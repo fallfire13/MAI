@@ -1,0 +1,5 @@
+(defun parallel-hands-minutes (h m)
+  (cond ((or (or (< h 0) (< m 0))
+             (or (>= h 12) (>= m 60))) "error")
+        ((< m (* h (/ 60.0 11))) (values (truncate (- (* h (/ 60.0 11)) m))))
+        ((>= m (* h (/ 60.0 11))) (values (truncate (+ (- 60 m) (* (/ 60.0 11) (+ h 1))))))))
