@@ -1,0 +1,2065 @@
+<HTML>
+<HEAD>
+<TITLE></TITLE>
+<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="TEXT/HTML; CHARSET=WINDOWS-1251">
+</HEAD>
+<body background="../fon.jpg">
+
+<p><CENTER><font size="4"><b>ГЛАВА 25
+<br>
+Настройка параметров Visual FoxPro </b></font>
+</center>
+</P>
+<br>
+<br>
+
+<ul>
+  <li><a href="gl25.html#1">Параметры вкладок окна Options</a>
+  <li><a href="gl25.html#2">General</a>
+  <li><a href="gl25.html#3">Controls</a>
+  <li><a href="gl25.html#4">Data</a>
+  <li><a href="gl25.html#5">File Locations</a>
+  <li><a href="gl25.html#6">Forms</a>
+  <li><a href="gl25.html#7">Projects</a>
+  <li><a href="gl25.html#8">Regional</a>
+  <li><a href="gl25.html#9">Remote Data</a>
+  <li><a href="gl25.html#10">View</a>
+  <li><a href="gl25.html#11">Editor</a>
+  <li><a href="gl25.html#12">Debug</a>
+  <li><a href="gl25.html#13">Field Mapping</a>
+  <li><a href="gl25.html#14">IDE</a>
+</ul>
+
+<P>
+Visual FoxPro содержит множество разнообразных параметров настройки. Вы можете указать расположение системных файлов, форматы отображения данных и многое другое. Для их настройки используется диалоговое окно Options (Параметры) (рис. 25.1), которое открывается при выполнении команды Options (Параметры) из меню Tools (Сервис). 
+</P>
+<P>
+Для облегчения настройки параметров они сгруппированы по функциональному назначению, причем каждая группа отображается на отдельной вкладке. Перечень вкладок и их назначение приведены в табл. 25.1. 
+</P>
+<P>
+Таблица 25.1. Назначение вкладок диалогового окна Options 
+</P>
+<TABLE BORDER="1">
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Вкладка 
+</TD>
+<TD VALIGN="TOP">
+Назначение 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+General (Общие) 
+</TD>
+<TD VALIGN="TOP">
+Содержит параметры  настройки  звука,  программирования, ввода данных 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+View (Вид) 
+</TD>
+<TD VALIGN="TOP">
+Содержит флажки, определяющие, будут ли отображаться на экране строка состояния, часы, системные сообщения и информация общего характера 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Data (Данные) 
+</TD>
+<TD VALIGN="TOP">
+Содержит параметры для управления данными в таблицах 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Remote Data (Удаленные данные) 
+</TD>
+<TD VALIGN="TOP">
+Осуществляет настройку средств удаленного доступа к данным 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+File Locations
+(Расположение файлов) 
+</TD>
+<TD VALIGN="TOP">
+Содержит   расположение   каталогов   и   файлов   Visual FoxPro 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Forms (Формы) 
+</TD>
+<TD VALIGN="TOP">
+Настраивает конструктор форм 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Projects (Проекты) 
+</TD>
+<TD VALIGN="TOP">
+Настраивает окно проекта 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Controls (Элементы управления) 
+</TD>
+<TD VALIGN="TOP">
+Содержит параметры  настройки  визуальных  классов  и OLE-объектов 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Regional (Региональные параметры) 
+</TD>
+<TD VALIGN="TOP">
+Содержит форматы отображения дат, времени, денежных единиц и чисел 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Debug (Отладка) 
+</TD>
+<TD VALIGN="TOP">
+Содержит параметры отладки и трассировки 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+IDE (Интерактивная среда разработки) 
+</TD>
+<TD VALIGN="TOP">
+Содержит параметры, позволяющие настроить свойства интерактивной среды разработки Visual FoxPro 
+</TD>
+</TR>
+
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Editor (Редактор) 
+</TD>
+<TD VALIGN="TOP">
+Настраивает параметры редактора Visual FoxPro 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Field Mapping (Связь типов элементов управления с типами полей таблиц) 
+</TD>
+<TD VALIGN="TOP">
+Задает тип объекта, который по умолчанию создается в форме при переносе в нее 
+таблицы или поля из окон конструктора базы данных, проекта и среды окружения 
+</TD>
+</TR>
+</TABLE>
+<P>
+После настройки параметров вы можете нажать кнопки ОК или Set As Default (По умолчанию). При нажатии кнопки ОК установленные значения будут действовать только в текущем сеансе работы с Visual FoxPro, а при нажатии кнопки Set As Default (По умолчанию) — во всех последующих сеансах. 
+</P>
+<IMG src="gl25-1.jpg" alt="gl25-1.jpg" ></IMG>
+<P>
+Рис. 25.1. Вкладка General диалогового окна Options 
+</P>
+
+<p>&nbsp;
+<a NAME="1"></a><font size="4">Параметры вкладок окна Options </font> 
+</P>
+<p>&nbsp;
+<a NAME="2"></a><font size="4">General </font> 
+</P>
+<P>
+Вкладка General (Общие) (рис. 25.1) содержит флажки и опции, влияющие на 
+совместимость с предыдущими версиями программ, на установку цвета, звуковых 
+сигналов и ввод данных. 
+</P>
+<P>
+Область Warning sound (Предупреждение звуком) данной вкладки позволяет выбрать тип звукового сигнала, звучащего при достижении пользователем конца поля или вводе недопустимых данных, путем установки одной из трех опций (табл. 25.2). 
+</P>
+<P>
+Таблица 25.2. Назначение опций области Warning sound 
+</P>
+<TABLE BORDER="1">
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Опция 
+</TD>
+<TD VALIGN="TOP">
+Назначение 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Off (Выкл.) 
+</TD>
+<TD VALIGN="TOP">
+Звуковой сигнал выключен 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Default
+(По умолчанию) 
+</TD>
+<TD VALIGN="TOP">
+Частота и длительность звукового сигнала устанавливаются по умолчанию (частота 512 Гц, продолжительность 
+- 2 с) 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Play
+(Проигрывать) 
+</TD>
+<TD VALIGN="TOP">
+Проигрывает звуковой файл 
+</TD>
+</TR>
+</TABLE>
+<P>
+При выборе опции Play (Проигрывать) можно воспользоваться кнопкой, расположенной права от поля ввода, и выбрать файл звукового сигнала с расширением WAV. 
+</P>
+<P>
+С правой стороны вкладки расположены четыре флажка (табл. 25.3). 
+</P>
+<P>
+Таблица 25.3. Назначение флажков для выбора файла звукового сигнала 
+</P>
+<TABLE BORDER="1">
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Флажок 
+</TD>
+<TD VALIGN="TOP">
+Назначение 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+dBASE compatibility
+(Совместимый с dBASE) 
+</TD>
+<TD VALIGN="TOP">
+Флажок управляет совместимостью Visual FoxPro с другими Xbase  языками.  Если флажок установлен,  то Visual FoxPro иначе интерпретирует команды, перечисленные в табл. 25.2 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Use Visual FoxPro color palette
+(Использовать цветовую палитру Visual FoxPro) 
+</TD>
+<TD VALIGN="TOP">
+При установленном флажке Visual FoxPro использует по умолчанию собственную цветовую палитру при отображении  растровых изображений.   При  сброшенном  флажке применяется палитра, использовавшаяся при его создании. Этот флажок соответствует команде SET PALETTE 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Confirm file replacement (Подтверждать перезапись файла) 
+</TD>
+<TD VALIGN="TOP">
+Определяет, будет ли выдаваться предупреждающее сообщение перед перезаписью уже существующего файла. Этот флажок соответствует команде SET SAFETY 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Browse <span lang="en-us">I</span>ME Control
+(Отображать окно редактора) 
+</TD>
+<TD VALIGN="TOP">
+Используется для открытия окна редактора при работе в режиме, когда каждый символ отображается двумя байтами 
+</TD>
+</TR>
+</TABLE>
+<P>
+Таблица 25.4. Команды, действие которых изменяется командой SET COMPATIBLE 
+</P>
+<TABLE BORDER="1">
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Команда 
+</TD>
+<TD VALIGN="TOP">
+В состоянии On 
+</TD>
+<TD VALIGN="TOP">
+В состоянии Off 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+@ . . . GET . . . RANGE 
+</TD>
+<TD VALIGN="TOP">
+Всегда проверяет предел 
+</TD>
+<TD VALIGN="TOP">
+Проверяет    предел,     только если изменяются данные 
+</TD>
+</TR>
+
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+@ . , . SAY 
+</TD>
+<TD VALIGN="TOP">
+CHR(7)      вызывает     звуковой сигнал 
+</TD>
+<TD VALIGN="TOP">
+CHR (7 ) не вызывает звуковой сигнал 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+@ . . . SAY 
+</TD>
+<TD VALIGN="TOP">
+Вывод   информации   на  экран вызывает сдвиг экрана вверх 
+</TD>
+<TD VALIGN="TOP">
+Вывод информации на экран прекращается   при   достижении нижнего правого угла 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+@ . . . SAY 
+</TD>
+<TD VALIGN="TOP">
+Крайняя правая цифра при использовании PICTURE округляется 
+</TD>
+<TD VALIGN="TOP">
+Крайняя правая цифра при использовании PICTURE отсекается 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+ACTIVATE   SCREEN 
+</TD>
+<TD VALIGN="TOP">
+Делая активным экран, устанавливает курсор в позицию 0,0 
+</TD>
+<TD VALIGN="TOP">
+Делая   активным   экран,    не изменяет позицию курсора 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+ACTIVATE   WINDOW 
+</TD>
+<TD VALIGN="TOP">
+Делая активным окно, устанавливает курсор в позицию 0,0 
+</TD>
+<TD VALIGN="TOP">
+Делая активным окно, не изменяет позицию курсора 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+APPEND   MEMO 
+</TD>
+<TD VALIGN="TOP">
+Использует по умолчанию расширение ТХТ 
+</TD>
+<TD VALIGN="TOP">
+Расширения по умолчанию нет 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+DECLARE 
+</TD>
+<TD VALIGN="TOP">
+Создает одномерный или двумерный массив 
+</TD>
+<TD VALIGN="TOP">
+(Используйте      вместо      нее команду DIMENSION) 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+DIMENSION 
+</TD>
+<TD VALIGN="TOP">
+Создает одномерный или двумерный массив 
+</TD>
+<TD VALIGN="TOP">
+ 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+FSIZE 
+</TD>
+<TD VALIGN="TOP">
+Возвращает размер файла 
+</TD>
+<TD VALIGN="TOP">
+Возвращает размер поля 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+GO/GOTO (если было   SET   TALK   ON) 
+</TD>
+<TD VALIGN="TOP">
+Выводит сообщение о текущей рабочей области и номере записи 
+</TD>
+<TD VALIGN="TOP">
+Не выводит сообщений 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+INKEY ( ) 
+</TD>
+<TD VALIGN="TOP">
+Клавиши   &lt;Ноте&gt;   и   &lt;Shift&gt;+ +&lt;Ноте&gt; возвращают код 26. Клавиши   &lt;Ctrl&gt;+&laquo;-&gt;   возвращают 1 
+</TD>
+<TD VALIGN="TOP">
+Клавиши &lt;Ноте&gt;  и &lt;Shift&gt;+ +&lt;Ноте&gt; возвращают 1 . Клавиши  &lt;Ctrl&gt;+&laquo;-&gt; возвращают 26 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+LASTKEY { ) 
+</TD>
+<TD VALIGN="TOP">
+Возвращает целое число в соответствии с кодом последней нажатой клавиши 
+</TD>
+<TD VALIGN="TOP">
+(Используйте     вместо      нее функциюINKEY ( ) ) 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+LIKEO 
+</TD>
+<TD VALIGN="TOP">
+Лидирующие  пробелы  в строках отсекаются перед сравнением 
+</TD>
+<TD VALIGN="TOP">
+Лидирующие   пробелы   сохраняются и считаются значимыми 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+MENU И POPUP 
+</TD>
+<TD VALIGN="TOP">
+Меню  помещается  в текущее окно вывода,  курсор позиционируется согласно команде 
+</TD>
+<TD VALIGN="TOP">
+Меню помещается в свое собственное окно, курсор остается в текущем окне вывода 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Вложенные    операторы 
+</TD>
+<TD VALIGN="TOP">
+Подразумевается     выполнение
+команды CLEAR   GETS При возврате на более высокий уровень 
+</TD>
+<TD VALIGN="TOP">
+Текущие GETS остаются при переходе  на  более  высокий уровень 
+</TD>
+</TR>
+
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+PLAY  MACRO 
+</TD>
+<TD VALIGN="TOP">
+Подразумевается    добавление клавиши    &lt;Alt&gt;+&lt;F10&gt;    перед макрокомандами, которые начинаются на A— Z. Перед макросами &lt;F1&gt;— &lt;F9&gt; добавляется &lt;Alt&gt; 
+</TD>
+<TD VALIGN="TOP">
+Ничего не добавляется 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+READ 
+</TD>
+<TD VALIGN="TOP">
+Проверяет   значение   оператором VALID  при  нажатии  клавиши &lt;Esc&gt; 
+</TD>
+<TD VALIGN="TOP">
+При нажатии &lt;Esc&gt; проверок VALID не выполняется 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+RUN 
+</TD>
+<TD VALIGN="TOP">
+Перед началом вывода курсор передвигается в первую позицию 24-й строки. После завершения экран сдвигается на 3 строки вверх 
+</TD>
+<TD VALIGN="TOP">
+Вывод на экран начинается с текущей позиции курсора, а после завершения экран сдвигается на две строки 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+SELECT () 
+</TD>
+<TD VALIGN="TOP">
+Возвращает номер наибольшей неиспользуемой рабочей области 
+</TD>
+<TD VALIGN="TOP">
+Возвращает   номер   текущей рабочей области 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+SET   COLOR  TO 
+</TD>
+<TD VALIGN="TOP">
+Устанавливает   цвета   окон   и меню, определенных пользователем 
+</TD>
+<TD VALIGN="TOP">
+(Пользуйтесь      вместо      нее командой COLOR OF SCHEME) 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+SET   BORDER 
+</TD>
+<TD VALIGN="TOP">
+Определяет     границу     вокруг различных полей, меню и окон 
+</TD>
+<TD VALIGN="TOP">
+ 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+SET   FIELDS 
+</TD>
+<TD VALIGN="TOP">
+Определяет   поля,   к   которым возможен доступ 
+</TD>
+<TD VALIGN="TOP">
+ 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+SET  MEMOWIDTH 
+</TD>
+<TD VALIGN="TOP">
+Определяет     ширину     Memoполей и символьных выражений 
+</TD>
+<TD VALIGN="TOP">
+ 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+SET   MESSAGE 
+</TD>
+<TD VALIGN="TOP">
+Выдает   сообщение   в   нижней строке экрана 
+</TD>
+<TD VALIGN="TOP">
+Сообщение     выдается,     если была команда SET STATUS ON 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+SET   PRINTER   TO 
+</TD>
+<TD VALIGN="TOP">
+По умолчанию выходной файл имеет расширение PRT 
+</TD>
+<TD VALIGN="TOP">
+Выходной    файл    не    имеет расширения по умолчанию 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+STORE 
+</TD>
+<TD VALIGN="TOP">
+Не может присвоить значения всем элементам массива 
+</TD>
+<TD VALIGN="TOP">
+Может     присвоить     значения сразу всем элементам массива 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+SUM 
+</TD>
+<TD VALIGN="TOP">
+Использует         установленное 
+</P>
+<P>
+КОМаНДОЙ   SET    DECIMALS   ЧИСЛО десятичных цифр 
+</TD>
+<TD VALIGN="TOP">
+Используемое число десятичных цифр определяется суммируемым полем 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+SYS (2001, 'COLOR' ) 
+</TD>
+<TD VALIGN="TOP">
+Возвращает значение, установленное   последней   командой SET   COLOR 
+</TD>
+<TD VALIGN="TOP">
+Возвращает значение цветовой пары для оператора SET 
+</P>
+<P>
+COLOR   TO 
+</TD>
+</TR>
+
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+TRANSFORM 
+</TD>
+<TD VALIGN="TOP">
+Возвращает   строку   символов из символьного или числового выражения 
+</TD>
+<TD VALIGN="TOP">
+ 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+USE 
+</TD>
+<TD VALIGN="TOP">
+Если установлен путь VFP и в команде указано устройство, то поиск     срайла      производится только на указанном устройстве 
+</TD>
+<TD VALIGN="TOP">
+Если установлен путь VFP и в команде указано устройство, то вначале производится поиск на заданном устройстве, а затем — по указанному пути 
+</TD>
+</TR>
+</TABLE>
+<P>
+Область Programming (Программирование) вкладки General (Общие) содержит три флажка, связанных с программированием (табл. 25.5). 
+</P>
+<P>
+Таблица 25.5. Назначение флажков вкладки General 
+</P>
+<TABLE BORDER="1">
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Флажок 
+</TD>
+<TD VALIGN="TOP">
+Назначение 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Cancel programs on escape (Останавливать программу при нажатии &lt;Esc&gt;) 
+</TD>
+<TD VALIGN="TOP">
+Позволяет прерывать выполнение программы нажатием клавиши &lt;Esc&gt; 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Log compilation errors 
+</P>
+<P>
+(Регистрировать ошибки компиляции) 
+</TD>
+<TD VALIGN="TOP">
+Позволяет ошибки, возникающие при компиляции файла, регистрировать в специальном файле 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+SET DEVELOPMENT 
+</P>
+<P>
+(Компилировать при изменении) 
+</TD>
+<TD VALIGN="TOP">
+При установке данного флажка перед выполнением уже скомпилированного файла Visual FoxPro проверяет, был ли исходный файл изменен, и в случае изменения — повторно компилирует его 
+</TD>
+</TR>
+</TABLE>
+<P>
+В области Data entry (Входные данные) вкладки General (Общие) содержатся три команды, связанные с вводом данных: 
+</P>
+<ul>
+  <li>Список Navigation keys (Кнопки навигации) соответствует команде SET
+KEYCOMP; </li>
+  <li>Флажок Fill new records with current values (Заполнить новые записи текущими значениями) вызывает перенос содержимого текущей записи в новую запись и соответствует команде SET CARRY; 
+  </li>
+  <li>Установка флажка Enter or tab to exit fields (Выход из поля нажатием &lt;Enter&gt; или &lt;Tab&gt;) разрешает пользователю переходить в следующее поле только нажав клавишу &lt;Enter&gt; или &lt;ТаЬ&gt;. Флажок соответствует команде SET CONFIRM. 
+Установка флажка несколько замедляет ввод данных, но при этом предотвращает случайное изменение полей записи. 
+  </li>
+</ul>
+<P>
+<font color="#008000"><b>Замечание</b></font></P>
+<P>
+<font color="#008000">Команда SET   CARRY может содержать фразу то, которая позволяет указать поля, переносимые из старых записей в новую.
+</font> 
+</P>
+<P>
+В области Year 2000 Compliance (Соглашение по 2000 году) вкладки General (Общие) содержится раскрывающийся список Strict Date Level (Строгая проверка данных типа &quot;дата и время&quot;), который используется для анализа ошибок и неоднозначности данных типа &quot;дата&quot;. 
+</P>
+<p>&nbsp;
+<a NAME="3"></a><font size="4">Controls </font> 
+</P>
+<P>
+Вкладка Controls (Элементы управления формы) (рис. 25.2) позволяет выбирать библиотеки классов и ActiveX-компоненты. Библиотека классов содержит один или более определенных пользователем классов, которые определяются исходя из основных классов FoxPro. ActiveX-компоненты обеспечивают связь с другими приложениями, поддерживающими OLE. Выбранные на данной вкладке библиотеки классов и ActiveX-компоненты появляются на панели инструментов Form Controls (Элементы управления формы) при нажатии на кнопку View Classes (Просмотр классов) этой панели. 
+</P>
+<IMG src="gl25-2.jpg" alt="gl25-2.jpg" ></IMG>
+<P>
+Рис. 25.2. Вкладка Controls диалогового окна Options 
+</P>
+<p>&nbsp;
+<a NAME="4"></a><font size="4">Data </font> 
+</P>
+<P>
+Вкладка Data (Данные) (рис. 25.3) предназначена для задания параметров, связанных с доступом к данным, методами сортировки и поиска, размером блока для Memo-полей, частотой обновления информации и многим другим. 
+</P>
+<IMG src="gl25-3.jpg" alt="gl25-3.jpg" ></IMG>
+<P>
+Рис. 25.3. Вкладка Data диалогового окна Options 
+</P>
+<P>
+В верхней части вкладки содержатся флажки, описанные в табл. 25.6. 
+</P>
+<P>
+Таблица 25.6. Назначение флажков вкладки Data 
+</P>
+<TABLE BORDER="1">
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Флажок 
+</TD>
+<TD VALIGN="TOP">
+Назначение 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Open exclusive
+(Открывать в монопольном режиме) 
+</TD>
+<TD VALIGN="TOP">
+Определяет режим открытия таблицы. Когда он установлен, Visual FoxPro открывает таблицу в монопольном режиме, т. е. никто кроме вас не сможет ее в дальнейшем открыть 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Show field names
+(Показывать наименования полей) 
+</TD>
+<TD VALIGN="TOP">
+Соответствует команде  SET   HEADINGS  и определяет, будет ли имя поля появляться в виде заголовка столбца данных  при   выполнении  таких  команд,   как  AVERAGE, DISPLAY, LIST
+<span lang="ru">и</span> SUM 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Prompt for code page
+(Напоминание о кодовой странице) 
+</TD>
+<TD VALIGN="TOP">
+Определяет, запрашивать ли пользователей относительно кодовой страницы. Кодовые страницы, если они включены, выполняют преобразования кодов символов 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Ignore deleted records
+(Игнорировать удаленные записи) 
+</TD>
+<TD VALIGN="TOP">
+Определяет, как Visual FoxPro будет обрабатывать записи, помеченные для удаления. Этот флажок соответствует команде SET DELETED 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Rushmore optimization
+(Оптимизация) 
+</TD>
+<TD VALIGN="TOP">
+Включает методику оптимизации  поиска,   называемую Rushmore,   Этот   флажок   соответствует   команде   SET<span lang="ru">
+</span>OPTIMIZE 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Unique records in indexes (Использовать только уникальные индексы) 
+</TD>
+<TD VALIGN="TOP">
+Влияет на создание индексных файлов. Если он сброшен, то индексы могут содержать 
+повторяющиеся указатели. Флажок соответствует команде SET UNIQUE 
+</TD>
+</TR>
+</TABLE>
+<P>
+Раскрывающийся список Collating sequence (Схема упорядочения) позволяет изменить порядок символов при сортировке, чтобы приспособиться под различные наборы символов в разных странах. По умолчанию используются ASCII-коды. Эта опция соответствует команде SET COLLATE. 
+</P>
+<P>
+На данной вкладке расположены счетчики, приведенные в табл. 25.7. 
+</P>
+<P>
+Таблица 25.7. Назначение счетчиков вкладки Data 
+</P>
+<TABLE BORDER="1">
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Счетчик 
+</TD>
+<TD VALIGN="TOP">
+Назначение 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Record counter interval
+(Частота отображения количества обработанных записей) 
+</TD>
+<TD VALIGN="TOP">
+Определяет частоту сообщений выдачи числа обработанных записей при выполнении команд REINDEX, PACK. Соответствует команде SET ODOMETER 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Memo block size (bytes)
+(Длина Мемо-поля) 
+</TD>
+<TD VALIGN="TOP">
+Определяет длину Memo-поля в байтах и соответствует команде SET BLOCKS IZE 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Browse refresh interval (sec)
+(Частота обновления данных в окне Browse) 
+</TD>
+<TD VALIGN="TOP">
+Определяет, как часто данные, отображаемые в окне   Browse  (Обзор),   будут  синхронизироваться   с фактическими  данными  в  таблице.   Соответствует команде SET REFRESH 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Table refresh interval (sec)
+(Частота обновления данных на экране) 
+</TD>
+<TD VALIGN="TOP">
+Определяет, как часто данные, отображаемые в любом окне, будут синхронизироваться с фактическими данными в таблице 
+</TD>
+</TR>
+</TABLE>
+<P>
+Для  управления  процессом  сравнения  строк используется  область String comparisons (Сравнение строк), содержащая флажки, описанные в табл. 25.8. 
+</P>
+<P>
+Таблица 25.8. Назначение флажков области String comparisons 
+</P>
+<TABLE BORDER="1">
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Флажок 
+</TD>
+<TD VALIGN="TOP">
+Назначение 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+SET NEAR on 
+</TD>
+<TD VALIGN="TOP">
+Определяет действия при неудавшемся поиске. Если флажок не установлен, FoxPro оставляет указатель записи в конце файла, в противном случае — указатель устанавливается на следующую по алфавиту запись после той, в которой ожидалось найти нужное значение 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+SET EXACT on 
+</TD>
+<TD VALIGN="TOP">
+Управляет поиском символьных строк. Если он установлен, то требуется точное совпадение образца с полем записи, т. е. совпадение 
+длин строк и совпадение всех их символов. При сброшенном флажке строки 
+сравниваются до длины той из них, которая в условии сравнения стоит справа 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+SET AN SI on 
+</TD>
+<TD VALIGN="TOP">
+При сравнении двух строк разной длины дополняет более короткую пробелами, чтобы длины строк стали одинаковыми.  Когда флажок сброшен, строки сравниваются до длины более короткой из них 
+</TD>
+</TR>
+</TABLE>
+<P>
+При работе в многопользовательском режиме вам необходимо в области Locking and buffering (Блокировка и буферизация) установить режимы блокировки файлов и записей с помощью флажков, приведенных в табл. 25.9. 
+</P>
+<P>
+Таблица 25.9. Назначение флажков области Locking and buffering 
+</P>
+<TABLE BORDER="1">
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Флажок 
+</TD>
+<TD VALIGN="TOP">
+Назначение 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Automatic file locking
+(Автоматическое блокирование файла) 
+</TD>
+<TD VALIGN="TOP">
+Этот флажок установлен всегда, за исключением случаев, когда вы намерены обрабатывать все блокировки в собственной программе. Соответствует команде SET LOCK 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Multiple record locks
+(Блокировка нескольких записей) 
+</TD>
+<TD VALIGN="TOP">
+Этот флажок устанавливается, когда требуется заблокировать сразу несколько записей и изменять их одновременно. Соответствует команде SET MULTILOCKS 
+</TD>
+</TR>
+</TABLE>
+<P>
+Для установки режима буферизации используется раскрывающийся список Buffering (Буферизация), а для определения количества попыток блокировки — Reprocessing (Повторное выполнение). 
+</P>
+<p>&nbsp;
+<a NAME="5"></a><font size="4">File Locations </font> 
+</P>
+<P>
+FoxPro в своей работе использует много файлов, находящихся в разных каталогах. Расположение двадцати различных групп файлов определяется с помощью вкладки File Locations (Расположение файлов) (рис. 25.4). 
+</P>
+<IMG src="gl25-4.jpg" alt="gl25-4.jpg" ></IMG>
+<P>
+Рис. 25.4. Вкладка File Location диалогового окна Options 
+</P>
+<P>
+Информация на данной вкладке представлена в виде таблицы, состоящей из двух столбцов. Первый столбец содержит наименование группы файлов, а второй — ее местоположение. В табл. 25.10 приведены типы файлов и варианты их настроек. 
+</P>
+<P>
+Таблица 25.10. Типы файлов окна File Location 
+</P>
+<TABLE BORDER="1">
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Тип файла 
+</TD>
+<TD VALIGN="TOP">
+Назначение 
+</TD>
+<TD VALIGN="TOP">
+Имя по умолчанию 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+ActiveDoc Launcher 
+</TD>
+<TD VALIGN="TOP">
+Определяет имя  и  расположение  приложения, которое вызывается при выборе команды Run Active Document 
+(Запуск активного документа) из меню Tools (Сервис) 
+</TD>
+<TD VALIGN="TOP">
+Runactd.prg 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Beautify 
+</TD>
+<TD VALIGN="TOP">
+Определяет имя и расположение приложения, которое вызывается при выборе команды   Beautify   (Улучшить)   из   меню   Tools (Сервис) 
+</TD>
+<TD VALIGN="TOP">
+Beautify, app 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Builders 
+</TD>
+<TD VALIGN="TOP">
+Определяет имя и расположение приложения-построителя объектов 
+</TD>
+<TD VALIGN="TOP">
+Builder.app 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Class Browser 
+</TD>
+<TD VALIGN="TOP">
+Определяет имя и расположение приложения, вызываемого командой Class Browser (Обзор класса) из меню Tools (Сервис) 
+</TD>
+<TD VALIGN="TOP">
+Browser.app 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Component Gallery 
+</TD>
+<TD VALIGN="TOP">
+Определяет имя и расположение приложения для просмотра Галереи компонентов 
+</TD>
+<TD VALIGN="TOP">
+Gallery.app 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Converter 
+</TD>
+<TD VALIGN="TOP">
+Определяет имя и расположение приложения, преобразующего объекты типа форм и 
+отчетов, разработанные в более ранних версиях FoxPro, в формат Visual FoxPro 7.0 
+</TD>
+<TD VALIGN="TOP">
+Converter.app 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Coverage Profiler 
+</TD>
+<TD VALIGN="TOP">
+Определяет имя файла приложения,  предназначенного для статистического анализа разработанного вами приложения 
+</TD>
+<TD VALIGN="TOP">
+Coverage.app 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Cross Tab Generator 
+</TD>
+<TD VALIGN="TOP">
+Определяет имя и расположение программы, создающей перекрестные таблицы 
+</TD>
+<TD VALIGN="TOP">
+Vfpxtab.fxp 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Default Directory 
+</TD>
+<TD VALIGN="TOP">
+Определяет по умолчанию имя каталога, в котором Visual FoxPro будет пытаться разместить таблицы и программные файлы 
+</TD>
+<TD VALIGN="TOP">
+ 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Default Include File 
+</TD>
+<TD VALIGN="TOP">
+Определяет   имя   и   расположение   файла, который используется для задания констант 
+</TD>
+<TD VALIGN="TOP">
+He задано 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Expression Builder 
+</TD>
+<TD VALIGN="TOP">
+Определяет имя и расположение приложения построителя выражений 
+</TD>
+<TD VALIGN="TOP">
+He задано 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+FoxCode Tabl 
+</TD>
+<TD VALIGN="TOP">
+Определяет имя и расположение таблицы, используемой       при       функционировании IntelliSense. Эта опция соответствует свойству FoxCode 
+</TD>
+<TD VALIGN="TOP">
+Foxcode.dbf 
+</TD>
+</TR>
+
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+FoxTask Table 
+</TD>
+<TD VALIGN="TOP">
+Определяет имя и расположение таблицы со списком заданий. Эта опция соответствует системной переменной FoxTask 
+</TD>
+<TD VALIGN="TOP">
+Foxcode.dbf 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+HTML Generator 
+</TD>
+<TD VALIGN="TOP">
+Определяет имя и расположение приложения, которое используется для сохранения приложения в формате HTML.  По умолчанию имя приложения 
+</TD>
+<TD VALIGN="TOP">
+Gethtml.app 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Help File 
+</TD>
+<TD VALIGN="TOP">
+Определяет   имя   и   расположение   файла справки 
+</TD>
+<TD VALIGN="TOP">
+Foxhelp.chm 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+IntelliSense Manager 
+</TD>
+<TD VALIGN="TOP">
+Определяет имя и расположение программы, поддерживающей Visual FoxPro IntelliSense 
+</TD>
+<TD VALIGN="TOP">
+Foxcode.app 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Menu Builder 
+</TD>
+<TD VALIGN="TOP">
+Определяет имя и расположение построителя меню 
+</TD>
+<TD VALIGN="TOP">
+ 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Resource File 
+</TD>
+<TD VALIGN="TOP">
+Определяет имя файла ресурсов с информацией о режимах работы, установках редактора, размерах окон, палитрах и т. д. 
+</TD>
+<TD VALIGN="TOP">
+ 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Samples Directory 
+</TD>
+<TD VALIGN="TOP">
+Определяет папку, в которой расположены примеры Visual FoxPro 
+</TD>
+<TD VALIGN="TOP">
+ 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Search Path 
+</TD>
+<TD VALIGN="TOP">
+Определяет каталог, в котором будет производиться поиск файлов, не найденных в 
+текущем каталоге. Здесь можно указать несколько каталогов, разделив их точками или точками с запятой 
+</TD>
+<TD VALIGN="TOP">
+ 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Startup Program 
+</TD>
+<TD VALIGN="TOP">
+Определяет имя и расположение приложения, которое вызывается при запуске Visual FoxPro 
+</TD>
+<TD VALIGN="TOP">
+VfpGstrt.app 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Task List 
+</TD>
+<TD VALIGN="TOP">
+Задает   имя   и   расположение   программы, управляющей списком задач. Эта опция соответствует системной переменной   TASKLIST 
+</TD>
+<TD VALIGN="TOP">
+Tasklist.app 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Temporary Files 
+</TD>
+<TD VALIGN="TOP">
+Определяет каталог для создания временных файлов на диске 
+</TD>
+<TD VALIGN="TOP">
+ 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Wizards 
+</TD>
+<TD VALIGN="TOP">
+Определяет имя и расположение мастеров Visual FoxPro 
+</TD>
+<TD VALIGN="TOP">
+Wizard. app 
+</TD>
+</TR>
+</TABLE>
+<P>
+Для изменения значения столбца Location (Расположение) выберите строку и выполните одно из следующих действий: 
+</P>
+<ul>
+  <li>нажмите кнопку Modify (Модифицировать) данной вкладки; </li>
+  <li>дважды щелкните кнопкой мыши на данной строке. </li>
+</ul>
+<P>
+На экране открывается диалоговое окно Change File Location (Изменить расположение файла) (рис. 25.5), в котором вы можете выбрать файл или папку. 
+</P>
+<IMG src="gl25-5.jpg" alt="gl25-5.jpg" ></IMG>
+<P>
+Рис. 25.5. Диалоговое окно Change File Location 
+</P>
+<p>&nbsp;
+<a NAME="6"></a><font size="4">Forms </font> 
+</P>
+<P>
+Вкладка Forms (Формы) диалогового окна Options (Параметры) (рис. 25.6) предназначена для настройки параметров работы конструктора форм. 
+</P>
+<IMG src="gl25-6.jpg" alt="gl25-6.jpg" ></IMG>
+<P>
+Рис. 25.6. Вкладка Forms диалогового окна Options 
+</P>
+<P>
+Область Grid (Сетка) используется для управления линиями сетки и выравнивания объектов (табл. 25.11). 
+</P>
+<P>
+Таблица 25.11. Назначение флажков области Grid 
+</P>
+<TABLE BORDER="1">
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Флажок 
+</TD>
+<TD VALIGN="TOP">
+Назначение 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Grid lines (Линии сетки) 
+</TD>
+<TD VALIGN="TOP">
+Определяет отображение линий сетки в форме 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Snap to grid
+(Выровнять по сетке) 
+</TD>
+<TD VALIGN="TOP">
+При установке данного флажка при изменении положения объекта в форме, он 
+автоматически устанавливается в ближайшую точку пересечения линий сетки. Флажок 
+не влияет на положение объектов, перемещенных до его установки 
+</TD>
+</TR>
+</TABLE>
+<P>
+Эта область содержит также два счетчика (табл. 25.12). 
+</P>
+<P>
+Таблица 25.12. Назначение счетчиков области Grid 
+</P>
+<TABLE BORDER="1">
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Счетчик 
+</TD>
+<TD VALIGN="TOP">
+Назначение 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Horizontal spacing (pixels) (Расстояние по горизонтали) 
+</TD>
+<TD VALIGN="TOP">
+Определяет число точек между горизонтальными линиями сетки 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Vertical spacing (pixels) (Расстояние по вертикали) 
+</TD>
+<TD VALIGN="TOP">
+Определяет число точек между вертикальными линиями сетки 
+</TD>
+</TR>
+</TABLE>
+<P>
+Для отображения в строке состояния положения и размера текущего объекта формы установите флажок Show position (Показывать положение). 
+</P>
+<P>
+Список Tab ordering (Перемещение при нажатии на клавишу &lt;Та<span lang="en-us">b</span>&gt;), содержащий два элемента Interactive (Интерактивное) и By List (По списку), определяет, каким образом будет устанавливаться последовательность перехода между объектами формы при нажатии клавиши &lt;Та<span lang="en-us">b</span>&gt;: 
+</P>
+<ul>
+  <li>Interactive (Интерактивно) — порядок переключения объектов можно устанавливать кнопкой мыши при нажатой клавише &lt;Shift&gt;; 
+  </li>
+  <li>By List (По списку) — последовательность переключения объектов отображается в списке, элементы которого можно менять местами. 
+  </li>
+</ul>
+<P>
+Для определения размеров и положения объектов в Visual FoxPro могут использоваться две единицы измерения: пикселы и фокселы. Выбор единицы измерения осуществляется с помощью списка Scale units (Единицы измерения). 
+</P>
+<P>
+Список Maximum design area (Максимальная область проектирования) используется для согласования разрешающих способностей пользовательского монитора и драйвера монитора. Значение списка ограничивает максимальный размер создаваемых форм с тем, чтобы они поместились на пользовательском экране с меньшей разрешающей способностью. 
+</P>
+<P>
+<font color="#000080"><b>Предупреждение</b></font></P>
+<P>
+<font color="#000080">Разрабатывая заказные прикладные программы, избегайте разработки экранных форм со слишком большим разрешением. Это может вызвать проблемы при установке такой программы на компьютер пользователя с низкой разрешающей способностью монитора.
+</font> 
+</P>
+<P>
+Для выбора классов, используемых по умолчанию как шаблоны при создании форм и набора форм, используется область Template classes (Классы шаблонов). При установке флажков Form set 
+(Набор форм) или Form (Форма) становятся доступны кнопки с правой стороны 
+одноименных текстовых полей, открывающие список доступных библиотек классов, 
+выбранных на вкладке Controls (Элементы управления). Из этого списка можно выбрать класс, который будет использоваться по умолчанию при создании форм или набора форм. 
+</P>
+<P>
+Установка флажка Builder lock (Закрепление построителя) ведет к автоматическому запуску построителей при добавлении объектов в форму. 
+</P>
+<P>
+Флажок Prompt to save changes before running form (Подтверждать запись изменений до запуска формы на выполнение) используется для вывода на экран сообщения о необходимости сохранения формы перед запуском ее на выполнение. 
+</P>
+<p>&nbsp;
+<a NAME="7"></a><font size="4">Projects </font> 
+</P>
+<P>
+Вкладка Projects (Проекты) (рис. 25.7) определяет параметры работы конструктора проектов. Область Project double-click action (Действие при двойном щелчке мыши в проекте) данной вкладки содержит две опции: 
+</P>
+<ul>
+  <li>Run selected file (Выполнить выбранный файл) — при двойном щелчке на имени файла в конструкторе проектов файл запускается на выполнение; 
+  </li>
+  <li>Modify selected file (Модифицировать выбранный файл) — при двойном щелчке на имени файла в конструкторе проектов файл открывается для модификации. 
+  </li>
+</ul>
+<P>
+Флажок Prompt for Wizards (Запрос на использование мастеров) управляет 
+отображением запроса при использовании мастера во время создания нового файла из конструктора проектов. 
+</P>
+<P>
+При установленном флажке Display user-defined container icons (Отображать значки, определенные пользователем) в окне проекта отображаются значки, определенные пользователем. 
+</P>
+<P>
+Установкой флажка Project class (Класс проекта) можно задать класс, который будет использоваться по умолчанию при создании нового проекта. Введите класс в расположенное рядом с флажком поле. Для ввода класса можно
+воспользоваться кнопкой с правой стороны поля ввода, открывающей диалоговое окно для поиска нужной библиотеки классов на диске. 
+</P>
+<P>
+Остальные флажки данной вкладки были подробно описаны в главе 13, 
+</P>
+<IMG src="gl25-7.jpg" alt="gl25-7.jpg" ></IMG>
+<P>
+Рис. 25.7. Вкладка Projects диалогового окна Options 
+</P>
+<p>&nbsp;
+<a NAME="8"></a><font size="4">Regional </font> 
+</P>
+<P>
+Вкладка Regional (Региональные) (рис. 25.8) служит для настройки форматов дат, времени, валюты и условных обозначений чисел в прикладных программах. 
+</P>
+<P>
+Если флажок Use System Settings (Использовать системные установки) установлен, будут действовать системные настройки, и вы не сможете устанавливать параметры вкладки. 
+</P>
+<P>
+Параметры отображения даты и времени задаются в области Date and Time (Дата и время). Раскрывающийся список Date Format (Формат даты) содержит форматы разных стран. Можно выбрать устраивающее вас значение из этого списка или создать и сохранить свой собственный формат. 
+</P>
+<P>
+Форматы отображения валюты и чисел устанавливаются в области Currency and Numbers 
+(Валюта и числа). Список Currency Format (Формат валюты) указывает размещение 
+символа валюты относительно его значения и заменяет Команды SET CURRENCY LEFT 
+или SET CURRENCY RIGHT. В поле <span lang="en-us">Currency</span>
+Symbol (Символ валюты) задается символ валюты. Здесь можно использовать любой символ, допустимый в текущем наборе символов, или их комбинацию. Соответствует команде SET CURRENCY то. Символ из поля 1000 Separator (Разделитель) появляется перед каждой третьей цифрой слева в целой части числа, отделяя тысячи от миллионов и т. д. Соответствует
+команде SET SEPARATOR. 
+</P>
+<IMG src="gl25-8.jpg" alt="gl25-8.jpg" ></IMG>
+<P>
+Рис. 25.8. Вкладка Regional диалогового окна Options 
+</P>
+<P>
+Символ в поле ввода Decimal Separator (Десятичный разделитель) отделяет целую часть числа от дробной. 
+</P>
+<P>
+Значение счетчика Decimal Digits (Десятичные знаки) определяет минимальное число десятичных знаков, используемых для вывода выражения. Это число может иметь значения от 0 до 18. Соответствует команде SET
+DECIMALS   TO. 
+</P>
+<P>
+Списки Week Starts on (Неделя начинается с) и First Week of Year (Первая неделя года) определяют по умолчанию день начала недели и первую неделю года. 
+</P>
+<p>&nbsp;
+<a NAME="9"></a><font size="4">Remote Data </font> 
+</P>
+<P>
+Вкладка Remote Data (Удаленные данные) (рис. 25.9) определяет работу Visual FoxPro с удаленными данными. 
+</P>
+<P>
+Область Remote view defaults (Удаленные представления данных по умолчанию) определяет по умолчанию параметры для удаленных представлений
+данных. Расположенные в этой области флажки имеют назначение, описанное в табл. 25.13. 
+</P>
+<IMG src="gl25-9.jpg" alt="gl25-9.jpg" ></IMG>
+<P>
+Рис. 25.9. Вкладка Remote Data диалогового окна Options 
+</P>
+<P>
+Таблица 25.13. Назначение флажков области Remote view defaults 
+</P>
+<TABLE BORDER="1">
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Флажок 
+</TD>
+<TD VALIGN="TOP">
+Назначение 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Share connection
+(Совместное подключение) 
+</TD>
+<TD VALIGN="TOP">
+Позволяет ODBC открывать не одно, а несколько представлений данных 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Fetch memo
+(Выборка Мемополя) 
+</TD>
+<TD VALIGN="TOP">
+Позволяет загружать Memo-данные только в случае активизации пользователем соответствующего поля, т. к. пересылка Memo-полей по локальной сети значительно увеличивает объем  пересылаемой  информации  и уменьшает скорость работы 
+</TD>
+</TR>
+</TABLE>
+<P>
+Список Criteria (Условие) определяет условия модификации исходных таблиц и содержит четыре значения: 
+</P>
+<ul>
+  <li>Key  Fields Only (Только  ключевые  поля)  —  допускает  модификацию только ключевых полей; 
+  </li>
+  <li>Key and Updatable Fields (Ключевые и изменяемые поля) — допускает модификацию ключевых и изменяемых полей; 
+  </li>
+  <li>Key and Modified Fields (Ключевые и модифицированные поля) — допускает модификацию ключевых и измененных полей; 
+  </li>
+  <li>Key and Timestamp (Ключевые поля и время изменения) — допускает модификацию ключевых полей и времени изменения. 
+  </li>
+</ul>
+<P>
+Список Method (Метод) определяет метод изменения таблиц. В зависимости от выбранной из него команды производится либо модификация нужной записи, либо удаление старой записи и добавление новой. 
+</P>
+<P>
+В табл. 25.14 приведены счетчики вкладки Remote Data и их назначение. 
+</P>
+<P>
+Таблица 25.14. Назначение счетчиков вкладки Remote Data 
+</P>
+<TABLE BORDER="1">
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Счетчик 
+</TD>
+<TD VALIGN="TOP">
+Назначение 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Records to fetch at a time
+(Выборка записей в единицу времени) 
+</TD>
+<TD VALIGN="TOP">
+Позволяет уменьшить нагрузку на локальную сеть, ограничивая   число   одновременно   пересылаемых записей. Дополнительные блоки записей считываются с сервера по мере необходимости 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Maximum records to fetch
+(Максимальное число выбираемых записей) 
+</TD>
+<TD VALIGN="TOP">
+Определяет верхний предел общего числа записей, возвращаемых запросом, позволяя ограничить объем выбираемых данных при неправильном формировании условий запроса 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Use memo for fields &gt;=
+(Использовать Мемо-поле для полей) 
+</TD>
+<TD VALIGN="TOP">
+Определяет число символов, при превышении которого поле автоматически  преобразуется  в Memo<span lang="en-us">-</span>поле. Поскольку максимальная длина символьного поля составляет 254 символа, этот счетчик обычно содержит число 255 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Records to batch update
+(Количество записей в пакете обновления) 
+</TD>
+<TD VALIGN="TOP">
+Определяет число записей, посылаемых на сервер при выполнении одной команды 
+модификации, позволяя оптимизировать пересылки по сети 
+</TD>
+</TR>
+</TABLE>
+<P>
+Флажки области Connection defaults (Установки соединения по умолчанию) определяют, как ваша прикладная программа будет связываться с данными на сервере (табл. 25.15). 
+</P>
+<P>
+Таблица 25.15. Назначение флажков области Connection defaults 
+</P>
+<TABLE BORDER="1">
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Флажок 
+</TD>
+<TD VALIGN="TOP">
+Назначение 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Asynchronous execution (Асинхронное выполнение) 
+</TD>
+<TD VALIGN="TOP">
+Определяет, возвращается ли управление к вашей прикладной программе сразу после начала сетевой операции. При синхронном обмене  программа  всегда дожидается окончания  операции  обмена  по  сети.   Если  установлен асинхронный обмен, то программа может выполнять различные операции и во время обмена по сети 
+</TD>
+</TR>
+
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Display warnings
+(Показывать предупреждения) 
+</TD>
+<TD VALIGN="TOP">
+Разрешает выдавать на экран сообщения об ошибках сетевых операций 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Batch processing
+(Пакетная пересылка) 
+</TD>
+<TD VALIGN="TOP">
+Разрешает пакетные пересылки по сети 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Automatic transactions
+(Автоматические транзакции) 
+</TD>
+<TD VALIGN="TOP">
+Определяет, будут ли транзакции обработаны автоматически или же ваша прикладная программа должна включать собственные функции SQLCOMMIT и SQLROLLBACK 
+</TD>
+</TR>
+</TABLE>
+<P>
+Раскрывающийся список Show login (Показывать окно входа в систему) позволяет указать, когда нужно показывать диалоговое окно входа в систему для пользователя: перед обращением к данным, всегда, никогда, или только по необходимости. 
+</P>
+<P>
+Счетчики области Connection defaults (Установки соединения по умолчанию) выполняют функции, описанные в табл. 25.16. 
+</P>
+<P>
+Таблица 25.16. Назначение счетчиков области Connection defaults 
+</P>
+<TABLE BORDER="1">
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Счетчик 
+</TD>
+<TD VALIGN="TOP">
+Назначение 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Connection timeout
+(Ожидание подключения) 
+</TD>
+<TD VALIGN="TOP">
+Определяет число секунд ожидания опознавания соединения сервером 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Idle timeout (Время простоя) 
+</TD>
+<TD VALIGN="TOP">
+Определяет, сколько минут будет поддерживаться соединение без действий. Значение по умолчанию 0 вызывает немедленный разрыв соединения по окончании обмена 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Query timeout
+(Ожидание результатов запроса) 
+</TD>
+<TD VALIGN="TOP">
+Определяет время ожидания результатов запроса в минутах. Если результат не получен по истечении этого времени, выдается сообщение об ошибке 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Wait time
+(Время ожидания) 
+</TD>
+<TD VALIGN="TOP">
+Определяет число миллисекунд между проверками завершения обмена по сети 
+</TD>
+</TR>
+</TABLE>
+<p>&nbsp;
+<a NAME="10"></a><font size="4">View </font> 
+</P>
+<P>
+С помощью флажков вкладки View (Вид) (рис. 25.10) можно определить, что требуется показывать на экране (табл. 25.17). 
+</P>
+<P>
+Таблица 25.17. Назначение флажков вкладки View 
+</P>
+<TABLE BORDER="1">
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Флажок 
+</TD>
+<TD VALIGN="TOP">
+Назначение 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Status bar 
+</P>
+<P>
+(Строка состояния) 
+</TD>
+<TD VALIGN="TOP">
+Включает отображение строки состояния  в  нижней части экрана.   Если   строка   состояния   выключена,   сообщения FoxPro выдаются в окно Wait (Ожидание) в верхнем правом углу экрана 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Clock (Часы) 
+</TD>
+<TD VALIGN="TOP">
+Отображает время в строке состояния 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Command results 
+</P>
+<P>
+(Результаты команд) 
+</TD>
+<TD VALIGN="TOP">
+Выводит результаты выполнения команд в строку состояния 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+System messages 
+</P>
+<P>
+(Системные сообщения) 
+</TD>
+<TD VALIGN="TOP">
+Включает или отключает вывод некоторых системных сообщений. Этот флажок соответствует команде SET NOTIFY 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Open last project on startup (Открывать последний проект при запуске) 
+</TD>
+<TD VALIGN="TOP">
+Заставляет Visual FoxPro при запуске автоматически открывать тот проект, который был открыт последним в предыдущем сеансе работы 
+</TD>
+</TR>
+</TABLE>
+&nbsp;<p>
+<IMG src="gl25-10.jpg" alt="gl25-10.jpg" ></IMG> </p>
+<P>
+Рис. 25.10. Вкладка View диалогового окна Options 
+</P>
+<P>
+Счетчик Most Recently Used list contains (Наиболее часто используемый список содержит) позволяет указать, сколько имен последних открывавшихся проектов должно отображаться в меню File (Файл). 
+</P>
+<p>&nbsp;
+<a NAME="11"></a><font size="4">Editor </font> 
+</P>
+<P>
+Вкладка Editor (Редактор) (рис. 25.11) диалогового окна Options (Параметры) позволяет настроить параметры редактора Visual FoxPro. 
+</P>
+<IMG src="gl25-11.jpg" alt="gl25-11.jpg" ></IMG>
+<P>
+Рис. 25.11. Вкладка Editor диалогового окна Options 
+</P>
+<P>
+В верхней области вкладки расположены три флажка: 
+</P>
+<ul>
+  <li>Selection margin (Область выборки) — при установке флажка в левой части окна редактора появляется область, в которой 
+  можно устанавливать признак точки останова или заметки; </li>
+  <li>Drag Drop between words (Перенести-и-оставить между словами) — устанавливает режим, в котором при использовании механизма &quot;перенести-иоставить&quot; выделенную область можно вставить только между словами; 
+  </li>
+  <li>Enable hyperlinks (Доступны гиперссылки) — определяет, будет ли редактор распознавать &quot;http:/&quot; как гиперссылку. 
+  </li>
+</ul>
+<P>
+Поле Comment string (Строка комментария) содержит символы, совокупность которых в программе идентифицирует строку с комментарием. По умолчанию используется набор символов *!*. 
+</P>
+<P>
+Счетчик List display count (Количество элементов в списке) определяет максимальное количество элементов в раскрывающемся списке. 
+</P>
+<P>
+Счетчик Highlight duration (Интервал подстветки) определяет количество миллисекунд, в течение которого при закрытии круглой или квадратной
+скобки содержащийся в скобках текст будет выделен. Вы можете выбрать значение из списка или ввести его вручную. 
+</P>
+<P>
+Раскрывающийся   список   Area   (Область)   области   Syntax   color   settings
+(Цветовое выделение синтаксических конструкций) содержит перечень программных элементов Visual FoxPro (зарезервированных слов, операторов, переменных, комментариев и т. д.). Выбирая из этого списка значение программного элемента, можно, используя список Font style (Стиль шрифта), задать стиль его отображения, а используя списки Foreground (Цвет шрифта) и Background (Цвет фона) — цвет шрифта и цвет фона. 
+</P>
+<P>
+Кнопка Reset All (Восстановить все) позволяет восстановить предыдущее состояние цветов и стилей программных элементов. 
+</P>
+<p>&nbsp;
+<a NAME="12"></a><font size="4">Debug </font> 
+</P>
+<P>
+Вкладка Debug (Отладка) (рис. 25.12) диалогового окна Options (Параметры) Visual FoxPro позволяет настроить параметры работы отладчика, такие как: 
+</P>
+<ul>
+  <li>шрифт и цвета; </li>
+  <li>отработка событий таймера; </li>
+  <li>нумерация строк кода на экране; </li>
+  <li>сохранение в файле содержимого окна Debug Output (Выходные данные отладки). 
+  </li>
+</ul>
+<IMG src="gl25-12.jpg" alt="gl25-12.jpg" ></IMG>
+<P>
+Рис. 25.12. Вкладка Debug диалогового окна Options 
+</P>
+<P>
+Раскрывающийся список Environment (Окружение) содержит два значения: 
+</P>
+<ul>
+  <li>Debug Frame (Область отладки) — при установке данного значения все окна отладчика открываются в отдельном от основного окна Visual FoxPro окне. При установке этой опции вы можете открыть окно отладчика с помощью команды Debugger (Отладчик) из меню Tools (Сервис); 
+  </li>
+  <li>FoxPro Frame (Область FoxPro) — отладчик встраивается в основное окно Visual FoxPro. При установке данного значения в меню Tools (Сервис) вместо пункта меню Debugger 
+(Отладчик) появляется пять пунктов меню, открывающих отдельные окна трассировки 
+программы, просмотра переменных. </li>
+</ul>
+<P>
+Для отображения событий таймера в окне Trace (Трассировка) установите флажок Display Timer Events (Показывать события таймера). 
+</P>
+<P>
+С помощью переключателя области Specify Window (Задать параметры окна) и расположенных ниже объектов настраиваются параметры окон отладки: 
+</P>
+<ul>
+  <li>Call Stack (Стек вызова). Определяются параметры окна Call Stack (Стек вызова) (табл. 25.18); 
+  </li>
+  <li>Output   (Выходные  данные).   Задаются   параметры  окна  Debug   Output
+(Выходные данные отладки) (табл. 25.19); </li>
+  <li>Trace   (Трассировка).   Задаются   параметры   окна  Trace   (Трассировка)
+(табл. 25.20). </li>
+</ul>
+<P>
+Таблица 25.18. Назначение флажков области Call Stack 
+</P>
+<TABLE BORDER="1">
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Флажок 
+</TD>
+<TD VALIGN="TOP">
+Назначение 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Show call stack order 
+</P>
+<P>
+(Показывать стек вызова) 
+</TD>
+<TD VALIGN="TOP">
+При установке флажка показывается глубина вложенности программы 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Show current line indicator (Показывать индикатор текущей строки) 
+</TD>
+<TD VALIGN="TOP">
+Устанавливает режим выделения текущей строки в окне Call Stack (Стек вызова) 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Show call stack indicator 
+</P>
+<P>
+(Показывать индикатор стека вызова) 
+</TD>
+<TD VALIGN="TOP">
+Управляет  выделением  стрелкой  процедуры,   отображаемой в окне Trace (Трассировка) 
+</TD>
+</TR>
+</TABLE>
+<P>
+Таблица 25.19. Назначение флажков области Debug Output 
+</P>
+<TABLE BORDER="1">
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Флажок 
+</TD>
+<TD VALIGN="TOP">
+Назначение 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Log Debug Output
+(Записать данные отладки) 
+</TD>
+<TD VALIGN="TOP">
+Результат отладки записывается в текстовый файл 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Append (Добавлять) 
+</TD>
+<TD VALIGN="TOP">
+Информация  окна  Debug Output (Выходные данные отладки) добавляется к 
+содержимому заданного текстового файла 
+</TD>
+</TR>
+
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Overwrite (Обновлять) 
+</TD>
+<TD VALIGN="TOP">
+Информация  окна  Debug  Output  (Выходные  данные отладки) обновляет содержимое заданного текстового файла 
+</TD>
+</TR>
+</TABLE>
+<P>
+Таблица 25.20. Назначение флажков области Trace 
+</P>
+<TABLE BORDER="1">
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Опция 
+</TD>
+<TD VALIGN="TOP">
+Назначение 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Show line numbers 
+</P>
+<P>
+(Показывать нумерацию строк) 
+</TD>
+<TD VALIGN="TOP">
+Отображается нумерация строк 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Trace between breakpoints (Трассировка между точками останова) 
+</TD>
+<TD VALIGN="TOP">
+Устанавливается замедленный режим выполнения программы между точками останова 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Pause between line execution (Пауза между выполнением строк программы) 
+</TD>
+<TD VALIGN="TOP">
+Задает задержку в секундах между выполнением каждой строки программы 
+</TD>
+</TR>
+</TABLE>
+<P>
+С помощью кнопки Font (Шрифт) и раскрывающихся списков области Colors (Цвета) устанавливаются гарнитура шрифта, его цвет и фон. 
+</P>
+<p>&nbsp;
+<a NAME="13"></a><font size="4">Field Mapping </font> 
+</P>
+<P>
+С помощью вкладки Field Mapping (Связь типов элементов управления с типами полей таблиц) (рис. 25.13) вы можете установить тип объекта, который будет создаваться в форме при размещении в ней полей таблицы заданного типа. 
+</P>
+<P>
+Таблица для определения соотношения между типом объекта и типом поля содержит три столбца: 
+</P>
+<ul>
+  <li>Туре (Тип) — типы полей таблиц; </li>
+  <li>Class Library (Библиотека класса) — имя библиотеки, из которой выбирается тип объекта; 
+  </li>
+  <li>Class Name (Имя класса) — имя класса объекта, определяющего тип создаваемого объекта. 
+  </li>
+</ul>
+<P>
+При нажатии на кнопку Modify (Модифицировать) открывается диалоговое окно Modify Field Mapping (Связь типов элементов управления с типами полей таблиц), в котором вы можете установить связь между типом поля таблицы базы данных и типом объекта. 
+</P>
+<IMG src="gl25-13.jpg" alt="gl25-13.jpg" ></IMG>
+<P>
+Рис. 25.13. Вкладка Field Mapping диалогового окна Options 
+</P>
+<P>
+В области Database options (Параметры базы данных) вкладки Field Mapping
+(Связь типов элементов управления с типами полей таблиц) расположены четыре флажка (табл. 25.21). 
+</P>
+<P>
+Таблица 25.21. Назначение флажков области Database options 
+</P>
+<TABLE BORDER="1">
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Флажок 
+</TD>
+<TD VALIGN="TOP">
+Назначение 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Drag and drop field caption 
+</P>
+<P>
+(Перенести-и-оставить подпись поля) 
+</TD>
+<TD VALIGN="TOP">
+При выборе этой опции имя поля таблицы будет размещено в форме в качестве надписи к создаваемому объекту 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Copy field comment 
+</P>
+<P>
+{Копировать комментарии к полю) 
+</TD>
+<TD VALIGN="TOP">
+Копирует примечание поля базы данных в свойство comment (Комментарий) создаваемого объекта 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Copy field input mask 
+</P>
+<P>
+(Копировать маску ввода поля) 
+</TD>
+<TD VALIGN="TOP">
+Копирует маску ввода поля базы данных в свойство inputMask (Маска ввода) создаваемого объекта 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Copy fie Id format 
+</P>
+<P>
+(Копировать формат поля) 
+</TD>
+<TD VALIGN="TOP">
+Копирует маску ввода поля базы данных в свойство Format (Формат) создаваемого объекта 
+</TD>
+</TR>
+</TABLE>
+<p>&nbsp;
+<a NAME="14"></a><font size="4">IDE </font> 
+</P>
+<P>
+С помощью вкладки IDE (рис. 25.14) настраиваются параметры интерактивной среды разработки. 
+</P>
+<IMG src="gl25-14.jpg" alt="gl25-14.jpg" ></IMG>
+<P>
+Рис. 25.14. Вкладка IDE диалогового окна Options 
+</P>
+<P>
+Область Specify file/window (Задать параметры файла/окна) позволяет задать тип файла/окна, настраиваемого с помощью данной вкладки. Список Туре (Тип) содержит возможные типы файлов. Поле Extensions 
+(Расширения) показывает допустимые расширения выбранного типа файлов. Флажок 
+Override individual settings (Перезаписать настройки по умолчанию) позволяет аннулировать настройки, заданные по умолчанию. 
+</P>
+<P>
+Область Indentation (Размеры отступов) позволяет определить размеры табуляции и отступа. По умолчанию используются значения в 4 символа. 
+</P>
+<P>
+Область Save options (Параметры сохранения) содержит флажки, позволяющие определить, каким образом файл выбранного типа будет сохраняться: 
+</P>
+<ul>
+  <li>Make backup (Создать резервную копию) — при установке флажка сохранение файла ведет к созданию резервной копии; 
+  </li>
+  <li>Save with line feeds — текущий тип файла сохраняется с символами новой строки CHR(13)+CHR(10); 
+  </li>
+  <li>Save with end-of-ffle marker (Сохранить с маркером конца файла) — текущий тип файла сохраняется с символом Ctrl+Z в конце файла; 
+  </li>
+  <li>Compile before saving (Компилировать перед сохранением) — перед сохранением данного типа файла осуществляется его компиляция. 
+  </li>
+</ul>
+<P>
+Область Appearance and behavior (Отображение и поведение) позволяет задать, как 
+будет выглядеть текст настраиваемого типа файла. Список Alignment (Выравнивание) определяет тип выравнивания информации: по левому
+краю, по центру, по правому краю. Поле Font (Шрифт) указывает шрифт, стиль оформления и размер символов текущего типа файла. Флажки области имеют следующее назначение: 
+</P>
+<ul>
+  <li>Drag-and-drop editing (Правка механизма перенести-и-оставить) — указывает, будет ли настраиваемый тип файла поддерживать механизм &quot;перенести-и-оставить&quot;; 
+  </li>
+  <li>Automatic indent (Автоматический отступ) — позволяет автоматически делать отступ при переходе на новую строку; 
+  </li>
+  <li>Show line/column position (Показывать позицию курсора) — управляет отображением в строке состояния главного окна позиции курсора в Memo-полях; 
+  </li>
+  <li>Word wrap (Перенос слов) — управляет переносом слов в окне редактирования файла; 
+  </li>
+  <li>Syntax coloring (Выделять синтаксические конструкции) — установленный флажок позволяет использовать выделение цветом текста в программе, в соответствии с результатами синтаксической проверки; 
+  </li>
+  <li>Embedded hyperlinks (Включить гиперссылки) — указывает, можно ли включать гиперссылки в настраиваемый тип файла; 
+  </li>
+  <li>Display white space (Показывать непечатаемые символы) — управляет отображением 
+на экране заданных непечатаемых символов (табуляции, отступов и т. д.). </li>
+</ul>
+<P>
+Кнопка Apply (Применить установки) сохраняет параметры, заданные на вкладке IDE, 
+а кнопка Reset All (Восстановить все) — восстанавливает параметры, задаваемые по умолчанию Visual FoxPro. 
+</P>
+</BODY>
+</HTML>

@@ -1,0 +1,825 @@
+<HTML>
+<HEAD>
+<TITLE></TITLE>
+<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="TEXT/HTML; CHARSET=WINDOWS-1251">
+</HEAD>
+<body background="../fon.jpg">
+
+<p><CENTER><font size="4"><b>ГЛАВА 23
+<br>
+Перенос данных из Visual FoxPro на платформу клиент-сервер</b></font>
+</center>
+</P>
+<br>
+<br>
+
+<ul>
+  <li><a href="gl23.html#1">Использование мастера наращивания для переноса данных в базу данных SQL Server</a>
+  <li><a href="gl23.html#2">Соответствие типов данных</a>
+  <li><a href="gl23.html#3">Отображение выражений из Visual FoxPro в SQL Server мастером наращивания</a>
+  <li><a href="gl23.html#4">Отображение типов индексов мастером наращивания</a>
+  <li><a href="gl23.html#5">Отображение объектов мастером наращивания</a>
+  <li><a href="gl23.html#6">Отображение правил и ссылочной целостности мастером наращивания</a>
+  <li><a href="gl23.html#7">Установка драйвера ODBC</a>
+  <li><a href="gl23.html#8">Выбор базы данных и источника данных</a>
+  <li><a href="gl23.html#9">Выбор переносимых таблиц</a>
+  <li><a href="gl23.html#10">Определение базы данных назначения и ее параметров</a>
+</ul>
+
+<P>
+В последнее время перед разработчиками все чаще возникает необходимость переноса приложений, созданных для базы данных Visual FoxPro, на платформу 
+клиент-сервер. Наиболее простым способом переноса данных является использование мастера наращивания. 
+</P>
+<P>
+Мастер наращивания создает базу данных SQL Server, которая дублирует, насколько это возможно, функциональный диапазон базы данных Visual FoxPro. С помощью мастера наращивания вы можете:  
+</P>
+<ul>
+  <li>преобразовывать локальные базовые таблицы и локальные представления в 
+  удаленные базовые таблицы и удаленные представления; </li>
+  <li>перемещать локальные данные на удаленный сервер; </li>
+  <li>переносить локальные приложения в среду клиент-сервер. </li>
+</ul>
+<P>
+<font color="#000080"><b>Предупреждение</b></font></P>
+<P>
+<font color="#000080">Наращивание может занимать много времени; это зависит от количества данных, объема сетевого трафика и числа параллельных запросов, обрабатываемых сервером. Для больших таблиц наращивание может выполняться в течение нескольких часов.
+</font> 
+</P>
+<P>
+В данной главе рассмотрим использование мастера наращивания для переноса данных из Visual FoxPro в базу SQL Server. 
+</P>
+<p>&nbsp;
+<a NAME="1"></a><font size="4">Использование мастера наращивания для переноса данных в базу данных SQL Server
+</font> 
+</P>
+<P>
+Прежде чем приступить к процессу переноса данных из Visual FoxPro в SQL Server, рассмотрим особенности и ограничения, связанные с переносом полей таблиц, выражений, правил поддержки целостности. 
+</P>
+<p>&nbsp;
+<a NAME="2"></a><font size="4">Соответствие типов данных </font> 
+</P>
+<P>
+Соответствие типов данных Visual FoxPro и MS SQL Server представление в табл. 23.1. 
+</P>
+<P>
+Таблица 23.1. Соответствие типов данных 
+</P>
+<TABLE BORDER="1">
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+ Сокращенное обозначение 
+</TD>
+<TD VALIGN="TOP">
+ Тип данных Visual FoxPro 
+</TD>
+<TD VALIGN="TOP">
+ Тип данных SQL Server 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+ С 
+</TD>
+<TD VALIGN="TOP">
+ Character 
+</TD>
+<TD VALIGN="TOP">
+ char 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+ Y 
+</TD>
+<TD VALIGN="TOP">
+ Currency 
+</TD>
+<TD VALIGN="TOP">
+ money 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+ D 
+</TD>
+<TD VALIGN="TOP">
+ Date 
+</TD>
+<TD VALIGN="TOP">
+ datetime 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+ Т 
+</TD>
+<TD VALIGN="TOP">
+ DateTime 
+</TD>
+<TD VALIGN="TOP">
+ datetime 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+ В 
+</TD>
+<TD VALIGN="TOP">
+ Double 
+</TD>
+<TD VALIGN="TOP">
+ float 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+ F 
+</TD>
+<TD VALIGN="TOP">
+ Float 
+</TD>
+<TD VALIGN="TOP">
+ float 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+ G 
+</TD>
+<TD VALIGN="TOP">
+ General 
+</TD>
+<TD VALIGN="TOP">
+ image 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+ I 
+</TD>
+<TD VALIGN="TOP">
+ Integer 
+</TD>
+<TD VALIGN="TOP">
+ int 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+ L 
+</TD>
+<TD VALIGN="TOP">
+ Logical 
+</TD>
+<TD VALIGN="TOP">
+ bit 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+ М 
+</TD>
+<TD VALIGN="TOP">
+ Memo 
+</TD>
+<TD VALIGN="TOP">
+ text 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+ М (binary) 
+</TD>
+<TD VALIGN="TOP">
+ Memo binary 
+</TD>
+<TD VALIGN="TOP">
+ image 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+ С (binary) 
+</TD>
+<TD VALIGN="TOP">
+ Character binary 
+</TD>
+<TD VALIGN="TOP">
+ binary 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+ N 
+</TD>
+<TD VALIGN="TOP">
+ Numeric 
+</TD>
+<TD VALIGN="TOP">
+ float 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+ Р 
+</TD>
+<TD VALIGN="TOP">
+ Picture 
+</TD>
+<TD VALIGN="TOP">
+ image 
+</TD>
+</TR>
+</TABLE>
+<p>&nbsp;
+<a NAME="3"></a><font size="4">Отображение выражений из Visual FoxPro в SQL Server мастером наращивания
+</font> 
+</P>
+<P>
+Несмотря на то, что Visual FoxPro и Transact-SQL имеют несколько общих функций, многие функции Visual FoxPro не поддерживаются в SQL Server. 
+Выражения Visual FoxPro, содержащиеся в правилах проверки достоверности на уровне полей и на уровне записей, а также в значениях по умолчанию мастер наращивания пытается преобразовать в выражения TransactSQL, используя соответствия, представленные в табл. 23.2. 
+</P>
+<P>
+Таблица 23.2. Отображение выражений из Visual FoxPro в SQL Server 
+</P>
+<TABLE BORDER="1">
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+ Выражение Visual FoxPro 
+</TD>
+<TD VALIGN="TOP">
+ Выражение SQL Server 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+ Истина (.Т.) 
+</TD>
+<TD VALIGN="TOP">
+ 1 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+ Ложь (.F.) 
+</TD>
+<TD VALIGN="TOP">
+ 0 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+ # 
+</TD>
+<TD VALIGN="TOP">
+ &lt;&gt; 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+ .AND. 
+</TD>
+<TD VALIGN="TOP">
+ AND 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+ .NOT. 
+</TD>
+<TD VALIGN="TOP">
+ NOT 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+ .NULL. 
+</TD>
+<TD VALIGN="TOP">
+ NULL 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+ .OR. 
+</TD>
+<TD VALIGN="TOP">
+ OR 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+ <SUB>=</SUB> &lt;; 
+</TD>
+<TD VALIGN="TOP">
+ &lt;= 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+ = &gt; 
+</TD>
+<TD VALIGN="TOP">
+ &gt;= 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+ ASCO 
+</TD>
+<TD VALIGN="TOP">
+ ASCII () 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+ AT() 
+</TD>
+<TD VALIGN="TOP">
+ CHARINDEX ( ) 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+ CDOW ( ) 
+</TD>
+<TD VALIGN="TOP">
+ DATENAME(dw, . . . ) 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+ CHR() 
+</TD>
+<TD VALIGN="TOP">
+ CHAR ( ) 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+ CMONTH ( ) 
+</TD>
+<TD VALIGN="TOP">
+ DATENAME (mm, . . • ) 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+ CTODO 
+</TD>
+<TD VALIGN="TOP">
+ CONVERT {datetime, . . . ) 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+ CTOT ( ) 
+</TD>
+<TD VALIGN="TOP">
+ CONVERT (datetime, . . . ) 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+ DATE ( ) 
+</TD>
+<TD VALIGN="TOP">
+ GET DATE ( ) 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+ DATETIME ( } 
+</TD>
+<TD VALIGN="TOP">
+ GETDATE ( ) 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+ DAY () 
+</TD>
+<TD VALIGN="TOP">
+ DATEPART{dd, . . . ) 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+ DOW() 
+</TD>
+<TD VALIGN="TOP">
+ DATEPART (dw, . . . ) 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+ DTOC ( ) 
+</TD>
+<TD VALIGN="TOP">
+ CONVERT (varchar, ...) 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+ DTOR ( ) 
+</TD>
+<TD VALIGN="TOP">
+ RADIANS ( ) 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+ DTOT ( ) 
+</TD>
+<TD VALIGN="TOP">
+ CONVERT (datetime, ...) 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+ HOUR ( ) 
+</TD>
+<TD VALIGN="TOP">
+ DATEPART (hh, . . . ) 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+ LIKEO 
+</TD>
+<TD VALIGN="TOP">
+ PATINDEX ( ) 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+ MINUTE () 
+</TD>
+<TD VALIGN="TOP">
+ DATEPART (mi, . . . ) 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+ MONTH ( ) 
+</TD>
+<TD VALIGN="TOP">
+ DATEPART (mm, . . . ) 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+ MTON ( ) 
+</TD>
+<TD VALIGN="TOP">
+ CONVERT (money, . . . ) 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+ NTOM ( ) 
+</TD>
+<TD VALIGN="TOP">
+ CONVERT (float, . . . ) 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+ RTOD ( ) 
+</TD>
+<TD VALIGN="TOP">
+ DEGREES ( ) 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+ SUBSTRO 
+</TD>
+<TD VALIGN="TOP">
+ SUBSTRING () 
+</TD>
+</TR>
+
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+ТТОС ( ) 
+</TD>
+<TD VALIGN="TOP">
+CONVERT (char,    , . . ) 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+TTOD{) 
+</TD>
+<TD VALIGN="TOP">
+CONVERT (ciatetime,    . . , ) 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+YEAR ( ) 
+</TD>
+<TD VALIGN="TOP">
+DATEPARTfyy,    ...} 
+</TD>
+</TR>
+</TABLE>
+<P>
+Следующие функции имеют одинаковый вид и в Visual FoxPro, и в SQL Server. 
+</P>
+<P>
+ CEILING ()</P>
+<P>
+ LOG (</P>
+<P>
+ LOWER () 
+</P>
+<P>
+ LTRIM(</P>
+<P>
+ RIGHT()</P>
+<P>
+ RTRIM() 
+</P>
+<P>
+ SOUNDEX()</P>
+<P>
+ SPACE () 
+</P>
+<P>
+ STR() 
+</P>
+<P>
+ STUFF ()</P>
+<P>
+ UPPER () 
+</P>
+<p>&nbsp;
+<a NAME="4"></a><font size="4">Отображение типов индексов мастером наращивания </font> 
+</P>
+<P>
+Индексы SQL Server и индексы Visual FoxPro очень похожи. В табл. 23.3 показано, как типы индексов Visual FoxPro преобразуются в типы индексов SQL Server. 
+</P>
+<P>
+Таблица 23.3. Сопоставление типов индекса Visual FoxPro
+типам индекса SQL Server 
+</P>
+<table border="1">
+  <tr>
+    <td >Тип индекса Visual FoxPro</td>
+    <td >Тип индекса SQL Server </td>
+  </tr>
+  <tr>
+    <td >Первичный </td>
+    <td >Кластеризованный уникальный </td>
+  </tr>
+  <tr>
+    <td >Кандидат </td>
+    <td >Уникальный </td>
+  </tr>
+  <tr>
+    <td >Уникальный, обычный</td>
+    <td >Неуникальный </td>
+  </tr>
+</table>
+<P>
+Мастер наращивания использует имена индексов Visual FoxPro в качестве имен индексов в SQL Server. Если имя индекса оказывается зарезервированным ключевым словом, мастер наращивания изменяет это имя, присоединяя к нему символ &quot;_&quot;. 
+</P>
+<P>
+<font color="#008000"><b>Замечание</b></font></P>
+<P>
+<font color="#008000">SQL Server не поддерживает убывающие и возрастающие индексы и не разрешает использовать выражения в индексах сервера. Мастер наращивания в ходе 
+наращивания индекса удаляет выражения Visual FoxPro из выражений индекса; на сервер передаются только имена полей.
+</font> 
+</P>
+<p>&nbsp;
+<a NAME="5"></a><font size="4">Отображение объектов мастером наращивания </font> 
+</P>
+<P>
+В табл. 23.4 показано, как отображаются объекты из Visual FoxPro в SQL Server: Таблица 23.4. Отображение объектов мастером наращивания 
+</P>
+<TABLE BORDER="1">
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Объект Visual FoxPro 
+</TD>
+<TD VALIGN="TOP">
+Объект SQL Server 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+База данных 
+</TD>
+<TD VALIGN="TOP">
+База данных 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Таблица 
+</TD>
+<TD VALIGN="TOP">
+Таблица 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Индексы 
+</TD>
+<TD VALIGN="TOP">
+Индексы 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Поле 
+</TD>
+<TD VALIGN="TOP">
+Поле 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Значение по умолчанию 
+</TD>
+<TD VALIGN="TOP">
+Значение по умолчанию 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Правило проверки достоверности таблицы 
+</TD>
+<TD VALIGN="TOP">
+Хранимые процедуры SQL Server,  вызываемые ИЗ триггеров UPDATE И INSERT 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Правило проверки достоверности поля 
+</TD>
+<TD VALIGN="TOP">
+Хранимые процедуры SQL Server,  вызываемые ИЗ триггеров UPDATE И INSERT 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Постоянные отношения (там, где они используются в качестве ограничений ссылочной целостности) 
+</TD>
+<TD VALIGN="TOP">
+Триггеры UPDATE, INSERT И DELETE 
+</TD>
+</TR>
+</TABLE>
+<p>&nbsp;
+<a NAME="6"></a><font size="4">Отображение правил и ссылочной целостности мастером наращивания
+</font> 
+</P>
+<P>
+В табл. 23.5 описываются триггеры, создаваемые мастером наращивания. Каждый конкретный триггер может содержать код, эмулирующий какиелибо 
+(или все) функциональные возможности Visual FoxPro из числа указанных. 
+</P>
+<P>
+Таблица 23.5. Триггеры, создаваемые мастером наращивания 
+</P>
+<TABLE BORDER="1">
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Триггер 
+</TD>
+<TD VALIGN="TOP">
+Эмулируемые функциональные возможности Visual FoxPro 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+UPDATE 
+</TD>
+<TD VALIGN="TOP">
+Правила проверки достоверности (на уровне полей и на уровне записей). Ссылочная целостность 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+INSERT 
+</TD>
+<TD VALIGN="TOP">
+Правила проверки достоверности (на уровне полей и на уровне записей). Ссылочная целостность (только триггеры дочерних таблиц) 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+DELETE (только родительские таблицы) 
+</TD>
+<TD VALIGN="TOP">
+Ссылочная целостность 
+</TD>
+</TR>
+</TABLE>
+<p>&nbsp;
+<a NAME="7"></a><font size="4">Установка драйвера ODBC </font> 
+</P>
+<P>
+Перед запуском мастера наращивания необходимо установить драйвер ODBC для выбранной базы данных и определить источник данных для связи с базой данных. Также желательно определить именованное удаленное соединение. 
+</P>
+<P>
+<font color="#008000"><b>Замечание</b></font></P>
+<P>
+<font color="#008000">Установку драйверов ODBC, определение источника данных и создание именованного удаленного соединения мы рассмотрели в главе 22.
+</font> 
+</P>
+<p>&nbsp;
+<a NAME="8"></a><font size="4">Выбор базы данных и источника данных </font> 
+</P>
+<P>
+На первом этапе работы с мастером наращивания вам необходимо выбрать и открыть 
+локальную базу данных, которая будет переноситься в базу данных SQL Server (рис. 23.1). 
+</P>
+<IMG src="gl23-1.jpg" alt="gl23-1.jpg" width="500" height="441" ></IMG>
+<P>
+Рис. 23.1. Выбор локальной базы данных с исходными таблицами 
+</P>
+<P>
+На втором этапе необходимо выбрать источник данных. Если вы используете именованное соединение для доступа к источнику данных, мастер наращивания будет связывать это именованное соединение со всеми удаленными представлениями, создаваемыми в процессе наращивания. Если при регистрации в источнике данных вы вместо имени соединения используете имя источника данных, а в дальнейшем задаете создание удаленных представлений, мастер наращивания создает именованное соединение с именем Upsize (или Upsize2, Upsize3 и т. д., если определение соединения с предлагаемым именем уже существует). 
+</P>
+<P>
+При нажатии кнопки Next (Далее) мастер откроет диалоговое окно ODBC Login (ODBC Логин). Если вы используете именованное соединение с сохраненным паролем, мастер зарегистрирует вас на выбранном сервере SQL Server, не требуя ввести регистрационную информацию ODBC. 
+</P>
+<p>&nbsp;
+<a NAME="9"></a><font size="4">Выбор переносимых таблиц </font> 
+</P>
+<P>
+На третьем этапе вы выбираете наращиваемые таблицы. Чтобы обеспечить правильность экспортируемых данных, мастер пытается открыть все таблицы базы данных, выбранной для наращивания, в режиме эксклюзивного 
+пользования. Если какие-либо открытые таблицы находятся в совместном пользовании, мастер закрывает их и вновь открывает в эксклюзивном режиме, что может вызвать потерю некоторых временных отношений, установленных с помощью команды SET RELATION или SET SKIP. Все таблицы, которые не удастся открыть в эксклюзивном режиме, не смогут принять участие в наращивании. 
+</P>
+<P>
+Вы не можете изменить принимаемое по умолчанию соответствие для поля ключа, если новый тип данных не позволит индексировать это поле. Вы можете изменить соответствие для поля, входящего в состав ключа индекса, если выберете тип данных, допускающий индексирование; однако после этого вы, возможно, захотите для единообразия изменить типы данных для остальных полей ключа. Visual FoxPro выдает предупреждающее сообщение при попытке
+изменить соответствие для поля, которое не является полем ключа, но используется в индексе Visual FoxPro. Если вы сделали ошибку, нажмите кнопку Reset To Defaults (Сброс) — произойдет сброс типов данных. 
+</P>
+<P>
+При переносе мастером наращивания таблиц Visual FoxPro имена полей и типы данных автоматически преобразуются в поля SQL Server. 
+</P>
+<P>
+Мастер показывает вам устанавливаемое по умолчанию преобразование типов данных. При необходимости вы можете изменить тип данных на сервере базы данных с помощью раскрывающегося списка Server Type (Тип сервера). 
+</P>
+<p>&nbsp;
+<a NAME="10"></a><font size="4">Определение базы данных назначения и ее параметров </font> 
+</P>
+<P>
+На следующем этапе определяется база данных назначения. Если вы хотите добавить таблицы Visual FoxPro в существующую базу данных SQL Server, 
+то можете задать наращивание до масштабов существующей базы данных. В этом случае мастер сразу переходит к восьмому этапу. 
+</P>
+<P>
+Если вы решили создать новую удаленную базу данных, ее имя может состоять не более чем из 30 символов, включая буквы, цифры и символы &quot;#&quot;, &quot;$&quot; и &quot;_&quot;. Пробелы не разрешаются. 
+</P>
+<P>
+<font color="#000080"><b>Предупреждение</b></font></P>
+<P>
+<font color="#000080">Для создания новой базы данных вы должны обладать соответствующими полномочиями. При возникновении проблем обратитесь к администратору базы данных SQL Server.
+</font> 
+</P>
+<P>
+На шестом и седьмом этапах определяются устройство и размер для базы данных и журнала транзакций. Размер новой базы данных должен быть не менее 2 Мбайт: это минимальный размер, допускаемый в SQL Server. SQL Server создает для вашей базы данных журнал транзакций, который можно использовать для восстановления базы данных в случае серьезных ошибок в системе. В идеальном варианте базу данных и соответствующий ей журнал следует размещать на устройствах, находящихся на разных физических дисках. Эти устройства должны быть созданы до запуска мастера наращивания, поскольку он создает все новые устройства на одном и том же физическом диске, на котором расположено главное устройство базы данных. 
+</P>
+<P>
+По умолчанию мастер наращивания экспортирует структуру таблицы и ее содержимое. Наряду с именами полей и типами данных, вы также можете экспортировать индексы, значения по умолчанию, отношения (ограничения целостности на уровне ссылок) и правила. 
+</P>
+<P>
+Индексы и значения по умолчанию Visual FoxPro становятся индексами и значениями по умолчанию SQL Server. Если вы решили экспортировать правила, мастер наращивания пытается экспортировать в SQL Server правила 
+уровня поля и правила уровня строки, в результате чего они превращаются в хранимые процедуры, вызываемые из триггеров SQL Server. Экспортированные табличные отношения также становятся частью этих триггеров. 
+</P>
+<P>
+<font color="#008000"><b>Замечание</b></font></P>
+<P>
+<font color="#008000">Если вы наращиваете табличные отношения, не забудьте выполнить и наращивание индексов, иначе производительность может заметно снизиться.
+</font> 
+</P>
+<P>
+Если у вас только один физический диск, вы должны разместить базу данных и ее журнал на разных устройствах, чтобы можно было пользоваться командой сервера SQL DUMP TRANSACTION. 
+</P>
+<IMG src="gl23-7.jpg" alt="gl23-7.jpg" width="500" height="430" ></IMG>
+<P>
+Рис. 23.2. Проект с информацией о переносе данных 
+</P>
+<IMG src="gl23-8.jpg" alt="gl23-8.jpg" width="500" height="416" ></IMG>
+<P>
+Рис. 23.3. Часть отчета о выполнении наращивания базы данных 
+</P>
+<P>
+На последнем этапе вы можете выбрать следующие варианты завершения наращивания: 
+</P>
+<ul>
+  <li>провести наращивание, не генерируя код SQL; </li>
+  <li>сгенерировать только код SQL для наращивания; </li>
+  <li>провести наращивание и сгенерировать код SQL. </li>
+</ul>
+<P>
+Первый и третий варианты доступны только в том случае, если вы обладаете на сервере SQL полномочием CREATE TABLE. Если вы выбрали один из вариантов, предусматривающий сохранение сгенерированного кода SQL, то весь код SQL, генерируемый мастером наращивания, будет сохранен на вашем жестком диске. 
+</P>
+<P>
+Мастер наращивания создает проект Report (Отчет) (рис. 23.2), который содержит таблицы, использующиеся для переноса данных из таблиц Visual FoxPro, а также отчеты о переносе данных (рис. 23.3). 
+</P>
+</BODY>
+</HTML>

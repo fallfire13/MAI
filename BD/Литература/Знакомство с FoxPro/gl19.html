@@ -1,0 +1,2953 @@
+<HTML>
+<HEAD>
+<TITLE></TITLE>
+<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="TEXT/HTML; CHARSET=WINDOWS-1251">
+</HEAD>
+<body background="../fon.jpg">
+
+<p><CENTER><font size="4"><b>ГЛАВА 19
+<br>
+Визуальное объектно-ориентированное программирование</b></font>
+</center>
+</P>
+<br>
+<br>
+
+<ul>
+  <li><a href="gl19.html#1">Использование классов</a>
+  <li><a href="gl19.html#2">Базовые классы Visual FoxPro</a>
+  <li><a href="gl19.html#3">Использование базовых классов при создании форм</a>
+  <li><a href="gl19.html#4">Использование вложенных объектов</a>
+  <li><a href="gl19.html#5">Создание пользовательских классов</a>
+  <li><a href="gl19.html#6">Создание пользовательского класса на основе базовых классов Visual FoxPro в конструкторе классов </a>
+  <li><a href="gl19.html#7">Создание класса типа "форма"</a>
+  <li><a href="gl19.html#8">Библиотека классов</a>
+  <li><a href="gl19.html#9">Создание подклассов</a>
+  <li><a href="gl19.html#10">Использование пользовательских классов для создания объектов формы </a>
+  <li><a href="gl19.html#11">Просмотр информации о классе и определение значка для его обозначения </a>
+  <li><a href="gl19.html#12">Формирование списка библиотек, используемых в конструкторах форм и классов </a>
+  <li><a href="gl19.html#13">Создание форм на основе пользовательских классов</a>
+  <li><a href="gl19.html#14">Форма просмотра информации о клиентах на основе пользовательских классов </a>
+  <li><a href="gl19.html#15">Использование формы для создания класса</a>
+  <li><a href="gl19.html#16">Средство Class Browser</a>
+  <li><a href="gl19.html#17">Управление классами</a>
+  <li><a href="gl19.html#18">Создание панели инструментов</a>
+</ul>
+
+<P>
+Visual FoxPro — это полнофункциональный язык объектно-ориентированного программирования. Он предлагает мощные средства для интерактивной 
+работы и создания приложений, предназначенных для управления реляционными базами данных. И, что не менее важно, этот язык прост в изучении. Кроме того, программы, написанные на языке Visual FoxPro 7.0, будут совместимы с программами, написанными на Visual FoxPro предыдущих версий. 
+</P>
+<P>
+Разработка объектно-ориентированных приложений начинается с моделирования 
+реальных объектов, необходимых для выполнения конкретного задания. При создании приложения вы взаимодействуете с хорошо знакомыми объектами: таблицами баз данных, формами, цветовыми схемами. Создание каждого объекта предполагает использование Visual FoxPro. Вам предоставляется возможность скопировать созданные объекты из одного приложения в другое и тем самым сократить объем работы. Например, если вы создали кнопку, которая предназначена для поиска фамилии клиента в указанной таблице, то вы можете использовать эту же кнопку в другом приложении. Вам потребуется лишь изменить наименование поля и таблицы, в которых будет осуществляться поиск. 
+</P>
+<P>
+Visual FoxPro позволяет сэкономить ваше время и деньги на каждом этапе процесса 
+создания приложения. На начальной стадии время, затраченное на разработку 
+прототипов, не пропадает даром. Вы можете сохранить каждый прототип в качестве 
+класса и использовать при создании новых форм. На следующих стадиях разработки 
+приложения (и даже после того, как работа над приложением уже завершена) вы 
+можете в любой момент вернуться к нужному объекту и изменить или расширить его 
+свойства, не нарушая целостности других объектов. Сопровождение и модификация приложений, написанных на Visual FoxPro, осуществляется гораздо более эффективно и требует меньших затрат по сравнению с традиционными линейными программами. 
+</P>
+<p>&nbsp;
+<a NAME="1"></a><font size="4">Использование классов </font> 
+</P>
+<P>
+Классы и объекты тесно связаны друг с другом, но, тем не менее, эти понятия не тождественны. Класс содержит информацию о том, как должен выглядеть объект и определяет выполняемые им действия. Объект является экземпляром класса, который наследует характеристики класса. 
+</P>
+<p>&nbsp;
+<a NAME="2"></a><font size="4">Базовые классы Visual FoxPro </font> 
+</P>
+<P>
+При создании объектов приложения вы можете использовать базовые классы Visual FoxPro, классы внешних библиотек, а также создавать новые классы. 
+</P>
+<P>
+Visual FoxPro содержит большое число базовых классов (табл. 19.1), которые можно использовать при создании форм любой сложности. Единственным недостатком базовых классов является невозможность их модификации, но вы можете использовать базовые классы для создания пользовательских классов, полностью вами управляемых. Далее при создании форм можно применять пользовательские классы вместо базовых. 
+</P>
+<P>
+Таблица 19.1. Базовые классы Visual FoxPro 
+</P>
+<TABLE BORDER="1">
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Наименование 
+</TD>
+<TD VALIGN="TOP">
+Назначение 
+</TD>
+<TD VALIGN="TOP">
+Видимый 
+</TD>
+<TD VALIGN="TOP">
+Контейнер 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+ActiveDoc 
+</TD>
+<TD VALIGN="TOP">
+Активный документ 
+</TD>
+<TD VALIGN="TOP">
+Нет 
+</TD>
+<TD VALIGN="TOP">
+Нет 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Checkbox 
+</TD>
+<TD VALIGN="TOP">
+Флажок 
+</TD>
+<TD VALIGN="TOP">
+Да</TD>
+<TD VALIGN="TOP">
+Нет 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Column 
+</TD>
+<TD VALIGN="TOP">
+Столбец 
+</TD>
+<TD VALIGN="TOP">
+Да 
+</TD>
+<TD VALIGN="TOP">
+Да 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+ComboBox 
+</TD>
+<TD VALIGN="TOP">
+Раскрывающийся список 
+</TD>
+<TD VALIGN="TOP">
+Да 
+</TD>
+<TD VALIGN="TOP">
+Нет 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+CoiranandButton 
+</TD>
+<TD VALIGN="TOP">
+Кнопка управления 
+</TD>
+<TD VALIGN="TOP">
+Да 
+</TD>
+<TD VALIGN="TOP">
+Нет 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+CommandGroup 
+</TD>
+<TD VALIGN="TOP">
+Набор кнопок управления 
+</TD>
+<TD VALIGN="TOP">
+Да 
+</TD>
+<TD VALIGN="TOP">
+Да 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Container 
+</TD>
+<TD VALIGN="TOP">
+Контейнер 
+</TD>
+<TD VALIGN="TOP">
+Да 
+</TD>
+<TD VALIGN="TOP">
+Да 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Control 
+</TD>
+<TD VALIGN="TOP">
+Базовый визуальный класс 
+</TD>
+<TD VALIGN="TOP">
+Да 
+</TD>
+<TD VALIGN="TOP">
+Нет 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Custom 
+</TD>
+<TD VALIGN="TOP">
+Базовый невизуальный класс 
+</TD>
+<TD VALIGN="TOP">
+Нет 
+</TD>
+<TD VALIGN="TOP">
+Нет 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+EditBox 
+</TD>
+<TD VALIGN="TOP">
+Поле редактирования 
+</TD>
+<TD VALIGN="TOP">
+Да 
+</TD>
+<TD VALIGN="TOP">
+Нет 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Form 
+</TD>
+<TD VALIGN="TOP">
+Форма 
+</TD>
+<TD VALIGN="TOP">
+Да 
+</TD>
+<TD VALIGN="TOP">
+Да 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Forms et 
+</TD>
+<TD VALIGN="TOP">
+Набор форм 
+</TD>
+<TD VALIGN="TOP">
+Нет 
+</TD>
+<TD VALIGN="TOP">
+Да 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Grid 
+</TD>
+<TD VALIGN="TOP">
+Таблица 
+</TD>
+<TD VALIGN="TOP">
+Да 
+</TD>
+<TD VALIGN="TOP">
+Да 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Header 
+</TD>
+<TD VALIGN="TOP">
+Заголовок столбцов таблицы 
+</TD>
+<TD VALIGN="TOP">
+Да 
+</TD>
+<TD VALIGN="TOP">
+Нет 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+HyperLink  Object 
+</TD>
+<TD VALIGN="TOP">
+Гиперссылка 
+</TD>
+<TD VALIGN="TOP">
+Нет 
+</TD>
+<TD VALIGN="TOP">
+Нет 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Image 
+</TD>
+<TD VALIGN="TOP">
+Изображение 
+</TD>
+<TD VALIGN="TOP">
+Да 
+</TD>
+<TD VALIGN="TOP">
+Нет 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Label 
+</TD>
+<TD VALIGN="TOP">
+Надпись 
+</TD>
+<TD VALIGN="TOP">
+Да 
+</TD>
+<TD VALIGN="TOP">
+Нет 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Line 
+</TD>
+<TD VALIGN="TOP">
+Линия 
+</TD>
+<TD VALIGN="TOP">
+Да 
+</TD>
+<TD VALIGN="TOP">
+Нет 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+ListBox 
+</TD>
+<TD VALIGN="TOP">
+Список 
+</TD>
+<TD VALIGN="TOP">
+Да 
+</TD>
+<TD VALIGN="TOP">
+Нет 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+OleContainerControl 
+</TD>
+<TD VALIGN="TOP">
+OLE-объект управления 
+</TD>
+<TD VALIGN="TOP">
+ 
+</TD>
+<TD VALIGN="TOP">
+ 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+OleBoundControl 
+</TD>
+<TD VALIGN="TOP">
+OLE-объект данных 
+</TD>
+<TD VALIGN="TOP">
+ 
+</TD>
+<TD VALIGN="TOP">
+ 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+OptionButton 
+</TD>
+<TD VALIGN="TOP">
+Переключатель 
+</TD>
+<TD VALIGN="TOP">
+Да 
+</TD>
+<TD VALIGN="TOP">
+Нет 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+OptionGroup 
+</TD>
+<TD VALIGN="TOP">
+Набор переключателей 
+</TD>
+<TD VALIGN="TOP">
+Да 
+</TD>
+<TD VALIGN="TOP">
+Да 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Page 
+</TD>
+<TD VALIGN="TOP">
+Вкладка формы 
+</TD>
+<TD VALIGN="TOP">
+Да 
+</TD>
+<TD VALIGN="TOP">
+Да 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Page Frame 
+</TD>
+<TD VALIGN="TOP">
+Макет страницы 
+</TD>
+<TD VALIGN="TOP">
+Нет 
+</TD>
+<TD VALIGN="TOP">
+Да 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+ProjectHook 
+</TD>
+<TD VALIGN="TOP">
+Проект 
+</TD>
+<TD VALIGN="TOP">
+Нет 
+</TD>
+<TD VALIGN="TOP">
+Да 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Separator 
+</TD>
+<TD VALIGN="TOP">
+Разделитель 
+</TD>
+<TD VALIGN="TOP">
+Да 
+</TD>
+<TD VALIGN="TOP">
+Нет 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Shape 
+</TD>
+<TD VALIGN="TOP">
+Обрамление 
+</TD>
+<TD VALIGN="TOP">
+Да 
+</TD>
+<TD VALIGN="TOP">
+Нет 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Spinner 
+</TD>
+<TD VALIGN="TOP">
+Счетчик 
+</TD>
+<TD VALIGN="TOP">
+Да 
+</TD>
+<TD VALIGN="TOP">
+Нет 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+TextBox 
+</TD>
+<TD VALIGN="TOP">
+Поле ввода 
+</TD>
+<TD VALIGN="TOP">
+Да 
+</TD>
+<TD VALIGN="TOP">
+Нет 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Timer 
+</TD>
+<TD VALIGN="TOP">
+Таймер 
+</TD>
+<TD VALIGN="TOP">
+Нет 
+</TD>
+<TD VALIGN="TOP">
+Нет 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+ToolBar 
+</TD>
+<TD VALIGN="TOP">
+Панель управления 
+</TD>
+<TD VALIGN="TOP">
+Да 
+</TD>
+<TD VALIGN="TOP">
+Да 
+</TD>
+</TR>
+</TABLE>
+<P>
+Почти все базовые классы являются визуальными. Объекты, созданные на их основе, отображаются на экране. Некоторые из базовых классов невидимы. Они используются для объединения объектов (например, FormSet), обработки специальных событий (например, Timer) или создания невизуальных объектов (например, ProjectHook). 
+</P>
+<P>
+В Visual FoxPro широко применяется вложенность классов. Вложенным является класс, являющийся частью другого класса, называемого контейнером (container class). Наиболее яркий пример контейнера представляет собой таблица, компоненты которой — это столбцы и надписи к ним. При создании формы и после запуска ее на выполнение вы можете получить доступ ко всем компонентам контейнера. 
+</P>
+<P>
+Каждый базовый класс предназначен для выполнения определенных функций и обладает соответствующим набором свойств, методов и событий. Кроме свойств и событий, специфических для данного класса, каждый базовый класс содержит основной набор свойств (табл. 19.2) и событий (табл. 19.3). 
+</P>
+<P>
+Таблица 19.2. Минимальный набор свойств класса 
+</P>
+<TABLE BORDER="1">
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Наименование 
+</TD>
+<TD VALIGN="TOP">
+Описание 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Class 
+</TD>
+<TD VALIGN="TOP">
+Тип класса 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+BaseClass 
+</TD>
+<TD VALIGN="TOP">
+Базовый класс, на основе которого создан данный класс 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+ClassLibrary 
+</TD>
+<TD VALIGN="TOP">
+Библиотека классов, в которой хранится данный класс 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+ParentClass 
+</TD>
+<TD VALIGN="TOP">
+Определенный пользователем класс, на основе которого создан данный класс 
+</TD>
+</TR>
+</TABLE>
+<P>
+Таблица 19.3. Минимальный набор событий 
+</P>
+<TABLE BORDER="1">
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Наименование 
+</TD>
+<TD VALIGN="TOP">
+Описание 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Init 
+</TD>
+<TD VALIGN="TOP">
+Наступает при создании объекта 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Destroy 
+</TD>
+<TD VALIGN="TOP">
+Наступает при освобождении объекта из памяти 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Error 
+</TD>
+<TD VALIGN="TOP">
+Наступает при возникновении ошибки, связанной с объектом 
+</TD>
+</TR>
+</TABLE>
+<p>&nbsp;
+<a NAME="3"></a><font size="4">Использование базовых классов при создании форм </font> 
+</P>
+<P>
+При создании форм мы широко использовали базовые классы, список которых содержится на панели инструментов конструктора формы. Для создания объектов на основе базового класса достаточно выбрать его на панели инструментов, поместить в требуемом месте, а затем определить свойства и методы созданных объектов. Созданный объект будет обладать всеми характеристиками базового класса. Пример создания объекта на основе базового класса Grid (Таблица) показан на рис. 19J. 
+</P>
+<P>
+Для создания новых объектов можно использовать не только конструктор форм, но и функцию CREATEOBJECT, которая имеет следующий синтаксис: 
+</P>
+<blockquote>
+<P>
+ CREATEOBJECT(имяКласса [, параметр1, параиетр2, ...]) 
+</P>
+</blockquote>
+<P>
+Функция CREATEOBJECT возвращает идентификатор созданного объекта, который вы можете применять для ссылки на него. Например, для создания формы, определения ее заголовка и отображения формы на экране необходимо выполнить следующую последовательность команд: 
+</P>
+<blockquote>
+<P>
+frmNew=CREATEOBJECT(&quot;FORM&quot;) 
+</P>
+<P>
+f rrriNew. Caption=&quot;Заголовок формы&quot; 
+</P>
+<P>
+f rmNew.Show() 
+</P>
+</blockquote>
+<IMG src="gl19-1.jpg" alt="gl19-1.jpg" width="500" height="412" ></IMG>
+<P>
+Рис. 19.1. Создание объекта в конструкторе форм 
+</P>
+<P>
+<b>Свойства объектов, созданных на основе базовых классов </b> 
+</P>
+<P>
+Объект, созданный на основе базовых классов, наследует его свойства, методы и обрабатываемые события. Свойства подобны переменным, однако в отличие от последних, они не существуют вне объекта. 
+</P>
+<P>
+Возможность изменения свойств объектов в Visual FoxPro является мощным инструментом управления данными в интерактивном режиме. Например, вы можете: 
+</P>
+<ul>
+  <li>изменить свойства формы (заголовок, размер, цвет, расположение и т. п.); 
+  </li>
+  <li>изменить цвета полей ввода, тип их отображения, цвет и формат выводимой в них информации; 
+  </li>
+  <li>запретить ввод информации в поля, переход на них или же сделать их невидимыми и многое другое. 
+  </li>
+</ul>
+<P>
+Для того чтобы определить какое-либо из свойств объекта в интерактивном режиме, вам необходимо выделить требуемый объект, после чего выполнить одно из следующих действий: 
+</P>
+<ul>
+  <li>в меню View (Вид) выбрать команду Properties (Свойства); </li>
+  <li>нажать правую кнопку мыши и из контекстного меню объекта выбрать команду Properties (Свойства). 
+  </li>
+</ul>
+<P>
+В результате на экране появляется окно свойств текущего объекта (рис. 19.2). Свойства объектов могут принимать символьные, логические и числовые значения. Некоторые из них могут принимать произвольные значения (например, заголовок поля, его координаты). Другие свойства могут принимать значения из определенного списка. 
+</P>
+<IMG src="gl19-2.jpg" alt="gl19-2.jpg" width="500" height="390" ></IMG>
+<P>
+Рис. 19.2. Окно свойств объекта 
+</P>
+<P>
+При программировании вы можете определить свойство объекта, указав имя объекта и имя свойства, которые разделяются точками. Для изменения свойства достаточно присвоить ему допустимое значение. Например: 
+</P>
+<blockquote>
+<P>
+ * присваиваем заголовку формы значение переменной cName 
+</P>
+<P>
+ frrnNew. Caption = cName 
+</P>
+</blockquote>
+<P>
+Язык Visual FoxPro позволяет вам устанавливать не только свойства отдельных объектов, но и определенной группы объектов. 
+</P>
+<P>
+Для этого используется конструкция WITH .. . ENDWITH, которая имеет следующий синтаксис: 
+</P>
+<blockquote>
+<P>
+WITH имяОбгьекта   [,имяОбгьекта]  
+</P>
+<P>
+[.имяСвойства = выражение] 
+</P>
+<P>
+ENDWITH 
+</P>
+</blockquote>
+<P>
+Например, вы можете установить одинаковый цвет для группы объектов: 
+</P>
+<blockquote>
+<P>
+ WITH cmdNext, cmdPrev 
+</P>
+<P>
+ .ForeColor=RGB(0,0,0) 
+</P>
+<P>
+ .BackColor=RGB(255,255,255)  
+</P>
+<P>
+ ENDWITH 
+</P>
+</blockquote>
+<P>
+Используя язык Visual FoxPro, можно изменять свойства объектов не только на 
+этапе их создания, но и в процессе выполнения программы. Например, вы можете при 
+переходе из режима просмотра в режим редактирования изменить заголовок формы &quot;Просмотр списка клиентов&quot;, который является одним из свойств формы, на &quot;Редактирование списка клиентов&quot;. 
+</P>
+<P>
+<font color="#008000"><b>Замечание</b></font></P>
+<P>
+<font color="#008000">Свойства, определенные для объектов с помощью окна свойств или программным путем, сохраняются в описании формы. Поэтому, если во время одного сеанса работы вы изменили свойства объектов, они сохранятся до следующего изменения. Изменение свойств объекта не приводит к генерации события, за исключением изменения свойства Value (Значение).
+</font> 
+</P>
+<P>
+Visual FoxPro позволяет не только использовать свойства, наследованные из базового класса, но и создавать новые, которые можно использовать для хранения характеристик объекта и связанных с ним данных. 
+</P>
+<P>
+Чтобы создать новое свойство объекта, используйте диалоговое окно New Property (Новое свойство) (рис. 19.3), которое открывается при выполнении команды New Property (Новое свойство) из меню Form (Форма). В этом диалоговом окне необходимо задать имя создаваемого свойства и описание. 
+</P>
+<P>
+В диалоговом окне New Property (Новое свойство) находятся флажки, определяющие возможности, приведенные в табл. 19.4. 
+</P>
+<P>
+Таблица 19.4. Флажки диалогового окна New Property 
+</P>
+<TABLE BORDER="1">
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Флажок 
+</TD>
+<TD VALIGN="TOP">
+Назначение 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Access Method
+(Метод доступа) 
+</TD>
+<TD VALIGN="TOP">
+Если установлен этот флажок, то для данного свойства будет автоматически создан метод Access (Доступ) 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Assign Method
+(Метод назначения} 
+</TD>
+<TD VALIGN="TOP">
+Если установлен флажок, то для этого свойства будет автоматически создан метод Assign (Назначение) 
+</TD>
+</TR>
+</TABLE>
+<P>
+Созданное вами свойство отображается на вкладке Other (Другие) окна свойств объекта. Далее вы можете присвоить созданному свойству требуемое значение в окне свойств объекта или программным путем и использовать его при выполнении приложения. 
+</P>
+<IMG src="gl19-3.jpg" alt="gl19-3.jpg" width="331" height="192" ></IMG>
+<P>
+Рис. 19.3. Диалоговое окно New Property 
+</P>
+<P>
+<b>Наследование событий и методов </b> 
+</P>
+<P>
+Visual FoxPro является языком, управляемым по событиям. Событие представляет собой некоторое действие, которое активизирует стандартную реакцию объекта. В качестве события в Visual FoxPro могут рассматриваться нажатие кнопки мыши, выбор пункта меню или открытие таблицы. 
+</P>
+<P>
+Аналогично свойствам, наследуются события и методы базового класса, на основе которого создается объект. Список методов, определенных для объекта, можно просмотреть на вкладке Methods (Методы) окна свойств объекта (рис. 19.4). 
+</P>
+<P>
+Для каждого события определен соответствующий ему метод, который выполняется при возникновении данного события. Например, метод click (Нажатие) выполняется при нажатии кнопки мыши. 
+</P>
+<P>
+Список доступных методов обработки событий определяется базовым классом. Именно эти методы обеспечивают обработку всех действий пользователя 
+(нажатие клавиш, управление мышью). Visual FoxPro предоставляет возможность модифицировать действия, выполняемые при обработке события данного объекта. Для редактирования метода установите курсор на этот метод в списке методов и дважды щелкните мышью. На экране откроется окно редактирования метода (рис. 19.5), в котором вы можете написать программу обработки события. Например, для кнопки формы вы можете определить программу перемещения по записям. 
+</P>
+<P>
+Для каждого события объекта выполняется определенное в базовом классе действие. В некоторых случаях вам может понадобиться запретить выполнение этих действий. Для этого используйте ключевое слово NODEFAULT в начале метода, связанного с этим событием. 
+</P>
+<IMG src="gl19-4.jpg" alt="gl19-4.jpg" width="500" height="390" ></IMG>
+<P>
+Рис. 19.4. Вкладка Methods окна свойств объекта 
+</P>
+<IMG src="gl19-5.jpg" alt="gl19-5.jpg" width="500" height="390" ></IMG>
+<P>
+Рис. 19.5. Окно редактирования методов 
+</P>
+<P>
+<font color="#008000"><b>Замечание</b></font></P>
+<P>
+<font color="#008000">Методы, выполняющиеся при наступлении событий, в окне свойств объекта в списке методов в дополнение к имени содержат слово Event (Событие).
+</font> 
+</P>
+<P>
+Команда MOUSE позволяет вам программным путем имитировать события click (Нажатие), Doubleclick (Двойное нажатие), MouseMove (Перемещение мыши) и DragDrop (Перенести и оставить). Остальные события не могут имитироваться программно, но вы можете вызвать методы, связанные с этими событиями. 
+</P>
+<P>
+Кроме методов, связанных с событиями, объект может содержать и дополнительные методы, которые выполняются только при их вызове. Например, для формы могут быть определены методы перехода на следующую запись, удаления записи и т. п. Эти методы могут наследоваться из базового класса, но вы можете создавать новые методы и для отдельных объектов. 
+</P>
+<P>
+Для создания нового метода в меню Form (Форма) выберите команду New Method (Новый метод) и в открывшемся диалоговом окне New Method (Новый метод) (рис. 19.6) определите имя и краткое описание метода. Созданный вами метод добавляется в список методов объекта, и вы можете открыть окно редактирования метода для ввода программного кода. 
+</P>
+<P>
+Для выполнения метода необходимо не только указать имя метода, но и объект, к которому данный метод будет применяться. Имя объекта и имя метода разделяются точкой. Например, для выполнения метода CaicSum
+формы Sales необходимо выполнить команду Sales.CalcSumO . 
+</P>
+<IMG src="gl19-6.jpg" alt="gl19-6.jpg" width="331" height="192" ></IMG>
+<P>
+Рис. 19.6. Диалоговое окно New Method 
+</P>
+<P>
+В табл. 19.5 и табл. 19.6 приведены события и методы, которые распознаются и используются Visual FoxPro, и их краткое описание. 
+</P>
+<P>
+Таблица. 19.5. События, распознаваемые Visual FoxPro 
+</P>
+<TABLE BORDER="1">
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Событие 
+</TD>
+<TD VALIGN="TOP">
+Возникает 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Activate 
+</TD>
+<TD VALIGN="TOP">
+При активизации объектов FormSet (Набор форм), Form (Форма),  Page  (Вкладка формы) или  при отображении объекта Toolbar (Панель управления) 
+</TD>
+</TR>
+
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+AfterBuilld 
+</TD>
+<TD VALIGN="TOP">
+При перестроении проекта или приложения, а также при создании динамической библиотеки (dll) 
+или выполняемого файла (ехе) на основе проекта 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+AfterCloseTables 
+</TD>
+<TD VALIGN="TOP">
+После закрытия таблиц или представлений данных 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+AfterDock 
+</TD>
+<TD VALIGN="TOP">
+После того, как фиксируется панель инструментов 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+AfterRowColChange 
+</TD>
+<TD VALIGN="TOP">
+При переходе в другую строку или другой столбец объекта Grid (Таблица) 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Bef oreDock 
+</TD>
+<TD VALIGN="TOP">
+Имеет место перед фиксацией объекта ToolBar (Панель управления) 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+BeforeOpenTables 
+</TD>
+<TD VALIGN="TOP">
+Перед открытием таблиц и представлений, связанных со средой данных формы, набора срорм или отчета 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+BeforeRowCoIChange 
+</TD>
+<TD VALIGN="TOP">
+Перед тем, как пользователь изменяет активную строку или столбец объекта Grid (Таблица) 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Click 
+</TD>
+<TD VALIGN="TOP">
+При нажатии и отпускании левой кнопки мыши 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+CoramandTargetExec 
+</TD>
+<TD VALIGN="TOP">
+При  активизации   программой-контейнером   приложения 
+</P>
+<P>
+типа Active  Document  (Активный документ) 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+CoinmandTarget Query 
+</TD>
+<TD VALIGN="TOP">
+При изменении программой-контейнером пользовательского интерфейса 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+ContainerRelease 
+</TD>
+<TD VALIGN="TOP">
+При закрытии программой-контейнером приложения типа 
+</P>
+<P>
+Active  Document  (Активный документ) 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+DblClick 
+</TD>
+<TD VALIGN="TOP">
+При двойном нажатии и отпускании левой кнопки мыши 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Deactivate 
+</TD>
+<TD VALIGN="TOP">
+Когда деакти визируется объект типа &quot;форма&quot; 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Deleted 
+</TD>
+<TD VALIGN="TOP">
+Когда пользователь удаляет пометку записи на удаление или когда выдается команда DELETE 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Destroy 
+</TD>
+<TD VALIGN="TOP">
+Когда освобождается объект 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+DownClick 
+</TD>
+<TD VALIGN="TOP">
+При нажатии кнопки со стрелкой, направленной вниз на объектах   типа    ComboBox    (Раскрывающийся    список), ListBox (Список) и Spinner (Счетчик) 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+DragDrop 
+</TD>
+<TD VALIGN="TOP">
+После завершения операции &quot;перенести-и-оставить&quot; 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+DragOver 
+</TD>
+<TD VALIGN="TOP">
+Когда элемент управления, переносимый с помощью мыши, накрывает объект назначения 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+DropDown 
+</TD>
+<TD VALIGN="TOP">
+В момент, когда после нажатия кнопки со стрелкой в элементе управления ComboBox   (Раскрывающийся список) должен появиться список 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Error 
+</TD>
+<TD VALIGN="TOP">
+При возникновении ошибки 
+</TD>
+</TR>
+
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+ErrorMessage 
+</TD>
+<TD VALIGN="TOP">
+Используется  для  определения  сообщения  об  ошибке, когда событие Valid (Корректный) возвращает значение False (Ложь) 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+GotFocus 
+</TD>
+<TD VALIGN="TOP">
+Когда объект получает фокус в результате действий пользователя или выполнения программного кода 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+HideDoc 
+</TD>
+<TD VALIGN="TOP">
+При переходе из активного документа 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Init 
+</TD>
+<TD VALIGN="TOP">
+При создании объекта, когда объект еще не выведен на экран 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Interactive   Change 
+</TD>
+<TD VALIGN="TOP">
+При изменении значения элемента управления с помощью клавиатуры или мыши 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+KeyPress 
+</TD>
+<TD VALIGN="TOP">
+При нажатии и отпускании клавиши 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Load 
+</TD>
+<TD VALIGN="TOP">
+Имеет место непосредственно перед созданием объекта 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+LostFocus 
+</TD>
+<TD VALIGN="TOP">
+Когда объект теряет фокус 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Message 
+</TD>
+<TD VALIGN="TOP">
+Отображает сообщение в строке состояния, когда объект получает управление 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+MiddleClick 
+</TD>
+<TD VALIGN="TOP">
+При нажатии средней кнопки мыши (для трехкнопочной мыши) 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+MouseDown 
+</TD>
+<TD VALIGN="TOP">
+При нажатии кнопки мыши 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+MouseMove 
+</TD>
+<TD VALIGN="TOP">
+При перемещении указателя мыши по объекту 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+MouseUp 
+</TD>
+<TD VALIGN="TOP">
+При отпускании кнопки мыши 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+MouseWheel 
+</TD>
+<TD VALIGN="TOP">
+При вращении колесика мыши, если в мыши оно есть 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Moved 
+</TD>
+<TD VALIGN="TOP">
+При перемещении объекта на новое место или когда значения свойства Тор (Верхняя позиция) или Left (Левая позиция)  объекта-контейнера  изменяются   программным способом 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+OLECompleteDrag 
+</TD>
+<TD VALIGN="TOP">
+Когда данные помещены на новое место или отменена операция &quot;перенести-и-оставить&quot; 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+OLEDragOver 
+</TD>
+<TD VALIGN="TOP">
+Возникает  в  том  случае,  если  свойство  OLEDropMode имеет значение 1  и данные перенесены от источника к приемнику 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+OLEGiveFeedBack 
+</TD>
+<TD VALIGN="TOP">
+После каждого события OLEDragOver 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+OLESetData 
+</TD>
+<TD VALIGN="TOP">
+Возникает у источника данных при  выполнении метода GetData, если нет данных в нужном формате 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+OLEStartDrag 
+</TD>
+<TD VALIGN="TOP">
+В   начале    переноса   данных   с   помощью   механизма &quot;перенести-и-оставить&quot; 
+</TD>
+</TR>
+
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Paint 
+</TD>
+<TD VALIGN="TOP">
+При перерисовывании формы или панели инструментов 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+ProgrammaticChange 
+</TD>
+<TD VALIGN="TOP">
+При изменении в коде значения элемента управления 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+QueryAddFile 
+</TD>
+<TD VALIGN="TOP">
+Перед добавлением файла в проект 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+QueryModifyFile 
+</TD>
+<TD VALIGN="TOP">
+Перед изменением файла в проекте 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+QueryRemoveFile 
+</TD>
+<TD VALIGN="TOP">
+Перед удалением файла из проекта 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+QueryRunFile 
+</TD>
+<TD VALIGN="TOP">
+Перед выполнением файла  или  предварительным  просмотром отчета или почтовой этикетки 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+QueryUnload 
+</TD>
+<TD VALIGN="TOP">
+Перед выгрузкой объекта Form (Форма) 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+RangeHigh 
+</TD>
+<TD VALIGN="TOP">
+Возвращает  наибольшее  значение  счетчика  или  число элементов списка и имеет место, когда элемент управления Spinner   (Счетчик) или TextBox    (Поле ввода) теряет фокус и когда элемент управления comboBox  {Раскрывающийся список) или ListBox  (Список) получает фокус 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+RangeLow 
+</TD>
+<TD VALIGN="TOP">
+Возвращает наименьшее значение счетчика или значение первого элемента списка и имеет место,  когда элемент управления Spinner  (Счетчик) или TextBox (Поле ввода) теряет фокус  или  когда элемент управления  СошЬоВох (Раскрывающийся список) или ListBox  (Список) получает фокус 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+ReadActivate 
+</TD>
+<TD VALIGN="TOP">
+При активизации новой формы в наборе форм 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+ReadDeactivate 
+</TD>
+<TD VALIGN="TOP">
+При деактивизации формы в наборе форм 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+ReadShow 
+</TD>
+<TD VALIGN="TOP">
+Когда выдана команда SHOW   GETS в активном объекте FormSet   (Набор форм) активизируется объект FormSet (Набор форм) 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+ReadValid 
+</TD>
+<TD VALIGN="TOP">
+Имеет   место   после   деактивизации   объекта   FormSet (Группа форм) 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+ReadWhen 
+</TD>
+<TD VALIGN="TOP">
+Имеет место после загрузки объекта FormSet   (Группа форм) 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Resize 
+</TD>
+<TD VALIGN="TOP">
+При изменении размеров объекта 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+RightClick 
+</TD>
+<TD VALIGN="TOP">
+При нажатии и отпускании правой кнопки мыши 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Run 
+</TD>
+<TD VALIGN="TOP">
+Имеет место, когда Active   Document (Активный документ) готов к выполнению кода пользователя 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Scrolled 
+</TD>
+<TD VALIGN="TOP">
+При прокрутке данных в объекте управления Grid (Таблица) 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+ShowDoc 
+</TD>
+<TD VALIGN="TOP">
+При переходе в активный документ 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Timer 
+</TD>
+<TD VALIGN="TOP">
+Когда истекает интервал времени,  заданный свойством Interval  (Интервал) 
+</TD>
+</TR>
+
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+UIEnable 
+</TD>
+<TD VALIGN="TOP">
+Имеет место для всех объектов, содержащихся внутри объекта Page   (Вкладка формы), каждый раз, когда объект Page (Вкладка формы) активизируется или деактивизируется 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+UnDock 
+</TD>
+<TD VALIGN="TOP">
+При перемещении объекта ToolBar  (Панель управления) с помощью мыши 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Unload 
+</TD>
+<TD VALIGN="TOP">
+При освобождении объекта 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+UpClick 
+</TD>
+<TD VALIGN="TOP">
+При нажатии кнопки с направленной вверх стрелкой на объектах управления типа СотЬоВох    (Раскрывающийся список), ListBox (Список) и spinner (Счетчик) 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Valid 
+</TD>
+<TD VALIGN="TOP">
+Перед тем, как элемент управления теряет фокус 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+When 
+</TD>
+<TD VALIGN="TOP">
+Перед тем, как элемент управления получает фокус 
+</TD>
+</TR>
+</TABLE>
+<P>
+Таблица 19.6. Методы, используемые Visual FoxPro 
+</P>
+<TABLE BORDER="1">
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Метод 
+</TD>
+<TD VALIGN="TOP">
+Описание 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+ActivateCell 
+</TD>
+<TD VALIGN="TOP">
+Активизирует ячейку в элементе управления Grid (Таблица) 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+AddColumn 
+</TD>
+<TD VALIGN="TOP">
+Добавляет объект Column  (Столбец) в элемент управления Grid  (Таблица) 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Add I tern 
+</TD>
+<TD VALIGN="TOP">
+Добавляет   новый   элемент   списка   в   объект   СотЬоВох (Раскрывающийся список) или ListBox   (Список), предоставляв при этом возможность задать индекс элемента 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+AddListltem 
+</TD>
+<TD VALIGN="TOP">
+Добавляет   новый   элемент   списка   в   объект   СотЬоВох (Раскрывающийся список) или  ListBox   (Список), давая возможность задать идентификатор элемента 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+AddObject 
+</TD>
+<TD VALIGN="TOP">
+Добавляет объект в контейнер на этапе выполнения 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+AddProperty 
+</TD>
+<TD VALIGN="TOP">
+Добавляет новое свойство в объект 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+AddToSCC 
+</TD>
+<TD VALIGN="TOP">
+Добавляет файл в проект 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Box 
+</TD>
+<TD VALIGN="TOP">
+Рисует прямоугольник в форме 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Build 
+</TD>
+<TD VALIGN="TOP">
+Перестраивает проект или создает приложение (арр), динамическую библиотеку (dli) или выполняемый файл (ехе) из проекта 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Checkln 
+</TD>
+<TD VALIGN="TOP">
+Запоминает изменения, осуществленные в выбранном файле проекта 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Checkout 
+</TD>
+<TD VALIGN="TOP">
+Выбирает файл из проекта для изменения 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Circle 
+</TD>
+<TD VALIGN="TOP">
+Рисует окружность или эллипс в форме 
+</TD>
+</TR>
+
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Cleanup 
+</TD>
+<TD VALIGN="TOP">
+Очищает таблицу проекта, удаляя записи с пометкой на удаление и сжимая Memo-поля 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Clear 
+</TD>
+<TD VALIGN="TOP">
+Очищает   содержимое   элемента   управления   СотЬоВох (Раскрывающийся список) или ListBox (Список) 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+ClearData 
+</TD>
+<TD VALIGN="TOP">
+Очищает   все   данные    и   форматы   данных   в   объекте Dataobject   (Объект данных). Доступен только в режиме выполнения программы 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+CloneObj ect 
+</TD>
+<TD VALIGN="TOP">
+Создает копию объекта со всеми его свойствами, событиями и методами 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Close 
+</TD>
+<TD VALIGN="TOP">
+Закрывает   проект    и    очищает   объекты    ProjectHook (Проект) и Project (Проект) 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+CloseTables 
+</TD>
+<TD VALIGN="TOP">
+Закрывает таблицы и представления данных, связанные со средой 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Cls 
+</TD>
+<TD VALIGN="TOP">
+Удаляет графику и текст из формы 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+DataToClip 
+</TD>
+<TD VALIGN="TOP">
+Копирует группу записей в текстовом виде в буфер обмена Windows 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+DeleteColumn 
+</TD>
+<TD VALIGN="TOP">
+Удаляет объект Column  (Столбец) из элемента управления Grid (Таблица) 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Dock 
+</TD>
+<TD VALIGN="TOP">
+Располагает объект ToolBar (Панель управления) у границы основного окна Visual FoxPro 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+DoCrad 
+</TD>
+<TD VALIGN="TOP">
+Выполняет команду Visual FoxPro для сервера приложения Visual FoxPro 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+DoScroll 
+</TD>
+<TD VALIGN="TOP">
+Моделирует работу пользователя с полосами прокрутки в объекте Grid (Таблица) 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+DoVerb 
+</TD>
+<TD VALIGN="TOP">
+Выполняет команду для заданного OLE-объекта 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Drag 
+</TD>
+<TD VALIGN="TOP">
+Начинает, заканчивает или отменяет операцию переноса объекта с помощью мыши 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Draw 
+</TD>
+<TD VALIGN="TOP">
+Перерисовывает объект формы 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Eval 
+</TD>
+<TD VALIGN="TOP">
+Вычисляет выражение и возвращает результат 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+GetData 
+</TD>
+<TD VALIGN="TOP">
+Заполняет данные из объекта DataObject (Объект данных). Доступен только в режиме выполнения программы 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Get Format 
+</TD>
+<TD VALIGN="TOP">
+Возвращает True (Истина), если заданный формат доступен для объекта DataObject (Объект данных). Доступен только в режиме выполнения программы 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+GetLatestVersion 
+</TD>
+<TD VALIGN="TOP">
+Определяет последнюю версию файла проекта и копирует файл с пометкой только для чтения на диск 
+</TD>
+</TR>
+
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+GoBack 
+</TD>
+<TD VALIGN="TOP">
+Возникает при возврате назад в списке хронологии программы-контейнера 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+GoForward 
+</TD>
+<TD VALIGN="TOP">
+Возникает при переходе вперед в списке хронологии программы-контейнера 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Help 
+</TD>
+<TD VALIGN="TOP">
+Открывает окно справки 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Hide 
+</TD>
+<TD VALIGN="TOP">
+Скрывает объект Form   (Форма), FormSet   (Набор форм) или ToolBar  (Панель управления), присваивая его свойству visible значение False  (Ложь) 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+IndexToItemID 
+</TD>
+<TD VALIGN="TOP">
+Возвращает индекс элемента с указанным идентификатором для объектов типа ComboBox    (Раскрывающийся список) и ListBox  (Список) 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Item 
+</TD>
+<TD VALIGN="TOP">
+Возвращает   объектную   ссылку   на   определенный   файл, проект   или   сервер   в  файловом,   проектном,   серверном сборнике 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+ItemlDToIndex 
+</TD>
+<TD VALIGN="TOP">
+Возвращает индекс  позиции элемента в списке данного элемента    управления    для     объектов    типа    ComboBox (Раскрывающийся список) и ListBox  (Список) 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Line 
+</TD>
+<TD VALIGN="TOP">
+Рисует линию в форме 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Modify 
+</TD>
+<TD VALIGN="TOP">
+Открывает файл проекта для редактирования в соответствующем конструкторе или редакторе 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Move 
+</TD>
+<TD VALIGN="TOP">
+Перемещает объект 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+NavigateTo 
+</TD>
+<TD VALIGN="TOP">
+Active   Document  (Активный документ) перемещается в контейнере в определенное место 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+OLEDrag 
+</TD>
+<TD VALIGN="TOP">
+Начинает операцию &quot;леренести-и-оставить&quot; 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Point 
+</TD>
+<TD VALIGN="TOP">
+Возвращает цвет в модели RGB (красный-зеленый-синий) для заданной точки формы 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Print 
+</TD>
+<TD VALIGN="TOP">
+Выдает в объекте Form  (Форма) символьную строку, которую нужно напечатать 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+PSet 
+</TD>
+<TD VALIGN="TOP">
+Устанавливает для точки формы или основного окна Visual FoxPro основной цвет символов 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Quit 
+</TD>
+<TD VALIGN="TOP">
+Завершает работу Visual FoxPro 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+ReadExpression 
+</TD>
+<TD VALIGN="TOP">
+Возвращает  выражение,   введенное   в  качестве  значения свойства в окне свойств 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+ReadMethod 
+</TD>
+<TD VALIGN="TOP">
+Возвращает текст заданного метода 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Refresh 
+</TD>
+<TD VALIGN="TOP">
+Перерисовывает объект Form  (Форма) или элемент управления, обновляя все значения 
+</TD>
+</TR>
+
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Release 
+</TD>
+<TD VALIGN="TOP">
+Освобождает  объект  FormSet    (Набор  форм)   или   Form (Форма) из памяти 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Remove 
+</TD>
+<TD VALIGN="TOP">
+Удаляет файл из сборника файла и проекта 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+RemoveFromSCC 
+</TD>
+<TD VALIGN="TOP">
+Удаляет файл из проекта 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Remove I tern 
+</TD>
+<TD VALIGN="TOP">
+Удаляет   элемент   из   списка   элемента   управления   типа ComboBox (Раскрывающийся список) или ListBox (Список) 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+RemoveListltem 
+</TD>
+<TD VALIGN="TOP">
+Удаляет   элемент   из   списка   элемента   управления   типа ComboBox (Раскрывающийся список) или ListBox (Список) 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+RemoveObject 
+</TD>
+<TD VALIGN="TOP">
+Удаляет заданный объект из объекта-контейнера на этапе выполнения 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Requery 
+</TD>
+<TD VALIGN="TOP">
+Повторно опрашивает источник строк, к которому привязан элемент управления типа ListBox  (Список) или ComboBox (Раскрывающийся список) 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+RequestData 
+</TD>
+<TD VALIGN="TOP">
+Создает массив, содержащий данные из таблицы Visual FoxPro 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Reset 
+</TD>
+<TD VALIGN="TOP">
+Сбрасывает элемент управления Timer (Таймер) в нулевое состояние 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+ResetToDefault 
+</TD>
+<TD VALIGN="TOP">
+Восстанавливает принятые по умолчанию в Visual FoxPro значения свойств, событий или методов 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Run 
+</TD>
+<TD VALIGN="TOP">
+Запускает файл проекта на выполнение или предварительный просмотр 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+SaveAs 
+</TD>
+<TD VALIGN="TOP">
+Сохраняет объект в виде файла с расширением SCX 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+SaveAsClass 
+</TD>
+<TD VALIGN="TOP">
+Сохраняет   экземпляр   объекта   в   качестве   определения класса в библиотеке классов 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Set All 
+</TD>
+<TD VALIGN="TOP">
+Присваивает установку некоторого свойства всем элементам управления данного объекта Container (Контейнер) или определенному классу таких элементов управления 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+SetData 
+</TD>
+<TD VALIGN="TOP">
+Помещает данные в DataObject (Объект данных). Доступен в режиме выполнения программы 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+SetFocus 
+</TD>
+<TD VALIGN="TOP">
+Устанавливает фокус в элементе управления 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+SetFormat 
+</TD>
+<TD VALIGN="TOP">
+Помещает формат данных в DataObject (Объект данных). Доступен в режиме выполнения программы 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+SetMain 
+</TD>
+<TD VALIGN="TOP">
+Делает текущий файл главным в проекте 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+SetVar 
+</TD>
+<TD VALIGN="TOP">
+Создает переменную и хранит ее значение 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+SetViewPort 
+</TD>
+<TD VALIGN="TOP">
+Определяет значения ViewPortLeft и viewPortTop для формы 
+</TD>
+</TR>
+
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Show 
+</TD>
+<TD VALIGN="TOP">
+Отображает объект Form  (Форма) и определяет его тип — модальный или немодальный 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+ShowWhatsThis 
+</TD>
+<TD VALIGN="TOP">
+Отображает тему справочной системы, заданную свойством 
+</P>
+<P>
+WhatsThisHelpID 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+TextHeight 
+</TD>
+<TD VALIGN="TOP">
+Возвращает высоту текстовой строки,  используя единицу измерения, устанавливаемую свойством ScaleMode объекта Form (Форма) 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+TextWidth 
+</TD>
+<TD VALIGN="TOP">
+Возвращает ширину текстовой строки, используя единицу измерения, устанавливаемую свойством ScaleMode объекта Form (Форма) 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+UndoCheckOut 
+</TD>
+<TD VALIGN="TOP">
+Отменяет все  изменения,  осуществленные  в  выбранном файле, и оставляет его в проекте в неизмененном виде 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+WhatsThisMode 
+</TD>
+<TD VALIGN="TOP">
+Отображает курсор мыши в виде вопросительного знака и устанавливает режим whats   This   Help   (Справка типа &quot;что это?&quot;) 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+WriteExpression 
+</TD>
+<TD VALIGN="TOP">
+Записывает символьную строку в таблицу свойств 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+WriteMethod 
+</TD>
+<TD VALIGN="TOP">
+Записывает указанный текст в заданный метод 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+ZOrder 
+</TD>
+<TD VALIGN="TOP">
+Помещает заданный объект Form   (Форма)  или элемент управления в заданную позицию данного объекта по отношению к другим объектам 
+</TD>
+</TR>
+</TABLE>
+<p>&nbsp;
+<a NAME="4"></a><font size="4">Использование вложенных объектов </font> 
+</P>
+<P>
+В Visual FoxPro имеются базовые классы, предназначенные для создания вложенных 
+объектов, например, класс Grid (Таблица). При ссылке на вложенный объект необходимо перечислить все объекты, в которые он входит, разделяя элементы списка точками. Например, ссылка на столбец coicustomerid объекта customer типа Grid (Таблица) определяется следующим образом: 
+</P>
+<blockquote>
+<P>
+Customer.colCustomerld 
+</P>
+</blockquote>
+<P>
+Ссылка такого типа называется абсолютной. В Visual FoxPro кроме абсолютной ссылки, которая при большой глубине вложения объекта является слишком громоздкой, вы можете использовать относительные ссылки, т. е. ссылки относительно активных в данный момент объектов (сам объект, форма, в которую входит объект, и группа форм), что значительно сокращает список объектов ссылки и позволяет получить доступ к объекту, даже если вы не знаете его имени. 
+</P>
+<P>
+Ссылка на активную форму осуществляется с помощью свойства ActiveForm (Активная форма) объекта (_SCREEN). 
+Например, следующее выражение позволяет изменить заголовок активной формы: 
+</P>
+<blockquote>
+<P>
+ _SCREEN.ActiveForm.Caption= &quot;Заголовок формы&quot; 
+</P>
+</blockquote>
+<P>
+Аналогично, свойство ActiveControi (Активный элемент управления) позволяет получить доступ к активному объекту формы, а свойство ActivePage (Активная вкладка) — к активной вкладке формы. Например, следующее выражение позволяет изменить надпись активной кнопки 
+</P>
+<blockquote>
+<P>
+ _SCREEN.ActiveControl.Caption= &quot;Печать отчета&quot; 
+</P>
+</blockquote>
+<P>
+При ссылке на вложенный объект вы можете использовать свойство Parent (Родительский) и ключевые слова для идентификации объекта, к которому вы хотите получить доступ. Свойство Parent (Родительский) содержит ссылку на непосредственный контейнер объекта. Список ключевых слов и определяемые ими ссылки приведены в табл. 19.7. 
+</P>
+<P>
+Таблица 19.7. Ключевые слова для идентификации объектов 
+</P>
+<TABLE BORDER="1">
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Наименование 
+</TD>
+<TD VALIGN="TOP">
+Ссылка 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+THIS 
+</TD>
+<TD VALIGN="TOP">
+На сам объект 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+THISFORM 
+</TD>
+<TD VALIGN="TOP">
+На форму, которая содержит объект 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+THISFORMSET 
+</TD>
+<TD VALIGN="TOP">
+На группу форм, которая содержит объект 
+</TD>
+</TR>
+</TABLE>
+<P>
+Для примера определим цвет текущего объекта и объекта, являющегося его непосредственным контейнером, а также заголовки формы и группы форм, которые содержат данный объект: 
+</P>
+<blockquote>
+<P>
+ THIS.BackColor=RGB(255,255,255) 
+</P>
+<P>
+ THIS.Parent.BackColor=RGB(192,0,0) 
+</P>
+<P>
+ THISFORM.Caption=&quot;Форма, содержащая объект&quot; 
+</P>
+<P>
+ THISFORMSET.Caption=&quot;Группа форм, содержащая объект&quot; 
+</P>
+</blockquote>
+<P>
+Каждый объект обрабатывает связанные с ним события независимо. Поэтому контейнер не может реагировать на события вложенного в него объекта даже в том случае, если данный объект не содержит метода для обработки события, а контейнер может реагировать на данное событие. 
+</P>
+<P>
+Ранее мы рассмотрели команды создания формы и присвоения ей заголовка. Теперь дополним эти команды командами размещения в форме кнопки, являющейся по отношению к ней вложенным объектом: 
+</P>
+<blockquote>
+<P>
+ f rmNew=CREATEOBJECT ( &quot;FORM&quot;) 
+</P>
+<P>
+frmNew.Caption=&quot;Форма,   созданная с помощью команд&quot; 
+</P>
+<P>
+ frmNew.Show() 
+</P>
+<P>
+ frmNew.AddObject(&quot;Button&quot;, &quot;CommandButton&quot;) 
+</P>
+<P>
+ cmdButton=frmNew.Button 
+</P>
+<P>
+ cmdButton.Visible=.Т. 
+</P>
+<P>
+ cmdButton.Top=l90 
+</P>
+<P>
+ cmdButton.Left=l20 
+</P>
+<P>
+ cmdButton.Width=70 
+</P>
+<P>
+ cmdButton.Height=3 0 
+</P>
+<P>
+ cmdButton.Caption=&quot;Выход&quot; 
+</P>
+</blockquote>
+<P>
+ Команда frmNew.AddObject(&quot;Button&quot;, &quot;CommandButton&quot;) создает В frmNew
+на основе базового класса CommandButton (Кнопка управления) новый объект Button 
+(Кнопка). Следующая команда делает видимой созданную кнопку. На рис. 19.7 показана форма, созданная этими командами. 
+</P>
+<P>
+<font color="#800000"><b>Совет</b></font></P>
+<P>
+<font color="#800000">В прикладных программах объекты желательно сохранять невидимыми до полного определения всех их свойств.
+</font> 
+</P>
+<IMG src="gl19-7.jpg" alt="gl19-7.jpg" width="500" height="324" ></IMG>
+<P>
+Рис. 19.7. Форма с вложенным объектом — кнопкой 
+</P>
+<p>&nbsp;
+<a NAME="5"></a><font size="4">Создание пользовательских классов </font> 
+</P>
+<P>
+В предыдущих главах при создании форм мы использовали базовые классы Visual FoxPro. В случае необходимости вы могли добавлять в объекты, созданные на основе базовых классов, новые свойства и методы. Одним из способов повышения производительности разработки является определение стандартных объектов создаваемого приложения и разработка классов для таких объектов. При разработке приложений для больших фирм классы часто используются для стандартизации пользовательского интерфейса. Вы можете определить класс форм, в котором задан определенный цвет фона и стандартный набор кнопок для управления данными. В целях обеспечения стандартизации разработки полезно иметь один или несколько пользовательских классов для каждого базового класса. Например, вы можете определить отдельный класс для поля ввода, которое доступно только для чтения, и класс для редактируемого поля ввода. Если в дальнейшем вам понадобится изменить стандарт, то будет достаточно изменить только пользовательские классы, на основе которых создаются объекты приложения. 
+</P>
+<p>&nbsp;
+<a NAME="6"></a><font size="4">Создание пользовательского класса
+на основе базовых классов Visual FoxPro
+в конструкторе классов </font> 
+</P>
+<P>
+Для создания нового класса вы можете выполнить одно из следующих действий: 
+</P>
+<ul>
+  <li>в окне проекта выбрать вкладку Classes (Классы) и нажать кнопку New (Новый); 
+  </li>
+  <li>в меню File (Файл) выбрать команду New (Новый), а затем в открывшемся диалоговом окне — опцию Class (Класс) и нажать кнопку New File (Новый файл); 
+  </li>
+  <li>в командном окне ввести команду CREATE CLASS, </li>
+</ul>
+<P>
+Независимо от выбранного вами способа, на экране откроется диалоговое окно New Class (Новый класс) (рис. 19.8). 
+</P>
+<IMG src="gl19-8.jpg" alt="gl19-8.jpg" width="402" height="153" ></IMG>
+<P>
+Рис. 19.8. Диалоговое окно New Class 
+</P>
+<P>
+В поле ввода Class Name (Имя класса) этого диалогового окна укажите имя создаваемого класса, а в следующем поле ввода Based On (Базовый класс) — имя класса, на основе которого создается новый класс. Поле From (Откуда) доступно только для чтения и содержит имя библиотеки классов, из которой выбран базовый класс. При использовании базовых классов Visual FoxPro данное поле остается пустым. 
+</P>
+<P>
+В поле ввода Store In (Сохранить в) необходимо ввести имя библиотеки, в которой 
+будет храниться создаваемый класс. Библиотека классов представляет собой файл с расширением VCX. 
+Вы можете выбрать созданные ранее библиотеки или указать новую библиотеку в 
+диалоговом окне Save as (Сохранить как), которое вызывается при нажатии на 
+кнопку, расположенную с правой стороны поля ввода. 
+</P>
+<P>
+<font color="#008000"><b>Замечание</b></font></P>
+<P>
+<font color="#008000">Для  создания   библиотеки   классов  вы   можете   воспользоваться   командой
+CREATE CLASSLIB в командном окне. </font> 
+</P>
+<P>
+После ввода значений в поля нажмите кнопку ОК, в результате чего на экране появится окно конструктора классов. В основное меню Visual FoxPro добавляется пункт Class (Класс) (рис. 19.9), который содержит команды, описанные в табл. 19.8. 
+</P>
+<P>
+Таблица 19.8. Назначение команд пункта меню C<span lang="en-us">l</span>ass 
+</P>
+<TABLE BORDER="1">
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Команда 
+</TD>
+<TD VALIGN="TOP">
+Назначение 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+New Property (Новое свойство) 
+</TD>
+<TD VALIGN="TOP">
+Создает новое свойство 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+New Method (Новый метод) 
+</TD>
+<TD VALIGN="TOP">
+Создает новый метод 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Edit     Property/Method     (Правка свойства/метода) 
+</TD>
+<TD VALIGN="TOP">
+Редактирует   наименование   созданного   ранее метода или свойства 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Include File (Включить файл) 
+</TD>
+<TD VALIGN="TOP">
+Задает   имя   файла   заголовка,   содержащего описание предопределенных констант 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Class Info (Информация о классе) 
+</TD>
+<TD VALIGN="TOP">
+Отображает информацию о текущем классе 
+</TD>
+</TR>
+</TABLE>
+<P>
+Окно конструктора классов аналогично окну конструктора форм. Если создаваемый класс является контейнером, вы можете размещать в классе объекты, 
+которые, в свою очередь, могут создаваться на основе пользовательских классов. Для каждого объекта класса вы можете определить свойства и методы, а при необходимости добавить новые. Эти действия аналогичны действиям, выполняемым в окне конструктора форм. Обратимся к примеру создания простого класса, который в дальнейшем может использоваться при создании новых форм. 
+</P>
+<IMG src="gl19-9.jpg" alt="gl19-9.jpg" width="500" height="347" ></IMG>
+<P>
+Рис. 19.9. Окно конструктора классов 
+</P>
+<p>&nbsp;
+<a NAME="7"></a><font size="4">Создание класса типа &quot;форма&quot; </font> 
+</P>
+<P>
+Рассмотрим создание класса для просмотра данных из одиночной таблицы, который содержит кнопки для перемещения по записям и выхода из формы. 
+</P>
+<ol>
+  <li>Откройте проект sales, в окне проекта выберите вкладку Classes (Классы) и нажмите кнопку New (Новый). 
+  </li>
+  <li>В открывшемся диалоговом окне New Class (Новый класс) в поле ввода Class Name (Имя класса) введите имя создаваемого класса bcSingleTable. 
+  </li>
+  <li>Из списка Based On (Базовый класс) выберите базовый класс Form (Форма). 
+  </li>
+  <li>В поле Store In (Сохранить в) введите имя библиотеки классов Forms (Формы), в которой будет храниться создаваемый класс. 
+  </li>
+  <li>На экране появляется пустая форма. Прежде всего изменим свойство Caption (Надпись) формы, введя в поле ввода значения свойства текст Табличная форма просмотра. 
+  </li>
+  <li>Далее разместим в верхней части формы текст заголовка и определим для него цвет и размер шрифта (рис. 19.10). Форма, созданная на основе
+данного класса, будет содержать размещенный в классе текст заголовка. Разработчику формы потребуется только изменить текст заголовка, причем будут соблюдены все стандарты на создаваемую форму. 
+  </li>
+</ol>
+<IMG src="gl19-10.jpg" alt="gl19-10.jpg" width="500" height="422" ></IMG>
+<P>
+Рис. 19.10. Размещение заголовка формы 
+</P>
+<ol>
+  <li value="7">Разместите в форме объект Grid (Таблица) и определите его свойства 
+отображения данных, такие как шрифт, цвет, которые будут стандартными для просмотра данных в табличном виде. 
+  </li>
+  <li>Установите для объекта Grid (Таблица) значение свойства Readonly (Только чтение) равным True (Истина), т. к. данную форму предполагается использовать только для просмотра данных. 
+  </li>
+  <li>Для перемещения по записям, а также для выхода из формы используются кнопки, которые мы также разместим в форме и определим для них действия, выполняемые при нажатии на кнопки. 
+  </li>
+  <li>Законченный вид класса приведен на рис. 19.11. Отметьте, что создание класса аналогично созданию формы. 
+  </li>
+</ol>
+<IMG src="gl19-11.jpg" alt="gl19-11.jpg" width="500" height="422" ></IMG>
+<P>
+Рис. 19.11. Класс для просмотра данных в табличном виде 
+</P>
+<p>&nbsp;
+<a NAME="8"></a><font size="4">Библиотека классов </font> 
+</P>
+<P>
+Библиотеки классов используются для хранения созданных в Visual FoxPro пользовательских классов. Для создания библиотеки предназначено диалоговое окно New Class (Новый класс), рассмотренное нами в предыдущем разделе. При разработке приложения удобно иметь несколько библиотек классов, в которых размещаются отдельные группы классов. Например, в одной библиотеке можно располагать все классы кнопок, используемых в приложении, а в другой — классы форм. 
+</P>
+<P>
+В случае необходимости вы можете копировать класс из одной библиотеки в другую. Для этого перейдите на вкладку Classes (Классы) окна проекта и раскройте обе библиотеки. Затем выберите копируемый класс, нажмите кнопку мыши и, удерживая ее нажатой, перенесите класс в новую библиотеку. В заключение отпустите кнопку мыши. 
+</P>
+<P>
+Для удаления класса из библиотеки выберите класс и нажмите кнопку Remove (Удалить) в окне проекта. 
+</P>
+<P>
+При необходимости вы можете переименовать выбранный класс, используя команду Rename (Переименовать) контекстного меню окна проекта. 
+</P>
+<P>
+<font color="#008000"><b>Замечание</b></font></P>
+<P>
+<font color="#008000">Для  удаления  класса  из библиотеки  классов  вы  можете  воспользоваться командой REMOVE  CLASS, а для изменения имени класса — командой RENAME
+CLASS. </font> 
+</P>
+<p>&nbsp;
+<a NAME="9"></a><font size="4">Создание подклассов </font> 
+</P>
+<P>
+При разработке приложений широко применяются подклассы, которые позволяют использовать уже имеющиеся пользовательские классы в качестве базы для создания следующих классов. Поскольку подкласс создается на базе ранее созданного класса, наследуются все свойства и методы, то достаточно добавить в подкласс новые свойства и методы или изменить некоторые свойства и методы базового класса. 
+</P>
+<P>
+Рассмотрим использование подклассов на примере создания нескольких классов кнопок. Сначала создадим подкласс пользовательской кнопки, для которой определим ее внешний вид. Далее на базе этого класса создадим текстовую кнопку перемещения на следующую запись. При определении этого класса определим надпись кнопки и выполняемое при нажатии на кнопку действие. Если понадобится кнопка для перемещения на следующую запись, содержащая вместо надписи графическое изображение, нет необходимости определять заново выполняемое при нажатии на нее действие. Достаточно использовать в качестве базового класса кнопку с надписью и определить для нее графическое изображение. Если затем понадобится изменить свойства отображения кнопок, достаточно будет скорректировать данные свойства в первом из созданных подклассов кнопки, и изменения будут отслеживаться во всей иерархии подклассов, созданных на базе этого класса. 
+</P>
+<P>
+<b>Создание текстовой кнопки выхода из формы </b> 
+</P>
+<P>
+Рассмотрим создание класса кнопки выхода из формы. Будем использовать возможности, предоставляемые системой при создании подклассов. 
+</P>
+<ol>
+  <li>Откройте проект Sales. </li>
+  <li>В окне проекта выберите вкладку Classes (Классы) и нажмите кнопку New (Новый). 
+  </li>
+  <li>В открывшемся диалоговом окне New Class (Новый класс) в поле ввода Class Name (Имя класса) введите имя создаваемого класса bcCmdButton. 
+<P>
+Из списка Based On (Базовый класс) выберите базовый класс commandButton (Кнопка управления), а затем в поле ввода Store In (Сохранить в) введите имя библиотеки классов Buttons (Кнопки), в которой будет храниться создаваемый класс. Библиотека BASE.vex 
+будет содержать пользовательские классы, созданные на основе базовых классов Visual FoxPro, которые 
+содержат свойства, характерные для данного приложения. На начальной стадии разработки вы можете оставить свойства базового класса без изменения. Такой подход позволяет вам достаточно просто изменить свойства объекта, если в этом возникнет необходимость. </P>
+  </li>
+  <li>Завершив ввод в поля, нажмите кнопку ОК. </li>
+  <li>На экране появляется окно конструктора классов, содержащее кнопку. Так как кнопка не является контейнером, вы не можете добавить в нее другие объекты. Ваши возможности ограничены изменением свойств и методов объекта. Для создаваемого класса кнопки измените наименование 
+шрифта, а затем установите свойство Caption (Надпись), введя в поле ввода значения свойства текст Кнопка (рис. 19.12). 
+  </li>
+  <li>Создание класса кнопки на этом завершено. Сохраните созданный класс и закройте окно конструктора классов. 
+  </li>
+</ol>
+<IMG src="gl19-12.jpg" alt="gl19-12.jpg" width="500" height="422" ></IMG>
+<P>
+Рис. 19.12. Создание класса кнопки 
+</P>
+<ol>
+  <li value="7">Теперь приступим к созданию кнопки для выхода из формы. Находясь на вкладке Classes (Классы), нажмите кнопку New (Новый). 
+  </li>
+  <li>В открывшемся диалоговом окне New Class (Новый класс) введите в поле ввода Class Name (Имя класса) имя создаваемого класса bcCmdTxtExit. В поле ввода Store In (Сохранить в) введите имя библиотеки классов 
+  </li>
+</ol>
+<blockquote>
+<P>
+Buttons (Классы), в которой будет храниться создаваемый класс. В данном случае для создания нового класса мы используем не базовый класс Visual FoxPro, а созданный на предыдущем шаге пользовательский класс. Поэтому нам необходимо указать не только имя класса, на основе которого будет создаваться новый класс, но и библиотеку, в которой он хранится. Для выбора библиотеки классов, а также класса из этой библиотеки, нажмите кнопку, расположенную правее списка Based On (Базовый класс). Откроется диалоговое окно Open (Открыть) (рис. 19.13). 
+</P>
+</blockquote>
+<IMG src="gl19-13.jpg" alt="gl19-13.jpg" width="500" height="231" ></IMG>
+<P>
+Рис. 19.13. Выбор класса из библиотеки классов 
+</P>
+<ol>
+  <li value="9">Левая часть окна содержит стандартные средства выбора файла. В правой части диалогового окна находится список Class 
+Name (Имя класса), который содержит список классов выбранной библиотеки. Выберите класс bcCmdButton, нажмите кнопку Open (Открыть), и вы вернетесь в диалоговое окно New Class (Новый класс), которое теперь будет содержать заполненные поля Based On (Базовый класс) и From (Откуда) (рис. 19.14). Нажмите кнопку ОК. В результате откроется окно конструктора классов, содержащее кнопку, которая наследует свойства класса (надпись на кнопке и шрифт), на основе которого мы будем создавать новый класс. 
+  </li>
+</ol>
+<IMG src="gl19-14.jpg" alt="gl19-14.jpg" width="402" height="153" ></IMG>
+<P>
+Рис. 19.14. Диалоговое окно New Class после выбора пользовательского класса 
+</P>
+<ol>
+  <li value="10">Для создаваемой кнопки измените надпись, введя в свойстве caption (Надпись) текст Выход. 
+  </li>
+  <li>Используя свойство click (Нажатие), определите действия, выполняемые при нажатии на эту кнопку (рис. 19.15). 
+  </li>
+  <li>Сохраните класс и закройте окно конструктора классов. </li>
+</ol>
+<IMG src="gl19-15.jpg" alt="gl19-15.jpg" width="500" height="370" ></IMG>
+<P>
+Рис. 19.15. Определение свойств и методов для кнопки выхода из формы 
+</P>
+<P>
+<b>Создание кнопки, содержащей изображение, для выхода из формы </b> 
+</P>
+<P>
+На многих кнопках, используемых в Windows, имеется графическое изображение, которое занимает меньше места, чем текст, и является более информативным. В качестве примера использования подклассов создадим кнопку, предназначенную для выхода из формы (она будет содержать изображение вместо текста). Для этого выполните следующие действия: 
+</P>
+<ol>
+  <li>На вкладке Classes (Классы) нажмите кнопку New (Новый). </li>
+  <li>В открывшемся диалоговом окне New Class (Новый класс) введите в поле ввода Class Name (Имя класса) имя создаваемого класса bcCmdPicExit. 
+<P>
+В поле ввода Store In (Сохранить в) введите имя библиотеки классов Buttons, в которой будет храниться создаваемый класс. В качестве базового класса для создания нового класса выберите созданный на предыдущем шаге класс bcCmdTxtExit из библиотеки классов Buttons (Кнопки). 
+</P>
+  </li>
+  <li>Для создаваемого класса наследуется метод, выполняемый при нажатии на кнопку мыши, поэтому нам необходимо только изменить внешний вид кнопки. Удалите надпись кнопки. 
+  </li>
+  <li>В поле ввода свойства Picture (Изображение) укажите имя файла с изображением, которое будет отображаться на кнопке (рис. 19.16). 
+  </li>
+</ol>
+<IMG src="gl19-16.jpg" alt="gl19-16.jpg" width="500" height="472" ></IMG>
+<P>
+Рис. 19.16. Определение кнопки с изображением 
+</P>
+<P>
+<font color="#800000"><b>Совет</b></font></P>
+<P>
+<font color="#800000">Аналогичным образом вы можете создать классы для кнопок перемещения по записям и разместите их в библиотеке Buttons (Кнопки).
+</font> 
+</P>
+<p>&nbsp;
+<a NAME="10"></a><font size="4">Использование пользовательских классов для создания объектов формы
+</font> 
+</P>
+<P>
+В данной главе был рассмотрен пример создания класса формы, причем при создании кнопок перемещения по записям и выхода использовался базовый класс кнопки. Теперь, после создания собственных классов кнопок, можно заменить базовые классы на пользовательские. Для этого выполните следующие действия: 
+</P>
+<ol>
+  <li>Откройте Проект Sales. </li>
+  <li>В окне проекта перейдите на вкладку Classes (Классы), выберите в библиотеке Forms (Формы) класс bcSingieTabie и нажмите кнопку Modify (Модифицировать). 
+  </li>
+  <li>В окне конструктора классов появится созданный нами ранее пользовательский класс формы для просмотра данных из одиночной таблицы. 
+  </li>
+  <li>Удалите из него созданные ранее кнопки. </li>
+  <li>Нажмите кнопку View Classes (Показать классы) WI на панели инструментов Form Controls (Элементы управления формы). 
+  </li>
+  <li>На экране появляется меню кнопки, содержащее список библиотек классов, а 
+также команду Add (Добавить), которая позволяет добавить в этот список новую библиотеку. Выберите команду Add (Добавить). 
+  </li>
+  <li>В открывшемся диалоговом окне Open (Открыть) выберите созданную пользовательскую библиотеку Buttons (Кнопки) и нажмите Open (Открыть). В результате выбора наименования библиотеки классов в меню кнопки View Classes (Показать классы) появляется команда Buttons (Кнопки). 
+  </li>
+  <li>Выберите команду Buttons (Кнопки). На панели инструментов Form Controls (Элементы управления формы) размещаются значки классов выбранной библиотеки. Теперь можно размещать эти объекты в классе обычным образом. 
+  </li>
+  <li>Выберите на панели инструментов кнопки перемещения по записям и кнопку выхода 
+из формы и разместите их в форме. Создание кнопок управления на этом 
+заканчивается, т. к. действия, выполняемые ими, наследуются из классов кнопок. Вкладка Other (Другие) окна свойств содержит наименования класса объекта и библиотеки классов (рис. 19.17). 
+  </li>
+</ol>
+<IMG src="gl19-17.jpg" alt="gl19-17.jpg" width="500" height="472" ></IMG>
+<P>
+Рис. 19.17. Размещение объекта, основанного на пользовательском классе 
+</P>
+<p>&nbsp;
+<a NAME="11"></a><font size="4">Просмотр информации о классе и определение значка для его обозначения
+</font> 
+</P>
+<P>
+Для просмотра информации о классе и определения значка для него используется диалоговое окно Class Info (Информация о классе), открываемое при выборе из меню Class (Класс) команды Class Info (Информация о классе). 
+</P>
+<P>
+Вкладка Class (Класс) содержит поля ввода изображений значков классов и поле редактирования Description (Описание), в которое можно ввести краткое описание класса. 
+</P>
+<P>
+На вкладке Members (Члены) (рис. 19.18) отображается список объектов класса, а также перечень методов и свойств. Столбец Class (Класс) содержит наименование объектов, а столбец Name (Наименование) — свойства и методы класса. С помощью параметра Visibility (Видимость), который может принимать одно из трех значений — Public (Открытый), Protected (Защищенный) и Hidden (Скрытый), вы можете установить степень защищенности
+объекта, а в столбце No Init (He инициализировать) указать, будет ли выполняться метод init (Инициализация) при создании объекта. 
+</P>
+<IMG src="gl19-18.jpg" alt="gl19-18.jpg" width="413" height="390" ></IMG>
+<P>
+Рис. 19.18. Вкладка Members диалогового окна Class Info 
+</P>
+<P>
+Для каждого класса вы можете указать два значка, вид которых задается на вкладке Class (Класс) (рис. 19.19). 
+</P>
+<IMG src="gl19-19.jpg" alt="gl19-19.jpg" width="413" height="390" ></IMG>
+<P>
+Рис. 19.19. Вкладка Class диалогового окна Class Info 
+</P>
+<P>
+Имя первого из них вводится в поле ввода Toolbar icon (Значок на панели 
+инструментов) и в дальнейшем отображается на панели инструментов Form Controls 
+(Элементы управления формы) в окнах конструктора форм и конструктора классов при выборе библиотеки классов, содержащей данный класс. Имя второго значка вводится в поле ввода Container icon (Значок контейнера) и отображается в диалоговом окне Class Browser (Обзор класса). Для задания значка вы можете ввести имя графического файла непосредственно в поля ввода или использовать кнопки выбора файла, расположенные справа от полей. 
+</P>
+<P>
+<font color="#800000"><b>Совет</b></font></P>
+<P>
+<font color="#800000">Настоятельно рекомендуется определять значки для создаваемых классов. В противном случае вам будет трудно выбирать пользовательские классы на панели инструментов Form Controls (Элементы управления формы), т. к. они будут иметь значки базовых классов и отличить один от другого можно только по всплывающей подсказке.
+</font> 
+</P>
+<IMG src="gl19-20.jpg" alt="gl19-20.jpg" width="500" height="347" ></IMG>
+<P>
+Рис. 19.20. Диалоговое окно Edit Property/Method 
+</P>
+<P>
+С помощью кнопки Modify (Модифицировать), расположенной на вкладке Members (Члены) диалогового окна Class Info 
+(Информация о классе), вы можете изменить параметры объектов, свойств и методов 
+объектов, входящих в класс. При нажатии на эту кнопку открывается диалоговое окно Edit Property/Method (Редактирование свойства/метода) (рис. 19.20), которое содержит таблицу с перечнем всех объектов, свойств и методов (табл. 19.9). 
+</P>
+<P>
+Таблица 19.9. Назначение столбцов таблицы диалогового окна
+Edit Property/Method 
+</P>
+<TABLE BORDER="1">
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Столбец 
+</TD>
+<TD VALIGN="TOP">
+Назначение 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Name (Наименование) 
+</TD>
+<TD VALIGN="TOP">
+Наименование объекта, свойства или метода 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Туре (Тип) 
+</TD>
+<TD VALIGN="TOP">
+Тип объекта: 0 — объект, М — метод, Р — свойство 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Access (Доступ) 
+</TD>
+<TD VALIGN="TOP">
+Данный столбец указывает, создан ли метод Access для свойства 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Assign (Назначение) 
+</TD>
+<TD VALIGN="TOP">
+Данный столбец указывает, создан ли метод Assign для свойства 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Visibility (Видимость) 
+</TD>
+<TD VALIGN="TOP">
+Определяет тип свойства или метода 
+</TD>
+</TR>
+</TABLE>
+<p>&nbsp;
+<a NAME="12"></a><font size="4">Формирование списка библиотек, используемых в конструкторах форм и классов </font>
+</P>
+<P>
+Для добавления библиотек классов на панель инструментов Form Controls (Элементы управления формы) можно использовать не только опцию Add (Добавить) всплывающего меню кнопки View Classes (Показать классы), но и вкладку Controls (Элементы управления) (рис. 19,21) диалогового окна Options (Параметры). Для его открытия выполните команду Options (Параметры) из меню Tools (Сервис). 
+</P>
+<IMG src="gl19-21.jpg" alt="gl19-21.jpg" width="478" height="416" ></IMG>
+<P>
+Рис. 19.21. Вкладка Controls диалогового окна Options 
+</P>
+<P>
+Чтобы определить библиотеки классов, установите переключатель Visual class libraries (Библиотеки визуальных классов). Затем заполните список Selected (Выбранные) названиями библиотек классов, которые вы собираетесь отображать на панели инструментов. Идя добавления нового класса в этот список используется кнопка Add (Добавить), при нажатии на которую открывается диалоговое окно Open (Открыть). В этом окне найдите и выберите требуемую библиотеку классов. Удаление из списка выбранной библиотеки осуществляется нажатием кнопки Remove (Удалить). При нажатии кнопки Set As Default (Использовать по умолчанию) введенные установки будут использоваться и в следующих сеансах работы с Visual FoxPro. 
+</P>
+<p>&nbsp;
+<a NAME="13"></a><font size="4">Создание форм на основе пользовательских классов </font> 
+</P>
+<P>
+С помощью вкладки Forms (Формы) (рис. 19.22) диалогового окна Options (Параметры) вы можете задать класс формы, который будет использоваться при создании новой формы. 
+</P>
+<IMG src="gl19-22.jpg" alt="gl19-22.jpg" width="478" height="416" ></IMG>
+<P>
+Рис. 19.22. Выбор класса, используемого при создании формы 
+</P>
+<P>
+Для выбора класса, используемого при создании формы, выполните следующие действия: 
+</P>
+<ol>
+  <li>На вкладке Forms (Формы) диалогового окна Options (Параметры) в области Template classes (Шаблон классов) установите флажок Form (Форма). 
+  </li>
+  <li>Откроется диалоговое окно Form Template (Шаблон формы) (рис. 19.23). Выберите библиотеку, а затем в области Class Name (Имя класса) — требуемый класс. 
+  </li>
+  <li>Нажмите кнопку ОК. </li>
+  <li>Вернувшись в диалоговое окно Options (Параметры), нажмите кнопку ОК для его закрытия. 
+  </li>
+</ol>
+<P>
+Аналогичным образом вы можете установить и пользовательский класс для создания наборов форм. 
+</P>
+<P>
+<font color="#008000"><b>Замечание</b></font></P>
+<P>
+<font color="#008000">Пользовательский класс, используемый при создании набора форм, определяется аналогичным образом. Только на вкладке Forms (Формы) диалогового окна Options (Параметры) необходимо установить флажок Form set (Набор форм).
+</font> 
+</P>
+<IMG src="gl19-23.jpg" alt="gl19-23.jpg" width="500" height="231" ></IMG>
+<P>
+Рис. 19.23. Диалоговое окно Form Template 
+</P>
+<p>&nbsp;
+<a NAME="14"></a><font size="4">Форма просмотра информации о клиентах на основе пользовательских классов
+</font> 
+</P>
+<P>
+Рассмотрим создание формы просмотра информации о клиентах, используя класс bcsingieTabie, созданный в предыдущем примере. 
+</P>
+<ol>
+  <li>Откройте диалоговое окно Options (Параметры). </li>
+  <li>На вкладке Forms (Формы) установите флажок Form (Форма). </li>
+  <li>В открывшемся диалоговом окне Form Template (Шаблон формы) (см. рис. 19.23) выберите пользовательскую библиотеку Forms (Формы). 
+  </li>
+  <li>В   области Class    Name    (Имя   класса)    выберите   требуемый    класс
+ bcSingleTable. </li>
+  <li>Нажмите кнопку ОК. </li>
+  <li>Вернувшись в диалоговое окно Options (Параметры), нажмите кнопку ОК для его закрытия. 
+  </li>
+  <li>Откройте проект sales. </li>
+  <li>В окне проекта выберите вкладку Documents (Документы), затем перейдите в раздел Forms (Формы) и нажмите кнопку New (Новый). На экране открывается окно конструктора форм, которое содержит объекты
+Класса bcSingleTable (рис. 19.24). </li>
+</ol>
+<IMG src="gl19-24.jpg" alt="gl19-24.jpg" width="500" height="411" ></IMG>
+<P>
+Рис. 19.24. Начальная стадия создания формы, основанной на пользовательском классе 
+</P>
+<ol>
+  <li value="9">Выберите текстовый объект, расположенный в верхней части формы, и измените его свойство Caption (Надпись), введя Просмотр информации о клиентах. 
+  </li>
+  <li>В окно окружения формы добавьте таблицу Customer. </li>
+  <li>Установите свойства объекта Grid (Таблица). Для этого задайте количество 
+столбцов в таблице, свяжите их с полями таблицы customer и определите   заголовки   полей.   На  этом   создание  формы   заканчивается (рис. 19.25). 
+  </li>
+  <li>Сохраните форму и запустите ее на выполнение. </li>
+</ol>
+<IMG src="gl19-25.jpg" alt="gl19-25.jpg" width="500" height="411" ></IMG>
+<P>
+Рис. 19.25. Форма просмотра информации о клиентах 
+</P>
+<p>&nbsp;
+<a NAME="15"></a><font size="4">Использование формы для создания класса </font> 
+</P>
+<P>
+В Visual FoxPro имеется возможность использования существующей формы для создания класса. Вы можете сохранить всю форму в виде класса или же выбрать определенные объекты формы и сохранить их в виде одного класса. Созданная в предыдущем примере форма содержит некоторую часть информации о клиентах. В создаваемом приложении могут понадобиться еще несколько форм для просмотра информации о клиентах, каждая из которых отображает определенную часть информации. В этом случае желательно иметь класс формы просмотра информации о клиентах, который содержит
+всего <span lang="ru">лишь</span> два <span lang="ru">поля</span> icdcustomer 
+<span lang="ru">и</span> ccompany таблицы Customer. 
+</P>
+<P>
+Для создания такого класса воспользуемся формой, созданной в предыдущем примере. 
+</P>
+<ol>
+  <li>Откройте окно конструктора для формы, созданной в предыдущем примере. 
+  </li>
+  <li>В объекте Grid (Таблица) удалите все столбцы, за исключением столбцов
+  <span lang="ru">с полями </span>icdcustomer <span lang="ru">и</span> ccompany (р<span lang="ru">ис</span>. 19.26). 
+  </li>
+</ol>
+<IMG src="gl19-26.jpg" alt="gl19-26.jpg" width="500" height="411" ></IMG>
+<P>
+Рис. 19.26. Подготовка формы для создания класса 
+</P>
+<ol>
+  <li value="3">В меню File (Файл) выберите команду Save As Class (Сохранить как класс). 
+  </li>
+  <li>В открывшемся диалоговом окне Save As Class (Сохранить как класс) установите переключатель Save (Сохранить) в положение Current 
+form (Текущая форма). В поле Name (Имя) укажите имя класса и имя библиотеки, в 
+которой будет располагаться класс, а в поле Description (Описание) — его краткое описание. После ввода всех атрибутов нажмите кнопку ОК, в результате в указанной библиотеке будет создан новый класс. 
+  </li>
+</ol>
+<P>
+<font color="#800000"><b>Сове<span lang="ru">т</span></b></font></P>
+<P>
+<font color="#800000">Для сохранения объектов формы в виде класса выделите их в форме, а затем в диалоговом окне Save As Class (Сохранить как класс) установите переключатель Save (Сохранить) в положение Selected controls (Выбранные элементы управления). Для сохранения набора форм в виде класса откройте окно конструктора для набора форм и в диалоговом окне Save As Class (Сохранить как класс) установите переключатель Save (Сохранить) в положение Entire form set (Набор форм).
+</font> 
+</P>
+<p>&nbsp;
+<a NAME="16"></a><font size="4">Средство Class Browser </font> 
+</P>
+<P>
+В Visual FoxPro имеется удобное средство, предназначенное для работы с классами, — это Class Browser (Обзор классов), с помощью которого вы можете просматривать библиотеки классов, создавать новые классы и редактировать существующие. 
+</P>
+<P>
+Для открытия окна Class Browser (Обзор классов) выполните одно из следующих действий. 
+</P>
+<ul>
+  <li>В меню Tools (Сервис) выберите команду Class Browser (Обзор классов). 
+  </li>
+  <li>В командном окне выполните команду DO  (_BROWSER) . </li>
+</ul>
+<P>
+Независимо от выбранного вами способа, будет запущено приложение Browser.app, которое открывает окно Class Browser (Обзор классов) (рис. 19.27), содержащее панель инструментов для управления классами и список объектов выбранной библиотеки. 
+</P>
+<P>
+После открытия библиотеки классов в левой части окна Class Browser (Обзор классов) будет отображен иерархический список классов выбранной библиотеки со значками, которые вы присвоили с помощью команды Class Info (Информация о классе) из меню Class (Класс). В правой части окна отображается список объектов, входящих в данный класс, его свойства и методы. В нижней части окна содержатся параметры выбранного класса или элемента класса. 
+</P>
+<IMG src="gl19-28.jpg" alt="gl19-28.jpg" width="500" height="488" ></IMG>
+<P>
+Рис. 19.27. Окно Class Browser 
+</P>
+<P>
+<font color="#800000"><b>Совет</b></font></P>
+<P>
+<font color="#800000">Двойной щелчок на имени класса в левой области окна Class Browser (Обзор классов) автоматически открывает данный класс в конструкторе классов.
+</font> 
+</P>
+<P>
+В окне Class Browser (Обзор классов) могут отображаться несколько библиотек классов. Для добавления новой библиотеки нажмите кнопку View
+Additional File (Просмотр дополнительного файла) на панели инструментов окна Class Browser (Обзор классов) и диалоговом окне Open (Открыть) выберите библиотеку классов. 
+</P>
+<P>
+Для просмотра любой другой библиотеки классов нажмите кнопку Open
+(Открыть) на панели инструментов и в диалоговом окне Open (Открыть) выберите требуемую библиотеку. 
+</P>
+<P>
+<font color="#008000"><b>Замечание</b></font></P>
+<P>
+<font color="#008000">В окне Class Browser (Обзор классов) могут отображаться не только библиотеки классов, но и формы.
+</font> 
+</P>
+<P>
+Чтобы просмотреть классы одного типа (например, класс кнопок), выберите из раскрывающегося списка Class Type (Тип класса) наименование требуемого типа. 
+</P>
+<p>&nbsp;
+<a NAME="17"></a><font size="4">Управление классами </font> 
+</P>
+<P>
+Для создания нового класса, изменения его имени, удаления его из библиотеки классов вы можете в окне Oass Browser (Обзор классов) использовать кнопки, описанные в табл. 19.10. 
+</P>
+<IMG src="gl19-29.jpg" alt="gl19-29.jpg" width="500" height="488" ></IMG>
+<P>
+Рис. 19.28. Исходный текст описания класса 
+</P>
+<P>
+Таблица 19.10. Кнопки окна Class Browser 
+</P>
+<TABLE BORDER="1">
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+Кнопка 
+</TD>
+<TD VALIGN="TOP">
+Наименование 
+</TD>
+<TD VALIGN="TOP">
+Описание 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+&nbsp;</TD>
+<TD VALIGN="TOP">
+Find (Поиск) 
+</TD>
+<TD VALIGN="TOP">
+Открывает диалоговое окно Find  (Найти) для поиска класса и элементов класса по имени, описанию 
+</TD>
+</TR>
+
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+&nbsp;</TD>
+<TD VALIGN="TOP">
+New Class (Новый класс) 
+</TD>
+<TD VALIGN="TOP">
+Открывает диалоговое окно New Class (Новый класс) для создания нового класса 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+&nbsp;</TD>
+<TD VALIGN="TOP">
+Rename 
+</P>
+<P>
+(Переименовать) 
+</TD>
+<TD VALIGN="TOP">
+Изменяет имя выбранного класса. Изменение имени может привести к ошибкам в формах, использующих данный класс 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+&nbsp;</TD>
+<TD VALIGN="TOP">
+Redefine 
+</P>
+<P>
+{Переопределить родительский класс) 
+</TD>
+<TD VALIGN="TOP">
+Переопределяет родительский класс выбранного класса 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+&nbsp;</TD>
+<TD VALIGN="TOP">
+Clean Up Class Library 
+</P>
+<P>
+(Упаковать библиотеку классов) 
+</TD>
+<TD VALIGN="TOP">
+Упаковывает библиотеку классов, удаляя из нее физически записи, помеченные для удаления 
+</TD>
+</TR>
+<TR ALIGN="LEFT" VALIGN="TOP">
+<TD VALIGN="TOP">
+&nbsp;</TD>
+<TD VALIGN="TOP">
+View Class Code 
+</P>
+<P>
+(Просмотр кода класса) 
+</TD>
+<TD VALIGN="TOP">
+Открывает диалоговое окно с исходным текстом описания  класса  (рис. 19.28).   Вы  можете  использовать эту информацию при создании собственных классов программным путем 
+</TD>
+</TR>
+</TABLE>
+<p>&nbsp;
+<a NAME="18"></a><font size="4">Создание панели инструментов </font> 
+</P>
+<P>
+Панели инструментов являются неотъемлемой частью приложений Windows. Visual FoxPro также позволяет разрабатывать класс панели инструментов и применять его при создании объекта панели инструментов. Этот объект может использоваться в формах для управления перемещением по записям, поиска данных и т. п. 
+</P>
+<P>
+В качестве примера создадим класс панели инструментов, предназначенный для просмотра данных таблицы. На панели содержатся кнопки перемещения по записям и выхода из формы. Выполните следующие действия: 
+</P>
+<ol>
+  <li>Откройте проект sales. </li>
+  <li>В окне проекта перейдите на вкладку Classes (Классы) и нажмите кнопку New (Новый). 
+  </li>
+  <li>В диалоговом окне New Class (Новый класс) выберите базовый класс Toolbar (Панель управления), введите имя класса bcTabieTooiBar и укажите пользовательскую библиотеку классов ForForms, а затем нажмите кнопку ОК. В окне конструктора классов появляется панель инструментов, не содержащая ни одного объекта. 
+  </li>
+  <li>Используя ранее созданные классы кнопок, разместите на создаваемой панели инструментов графические кнопки перемещения по записям и выхода из формы (рис. 19.29). 
+  </li>
+</ol>
+<IMG src="gl19-30.jpg" alt="gl19-30.jpg" width="500" height="488" ></IMG>
+<P>
+Рис. 19.29. Создание класса панели управления для перемещения по записям таблицы 
+</P>
+<P>
+После создания класса панели инструментов нет необходимости размещать в формах кнопки перемещения по записям. Вместо них можно при инициализации 
+формы создавать панель инструментов и использовать ее для перемещения по записям и выхода из формы. Рассмотрим пример создания формы, в которой для перемещения по записям используется панель инструментов: 
+</P>
+<ol>
+  <li>Откройте проект sales. </li>
+  <li>В окне проекта перейдите на вкладку Classes (Классы) и нажмите кнопку New (Новый). 
+  </li>
+  <li>В открывшемся диалоговом окне New Class (Новый класс) в поле ввода Class Name (Имя класса) введите имя создаваемого класса bcSingleTableToolbar. Из списка Based On (Базовый класс) выберите базовый класс Form (Форма), а затем в поле ввода Store In (Сохранить в) введите имя библиотеки классов Forms (Формы), в которой будет храниться создаваемый класс. 
+  </li>
+  <li>Разместите в форме текст заголовка и объект Grid (Таблица). </li>
+  <li>Нам необходимо создать в форме объект типа &quot;панель&quot; инструментов на основе созданного в предыдущем примере класса. Для этого определите
+новое свойство oTooiBar формы, выполнив команду New Property (Новое свойство) из меню Class (Класс), а затем в методе Activate (Активизация) формы создайте объект типа &quot;панель инструментов&quot; и отобразите его на экране: 
+  </li>
+</ol>
+<blockquote>
+<P>
+*  Создаем панель  инструментов 
+</P>
+<P>
+_screen.ActiveForm.oToolBar=CREATEOBJECT(&quot;bcTableToolBar&quot;) 
+</P>
+<P>
+*  Отображаем панель  инструментов  на экране  
+</P>
+<P>
+__screen.ActiveForm. oTooiBar. Show () 
+</P>
+</blockquote>
+<IMG src="gl19-31.jpg" alt="gl19-31.jpg" width="500" height="477" ></IMG>
+<P>
+Рис. 19.30. Создание класса формы, в которой используется панель инструментов 
+</P>
+<ol>
+  <li value="6">Результат выполненных действий показан на рис. 19.30. Сохраните созданный класс и закройте окно конструктора классов. 
+  </li>
+  <li>Теперь приступим к созданию формы на основе созданного в этом примере класса. Для этого откройте диалоговое окно Options (Параметры), перейдите на вкладку Forms (Формы) и установите в поле ввода Form (Форма) имя пользовательского класса bcsingieTabieTooibar из библиотеки Forms (Формы). 
+  </li>
+  <li>Откройте проект sales. </li>
+  <li>В окне проекта выберите вкладку Documents (Документы), перейдите в раздел Forms (Формы) и нажмите кнопку New (Новый). На экране откроется окно конструктора форм, которое содержит объекты класса bcsingieTabieTooibar. 
+Обратите внимание на то, что в форме панель инструментов отсутствует. Она создается при запуске формы на выполнение, 
+  </li>
+  <li>Выберите текстовый объект, расположенный в верхней части формы, и измените его свойство caption (Надпись), введя Просмотр информации о клиентах, 
+  </li>
+  <li>Добавьте в окружение формы таблицу customer. </li>
+  <li>Установите свойства объекта Grid (Таблица). Для этого свяжите столбцы таблицы с полями таблицы customer и определите заголовки столбцов. 
+  </li>
+  <li>На этом создание формы заканчивается. Сохраните ее и запустите на выполнение. На рис. 19.31 вы видите созданную форму в режиме выполнения. 
+  </li>
+</ol>
+<IMG src="gl19-32.jpg" alt="gl19-32.jpg" width="500" height="497" ></IMG>
+<P>
+Рис. 19.31. Использование панели инструментов для просмотра таблицы 
+</P>
+<P>
+<font color="#800000"><b>Совет</b></font></P>
+<P>
+<font color="#800000">Если при запуске данной формы на выполнение появляется сообщение о том, что класс ьстаЫетоо1ваг не найден, вам необходимо в методе Activate (Активизация) формы перед созданием объекта типа &quot;панель инструментов&quot; вставить команду SET CLASSLIB то с указанием папки расположения класса.
+</font> 
+</P>
+</BODY>
+</HTML>
