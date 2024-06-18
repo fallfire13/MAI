@@ -1,0 +1,23 @@
+		1.6/	https://github.com/m-bronnikov/FuncProg/tree/master/lab1	
+		1.7/	https://github.com/lveltman/FP/tree/master/lab1			
+		1.11/	https://github.com/xoxoginger/FP/tree/master/lab1
+		1.17/	https://github.com/DenVankov/FP/tree/master/lab1
+			https://github.com/Berdikin/MAI_FOREVER/tree/main/FP/lab1	
+		1.18/	https://github.com/ArtoyTrumpeter/MAI_study/tree/main/functional%20programming/lab1
+			https://github.com/mmaxim2710/FP/tree/master/lab1
+		1.20/	https://github.com/ArtDu/FP/tree/master/lab_1
+		1.27/	https://github.com/markov-alex/fp/tree/main/lab1
+		1.32/	https://github.com/obydenkova/mai/tree/main/%D1%84%D0%BF/1
+		1.33/	https://github.com/KapitoshkaThe1st/MAI/tree/master/FP/1
+		1.34/	https://github.com/tutkarma/mai_study/tree/master/FP/lab1
+		1.38/	https://github.com/VityaP/MAI/tree/master/FP/laba1
+			https://github.com/tainella/MAI/tree/master/6_FP/lab1
+		1.40/	https://github.com/blizliz/MAI/tree/master/FP/lab1		
+		1.44/	https://github.com/iDneprov/university/tree/master/FP/1
+		1.45/	https://github.com/kwk18/FP/tree/main/1
+		5.1/1 	https://github.com/AlexFirfarov/MAI/blob/master/%D0%A4%D1%83%D0%BD%D0%BA%D1%86%D0%B8%D0%BE%D0%BD%D0%B0%D0%BB%D1%8C%D0%BD%D0%BE%D0%B5%20%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5/lab5.lisp
+       		5.4/1	https://github.com/KsuPav/FP/blob/main/LR_5/%D0%9E%D1%82%D1%87%D0%B5%D1%82-5.doc
+     		5.22/2	https://github.com/memosiki/functional_programming/blob/master/lab5.lisp
+      		5.38/3	https://github.com/ArtDu/FP
+     		5.40/3	https://github.com/KapitoshkaThe1st/MAI/blob/master/FP/5/report/lab5.pdf
+      		5.41/3	https://github.com/kwk18/FP/blob/main/5/Chursina_308_Lab5.doc
