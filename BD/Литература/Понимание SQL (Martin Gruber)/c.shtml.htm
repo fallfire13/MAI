@@ -1,0 +1,467 @@
+<HTML>
+<HEAD>
+<TITLE>Понимание SQL. Приложение B. [SQL.RU]</TITLE>
+<META http-equiv="Content-Type" CONTENT="text/html; charset=windows-1251">
+<META HTTP-EQUIV="Window-target" CONTENT="_top">
+<META HTTP-EQUIV="Last-Modified" CONTENT="29-03-2001">
+<META NAME="Description" CONTENT="Использование языка SQL, создание клиент-серверных систем. Конференция по MSSQL, Oracle, Interbase, MySQL. Полезные ссылки, документация, рекомендации по разработке информационных систем, сертификация, заказ книг и многое другое.">
+<META NAME="Keywords" CONTENT="SQL, конференция, Database Server, Oracle, Interbase, MySQL, документация, статьи, примеры, книги, ссылки, сертификация, работа, СУБД">
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../form.css" tppabs="http://www.sql.ru/form.css">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" leftmargin="3" topmargin="3" marginheight="3" marginwidth="3">
+<noindex>
+<TABLE BGCOLOR="#000000" WIDTH=100% CELLPADDING=0 CELLSPACING=0 BORDER=0>
+<TR><TD>
+
+<TABLE WIDTH=100% CELLPADDING=0 CELLSPACING=1 BORDER=0>
+<TR BGCOLOR="#6699CC"><TD><TABLE CELLSPACING=0 CELLPADDING=0 WIDTH=100% BORDER=0 BGCOLOR="#6699CC">
+<TR><TD COLSPAN=3><IMG SRC="../../../images/blank.gif" tppabs="http://www.sql.ru/images/blank.gif" height=3 width=1 alt=""></TD></TR>
+<TR><TD VALIGN=TOP>&nbsp;<FONT FACE="Verdana,Arial" SIZE=5 COLOR=lightyellow>SQL.RU<BR><FONT SIZE=-5>&nbsp;client/server technologies</FONT></FONT><!--begin of Top100--><a href="javascript:if(confirm('http://top100.rambler.ru/top100/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://top100.rambler.ru/top100/'" tppabs="http://top100.rambler.ru/top100/"><img src="../../../../counter.rambler.ru/top100.cnt-236431.gif" tppabs="http://counter.rambler.ru/top100.cnt?236431" alt="Rambler's Top100" width=1 height=1 border=0></a><!--end of Top100 code--></TD>
+<TD WIDTH=468 HEIGHT=60 BGCOLOR=#6699CC ALIGN=RIGHT></TD>
+<TD WIDTH=2><IMG SRC="../../../images/blank.gif" tppabs="http://www.sql.ru/images/blank.gif" height=1 width=2 alt=""></TD></TR>                                                      	
+<TR HEIGHT=4><TD COLSPAN=3><IMG SRC="../../../images/blank.gif" tppabs="http://www.sql.ru/images/blank.gif" height=5 width=1 alt=""></TD></TR></TABLE>
+
+</TD></TR>
+
+<TR HEIGHT=15><TD bgcolor=#006699><FONT FACE="Verdana,Arial" SIZE=1 COLOR=WHITE><B><A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/'" tppabs="http://www.sql.ru/">&nbsp;<FONT COLOR=white>Главная</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/docs  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/docs'" tppabs="http://www.sql.ru/docs">&nbsp;<FONT COLOR=yellow>Документация</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/articles  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/articles'" tppabs="http://www.sql.ru/articles">&nbsp;<FONT COLOR=white>Статьи</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/books  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/books'" tppabs="http://www.sql.ru/books">&nbsp;<FONT COLOR=white>Книги</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/forum/actualforum.aspx  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/forum/actualforum.aspx'" tppabs="http://www.sql.ru/forum/actualforum.aspx">&nbsp;<FONT COLOR=white>Форум</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/poll  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/poll'" tppabs="http://www.sql.ru/poll">&nbsp;<FONT COLOR=white>Опросы</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/forum/actualtopics.aspx?bid=11  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/forum/actualtopics.aspx?bid=11'" tppabs="http://www.sql.ru/forum/actualtopics.aspx?bid=11">&nbsp;<FONT COLOR=white>Гостевая</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/subscribe  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/subscribe'" tppabs="http://www.sql.ru/subscribe">&nbsp;<FONT COLOR=white>Рассылка</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/job  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/job'" tppabs="http://www.sql.ru/job">&nbsp;<FONT COLOR=white>Работа</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/search  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/search'" tppabs="http://www.sql.ru/search">&nbsp;<FONT COLOR=white>Поиск</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/faq  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/faq'" tppabs="http://www.sql.ru/faq">&nbsp;<FONT COLOR=white>FAQ</FONT>&nbsp;</A>|</B></FONT></TD></TR>
+<TR><TD BGCOLOR=#F5F5F5>
+</noindex>
+
+<TABLE BORDER=0 CELLSPACING=10><TR><TD>
+<CENTER>
+<H2 class="headline">
+Приложение C</H2></CENTER>
+<HR width="50%">
+
+<H3>НЕКОТОРЫЕ ОБЩИЕ HЕСТАНДАРТНЫЕ СРЕДСТВА SQL </H3>Имеется ряд 
+особенностей языка SQL, которые пока не определены как часть стандарта ANSI или 
+стандарта ISO (Международная Организация По Стандартизации), и являются общими 
+для многочисленных реализаций, так как они были получены для практического 
+использования. Это дополнительные элементы чисел этих особенностей. Конечно, эти 
+особенности меняются от программы к программе, и их обсуждение предназначено 
+только чтобы показать некоторые общие подходы к ним. 
+<H3>TИПЫ ДАННЫХ</H3>Типы данных поддерживаемые стандартом SQL, собраны в 
+Приложении B. Это количество для CHARACTER и разнообразие числовых типов. 
+Реализация их может, фактически, быть значительно сложнее чем показано в 
+терминах типов, которые они фактически могут использовать. Мы будем здесь 
+обсуждать ряд таких нестандартных типов данных. 
+<H4>ТИПЫ DATE И TIME</H4>Как упомянуто в<A 
+href="ch2.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch2.shtml"> Главе 2</A>, тип 
+данных DATE широко поддерживается, даже если он не часть стандарта. Мы 
+использовали ранее в нашей таблице Порядков, этот тип использующий формат 
+mm/dd/yyyy. Это стандартный формат IBM в США. Разумеется возможны и другие 
+форматы, и программные реализации часто поддерживают ряд форма- тов, позволяя 
+вам выбирать тот который лучше для вас подходит. Реализация которая предлагает 
+эту особенность должна быть способна преобразовывать дату одного формата в 
+другой - автоматически. Имеются несколько основных форматов даты с которыми вы 
+можете столкнуться:
+<P>
+<TABLE>
+  <TBODY>
+  <TR align=left>
+    <TH>Стандарт
+    <TH>Формат
+    <TH>Пример 
+  <TR align=left>
+    <TH>Международная Организация По Стандартизации (ISO)
+    <TH>yyyy-mm-dd
+    <TH>1990-10-31 
+  <TR align=left>
+    <TH>Японский Индустриальный Стандарт (JIS)
+    <TH>yyyy-mm-dd
+    <TH>1990-10-31 
+  <TR align=left>
+    <TH>IBM Европейский Стандарт (EUR)
+    <TH>dd.mm.yyyy
+    <TH>10.31.1990 </TR></TBODY></TABLE>
+<P>Наличие специального типа определяемого для даты, дает возможность выполнять 
+арифметические операции с датами. Например, вы можете добавлять число дней к 
+дате и получать другую дату, в программе, самостоятельно следящей за числом дней 
+в месяцах, високосными годами, и так далее. Даты могут также сравниваться; 
+например фраза, дата A &lt; дата B , означает, что дата A предшествует дате B по 
+времени. Кроме даты, большое количество программ определяют специальный тип для 
+времени, который может также быть представлен в ряде форматов, включая 
+следующие: 
+<P>
+<TABLE>
+  <TBODY>
+  <TR align=left>
+    <TH>Стандарт
+    <TH>Формат
+    <TH>Пример 
+  <TR align=left>
+    <TH>МЕЖДУНАРОДНАЯ ОРГАНИЗАЦИЯ ПО СТАНДАРТИЗАЦИИ (ISO)
+    <TH>hh-mm-ss
+    <TH>21.04.37 
+  <TR align=left>
+    <TH>Японский Индустриальный Стандарт (JIS )
+    <TH>hh-mm-ss
+    <TH>21.04.37 
+  <TR align=left>
+    <TH>IBM Европейский Стандарт
+    <TH>hh-mm-ss
+    <TH>21.04.37 
+  <TR align=left>
+    <TH>IBM USA Стандарт (USA) 
+    <TH>hh.mm AM/PM
+    <TH>9.04 PM </TR></TBODY></TABLE>
+<P>Время может добавляться или сравниваться точно также как дата, с коррекцией 
+числа секунд в минутах или часах автоматически. Кроме того, специально 
+встроенные константы указывающие текущую дату или время ( CURDATE или CURTIME ) 
+являются общими. Они похожи на константу USER (Пользователь) в которой их 
+значение будет непрерывно меняться. Можете ли вы включать врем и дату в одно 
+поле ? Некоторые реализации определяют тип DATE достаточно точно, чтобы включать 
+туда еще и TIME. В качестве альтернативы, третий обобщающий тип, TIMESTAMP, 
+может быть определен как комбинация этих двух. 
+<HR width="70%">
+
+<H3>ТИПЫ ТЕКСТОВОЙ СТРОКИ</H3>ANSI поддерживает только один тип чтобы 
+представлять текст. Это - тип CHAR. Любое поле такого типа должно иметь 
+определенную длину. Если строка вставлена в поле меньше чем длина пол, она 
+дополняется пробелами; строка не может быть длиннее чем длина пол. 
+<P>Хотя и достаточно удобное, это определение все же имеет некоторые ограничения 
+для пользователя. Например, символьные поля должны иметь одинаковую длину чтобы 
+можно было выполнить команду UNION. Большинство реализаций, поддерживают строки 
+переменной длины для типов данных VARCHAR и LONG VARCHAR( или просто LONG). В то 
+врем как поле типа CHAR всегда может распределить память для максимального числа 
+символов которое может сохраняться в поле, поле VARCHAR при любом количестве 
+символов, может распределить только определенное количество памяти чтобы 
+сохранить фактическое содержание поля, хотя SQL может установить снаружи, 
+некоторое дополнительное пространство памяти чтобы следить за текущей длиной 
+пол. Поле VARCHAR может быть любой длинны включая реализационно-определяемый 
+максимум. Этот максимум может меняться от 254 до 2048 символов для VARCHAR, и до 
+16000 символов для LONG. LONG обычно используется для текста пояснительного 
+характера или для данных, которые не могут легко сжиматься в простые значения 
+полей; VARCHAR может использоваться для любой текстовой строки чья длина может 
+меняться. Между прочим, не всегда хорошо использовать VARCHAR вместо CHAR. 
+Извлечение и модифицирование полей VARCHAR - более сложный, и следовательно 
+более медленный процесс, чем извлечение и модифицирование полей CHAR. Кроме 
+того, некоторое количество памяти VARCHAR, остается всегда неиспользованной (в 
+резерве) для гарантии вмещения всей длины строки. Вы должны просчитывать, 
+насколько значения полей могут меняться по длине, а также, способны ли они к 
+объединению с другими полями, перед тем как решить, использовать CHAR или 
+VARCHAR. Часто, тип LONG используется для сохранения двоичных данных. 
+Естественно, что использование размера такого "неуклюжего" пол будет 
+ограничивать оперативность SQL. Проконсультируйтесь с вашим руководством. 
+<HR width="70%">
+
+<H3>КОМАНДА FORMAT </H3>Как мы подчеркивали в Главе 7, процесс вывода 
+выполняемого в стандарте SQL - ограничен. Хотя большинство реализаций включают 
+SQL в пакеты, имеющие другие средства для управления этой функцией, некоторые 
+реализации также используют команду типа FORMAT внутри SQL чтобы навзывать 
+выводу запроса, определенные формы, структуры, или ограничения. Среди возможных 
+функций команды FORMAT - существуют такие: <BR>
+<UL>
+  <LI>определение ширины столбцов ( при печати ). 
+  <LI>oпределение представления NULL значений. 
+  <LI>обеспечение (новых) заголовков для столбцов. 
+  <LI>обеспечение заголовков внизу или вверху страниц выводимых на печать. 
+  <LI>навязывает присвоение или изменение форматам полей содержащих значения 
+  даты, времени или денежной суммы. 
+  <LI>вычисляет общие и промежуточные суммы не исключая возможности обобщения 
+  поля, как это делает например SUM. <BR><FONT size=2>(Альтернативным подходом к 
+  этой проблеме в некоторых программах является предложение 
+  COMPUTE.)</FONT><BR><BR></LI></UL>Команда FORMAT может вводиться сразу перед или 
+сразу после запроса к которому она применяется, в зависимости от реализации. 
+Одна команда FORMAT обычно может применяться только к одному запросу, хотя любое 
+число команд FORMAT может применяться к одному и тому же запросу. Вот некоторые 
+примеры команды FORMAT: <BR><BR><PRE> 
+       FORMAT NULL '_ _ _ _ _ _ _'; 
+       FORMAT BTITLE 'Orders Grouped by Salesperson';
+       FORMAT EXCLUDE (2, 3);
+</PRE>Первая из их значения<B> NULL</B> представляется в виде<B> ' _ _ _ _ _ _ _ 
+'</B> при выводе на печать; вторая вставляет заголовок<B> 'Orders Grouped by 
+Salesperson'</B> в нижнюю часть каждой страницы; треть исключает второй и третий 
+столбцы из вывода предыдущего запроса. Вы могли бы использовать последнюю из их 
+если вы выбираете конкретные столбцы, чтобы использовать их в предложении 
+<B>ORDER BY</B>, в вашем выводе. Так как указанные функции команды FORMAT могут 
+выполняться по разному, весь набор их приложений не может быть здесь показан. 
+<BR><BR>Имеются другие команды которые могут использоваться для выполнения тех 
+же функций. Команда SET подобна команде FORMAT; она является вариантом или 
+дополнением к команде, которая применяется во всех запросах текущего сеанса 
+пользователя а не просто в одиночном запросе. В следующей реализации, команда 
+FORMAT начинается ключевым словом COLUMN следующим образом: <BR><BR><B>COLUMN 
+odate FORMAT dd-mon-yy;</B><BR><BR>что навязывает формат типа - 10-Oct-90 в поле 
+даты использующемся в выводе запроса на печать. Предложение COMPUTE, упомянутое 
+ранее, вставляется в запрос, следующим образом: <BR><BR><PRE>        SELECT odate, amt
+           FROM Orders 
+           WHERE snum = 1001
+           COMPUTE SUM (amt); 
+</PRE>Оно выводит все порядки продавца Peel, с датой и суммой приобретения по 
+каждой дате, а в конце, общую сумму приобретений. Другая реализация выводит 
+промежуточные суммы приобретений используя COMPUTE в качестве команды. Сначала, 
+она определяет разбивку <BR><BR><PRE> 
+            BREAK ON odate; 
+</PRE>вывода вышеупомянутого запроса на страницы - сгруппировав их по датам, 
+поэтому все значения odate в каждой группе - одинаковые. Затем вы можете ввести 
+следующее предложение: <BR><BR><PRE>           COMPUTE SUM OF amt ON odate;
+ </PRE>Столбец в предложении ON, предварительно, должен быть использован в 
+команде BREAK. 
+<HR width="70%">
+
+<H3>ФУНКЦИИ</H3>Для SQL в стандарте ANSI, вы можете применять агрегатные функции 
+для столбцов или использовать их значения в скалярных выражениях,таких например 
+как - comm * 100. Имеется много других полезных функций, которые вы, вероятно 
+встречали на практике. <BR><BR>Имеется список некоторых общих функций SQL 
+отличающихся от стандартных агрегатов. Они могут использоваться в предложениях 
+SELECT запросов, точно так же как агрегатные функции, но эти функции выполняются 
+для одиночных значений а не групповых. В следующем списке они классифицированы 
+согласно типам данных с которыми они выполняются. Если нет примечаний, то 
+переменные в этом списке стандартизированы для любого выражения значений 
+соответствующего типа, которые могут быть использованы в предложении SELECT: 
+<BR><BR>
+<H4>МАТЕМАТИЧЕСКИЕ ФУНКЦИИ </H4>Эти функции применяются для чисел. 
+<TABLE>
+  <TBODY>
+  <TR align=left>
+    <TH>ФУНКЦИЯ
+    <TH>ЗНАЧЕНИЕ 
+  <TR align=left>
+    <TH>ABX(X)
+    <TH>Абсолютное значение из X ( преобразование отрицательного или 
+      положительного значений в положительное ) 
+  <TR align=left>
+    <TH>CEIL (X)
+    <TH>X - является десятичным значением которое будет округляться сверху. 
+  <TR align=left>
+    <TH>FLOOR (X)
+    <TH>X - является десятичным значением которое будет округляться снизу. 
+  <TR align=left>
+    <TH>GREATEST(X,Y)
+    <TH>Возвращает большее из двух значений. 
+  <TR align=left>
+    <TH>LEAST(X,Y)
+    <TH>Возвращает меньшее из двух значений. 
+  <TR align=left>
+    <TH>MOD(X,Y)
+    <TH>Возвращает остаток от деления X на Y. 
+  <TR align=left>
+    <TH>POWER(X,Y)
+    <TH>Возвращает значение X в степени Y. 
+  <TR align=left>
+    <TH>ROUND(X,Y)
+    <TH>Цикл от X до десятичного Y. Eсли Y отсутствует, цикл до целого числа. 
+  <TR align=left>
+    <TH>SING(X)
+    <TH>Bозвращает минус если X &lt; 0, или плюс если X &gt; 0. 
+  <TR align=left>
+    <TH>SQRT (X)
+    <TH>Возвращает квадратный корень из X. </TR></TBODY></TABLE>
+<H4>СИМВОЛЬНЫЕ ФУНКЦИИ </H4>Эти функции могут быть применены для строк текста, 
+либо из столбцов текстовых типов данных, либо из строк литерных текстов, или же 
+комбинация из этих двух. 
+<P>
+<TABLE>
+  <TBODY>
+  <TR align=left>
+    <TH>ФУНКЦИЯ
+    <TH>ЗНАЧЕНИЕ 
+  <TR align=left>
+    <TH>LEFT(<STRING>,X)
+    <TH>Возвращает крайние левые(старшие) символы X из строки. 
+  <TR align=left>
+    <TH>RICHT(<STRING>,X)
+    <TH>Возвращает символы X младшего разряда из строки 
+  <TR align=left>
+    <TH>ASCII(<STRING>)
+    <TH>Возвращает код ASCII которым представляется строка в памяти 
+      компьютера. 
+  <TR align=left>
+    <TH>CHR(<ASCIICODE>)
+    <TH>Возвращает принтерные символы кода ASCII. 
+  <TR align=left>
+    <TH>VALUE(<STRING>)
+    <TH>Возвращает математическое значение для строки. Считается что строка 
+      имеет тип CHAR или VARCHAR, но состоит из чисел. VALUE('3') произведет 
+      число 3 типа INTEGER. 
+  <TR align=left>
+    <TH>UPPER(<STRING>)
+    <TH>Преобразует все символы строки в символы верхнего регистра. 
+  <TR align=left>
+    <TH>LOWER(<STRING>)
+    <TH>Преобразует все символы строки в символы нижнего регистра. 
+  <TR align=left>
+    <TH>INlTCAP(<STRING>)
+    <TH>Преобразует символы строки в заглавные буквы. В некоторых реализациях 
+      может иметь название - PROPER. 
+  <TR align=left>
+    <TH>LENGTH(<STRING>)
+    <TH>Возвращает число символов в строке. 
+  <TR align=left>
+    <TH><STRING>||<STRING>
+    <TH>Объединяет две строки в выводе, так чтобы после первой немедленно 
+      следовала вторая. (значок || называется оператором сцепления). 
+  <TR align=left>
+    <TH>LPAD(<STRING>,X,'*' )
+    <TH>Дополняет строку слева звездочками '*', или любым другим указанным 
+      символом, с количестве, определяем ом X. 
+  <TR align=left>
+    <TH>RPAD(<STRING>,X, ")
+    <TH>То же самое что и LPAD, за исключением того, что дополнение делается 
+      справа. 
+  <TR align=left>
+    <TH>SUBSTR(<STRING>,X,Y)
+    <TH>Извлекает Y символов из строки начиная с позиции X. </TR></TBODY></TABLE>
+<H4>ФУНКЦИИ ДАТЫ И ВРЕМЕНИ </H4>Эти функции выполняются только для допустимых 
+значений даты или времени. 
+<TABLE>
+  <TBODY>
+  <TR align=left>
+    <TH>ФУНКЦИЯ 
+    <TH>ЗНАЧЕНИЕ 
+  <TR align=left>
+    <TH>DAY(<DATE>)
+    <TH>Извлекает день месяца из даты. Подобные же функции существуют для 
+      MONTH(МЕСЯЦ), YEAR(ГОД), HOUR(ЧАСЫ), SECOND(СЕКУНДЫ) и так далее. 
+  <TR align=left>
+    <TH>WEEKDAY(<DATE>)
+    <TH>Извлекает день недели из даты. </TR></TBODY></TABLE>
+<H4>ДРУГИЕ ФУНКЦИИ </H4>Эта функция может быть применена к любому типу данных. 
+<TABLE>
+  <TBODY>
+  <TR align=left>
+    <TH>ФУНКЦИЯ
+    <TH>ЗНАЧЕНИЕ 
+  <TR align=left>
+    <TH>NVL(<COLUMN>,<VALUE>)
+    <TH>NVL (NULL Значение) будет меняться на значение <VALUE>каждое NULL 
+      значение найденное в столбце <COLUMN>. Если полученное значение <COLUMN>не 
+      =NULL, NVL ничего не делает. </TR></TBODY></TABLE>
+<HR>
+
+<H3>INTERSECT И MINUS </H3>Команда UNION, как вы уже видели в Главе 14, может 
+объединить два запроса, объединив их вывод в один. Два других обычно имеющихся 
+способа объединения отдельных запросов - это INTERSECT(Плюс) и MINUS(Минус). 
+INTERSECT выводит только строки произведенные обоими перекрестными запросами, в 
+то врем как MINUS выводит строки которые производятся одним запросом, но не 
+другим. Следовательно, следующие два запроса <BR><BR><PRE>      SELECT * 
+         FROM Salespeople
+         WHERE city = 'London' 
+ 
+         INTERSECT 
+ 
+      SELECT * 
+         FROM Salespeople 
+         WHERE 'London' IN 
+            (SELECT city 
+                FROM Customers 
+                WHERE Customers.snum = 
+                 Salespeople.snum); 
+</PRE>выведут строки произведенные обоими запросами, производящими всех 
+продавцов в Лондоне которые имели по крайней мере одного заказчика размещенного 
+там также. С другой стороны, запрос <PRE>      SELECT * 
+         FROM Salespeople 
+         WHERE city = 'London' 
+ 
+         MINUS 
+ 
+      SELECT * 
+         FROM Salespeople 
+         WHERE 'London' IN 
+            (SELECT sity 
+                FROM Customers 
+                WHERE Customers.snum = 
+                 Salespeople.snum); 
+</PRE>удалит строки выбранные вторым запросом из вывода первого, и таким образом 
+будут выведены все продавцы в Лондоне которые не имели там заказчиков. MINUS 
+иногда еще называют DIFFERENCE (ОТЛИЧИЕ) 
+<HR>
+
+<H3>АВТОМАТИЧЕСКИЕ ВНЕШНИЕ ОБЪЕДИНЕНИЯ </H3>В <A 
+href="ch14.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch14.shtml">Главе 
+14</A>, мы обсуждали внешнее объединение и показывали вам как выполнять его 
+используя команду UNION. Некоторые программы базы данных имеют более 
+непосредственный способ выполнения внешних объединений. В некоторых реализациях, 
+вводимый знак " + " после предиката, может выводить строки которые удовлетворяют 
+условию также как и строки которые ему не удовлетворяют. В условии предиката 
+может содержаться поле совпадающее для обеих таблиц, и NULL значения будут 
+вставлены там, где такого совпадения не будет найдено. Например, предположим вы 
+хотите видеть ваших продавцов и соответствующих им заказчиков, не исключая тех 
+продавцов которым не назначено ни одного заказчика ( хотя такого нет в наших 
+типовых таблицах, но в действительности это возможно ) : <PRE> 
+        SELECT a.snum, sname, cname 
+           FROM Salespeople a, Customers b 
+           WHEREa.snum = b.snum(+); 
+</PRE>Это является эквивалентом следующего объединения (UNION): <PRE> 
+        SELECT a.snum, sname, cname 
+           FROM Salespeople a, Customers b 
+           WHERE a.snum = b.snum 
+ 
+           UNION 
+ 
+        SELECT snum, sname, '_ _ _ _ _ _ _ _ _ _' 
+           FROM Salespeople 
+           WHERE snum NOT IN 
+              (SELECT snum 
+                  FROM Customers); 
+</PRE>Мы считаем что подчеркивания будут отображены NULL значениями( см. команду 
+FORMAT ранее в этом приложении где описывалось отображение NULL значениями). 
+<HR width="50%">
+
+<H3>ОТСЛЕЖИВАНИЕ ДЕЙСТВИЙ</H3>Ваша SQL реализация - достаточна хороша, если она 
+доступна многим пользователям, чтобы обеспечивать для них некий способ слежения 
+за действиями выполняемыми в базе данных. Имеются две основные формы чтобы 
+делать это: <PRE>  Journaling(Протоколирование) и  Auditing(Ревизия). 
+ </PRE>Эти формы отличаются по назначению. <BR>Journaling, применяется с целью 
+защиты ваших данных, при разрушении вашей системы. Сначала Вы используете 
+реализационно-зависимую процедуру чтобы архивировать текущее содержание вашей 
+базы данных, поэтому копия ее содержания где-нибудь будет сохранена. Затем вы 
+просматриваете протокол изменений сделанных в базе данных. Он сохраняется в 
+некоторой области памяти, но не в главной памяти базы данных, а желательно на 
+отдельном устройстве, и содержит список всех команд которые произвели изменения 
+в структуре или в содержании базы данных. Если у вас вдруг появились проблемы и 
+текущее содержание вашей базы данных оказалось нарушенным, вы можете повторно 
+выполнить все изменения зарегистрированные в протоколе на резервной копии ва шей 
+базы данных, и снова привести вашу базу данных в состояние которое было до 
+момента последней записи в протокол. Типичной командой, чтобы начать 
+протоколирование, будет следующая: <PRE> 
+            SET JOURNAL ON; 
+</PRE>Auditing используется c целью защиты. Она следит за тем, кто и какие 
+действия выполнял в базе данных, и сохраняет эту информацию в таблице доступной 
+только очень немногим высоко привилегированным пользователям. Конечно, вы редко 
+будете прибегать к процедуре ревизии, потому что очень скоро она займет много 
+памяти и вам будет сложно работать в вашей базе данных. Но вы можете 
+устанавливать ревизию для опре- деленных пользователей, определенных действий 
+или определенных объектов данных. Имеется такая форма команды AUDIT: <PRE> 
+        AUDIT INSERT ON Salespeople BY Diane; 
+</PRE>Или предложение ON или предложение BY могут быть исключены, устанавливая 
+ревизию, либо всех объектов или всех пользователей, соответственно. Применение 
+AUDIT ALL, вместо AUDIT INSERT, приведет к отслеживанию всех действий Diane в 
+таблице Продавцов. 
+</TD></TR></TABLE>
+</TD></TR>
+<TR BGCOLOR=#6699CC><TD><TABLE WIDTH=100% BORDER=0 CELLSPACING=0 CELLPADDING=0><TR><TD BGCOLOR=#6699CC VALIGN=CENTER HEIGHT = 40><FONT SIZE=-10>
+<!--begin of Top100 logo-->
+<a href="javascript:if(confirm('http://top100.rambler.ru/top100/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://top100.rambler.ru/top100/'" tppabs="http://top100.rambler.ru/top100/">
+<img src="../../../../top100-images.rambler.ru/top100/banner-88x31-rambler-gray2.gif" tppabs="http://top100-images.rambler.ru/top100/banner-88x31-rambler-gray2.gif" alt="Rambler's Top100" width=88 height=31 border=0></a>
+<!--end of Top100 logo -->
+</FONT>
+<!--Rating@Mail.ru COUNTER--><a target=_top
+href="javascript:if(confirm('http://top.mail.ru/jump?from=58574  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://top.mail.ru/jump?from=58574'" tppabs="http://top.mail.ru/jump?from=58574"><img
+src="../../../../top.list.ru/counter-id=58574;t=94.gif" tppabs="http://top.list.ru/counter?id=58574;t=94"
+border=0 height=18 width=88
+alt="Рейтинг@Mail.ru"></a><!--/COUNTER-->
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="font : bold 10px verdana; color : white" href="javascript:if(confirm('http://hosting.parking.ru/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://hosting.parking.ru/'" tppabs="http://hosting.parking.ru/">Хостинг от компании Parking.ru</a>
+<script src="../../../../www.google-analytics.com/urchin.js" tppabs="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-265508-1";
+urchinTracker();
+</script>
+</TD>
+<TD BGCOLOR=#6699CC ALIGN=right><FONT COLOR=white FACE="Tahoma,Arial" SIZE=1>&nbsp;Administrator:&nbsp;<A STYLE="color :white" HREF="mailto:admin@sql.ru">admin@sql.ru</A>&nbsp;<BR>Last update: <FONT COLOR=white>05 июн 2007&nbsp;</FONT></FONT></TD></TR></TABLE>
+</TD></TR></TABLE></TD></TR></TABLE>
+
+</BODY></HTML>
+

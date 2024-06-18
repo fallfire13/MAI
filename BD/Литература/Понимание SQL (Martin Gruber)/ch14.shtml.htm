@@ -1,0 +1,586 @@
+<HTML>
+<HEAD>
+<TITLE>Понимание SQL. Глава 14. Использование предложения UNION. [SQL.RU]</TITLE>
+<META http-equiv="Content-Type" CONTENT="text/html; charset=windows-1251">
+<META HTTP-EQUIV="Window-target" CONTENT="_top">
+<META HTTP-EQUIV="Last-Modified" CONTENT="29-03-2001">
+<META NAME="Description" CONTENT="Использование языка SQL, создание клиент-серверных систем. Конференция по MSSQL, Oracle, Interbase, MySQL. Полезные ссылки, документация, рекомендации по разработке информационных систем, сертификация, заказ книг и многое другое.">
+<META NAME="Keywords" CONTENT="SQL, конференция, Database Server, Oracle, Interbase, MySQL, документация, статьи, примеры, книги, ссылки, сертификация, работа, СУБД">
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../form.css" tppabs="http://www.sql.ru/form.css">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" leftmargin="3" topmargin="3" marginheight="3" marginwidth="3">
+<noindex>
+<TABLE BGCOLOR="#000000" WIDTH=100% CELLPADDING=0 CELLSPACING=0 BORDER=0>
+<TR><TD>
+
+<TABLE WIDTH=100% CELLPADDING=0 CELLSPACING=1 BORDER=0>
+<TR BGCOLOR="#6699CC"><TD><TABLE CELLSPACING=0 CELLPADDING=0 WIDTH=100% BORDER=0 BGCOLOR="#6699CC">
+<TR><TD COLSPAN=3><IMG SRC="../../../images/blank.gif" tppabs="http://www.sql.ru/images/blank.gif" height=3 width=1 alt=""></TD></TR>
+<TR><TD VALIGN=TOP>&nbsp;<FONT FACE="Verdana,Arial" SIZE=5 COLOR=lightyellow>SQL.RU<BR><FONT SIZE=-5>&nbsp;client/server technologies</FONT></FONT><!--begin of Top100--><a href="javascript:if(confirm('http://top100.rambler.ru/top100/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://top100.rambler.ru/top100/'" tppabs="http://top100.rambler.ru/top100/"><img src="../../../../counter.rambler.ru/top100.cnt-236431.gif" tppabs="http://counter.rambler.ru/top100.cnt?236431" alt="Rambler's Top100" width=1 height=1 border=0></a><!--end of Top100 code--></TD>
+<TD WIDTH=468 HEIGHT=60 BGCOLOR=#6699CC ALIGN=RIGHT></TD>
+<TD WIDTH=2><IMG SRC="../../../images/blank.gif" tppabs="http://www.sql.ru/images/blank.gif" height=1 width=2 alt=""></TD></TR>                                                      	
+<TR HEIGHT=4><TD COLSPAN=3><IMG SRC="../../../images/blank.gif" tppabs="http://www.sql.ru/images/blank.gif" height=5 width=1 alt=""></TD></TR></TABLE>
+
+</TD></TR>
+
+<TR HEIGHT=15><TD bgcolor=#006699><FONT FACE="Verdana,Arial" SIZE=1 COLOR=WHITE><B><A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/'" tppabs="http://www.sql.ru/">&nbsp;<FONT COLOR=white>Главная</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/docs  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/docs'" tppabs="http://www.sql.ru/docs">&nbsp;<FONT COLOR=yellow>Документация</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/articles  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/articles'" tppabs="http://www.sql.ru/articles">&nbsp;<FONT COLOR=white>Статьи</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/books  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/books'" tppabs="http://www.sql.ru/books">&nbsp;<FONT COLOR=white>Книги</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/forum/actualforum.aspx  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/forum/actualforum.aspx'" tppabs="http://www.sql.ru/forum/actualforum.aspx">&nbsp;<FONT COLOR=white>Форум</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/poll  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/poll'" tppabs="http://www.sql.ru/poll">&nbsp;<FONT COLOR=white>Опросы</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/forum/actualtopics.aspx?bid=11  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/forum/actualtopics.aspx?bid=11'" tppabs="http://www.sql.ru/forum/actualtopics.aspx?bid=11">&nbsp;<FONT COLOR=white>Гостевая</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/subscribe  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/subscribe'" tppabs="http://www.sql.ru/subscribe">&nbsp;<FONT COLOR=white>Рассылка</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/job  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/job'" tppabs="http://www.sql.ru/job">&nbsp;<FONT COLOR=white>Работа</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/search  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/search'" tppabs="http://www.sql.ru/search">&nbsp;<FONT COLOR=white>Поиск</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/faq  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/faq'" tppabs="http://www.sql.ru/faq">&nbsp;<FONT COLOR=white>FAQ</FONT>&nbsp;</A>|</B></FONT></TD></TR>
+<TR><TD BGCOLOR=#F5F5F5>
+</noindex>
+
+<TABLE BORDER=0 CELLSPACING=10><TR><TD>
+<CENTER>
+<H2 class="headline">
+14. ИСПОЛЬЗОВАНИЕ ПРЕДЛОЖЕНИЯ UNION</H2></CENTER> 
+В предшествующих главах, мы обсуждали 
+различные способы которыми запросы могут помещаться один внутрь 
+другого. Имеется другой способ объединения многочисленных запросов 
+ - то есть формирование их в объединение. 
+В этой главе, вы научитесь использовать предложение UNION в SQL. 
+UNION отличается от подзапросов тем что в нем ни один из двух 
+( или больше ) запросов не управляются другим запросом. Все запросы 
+выполняются независимо друг от друга, а уже вывод их - объединяется. 
+ <A name=14.1>
+<H3>ОБЪЕДИНЕНИЕ МНОГОЧИСЛЕННЫХ ЗАПРОСОВ В ОДИН</H3>Вы можете поместить многочисленные запросы вместе и объединить их вывод 
+используя предложение UNION. Предложение UNION объединяет вывод двух 
+или более SQL запросов в единый набор строк и столбцов. Например чтобы 
+получить всех продавцов и заказчиков размещенных в Лондоне и вывести их 
+как единое целое вы могли бы ввести: 
+<PRE> 
+                  SELECT snum, sname 
+                     FROM Salespeople 
+                     WHERE city = 'London' 
+ 
+                     UNION 
+ 
+                  SELECT cnum, cname 
+                     FROM Customers 
+                     WHERE city = 'London'; 
+</PRE> 
+и получить вывод показанный в Рисунке 14.1. 
+ 
+Как вы можете видеть, столбцы выбранные двум командами выведены так 
+как если она была одна. Заголовки столбца исключены, потому что ни один 
+из столбцов выведенных объединением, не был извлечен непосредственно 
+из только одной таблицы. Следовательно все эти столбцы вывода не имеют 
+никаких имен ( смотрите <A href="ch7.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch7.shtml">Главу 7</A>, в которой  обсуждается вывод столбцов ). 
+   Кроме того обратите внимание, что только последний запрос заканчивает- 
+с точкой с запятой. 
+Отсутствие точки с запятой дает понять SQL , что имеется еще одно или более запросов. 
+<PRE> 
+ 
+                ===============  SQL Execution Log ============ 
+               |                                               | 
+               | SELECT snum, sname                            | 
+               | FROM  Salespeople                             | 
+               | WHERE city = 'London'                         | 
+               | UNION                                         | 
+               | SELECT cnum, cname                            | 
+               | FROM Customers                                | 
+               | WHERE city = 'London';                        | 
+               | ============================================= | 
+               |                                               | 
+               |  -----    --------                            | 
+               |   1001    Peel                                | 
+               |   1004    Motika                              | 
+               |   2001    Hoffman                             | 
+               |   2006    Climens                             | 
+               |                                               | 
+                 ============================================= 
+</PRE> 
+Рисунок 14.1: Формирование объединения из двух запросов 
+ <A name=14.2>
+<H3>КОГДА ВЫ МОЖЕТЕ ДЕЛАТЬ ОБЪЕДИНЕНИЕ МЕЖДУ ЗАПРОСАМИ ?</H3>Когда два ( или более ) запроса подвергаются объединению, их столбцы 
+вывода должны быть совместимы для объединения. Это означает, что каждый 
+запрос должен указывать одинаковое число столбцов и в том же порядке что и 
+первый, второй, третий, и так далее, и каждый должен иметь тип, совместимый 
+с каждым. Значение совместимости типов - меняется. ANSI следит за этим 
+очень строго и поэтому числовые пол должны иметь одинаковый числовой тип 
+и размер, хотя некоторые имена используемые ANSI для этих типов являются - 
+синонимами. ( Смотрите Приложение B для подробностей об ANSI числовых 
+типах. ) 
+Кроме того, символьные поля должны иметь одинаковое число символов ( значение предназначенного номера, не обязательно такое же как используемый 
+номер ). 
+Хорошо, что некоторые SQL программы обладают большей гибкостью чем это 
+определяется ANSI. Типы не определенные ANSI, такие как DATA и BINARY, 
+обычно должны совпадать с другими столбцами такого же нестандартного типа. 
+Длина строки также может стать проблемой. Большинство программ разрешают 
+пол переменной длины, но они не обязательно будут использоваться с UNION. 
+С другой стороны, некоторые программы (и ANSI тоже) требуют чтобы символь- 
+ные поля были точно равной длины. В этих вопросах вы должны проконсультироваться с документацией вашей собственной программы. 
+  Другое ограничение на совместимость - это когда пустые значения(NULL) 
+запрещены в любом столбце объединения, причем эти значения необходимо 
+запретить и для всех соответствующих столбцов в других запросах объединения. 
+Пустые значения(NULL) запрещены с ограничением NOT NULL, которое будет 
+обсуждаться в <A href="ch18.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch18.shtml">Главе 18</A>. Кроме того, вы не можете использовать UNION в под- 
+запросах, а также не можете использовать агрегатные функции в предложении SELECT запроса в объединении. ( Большинство программ пренебрегают 
+этими ограничениями. ) 
+ <A name=14.3>
+<H3>UNION И УСТРАНЕНИЕ ДУБЛИКАТОВ</H3>UNION будет автоматически исключать дубликаты строк из вывода. 
+Это нечто несвойственное для SQL, так как одиночные запросы обычно содер- 
+жат DISTINCT чтобы устранять дубликаты. Например запрос, чей вывод показывается в Рисунке 14.2, 
+<PRE> 
+                 SELECT snum, city 
+                    FROM Customers; 
+</PRE> 
+имеет двойную комбинацию значений ( snum=1001, city=London ), потому что 
+мы не указали, чтобы SQL устранил дубликаты. Однако, если мы используем 
+<PRE> 
+ 
+                ===============  SQL Execution Log ============ 
+               |                                               | 
+               | SELECT snum, city                             | 
+               | FROM Customers;                               | 
+               | ============================================= | 
+               |  snum     city                                | 
+               |  -----    --------                            | 
+               |   1001    London                              | 
+               |   1003    Rome                                | 
+               |   1002    San Jose                            | 
+               |   1002    Berlin                              | 
+               |   1001    London                              | 
+               |   1004    Rome                                | 
+               |   1007    San Jose                            | 
+               |                                               | 
+                 ============================================= 
+</PRE> 
+Рисунок 14.2: Одиночный запрос с дублированным выводом 
+ 
+UNION в комбинации этого запроса с ему подобным в таблице Продавцов, 
+то эта избыточная комбинация будет устранена. 
+Рисунок 14.3  показывает вывод следующего запроса. 
+<PRE> 
+             SELECT snum, city 
+                FROM Customers 
+ 
+                UNION 
+ 
+             SELECT snum, city 
+                FROM Salespeople.; 
+ 
+ 
+                ===============  SQL Execution Log ============ 
+               |                                               | 
+               | FROM Customers                                | 
+               | UNION                                         | 
+               | SELECT snum, sity                             | 
+               | FROM Salespeople;                             | 
+               | ============================================= | 
+               |                                               | 
+               |  -----    --------                            | 
+               |   1001    London                              | 
+               |   1002    Berlin                              | 
+               |   1007    San Jose                            | 
+               |   1007    New York                            | 
+               |   1003    Rome                                | 
+               |   1001    London                              | 
+               |   1003    Rome                                | 
+               |   1002    Barcelona                           | 
+               |   1007    San Jose                            | 
+               |                                               | 
+                ----------------------------------------------- 
+</PRE> 
+Рисунок 14.3: UNION устраняет двойной вывод 
+  <BR><BR>
+Вы можете получить нечто похожее ( в некоторых программах SQL, используя 
+UNION ALL вместо просто UNION, наподобие этого: 
+<PRE> 
+             SELECT snum, city 
+                FROM Customers 
+ 
+                UNION ALL 
+ 
+             SELECT snum, city 
+                FROM Salespeople; 
+</PRE> <A name=14.4>
+<H3>ИСПОЛЬЗОВАНИЕ СТРОК И ВЫРАЖЕНИЙ С UNION</H3>Иногда, вы можете вставлять константы и выражения в предложении 
+SELECT используемые с UNION. Это не следует строго указаниям ANSI, 
+но это полезна и необычно используемая возможность. Константы и 
+выражения которые вы используете, должны встречать совместимые 
+стандарты которые мы выделяли ранее. 
+Эта свойство полезно, например, чтобы устанавливать комментарии указывающие какой запрос вывел данную строку. 
+Предположим что вы должны сделать отчет о том, какие продавцы производят наибольшие и наименьшие порядки по датам. 
+Мы можем объединить два запроса, вставив туда текст чтобы различать 
+вывод для каждого из них. 
+<PRE> 
+     SELECT a.snum, sname, onum, 'Highest on', odate 
+        FROM (Salespeople a, Orders b 
+        WHERE a.snum = b.snum 
+        AND b.amt = 
+          ( SELECT MAX (amt) 
+               FROM Orders c 
+               WHERE c.odate = b.odate ) 
+ 
+        UNION 
+ 
+     SELECT a.snum, (sname, (onum ' Lowest on', odate 
+        FROM ( Salespeople a, Orders b 
+        WHERE a.snum = b.snum 
+        AND b.amt = 
+           ( SELECT  MIN (amt) 
+                FROM Orders c 
+                WHERE c.odate = b.odate ); 
+</PRE> 
+Вывод из этой команды  показывается в Рисунке 14.4. 
+ <BR><BR> 
+Мы должны были добавить дополнительный пробел в строку 'Lowest on', 
+чтобы сделать ее совпадающей по длине со строкой 'Highest on'. 
+Обратите внимание что Peel выбран при наличии и самого высокого 
+и самого низкого ( фактически он единственный ) порядка на 5 Октября. 
+Так как вставляемые строки двух этих запросов различны, строки не 
+будут устранены как дубликаты. 
+<PRE> 
+ 
+                ===============  SQL Execution Log ============ 
+               |                                               | 
+               | AND b.amt =                                   | 
+               | ( SELECT min (amt)                            | 
+               | FROM Orders c                                 | 
+               | WHERE c.odate = b.odate);                     | 
+               | ============================================= | 
+               |                                               | 
+               | -----  ------- ------  ---------- ----------- | 
+               |  1001  Peel     3008   Highest on  10/05/1990 | 
+               |  1001  Peel     3008   Lowest  on  10/05/1990 | 
+               |  1001  Peel     3011   Highest on  10/06/1990 | 
+               |  1002  Serres   3005   Highest on  10/03/1990 | 
+               |  1002  Serres   3007   Lowest  on  10/04/1990 | 
+               |  1002  Serres   3010   Lowest  on  10/06/1990 | 
+               |  1003  Axelrod  3009   Highest on  10/04/1990 | 
+               |  1007  Rifkin   3001   Lowest  on  10/03/1990 | 
+                =============================================== 
+ 
+</PRE> 
+Рисунок 14.4: Выбор наивысших и наинизших порядков, определяемых 
+                   с помощью строк 
+
+<A name=14.5>
+
+<H3>ИСПОЛЬЗОВАНИЕ UNION С ORDER BY</H3>До сих пор, мы не оговаривали что данные многочисленных запросов будут 
+выводиться в каком то особом порядке. Мы просто показывали вывод сна- 
+чала из одного запроса а затем из другого. Конечно, вы не можете полагаться на вывод приходящий в произвольном порядке. Мы как раз сделаем 
+так чтобы этот способ для выполнения примеров был более простым. Вы 
+можете, использовать предложение ORDER BY чтобы упорядочить вывод 
+из объединения, точно так же как это делается в индивидуальных запросах. 
+Давайте пересмотрим наш последний пример чтобы упорядочить имена с 
+помощью их порядковых номеров. Это может внести противоречие, такое 
+как повторение имени Peel в последней команде, как вы сможете увидеть 
+из вывода показанного в Рисунке 14.5. 
+<PRE>
+
+SELECT a.snum, sname, onum, 'Highest on', odate 
+   FROM Salespeople a, Orders b 
+   WHERE a.snum = b.snum 
+   AND b.amt = 
+     ( SELECT MAX (amt) 
+	  FROM Orders c 
+	  WHERE c.odate = b.odate ) 
+
+   UNION 
+
+SELECT a.snum, (sname, (onum, 'Lowest on', odat 
+   FROM Salespeople a, Orders b 
+   WHEREa.snum = b.snum 
+   AND b.amt = 
+      ( SELECT MIN (amt) 
+	   FROM Orders c 
+	   WHERE c.odate = b.odate ) 
+
+ORDER BY 3; 
+
+	===============  SQL Execution Log ============ 
+       | ( SELECT min (amt)                            | 
+       | FROM Orders c                                 | 
+       | WHERE c.odate = b.odate)                      | 
+       | ORDER BY 3;                                   | 
+       | ============================================= | 
+       |                                               | 
+       | -----  ------- ------  ---------- ----------- | 
+       |  1007  Rifkin   3001   Lowest  on  10/03/1990 | 
+       |  1002  Serres   3005   Highest on  10/03/1990 | 
+       |  1002  Serres   3007   Lowest  on  10/04/1990 | 
+       |  1001  Peel     3008   Highest on  10/05/1990 | 
+       |  1001  Peel     3008   Lowest  on  10/05/1990 | 
+       |  1003  Axelrod  3009   Highest on  10/04/1990 | 
+       |  1002  Serres   3010   Lowest  on  10/06/1990 | 
+       |  1001  Peel     3011   Highest on  10/06/1990 | 
+	=============================================== 
+</PRE>Рисунок 14.5: Формирование объединения с использованием ORDER BY 
+ <BR><BR>
+Пока ORDER BY используется по умолчанию, мы не должны его указывать. Мы 
+можем упорядочить наш вывод с помощью нескольких полей, одно внутри другого 
+и указать ASC или DESC для каждого, точно также как мы делали это для одиноч- 
+ных запросов. Заметьте, что номер 3 в предложении ORDER BY указывает какой 
+столбец из предложения SELECT будет упорядочен. Так как столбцы объединения - 
+это столбцы вывода, они не имеют имен, и следовательно, должны определяться 
+по номеру.  Этот номер указывает на их место среди других столбцов вывода. 
+( Смотрите <A href="ch7.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch7.shtml">Главу 7</A> обсуждающую столбцы вывода.) 
+<A name=14.6>
+<H3>ВНЕШНЕЕ ОБЪЕДИНЕНИЕ</H3>Операция которая бывает часто полезна - это объединение из двух зап- 
+росов в котором второй запрос выбирает строки, исключенные первым. 
+Наиболее часто, вы будете делать это, так чтобы не исключать строки 
+которые не удовлетворили предикату при объединении таблиц. Это 
+называется - внешним объединением. 
+Предположим что некоторые из ваших заказчиков еще не были назначены к продавцам. Вы можете захотеть увидеть имена и города всех ваших 
+заказчиков, с именами их продавцов, не учитывая тех кто еще не был 
+назначен. Вы можете достичь этого, формируя объединение из двух зап- 
+росов, один из которых выполняет объединение, а другой выбирает заказ- 
+чиков с пустыми(NULL) значениями пол snum. Этот последний запрос 
+должен вставлять пробелы в пол соответствующие полю sname в первом 
+запросе. 
+Как и раньше, вы можете вставлять текстовые строки в ваш вывод чтобы 
+идентифицировать запрос который вывел данную строку. 
+Использование этой методики во внешнем объединении, дает возможность 
+использовать предикаты для классификации, а не для исключения. 
+Мы использовали пример нахождения продавцов с заказчиками размещенными в их городах и раньше. Однако вместо просто выбора только 
+этих строк, вы возможно захотите чтобы ваш вывод перечислял всех про- 
+давцов, и указывал тех, кто не имел заказчиков в их городах, и кто имел. 
+Следующий запрос, чей вывод  показывается в Рисунке 14.6, выполнит это: 
+<PRE>
+     SELECT Salespeople.snum, sname, cname, comm 
+	FROM (Salespeople, Customers 
+	WHERE Salespeople.city = Customers.city. 
+
+	UNION 
+
+     SELECT snum, sname, ' NO MATCH    ', comm 
+	FROM (Salespeople 
+	WHERE NOT city = ANY 
+	   ( SELECT city 
+		FROM Customers ) 
+
+	ORDER BY 2 DESC; 
+
+
+	===============  SQL Execution Log ============ 
+       |                                               | 
+       | FROM Salespeople                              | 
+       | WHERE NOT city = ANYate)                      | 
+       | ( SELECT city                                 | 
+       | FROM Customers)                               | 
+       | ORDER BY 2 DESC;                              | 
+       | ============================================= | 
+       |                                               | 
+       | -----  -------  ---------     ------------    | 
+       |  1002  Serres   Cisneros           0.1300     | 
+       |  1002  Serres   Liu                0.1300     | 
+       |  1007  Rifkin   NO MATCH           0.1500     | 
+       |  1001  Peel     Clemens            0.1200     | 
+       |  1001  Peel     Hoffman            0.1200     | 
+       |  1004  Motika   Clemens            0.1100     | 
+       |  1004  Motika   Hoffman            0.1100     | 
+       |  1003  Axelrod  NO MATCH           0.1000     | 
+       |                                               | 
+	=============================================== 
+
+</PRE>
+Рисунок 14. 6: Внешнее объединение 
+ <BR><BR>
+Строка ' NO MATCH ' была дополнена пробелами, чтобы получить совпадение поля cname по длине ( это не обязательно во всех реализациях SQL ). 
+Второй запрос выбирает даже те строки которые исключил первый. 
+Вы можете также добавить комментарий или выражение к вашему запросу, 
+в виде дополнительного поля. Если вы сделаете это, вы будете должны добавить некоторый дополнительный комментарий или выражение, в той же са- 
+мой позиции среди выбранных полей, для каждого запроса в операции объединения. Совместимость UNION предотвращает вас от добавления дополнительного поля для первого запроса, но не для второго. Имеется запрос который добавляет строки к выбранным полям, и указывает совпадает ли  данный продавец с его заказчиком в его городе: 
+<PRE>
+  SELECT a.snum, sname, a.city, ' MATCHED ' 
+     FROM Salespeople a, Customers b 
+     WHERE a.city = b.city 
+
+     UNION 
+
+  SELECT snum, sname, city, 'NO MATCH' 
+     FROM Salespeople 
+     WHERE NOT city = ANY 
+	( SELECT city 
+	    FROM Customers ) 
+
+     ORDER BY 2 DESC; 
+</PRE>
+
+Рисунок 14,7  показывает вывод этого запроса. 
+
+<PRE>
+	===============  SQL Execution Log ============ 
+       |                                               | 
+       | WHERE a.city = b.city                         | 
+       | UNION                                         | 
+       | SELECT snum,sname,city, 'NO MATCH'            | 
+       | FROM Salespeople                              | 
+       | WHERE NOT city = ANYate)                      | 
+       | ( SELECT city                                 | 
+       | FROM Customers)                               | 
+       | ORDER BY 2 DESC;                              | 
+       | ============================================= | 
+       |                                               | 
+       | -----  -------   ------------  ---------      | 
+       |  1002  Serres     San Jose     MATCHED        | 
+       |  1007  Rifkin     Barselona    NO MATCH       | 
+       |  1001  Peel       London       MATCHED        | 
+       |  1004  Motika     London       MATCHED        | 
+       |  1003  Axelrod    New York     NO MATCH       | 
+       |                                               | 
+	=============================================== 
+</PRE>
+
+Рисунок 14. 7: Внешнее объединение с полем комментария 
+
+ <BR><BR>
+Это не полное внешнее объединение, так как оно включает только несовпадающие поля одной из объединяемых таблиц.   Полное внешнеее объединение должно включать всех заказчиков имеющих и не имеющих про- 
+давцов в их городах. 
+Такое условие будет более полным, как вы это сможете увидеть (вывод 
+следующего запроса показан на Рисунке 14,8 ) : 
+
+<PRE>
+SELECT snum, city, 'SALESPERSON - MATCH' 
+ FROM Salespeople 
+ WHERE NOT city = ANY 
+   (SELECT city 
+	FROM Customers) 
+
+ UNION 
+
+
+SELECT snum, city, 'SALESPERSON - NO MATCH' 
+ FROM Salespeople 
+ WHERE NOT city = ANY 
+   (SELECT city 
+	FROM Customers)) 
+
+ UNION 
+
+(SELECT cnum, city, 'CUSTOMER - MATCHED' 
+ FROM Customers 
+ WHERE city = ANY 
+    (SELECT city 
+	 FROM Salespeople) 
+
+ UNION 
+
+SELECT cnum, city, 'CUSTOMER - NO MATCH' 
+ FROM Customers 
+ WHERE NOT city = ANY 
+   (SELECT city 
+       FROM Salespeople)) 
+
+ ORDER BY 2 DESC; 
+
+
+   ===============  SQL Execution Log =============== 
+  |                                                  | 
+  | FROM  Salespeople)                               | 
+  | ORDER BY 2 DESC;                                 | 
+  |                                                  | 
+  | ================================================ | 
+  |                                                  | 
+  |  ----   --------     ------------------------    | 
+  |  2003   San Jose     CUSTOMER     -   MATCHED    | 
+  |  2008   San Jose     CUSTOMER     -   MATCHED    | 
+  |  2002   Rome         CUSTOMER     -   NO MATCH   | 
+  |  2007   Rome         CUSTOMER     -   NO MATCH   | 
+  |  1003   New York     SALESPERSON  -   MATCHED    | 
+  |  1003   New York     SALESPERSON  -   NO MATCH   | 
+  |  2001   London       CUSTOMER     -   MATCHED    | 
+  |  2006   London       CUSTOMER     -   MATCHED    | 
+  |  2004   Berlin       CUSTOMER     -   NO MATCH   | 
+  |  1007   Barcelona    SALESPERSON  -   MATCHED    | 
+  |  1007   Barcelona    SALESPERSON  -   NO MATCH   | 
+  |                                                  | 
+   ================================================== 
+</PRE>
+Рисунок 1.8: Полное внешнее объединение 
+ <BR><BR>
+( Понятно, что эта формула использующая ANY - эквивалентна объединению в предыдущем примере. ) 
+Сокращенное внешнее объединение с которого мы начинали, использует- 
+с чаще чем этот последний пример. 
+Этот пример, однако, имеет другой смысл. Всякий раз, когда вы выполняете объединение более чем двух запросов, вы можете использовать круг- 
+лые скобки чтобы определить порядок оценки. Другими словами, вместо 
+просто - 
+<PRE>
+    query X UNION query Y UNION query Z; 
+</PRE>
+вы должны указать, или 
+<PRE>
+
+   ( query X UNION query Y )UNION query Z; 
+</PRE>
+или 
+<PRE>
+    query X UNION ( query Y UNION query Z ); 
+</PRE>
+Это потому, что UNION и UNION ALL могут быть скомбинированы, чтобы 
+удалять одни дубликаты, не удал других.  Предложение - 
+<PRE>
+   ( query X UNION ALL query Y )UNION query Z; 
+</PRE>
+не обязательно воспроизведет те же результаты что предложение - 
+<PRE>
+    query X UNION ALL( query Y UNION query Z ); 
+</PRE>
+если двойные строки в нем, будут удалены. 
+<A name=14.7>
+<H3>РЕЗЮМЕ</H3>Теперь вы знаете как использовать предложение UNION, которое дает 
+возможность объединять любое число запросов в единое тело вывода. 
+Если вы имеете ряд подобных таблиц - таблиц, содержащих похожую информацию, но принадлежащую разным пользователям и охватывающую 
+различные особенности, возможно - что объединение сможет обеспечить 
+простой способ для слияния и упорядочивания вывода. Аналогично, внеш- 
+ние объединения дают вам новый способ использования условий, не для 
+исключения вывода, а для его маркировки или обработки его частей, ко- 
+гда встречается условие отличающееся от того, которое не выполняется. 
+ <BR><BR>
+Этим заканчиваются наши главы о запросах. Вы теперь имеете довольно 
+полное представление о поиске данных в SQL. Следующий шаг должен 
+включать то, как значения вводятся в таблицы и как таблицы создаются 
+с самого начала. Как вы увидите, запросы иногда используются внутри 
+других типов команд, также хорошо как и сами по себе. 
+<A name=14.8>
+<H3>РАБОТА С SQL</H3>1. Создайте объединение из двух запросов которое показало бы имена, 
+города, и оценки всех заказчиков.  Те из них которые имеют поле 
+rating=200 и более, должны кроме того иметь слова - " Высокий 
+Рейтинг ", а остальные должны иметь слова " Низкий Рейтинг ". 
+<BR><BR>
+2. Напишите команду которая бы вывела имена и номера каждого продавца и каждого заказчика которые имеют больше чем один текущий 
+порядок.   Результат представьте в алфавитном порядке. 
+<BR><BR>
+3. Сформируйте объединение из трех запросов. Первый выбирает пол 
+snum всех продавцов в San Jose; второй, пол cnum всех заказчиков в 
+San Jose; и третий пол onum всех порядков на 3 Октября. 
+Сохраните дубликаты между последними двумя запросами, но устраните любую избыточность вывода между каждым из их и самым первым.  ( Примечание: в данных типовых таблицах, не содержится никакой избыточности. Это только пример. ) 
+<BR><BR>
+( См. <A href="a.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/a.shtml">Приложение A </A>для ответов. ) 
+
+</TD></TR></TABLE>
+</TD></TR>
+<TR BGCOLOR=#6699CC><TD><TABLE WIDTH=100% BORDER=0 CELLSPACING=0 CELLPADDING=0><TR><TD BGCOLOR=#6699CC VALIGN=CENTER HEIGHT = 40><FONT SIZE=-10>
+<!--begin of Top100 logo-->
+<a href="javascript:if(confirm('http://top100.rambler.ru/top100/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://top100.rambler.ru/top100/'" tppabs="http://top100.rambler.ru/top100/">
+<img src="../../../../top100-images.rambler.ru/top100/banner-88x31-rambler-gray2.gif" tppabs="http://top100-images.rambler.ru/top100/banner-88x31-rambler-gray2.gif" alt="Rambler's Top100" width=88 height=31 border=0></a>
+<!--end of Top100 logo -->
+</FONT>
+<!--Rating@Mail.ru COUNTER--><a target=_top
+href="javascript:if(confirm('http://top.mail.ru/jump?from=58574  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://top.mail.ru/jump?from=58574'" tppabs="http://top.mail.ru/jump?from=58574"><img
+src="../../../../top.list.ru/counter-id=58574;t=94.gif" tppabs="http://top.list.ru/counter?id=58574;t=94"
+border=0 height=18 width=88
+alt="Рейтинг@Mail.ru"></a><!--/COUNTER-->
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="font : bold 10px verdana; color : white" href="javascript:if(confirm('http://hosting.parking.ru/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://hosting.parking.ru/'" tppabs="http://hosting.parking.ru/">Хостинг от компании Parking.ru</a>
+<script src="../../../../www.google-analytics.com/urchin.js" tppabs="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-265508-1";
+urchinTracker();
+</script>
+</TD>
+<TD BGCOLOR=#6699CC ALIGN=right><FONT COLOR=white FACE="Tahoma,Arial" SIZE=1>&nbsp;Administrator:&nbsp;<A STYLE="color :white" HREF="mailto:admin@sql.ru">admin@sql.ru</A>&nbsp;<BR>Last update: <FONT COLOR=white>05 июн 2007&nbsp;</FONT></FONT></TD></TR></TABLE>
+</TD></TR></TABLE></TD></TR></TABLE>
+
+</BODY></HTML>
+

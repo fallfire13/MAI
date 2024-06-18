@@ -1,0 +1,382 @@
+<HTML>
+<HEAD>
+<TITLE>Понимание SQL. Глава 16. Использование подзапросов с командами модификации. [SQL.RU]</TITLE>
+<META http-equiv="Content-Type" CONTENT="text/html; charset=windows-1251">
+<META HTTP-EQUIV="Window-target" CONTENT="_top">
+<META HTTP-EQUIV="Last-Modified" CONTENT="29-03-2001">
+<META NAME="Description" CONTENT="Использование языка SQL, создание клиент-серверных систем. Конференция по MSSQL, Oracle, Interbase, MySQL. Полезные ссылки, документация, рекомендации по разработке информационных систем, сертификация, заказ книг и многое другое.">
+<META NAME="Keywords" CONTENT="SQL, конференция, Database Server, Oracle, Interbase, MySQL, документация, статьи, примеры, книги, ссылки, сертификация, работа, СУБД">
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../form.css" tppabs="http://www.sql.ru/form.css">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" leftmargin="3" topmargin="3" marginheight="3" marginwidth="3">
+<noindex>
+<TABLE BGCOLOR="#000000" WIDTH=100% CELLPADDING=0 CELLSPACING=0 BORDER=0>
+<TR><TD>
+
+<TABLE WIDTH=100% CELLPADDING=0 CELLSPACING=1 BORDER=0>
+<TR BGCOLOR="#6699CC"><TD><TABLE CELLSPACING=0 CELLPADDING=0 WIDTH=100% BORDER=0 BGCOLOR="#6699CC">
+<TR><TD COLSPAN=3><IMG SRC="../../../images/blank.gif" tppabs="http://www.sql.ru/images/blank.gif" height=3 width=1 alt=""></TD></TR>
+<TR><TD VALIGN=TOP>&nbsp;<FONT FACE="Verdana,Arial" SIZE=5 COLOR=lightyellow>SQL.RU<BR><FONT SIZE=-5>&nbsp;client/server technologies</FONT></FONT><!--begin of Top100--><a href="javascript:if(confirm('http://top100.rambler.ru/top100/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://top100.rambler.ru/top100/'" tppabs="http://top100.rambler.ru/top100/"><img src="../../../../counter.rambler.ru/top100.cnt-236431.gif" tppabs="http://counter.rambler.ru/top100.cnt?236431" alt="Rambler's Top100" width=1 height=1 border=0></a><!--end of Top100 code--></TD>
+<TD WIDTH=468 HEIGHT=60 BGCOLOR=#6699CC ALIGN=RIGHT></TD>
+<TD WIDTH=2><IMG SRC="../../../images/blank.gif" tppabs="http://www.sql.ru/images/blank.gif" height=1 width=2 alt=""></TD></TR>                                                      	
+<TR HEIGHT=4><TD COLSPAN=3><IMG SRC="../../../images/blank.gif" tppabs="http://www.sql.ru/images/blank.gif" height=5 width=1 alt=""></TD></TR></TABLE>
+
+</TD></TR>
+
+<TR HEIGHT=15><TD bgcolor=#006699><FONT FACE="Verdana,Arial" SIZE=1 COLOR=WHITE><B><A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/'" tppabs="http://www.sql.ru/">&nbsp;<FONT COLOR=white>Главная</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/docs  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/docs'" tppabs="http://www.sql.ru/docs">&nbsp;<FONT COLOR=yellow>Документация</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/articles  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/articles'" tppabs="http://www.sql.ru/articles">&nbsp;<FONT COLOR=white>Статьи</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/books  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/books'" tppabs="http://www.sql.ru/books">&nbsp;<FONT COLOR=white>Книги</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/forum/actualforum.aspx  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/forum/actualforum.aspx'" tppabs="http://www.sql.ru/forum/actualforum.aspx">&nbsp;<FONT COLOR=white>Форум</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/poll  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/poll'" tppabs="http://www.sql.ru/poll">&nbsp;<FONT COLOR=white>Опросы</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/forum/actualtopics.aspx?bid=11  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/forum/actualtopics.aspx?bid=11'" tppabs="http://www.sql.ru/forum/actualtopics.aspx?bid=11">&nbsp;<FONT COLOR=white>Гостевая</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/subscribe  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/subscribe'" tppabs="http://www.sql.ru/subscribe">&nbsp;<FONT COLOR=white>Рассылка</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/job  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/job'" tppabs="http://www.sql.ru/job">&nbsp;<FONT COLOR=white>Работа</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/search  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/search'" tppabs="http://www.sql.ru/search">&nbsp;<FONT COLOR=white>Поиск</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/faq  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/faq'" tppabs="http://www.sql.ru/faq">&nbsp;<FONT COLOR=white>FAQ</FONT>&nbsp;</A>|</B></FONT></TD></TR>
+<TR><TD BGCOLOR=#F5F5F5>
+</noindex>
+
+<TABLE BORDER=0 CELLSPACING=10><TR><TD>
+<CENTER>
+<H2 class="headline">
+16. ИСПОЛЬЗОВАНИЕ ПОДЗАПРОСОВ С КОМАНДАМИ МОДИФИКАЦИИ</H2></CENTER> 
+В этой главе, вы узнаете как использовать 
+подзапросы в командах модификации. 
+Вы найдете, что нечто подобное - вы уже видели при использовании под- 
+запросов в запросах. Понимание, как подзапросы используются в командах SELECT, cделает их применение в командах модификации более уверенным, хотя и останутся некоторые вопросы. 
+Завершением команды SELECT является подзапрос, но не предикат, и по- 
+этому его использование отличается от использования простых предикатов с командами модификации, которые вы уже выполняли раннее с командами UPDATE и DELETE. Вы использовали простые запросы чтобы 
+производить значения для INSERT, а теперь мы можем расширить эти 
+запросы чтобы включать в них подзапросы.  <BR><BR>
+   Важный принцип который надо соблюдать при работе с командами 
+модификации, состоит в том, что вы не можете в предложении FROM 
+любого подзапроса, модифицировать таблицу к которой ссылаетесь с 
+помощью основной команды. Это относится ко всем трем командам мо- 
+дификации.  Хотя имеется большое количество ситуаций в которых будет 
+полезно сделать запрос той таблицы которую вы хотите модифицировать 
+причем во врем ее модификации, это слишком усложняет операцию что- 
+бы использовать ее на практике.    <BR><BR>
+    Не делайте ссылки к текущей строке таблицы указанной в команде, 
+которая является соотнесенным подзапросом. 
+ <A name=16.1>
+<H3>ИСПОЛЬЗОВАНИЕ ПОДЗАПРОСОВ С INSERT</H3> INSERT - это самый простой случай. Вы уже видели как вставлять 
+результаты запроса в таблицу. Вы можете использовать подзапросы 
+внутри любого запроса, который генерирует значения для команды 
+INSERT тем же самым способом, которым вы делали это для других 
+запросов - т.е. внутри предиката или предложения HAVING. 
+   Предположим, что мы имеем таблицу с именем SJpeople, столбцы 
+которой совпадают со столбцами нашей таблицы Продавцов. 
+Вы уже видели как заполнять таблицу подобно этой, заказчиками в 
+городе, например, в San Jose: 
+<PRE> 
+                   INSERT INTO SJpeople 
+                      SELECT * 
+                      FROM Salespeople 
+                      WHERE city = 'San Jose'; 
+</PRE> 
+ 
+Теперь мы можем использовать подзапрос чтобы добавить к таблице 
+SJpeople всех продавцов которые имеют заказчиков в San Jose, неза- 
+висимо от того, находятся ли там продавцы или нет: 
+<PRE> 
+       INSERT INTO SJpeople 
+          SELECT * 
+             FROM Salespeople 
+             WHERE snum = ANY 
+               ( SELECT snum 
+                    FROM Customers 
+                    WHERE city = ' (San (Jose' ); 
+ </PRE> 
+Оба запроса в этой команде функционируют также как если бы они не 
+являлись частью выражения INSERT. Подзапрос находит все строки для 
+заказчиков в San Jose и формирует набор значений snum. Внешний запрос 
+выбирает строки из таблицы Salespeople, где эти значения snum найдены. 
+В этом примере, строки для продавцов Rifkin и Serres, которые назначены 
+заказчикам в San Jose - Liu и Cisneros, будут вставлены в таблицу SJpeople. 
+<A name=16.2>
+<H3>НЕ ВСТАВЛЯЙТЕ ДУБЛИКАТЫ СТРОК</H3>Последовательность команд в предшествующем разделе может быть 
+проблематичной. Продавец Serres находится в San Jose, и следовательно 
+будет вставлен с помощью первой команды. Вторая команда попытается 
+вставить его снова, поскольку он имеет еще одного заказчика в San Jose. 
+Если имеются любые ограничения в таблице SJpeople которые вынужда- 
+ют ее значения быть уникальными, эта вторая вставка потерпит неудачу 
+( как это и должно было быть). 
+Двойные строки это плохо. ( См. <A href="ch18.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch18.shtml">Главу 18</A> для подробностей об ограничениях. ) 
+Было бы лучше если бы вы могли как-то выяснить, что эти значения уже 
+были вставлены в таблицу, прежде чем вы попытаетесь сделать это снова, 
+с помощью добавления другого подзапроса ( использующего операторы 
+типа EXISTS, IN,  &lt; &gt; ALL, и так далее )  к предикату. 
+К сожалению, чтобы сделать эту работу, вы должны будете сослаться на 
+саму таблицу SJpeople в предложении FROM этого нового подзапроса,  а, 
+как мы говорили ранее, вы не можете ссылаться на таблицу которая 
+задействована ( целиком ) в любом подзапросе команды модификации. 
+В случае INSERT, это будет также препятствовать соотнесенным подзапросам, основанным на таблице в которую вы вставляете значения. Это имеет 
+значение, потому что, с помощью INSERT, вы создаете новую строку в таблице. "Текущая строка" не будет существовать до тех пор, пока INSERT не 
+закончит ее обрабатывать. 
+<A name=16.3>
+<H3>ИСПОЛЬЗОВАНИЕ ПОДЗАПРОСОВ СОЗДАННЫХ ВО ВНЕШНЕЙ ТАБЛИЦЕ ЗАПРОСА</H3>Запрещение на ссылку к таблице которая модифицируется командой INSERT 
+не предохранит вас от использования подзапросов которые ссылаются к таб- 
+лице используемой в предложении FROM внешней команды SELECT.  Таблица 
+из которой вы выбираете значения, чтобы произвести их для INSERT , не будет 
+задействована командой; и вы сможете ссылаться к этой таблице любым способом, которыми вы обычно это делали, но только если эта таблица указана в автономном запросе.  Предположим что мы имеем таблицу с именем Samecity в ко- 
+торой мы запомним продавцов с заказчиками в их городах. 
+Мы можем заполнить таблицу используя соотнесенный подзапрос: 
+<PRE>
+      INSERT INTO (Samecity 
+	 SELECT * 
+	    FROM (Salespeople outer 
+	    WHERE city IN 
+	      ( SELECT city 
+		   FROM Customers inner 
+		   WHERE inner.snum = outer.snum ); 
+ </PRE> 
+Ни таблица Samecity, ни таблица Продавцов не должны быть использованы во 
+внешних или внутренних запросах INSERT. В качестве другого примера, предположим, что вы имеете премию для продавца который имеет самый большой порядок на каждый день. Вы следите за ним в таблице с именем Bonus, которая 
+содержит поле snum продавцов, поле odate и поле amt . Вы должны заполнить 
+эту таблицу информацией которая хранится в таблице Порядков, используя следующую команду: 
+<PRE>
+   INSERT INTO Bonus 
+      SELECT snum, odate, amt 
+	 FROM Orders a 
+	 WHERE amt = 
+	   ( SELECT MAX (amt) 
+		FROM Orders b 
+		WHERE a.odate = b.odate ); 
+
+</PRE> 
+Даже если эта команда имеет подзапрос который базируется на той же 
+самой таблице что и внешний запрос, он не ссылается к таблице Bonus, 
+на которую воздействует команда. Что для нас абсолютно приемлемо. 
+Логика запроса, естественно, должна просматривать таблицу Порядков, 
+и находить для каждой строки максимум порядка сумм приобретений для 
+этой даты. Если эта величина - так же как у текущей строки, текущая 
+строка является наибольшим порядком для этой даты, и данные вставляются в таблицу Bonus. 
+<A name=16.4>
+<H3>ИСПОЛЬЗОВАНИЕ ПОДЗАПРОСОВ С DELETE</H3>Вы можете также использовать подзапросы в предикате команды DELETE. 
+Это даст вам возможность определять некоторые довольно сложные критерии чтобы установить, какие строки будут удаляться, что важно, так как 
+вы конечно же не захотите по неосторожности удалить нужную строку. 
+Например, если мы закрыли наше ведомство в Лондоне, мы могли бы 
+использовать следующий запрос чтобы удалить всех заказчиков назначенных к продавцам в Лондоне: 
+<PRE>
+     DELETE 
+	FROM Customers 
+	WHERE snum = ANY 
+	  ( SELECT snum 
+	      FROM Salespeople 
+	      WHERE city = 'London' ); 
+</PRE> 
+Эта команда удалит из таблицы Заказчиков строки Hoffman и Clemens 
+( назначенных для Peel ), и Periera ( назначенного к Motika). 
+Конечно, вы захотите удостовериться, правильно ли сформирована эта 
+операция, прежде чем удалить или изменить строки Peel и Motika. 
+   <BR><BR>
+Это важно. Обычно, когда мы делаем модификацию в базе данных, 
+которая повлечет другие модификации, наше первое желание - сделать 
+сначала основное действие, а затем проследить другие, вторичные. 
+Этот пример, покажет, почему более эффективно делать наоборот, вы- 
+полнив сначала вторичные действия. 
+Если, например, вы решили изменить значение пол city ваших продавцов везде, где они переназначены, вы должны рассмотреть всех этих 
+заказчиков более сложным способом. 
+Так как реальные базы данных имеют тенденцию развиваться до значительно больших размеров чем наши небольшие типовые таблицы, это может стать серьезной проблемой. SQL может предоставить некоторую по- 
+мощь в этой области используя механизм справочной целостности ( об- 
+сужденной в <A href="ch19.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch19.shtml">Главе 19</A> ), но это не всегда доступно и не всегда применимо. 
+Хотя вы не можете ссылаться к таблице из которой вы будете удалть 
+строки в предложении FROM подзапроса, вы можете в предикате, сослать- 
+с на текущую строку-кандидат этой таблицы - котора влетс строкой 
+котора в настудалятьрем проверетс в основном предикате. Другими 
+словами, вы можете использовать соотнесенные подзапросы. Они отлича- 
+ютс от тех соотнесенных подзапросов, которые вы могли использовать с 
+INSERT, в котором они фактически базировались на строках-кандидатах 
+таблицы задействованной в команде, а не на запросе другой таблицы. 
+<PRE>
+  DELETE FROM Salespeople 
+     WHERE EXISTS 
+       ( SELECT * 
+	   FROM Customers 
+	   WHERE rating = 100 
+	   AND Salespeople.snum = Customers.snum ); 
+</PRE> 
+Обратите внимание, что AND часть предиката внутреннего запроса 
+ссылается к таблице Продавцов. Это означает что весь подзапрос будет 
+выполняться отдельно для каждой строки таблицы Продавцов, также как 
+это выполнялось с другими соотнесенными подзапросами. Эта команда 
+удалит всех продавцов которые имели по меньшей мере одного заказчика 
+с оценкой 100 в таблице Продавцов. 
+Конечно же, имеется другой способ сделать то же: 
+<PRE>
+     DELETE FROM Salespeople 
+	WHERE 100 IN 
+	  ( SELECT rating 
+	      FROM Customers 
+	      WHERE Salespeople.snum = Customers.snum); 
+</PRE> 
+
+Эта команда находит все оценки для каждого заказчика продавцов и уда- 
+лет тех продавцов заказчики которого имеют оценку = 100. 
+  <BR><BR>
+Обычно соотнесенные подзапросы - это подзапросы связанные с таблицей 
+к которой они ссылаются во внешнем запросе (а не в самом предложении 
+DELETE) - и  также часто используемые. Вы можете найти наинизший пор- 
+док на каждый день и удалить продавцов которые произвели его, с помощью следующей команды: 
+<PRE>
+      DELETE FROM Salespeople 
+	 WHERE (snum IN 
+	   ( SELECT snum 
+		FROM Orders 
+		WHERE amt = 
+		  ( SELECT MIN (amt) 
+		       FROM Orders b 
+		       WHERE a.odate = b.odate )); 
+</PRE> 
+Подзапрос в предикате DELETE , берет соотнесенный подзапрос. Этот внутренний запрос находит минимальный порядок суммы приобретений для 
+даты каждой строки внешнего запроса. Если эта сумма так же как сумма текущей строки, предикат внешнего запроса верен, что означает, что 
+текущая строка имеет наименьший порядок для этой даты. Поле snum продавца, ответственного за этот порядок, извлекается и передается в основ- 
+ной предикат команды DELETE, которая затем удаляет все строки с этим 
+значением пол snum из таблицы Продавцов( так как snum - это первичный 
+ключ таблицы Продавцов, то естественно там должна иметься только одна 
+удаляемая строка для значения пол snum выведенного с помощью подзап- 
+роса. Если имеется больше одной строки, все они будут удалены. ) 
+Поле snum = 1007 которое будет удалено, имеет наименьшее значение на 
+3 Октября; поле snum = 1002, наименьшее на 4 Октября; поле snum = 1001, 
+наименьшее в порядках на 5 Октября ( эта команда кажется довольно резкой, 
+особенно когда она удаляет Peel создавшего единственный порядок на 5 Октября, но зато это хорошая иллюстрация). 
+ <BR><BR>
+Если вы хотите сохранить Peel, вы могли бы добавить другой подзапрос, 
+который бы это делал: 
+<PRE>
+   DELETE FROM Salespeople 
+      WHERE (snum IN 
+	( SELECT snum 
+	     FROM Orders a 
+	     WHERE amt = 
+	       ( SELECT MIN (amt) 
+		    FROM Orders b 
+		    WHERE a.odate = b.odate ) 
+	     AND 1 &lt; 
+	      ( SELECT COUNT onum 
+		   FROM Orders b 
+		   WHERE a.odate = b.odate )); 
+</PRE> 
+Теперь для дня в котором был создан только один порядок, будет произведен 
+счет = 1 во втором соотнесенном подзапросе. Это сделает предикат внешнего запроса неправильным, и пол snum следовательно не будут переданы в 
+основной предикат. 
+<A name=16.5>
+<H3>ИСПОЛЬЗОВАНИЕ ПОДЗАПРОСОВ С UPDATE</H3>UPDATE использует подзапросы тем же самым способом что и DELETE 
+- внутри этого необязательного предиката. Вы можете использовать соотнесенные подзапросы или в форме пригодной для использования с DELETE - 
+связанной или с модифицируемой таблицей или с таблицей вызываемой во 
+внешнем запросе. Например, с помощью соотнесенного подзапроса к таблице которая будет модифицироваться, вы можете увеличить комиссионные 
+всех продавцов которые были назначены по крайней мере двум заказчикам: 
+<PRE>
+UPDATE Salespeople 
+   SET comm = comm + .01 
+   WHERE 2 &lt; = 
+      ( SELECT COUNT (cnum) 
+	   FROM Customers 
+	   WHERE Customers.snum = 
+	    Salespeople.snum ); 
+</PRE> 
+
+Теперь продавцы Peel и Serres, имеющие многочисленных заказчиков, 
+получат повышение своих комиссионных. 
+Имеется разновидность последнего примера из предыдущего раздела с 
+DELETE. Он уменьшает комиссионные продавцов которые произвели наименьшие порядки, но не стирает их в таблице: 
+<PRE>
+   UPDATE Salespeople 
+      SET comm = comm - .01 
+      WHERE snum IN 
+	( SELECT snum 
+	     FROM Orders a 
+	     WHERE amt = 
+	       ( SELECT MIN (amt) 
+		    FROM Orders b 
+		    WHERE a.odate = b.odate )); 
+</PRE> 
+<A name=16.6>
+<H3>СТОЛКНОВЕНИЕ С ОГРАНИЧЕНИЯМИ ПОДЗАПРОСОВ КОМАНДЫ DML</H3>Неспособность сослаться к таблице задействованной в любом подзапросе из 
+команды модификации (UPDATE), устраняет целые категории возможных 
+действий. 
+Например, вы не можете просто выполнить такую операцию как удаление 
+всех заказчиков с оценками ниже средней. Вероятно лучше всего вы могли 
+бы сначала (Шаг 1.), выполнить запрос, получающий среднюю величину, а 
+затем (Шаг 2.), удалить все строки с оценкой ниже этой величины: 
+
+Шаг 1. 
+<PRE>
+  SELECT AVG (rating) 
+     FROM Customers; 
+</PRE> 
+Вывод = 200. 
+
+Шаг 2. 
+<PRE>
+  DELETE 
+     FROM Customers 
+     WHERE rating &lt; 200; 
+</PRE> 
+<A name=16.7>
+<H3>РЕЗЮМЕ</H3>Теперь вы овладели трем командами которые управляют всем содержанием 
+вашей базы данных. Осталось только несколько общих вопросов относительно 
+ввода и стирания значений таблицы, когда например эти команды могут выполниться данным пользователем в данной таблице и когда действия сделанные ими, становятся постоянными. 
+Подведем итог: Вы используете команду INSERT чтобы добавлять строки в таблицу. Вы можете или дать имена значениям этих строк в предложении VALUES 
+( когда только одна строка может быть добавлена ), или вывести значения с по- 
+мощью запроса ( когда любое число строк можно добавить одной командой ). 
+Если используется запрос, он не может ссылаться к таблице в которую вы делаете вставку, каким бы способом Вы ее ни делали, ни в предложении FROM, ни 
+с помощью внешней ссылки ( как это делается в соотнесенных подзапросах ). 
+Все это относится к любым подзапросам внутри этого запроса. 
+Запрос, однако, оставляет вам свободу использования соотнесенных подзапросов или подзапросов которые дают в предложении FROM им таблице, которое 
+уже было указано в предложении FROM внешнего запроса ( это - общий случай 
+для запросов ). 
+DELETE и UPDATE используются чтобы, соответственно удалить строки из таблицы и изменить в них значения. Оба они применимы ко всем строкам таблицы, 
+если не используется предикат определяющий какие строки должны быть удалены или модифицированы. Этот предикат может содержать подзапросы, которые 
+могут быть связаны с таблицей, удаляемой, или модифицированной, с помощью 
+внешней ссылки. Эти подзапросы, однако, не могут ссылать к таблице модифицируемой любым предложением FROM. 
+Может показаться, что мы прошли материал SQL который обладает не самым 
+понятным логическим порядком. Сначала мы сделали запрос таблицы которая 
+уже заполнена данными. Потом мы показали как можно фактически помещать 
+эти значения изначально. Но, как вы видите, полное ознакомление с запросами 
+здесь неоценимо. 
+Теперь, когда мы показали вам как заполнять значениями таблицы которые уже 
+были созданы (по определению) , мы покажем( <A href="ch17.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch17.shtml">со следующей главы</A>)  откуда появились эти таблицы.  
+
+
+<A name=16.8>
+<H3>РАБОТА С SQL</H3>1. Предположите, что имеется таблица называемая Multicust, с такими 
+же именами столбцов что и таблица Продавцов. Напишите команду, 
+которая бы вставила всех продавцов (из таблицы Продавцов)имеющих 
+более чем одного заказчика в эту таблицу. 
+<BR><BR>
+2. Напишите команду которая бы удаляла всех заказчиков не имеющих 
+текущих порядков. 
+<BR><BR>
+3. Напишите команду которая бы увеличила на двадцать процентов комиссионные всех продавцов имеющих общие текущие порядки выше чем $3,000. 
+<BR><BR>
+( См. <A href="a.shtml.htm#16" tppabs="http://www.sql.ru/docs/sql/u_sql/a.shtml#16">Приложение A</A> для ответов. ) 
+
+</TD></TR></TABLE>
+</TD></TR>
+<TR BGCOLOR=#6699CC><TD><TABLE WIDTH=100% BORDER=0 CELLSPACING=0 CELLPADDING=0><TR><TD BGCOLOR=#6699CC VALIGN=CENTER HEIGHT = 40><FONT SIZE=-10>
+<!--begin of Top100 logo-->
+<a href="javascript:if(confirm('http://top100.rambler.ru/top100/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://top100.rambler.ru/top100/'" tppabs="http://top100.rambler.ru/top100/">
+<img src="../../../../top100-images.rambler.ru/top100/banner-88x31-rambler-gray2.gif" tppabs="http://top100-images.rambler.ru/top100/banner-88x31-rambler-gray2.gif" alt="Rambler's Top100" width=88 height=31 border=0></a>
+<!--end of Top100 logo -->
+</FONT>
+<!--Rating@Mail.ru COUNTER--><a target=_top
+href="javascript:if(confirm('http://top.mail.ru/jump?from=58574  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://top.mail.ru/jump?from=58574'" tppabs="http://top.mail.ru/jump?from=58574"><img
+src="../../../../top.list.ru/counter-id=58574;t=94.gif" tppabs="http://top.list.ru/counter?id=58574;t=94"
+border=0 height=18 width=88
+alt="Рейтинг@Mail.ru"></a><!--/COUNTER-->
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="font : bold 10px verdana; color : white" href="javascript:if(confirm('http://hosting.parking.ru/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://hosting.parking.ru/'" tppabs="http://hosting.parking.ru/">Хостинг от компании Parking.ru</a>
+<script src="../../../../www.google-analytics.com/urchin.js" tppabs="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-265508-1";
+urchinTracker();
+</script>
+</TD>
+<TD BGCOLOR=#6699CC ALIGN=right><FONT COLOR=white FACE="Tahoma,Arial" SIZE=1>&nbsp;Administrator:&nbsp;<A STYLE="color :white" HREF="mailto:admin@sql.ru">admin@sql.ru</A>&nbsp;<BR>Last update: <FONT COLOR=white>05 июн 2007&nbsp;</FONT></FONT></TD></TR></TABLE>
+</TD></TR></TABLE></TD></TR></TABLE>
+
+</BODY></HTML>
+

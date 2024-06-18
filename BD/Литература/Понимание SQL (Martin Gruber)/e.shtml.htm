@@ -1,0 +1,122 @@
+<HTML>
+<HEAD>
+<TITLE>Понимание SQL. Приложение E. [SQL.RU]</TITLE>
+<META http-equiv="Content-Type" CONTENT="text/html; charset=windows-1251">
+<META HTTP-EQUIV="Window-target" CONTENT="_top">
+<META HTTP-EQUIV="Last-Modified" CONTENT="29-03-2001">
+<META NAME="Description" CONTENT="Использование языка SQL, создание клиент-серверных систем. Конференция по MSSQL, Oracle, Interbase, MySQL. Полезные ссылки, документация, рекомендации по разработке информационных систем, сертификация, заказ книг и многое другое.">
+<META NAME="Keywords" CONTENT="SQL, конференция, Database Server, Oracle, Interbase, MySQL, документация, статьи, примеры, книги, ссылки, сертификация, работа, СУБД">
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../form.css" tppabs="http://www.sql.ru/form.css">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" leftmargin="3" topmargin="3" marginheight="3" marginwidth="3">
+<noindex>
+<TABLE BGCOLOR="#000000" WIDTH=100% CELLPADDING=0 CELLSPACING=0 BORDER=0>
+<TR><TD>
+
+<TABLE WIDTH=100% CELLPADDING=0 CELLSPACING=1 BORDER=0>
+<TR BGCOLOR="#6699CC"><TD><TABLE CELLSPACING=0 CELLPADDING=0 WIDTH=100% BORDER=0 BGCOLOR="#6699CC">
+<TR><TD COLSPAN=3><IMG SRC="../../../images/blank.gif" tppabs="http://www.sql.ru/images/blank.gif" height=3 width=1 alt=""></TD></TR>
+<TR><TD VALIGN=TOP>&nbsp;<FONT FACE="Verdana,Arial" SIZE=5 COLOR=lightyellow>SQL.RU<BR><FONT SIZE=-5>&nbsp;client/server technologies</FONT></FONT><!--begin of Top100--><a href="javascript:if(confirm('http://top100.rambler.ru/top100/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://top100.rambler.ru/top100/'" tppabs="http://top100.rambler.ru/top100/"><img src="../../../../counter.rambler.ru/top100.cnt-236431.gif" tppabs="http://counter.rambler.ru/top100.cnt?236431" alt="Rambler's Top100" width=1 height=1 border=0></a><!--end of Top100 code--></TD>
+<TD WIDTH=468 HEIGHT=60 BGCOLOR=#6699CC ALIGN=RIGHT></TD>
+<TD WIDTH=2><IMG SRC="../../../images/blank.gif" tppabs="http://www.sql.ru/images/blank.gif" height=1 width=2 alt=""></TD></TR>                                                      	
+<TR HEIGHT=4><TD COLSPAN=3><IMG SRC="../../../images/blank.gif" tppabs="http://www.sql.ru/images/blank.gif" height=5 width=1 alt=""></TD></TR></TABLE>
+
+</TD></TR>
+
+<TR HEIGHT=15><TD bgcolor=#006699><FONT FACE="Verdana,Arial" SIZE=1 COLOR=WHITE><B><A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/'" tppabs="http://www.sql.ru/">&nbsp;<FONT COLOR=white>Главная</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/docs  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/docs'" tppabs="http://www.sql.ru/docs">&nbsp;<FONT COLOR=yellow>Документация</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/articles  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/articles'" tppabs="http://www.sql.ru/articles">&nbsp;<FONT COLOR=white>Статьи</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/books  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/books'" tppabs="http://www.sql.ru/books">&nbsp;<FONT COLOR=white>Книги</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/forum/actualforum.aspx  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/forum/actualforum.aspx'" tppabs="http://www.sql.ru/forum/actualforum.aspx">&nbsp;<FONT COLOR=white>Форум</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/poll  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/poll'" tppabs="http://www.sql.ru/poll">&nbsp;<FONT COLOR=white>Опросы</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/forum/actualtopics.aspx?bid=11  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/forum/actualtopics.aspx?bid=11'" tppabs="http://www.sql.ru/forum/actualtopics.aspx?bid=11">&nbsp;<FONT COLOR=white>Гостевая</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/subscribe  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/subscribe'" tppabs="http://www.sql.ru/subscribe">&nbsp;<FONT COLOR=white>Рассылка</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/job  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/job'" tppabs="http://www.sql.ru/job">&nbsp;<FONT COLOR=white>Работа</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/search  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/search'" tppabs="http://www.sql.ru/search">&nbsp;<FONT COLOR=white>Поиск</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/faq  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/faq'" tppabs="http://www.sql.ru/faq">&nbsp;<FONT COLOR=white>FAQ</FONT>&nbsp;</A>|</B></FONT></TD></TR>
+<TR><TD BGCOLOR=#F5F5F5>
+</noindex>
+
+<TABLE BORDER=0 CELLSPACING=10><TR><TD>
+<CENTER>
+<H2 class="headline">
+Приложение E</H2></CENTER>
+<HR width="50%">
+
+<H3>
+<CENTER>ТАБЛИЦЫ, ИСПОЛЬЗУЕМЫЕ В SQL</CENTER></H3><PRE> 
+ 
+====================  ТАБЛИЦА 1:  ПРОДАВЦЫ  ================ 
+ 
+      ---------------------------------------------- 
+        snum  |   sname   |  city        |   comm 
+      --------|-----------|--------------|---------- 
+        1001  |  Peel     |  London      |    .12 
+        1002  |  Serres   |  San Jose    |    .13 
+        1004  |  Motika   |  London      |    .11 
+        1007  |  Rifkin   |  Barcelona   |    .15 
+        1003  |  Axelrod  |  New York    |    .10 
+       --------------------------------------------- 
+ 
+ 
+ 
+==================  ТАБЛИЦА 2:  ЗАКАЗЧИКИ  =============== 
+ 
+       ---------------------------------------------- 
+        cnum  |  cname     | city    | rating | snum 
+       -------|------------|---------|--------|------ 
+        2001  |  Hoffman   | London  |   100  | 1001 
+        2002  |  Giovanni  | Rome    |   200  | 1003 
+        2003  |  Liu       | SanJose |   200  | 1002 
+        2004  |  Grass     | Berlin  |   300  | 1002 
+        2006  |  Clemens   | London  |   100  | 1001 
+        2008  |  Cisneros  | SanJose |   300  | 1007 
+        2007  |  Pereira   | Rome    |   100  | 1004 
+       ---------------------------------------------- 
+ 
+ 
+ 
+==================  ТАБЛИЦА 3:   ПОРЯДКИ  ================== 
+ 
+       ----------------------------------------------- 
+        onum  |    amt    |    odate    | cnum | snum 
+       -------|-----------|-------------|------|------ 
+        3001  |    18.69  |  10/03/1990 | 2008 | 1007 
+        3003  |   767.19  |  10/03/1990 | 2001 | 1001 
+        3002  |  1900.10  |  10/03/1990 | 2007 | 1004 
+        3005  |  5160.45  |  10/03/1990 | 2003 | 1002 
+        3006  |  1098.16  |  10/03/1990 | 2008 | 1007 
+        3009  |  1713.23  |  10/04/1990 | 2002 | 1003 
+        3007  |    75.75  |  10/04/1990 | 2004 | 1002 
+        3008  |  4723.00  |  10/05/1990 | 2006 | 1001 
+        3010  |  1309.95  |  10/06/1990 | 2004 | 1002 
+        3011  |  9891.88  |  10/06/1990 | 2006 | 1001 
+       ----------------------------------------------- 
+</PRE>
+</TD></TR></TABLE>
+</TD></TR>
+<TR BGCOLOR=#6699CC><TD><TABLE WIDTH=100% BORDER=0 CELLSPACING=0 CELLPADDING=0><TR><TD BGCOLOR=#6699CC VALIGN=CENTER HEIGHT = 40><FONT SIZE=-10>
+<!--begin of Top100 logo-->
+<a href="javascript:if(confirm('http://top100.rambler.ru/top100/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://top100.rambler.ru/top100/'" tppabs="http://top100.rambler.ru/top100/">
+<img src="../../../../top100-images.rambler.ru/top100/banner-88x31-rambler-gray2.gif" tppabs="http://top100-images.rambler.ru/top100/banner-88x31-rambler-gray2.gif" alt="Rambler's Top100" width=88 height=31 border=0></a>
+<!--end of Top100 logo -->
+</FONT>
+<!--Rating@Mail.ru COUNTER--><a target=_top
+href="javascript:if(confirm('http://top.mail.ru/jump?from=58574  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://top.mail.ru/jump?from=58574'" tppabs="http://top.mail.ru/jump?from=58574"><img
+src="../../../../top.list.ru/counter-id=58574;t=94.gif" tppabs="http://top.list.ru/counter?id=58574;t=94"
+border=0 height=18 width=88
+alt="Рейтинг@Mail.ru"></a><!--/COUNTER-->
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="font : bold 10px verdana; color : white" href="javascript:if(confirm('http://hosting.parking.ru/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://hosting.parking.ru/'" tppabs="http://hosting.parking.ru/">Хостинг от компании Parking.ru</a>
+<script src="../../../../www.google-analytics.com/urchin.js" tppabs="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-265508-1";
+urchinTracker();
+</script>
+</TD>
+<TD BGCOLOR=#6699CC ALIGN=right><FONT COLOR=white FACE="Tahoma,Arial" SIZE=1>&nbsp;Administrator:&nbsp;<A STYLE="color :white" HREF="mailto:admin@sql.ru">admin@sql.ru</A>&nbsp;<BR>Last update: <FONT COLOR=white>05 июн 2007&nbsp;</FONT></FONT></TD></TR></TABLE>
+</TD></TR></TABLE></TD></TR></TABLE>
+
+</BODY></HTML>
+

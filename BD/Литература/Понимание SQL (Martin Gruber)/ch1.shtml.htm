@@ -1,0 +1,408 @@
+<HTML>
+<HEAD>
+<TITLE>Понимание SQL. Введение В Реляционную Базу Данных. [SQL.RU]</TITLE>
+<META http-equiv="Content-Type" CONTENT="text/html; charset=windows-1251">
+<META HTTP-EQUIV="Window-target" CONTENT="_top">
+<META HTTP-EQUIV="Last-Modified" CONTENT="29-03-2001">
+<META NAME="Description" CONTENT="Использование языка SQL, создание клиент-серверных систем. Конференция по MSSQL, Oracle, Interbase, MySQL. Полезные ссылки, документация, рекомендации по разработке информационных систем, сертификация, заказ книг и многое другое.">
+<META NAME="Keywords" CONTENT="SQL, конференция, Database Server, Oracle, Interbase, MySQL, документация, статьи, примеры, книги, ссылки, сертификация, работа, СУБД">
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../form.css" tppabs="http://www.sql.ru/form.css">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" leftmargin="3" topmargin="3" marginheight="3" marginwidth="3">
+<noindex>
+<TABLE BGCOLOR="#000000" WIDTH=100% CELLPADDING=0 CELLSPACING=0 BORDER=0>
+<TR><TD>
+
+<TABLE WIDTH=100% CELLPADDING=0 CELLSPACING=1 BORDER=0>
+<TR BGCOLOR="#6699CC"><TD><TABLE CELLSPACING=0 CELLPADDING=0 WIDTH=100% BORDER=0 BGCOLOR="#6699CC">
+<TR><TD COLSPAN=3><IMG SRC="../../../images/blank.gif" tppabs="http://www.sql.ru/images/blank.gif" height=3 width=1 alt=""></TD></TR>
+<TR><TD VALIGN=TOP>&nbsp;<FONT FACE="Verdana,Arial" SIZE=5 COLOR=lightyellow>SQL.RU<BR><FONT SIZE=-5>&nbsp;client/server technologies</FONT></FONT><!--begin of Top100--><a href="javascript:if(confirm('http://top100.rambler.ru/top100/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://top100.rambler.ru/top100/'" tppabs="http://top100.rambler.ru/top100/"><img src="../../../../counter.rambler.ru/top100.cnt-236431.gif" tppabs="http://counter.rambler.ru/top100.cnt?236431" alt="Rambler's Top100" width=1 height=1 border=0></a><!--end of Top100 code--></TD>
+<TD WIDTH=468 HEIGHT=60 BGCOLOR=#6699CC ALIGN=RIGHT></TD>
+<TD WIDTH=2><IMG SRC="../../../images/blank.gif" tppabs="http://www.sql.ru/images/blank.gif" height=1 width=2 alt=""></TD></TR>                                                      	
+<TR HEIGHT=4><TD COLSPAN=3><IMG SRC="../../../images/blank.gif" tppabs="http://www.sql.ru/images/blank.gif" height=5 width=1 alt=""></TD></TR></TABLE>
+
+</TD></TR>
+
+<TR HEIGHT=15><TD bgcolor=#006699><FONT FACE="Verdana,Arial" SIZE=1 COLOR=WHITE><B><A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/'" tppabs="http://www.sql.ru/">&nbsp;<FONT COLOR=white>Главная</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/docs  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/docs'" tppabs="http://www.sql.ru/docs">&nbsp;<FONT COLOR=yellow>Документация</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/articles  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/articles'" tppabs="http://www.sql.ru/articles">&nbsp;<FONT COLOR=white>Статьи</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/books  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/books'" tppabs="http://www.sql.ru/books">&nbsp;<FONT COLOR=white>Книги</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/forum/actualforum.aspx  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/forum/actualforum.aspx'" tppabs="http://www.sql.ru/forum/actualforum.aspx">&nbsp;<FONT COLOR=white>Форум</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/poll  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/poll'" tppabs="http://www.sql.ru/poll">&nbsp;<FONT COLOR=white>Опросы</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/forum/actualtopics.aspx?bid=11  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/forum/actualtopics.aspx?bid=11'" tppabs="http://www.sql.ru/forum/actualtopics.aspx?bid=11">&nbsp;<FONT COLOR=white>Гостевая</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/subscribe  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/subscribe'" tppabs="http://www.sql.ru/subscribe">&nbsp;<FONT COLOR=white>Рассылка</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/job  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/job'" tppabs="http://www.sql.ru/job">&nbsp;<FONT COLOR=white>Работа</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/search  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/search'" tppabs="http://www.sql.ru/search">&nbsp;<FONT COLOR=white>Поиск</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/faq  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/faq'" tppabs="http://www.sql.ru/faq">&nbsp;<FONT COLOR=white>FAQ</FONT>&nbsp;</A>|</B></FONT></TD></TR>
+<TR><TD BGCOLOR=#F5F5F5>
+</noindex>
+
+<TABLE BORDER=0 CELLSPACING=10><TR><TD>
+<CENTER>
+<H2 class="headline">
+ВВЕДЕНИЕ В РЕЛЯЦИОННУЮ БАЗУ ДАННЫХ</H2></CENTER>
+<P>
+<P>
+<HR width="50%">
+
+<P><B>
+<H4>В В Е Д Е Н И Е </H4></B>
+<P><B>SQL</B> ( ОБЫЧНО ПРОИЗНОСИМАЯ КАК "СИКВЭЛ" ) символизирует собой<B> 
+Структурированный Язык Запросов.</B> Это - язык который дает вам возможность 
+создавать и работать в реляционных базах данных, которые являются наборами 
+связанной информации сохраняемой в таблицах. 
+<P>Мир баз данных становится все более и более единым, что привело к 
+необходимости создания стандартного языка, который мог бы использоваться для 
+функционирования в большом количестве различных видов компьютерных сред. 
+Стандартный язык позволит пользователям, знающим один набор команд, использовать 
+их, чтобы создавать, отыскивать, изменять, и передавать информацию, независимо 
+от того, работают ли они на персональном компьютере, сетевой рабочей станции, 
+или на универсальной ЭВМ. 
+<P>В нашем все более и более взаимосвязанном компьютерном мире, пользователь 
+снабженный таким языком, имеет огромное преимущество в использовании и обобщении 
+информации из ряда источников с помощью большого количества способов. 
+<P>Элегантность и независимость от специфики компьютерных технологий, а также 
+его поддержка лидерами промышленности в области технологии реляционных баз 
+данных, сделало <B>SQL,</B> и вероятно в течение обозримого будущего оставит 
+его, основным стандартным языком. По этой причине, любой кто хочет работать с 
+базами данных 90-х годов должен знать<B> SQL.</B> 
+<P><B>Стандарт SQL</B> определяется<B> ANSI (Американским Национальным 
+Институтом Стандартов)</B> и в данное время также принимается <B>ISO 
+(Международной организацией по стандартизации).</B> Однако, большинство 
+коммерческих программ баз данных расширяют<B> SQL</B> без уведомления<B> 
+ANSI,</B> добавляя разные другие особенности в этот язык, которые, как они 
+считают, будут весьма полезны. <BR>Иногда они несколько нарушают стандарт языка, 
+хотя хорошие идеи имеют тенденцию развиваться и вскоре становиться стандартами 
+"рынка" сами по себе в силу полезности своих качеств. 
+<P>В этой книге, мы будем, в основном, следовать стандарту ANSI, но одновременно 
+иногда будет показывать и некоторые наиболее общие отклонения от его стандарта. 
+<P>Вы должны проконсультироваться с документацией вашего пакета программ который 
+вы будете использовать, чтобы знать где в нем этот стандарт видоизменен. 
+<P>ПРЕЖДЕ, ЧЕМ ВЫ СМОЖЕТЕ ИСПОЛЬЗОВАТЬ SQL, ВЫ должны понять <B>что такое 
+реляционные базы данных.</B><BR>В этой главе, мы это объясним, и покажем 
+насколько реляционные базы данных полезны. Мы не будем обсуждать SQL именно 
+здесь, и если вы уже знаете эти понятия довольно хорошо, вы можете просто 
+пропустить эту главу. <BR>В любом случае, вы должны рассмотреть три таблицы 
+которые предоставляются и объясняются в конце главы; они станут основой наших 
+примеров в этой книге. Вторая копия этих таблиц находится в <A 
+href="e.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/e.shtml">Приложении 
+E</A>, и мы рекомендуем скопировать их для удобства ссылки к ним. 
+<P>
+<HR width="50%">
+
+<P><A name=what>
+<H4><B>ЧТО ТАКОЕ - РЕЛЯЦИОННАЯ БАЗА ДАННЫХ? </H4></B>
+<P><B>Реляционная база данных </B>- это тело связанной информации, сохраняемой в 
+двухмерных таблицах. Напоминает адресную или телефонную книгу. 
+<P>В книге имеется большое количество входов, каждый из которых соответствует 
+определенной особенности. Для каждой такой особенности, может быть несколько 
+независимых фрагментов данных, <I>например</I> имя, телефонный номер, и адрес. 
+Предположим, что вы должны сформатировать эту адресную книгу в виде таблицы со 
+строками и столбцами. Каждая строка ( называемая также записью ) будет 
+соответствовать определенной особенности; каждый столбец будет содержать 
+значение для каждого типа данных - имени, телефонного номера, и адреса 
+представляемого в каждой строке. Адресная книга могла бы выглядеть следующим 
+образом: 
+<P>
+<TABLE cellSpacing=15>
+  <TBODY>
+  <TR align=left>
+    <TD><FONT size=5>Имя</FONT>
+    <TD><FONT size=5>Телефон</FONT>
+    <TD><FONT size=5>Адрес</FONT></TD>
+  <TR align=left>
+    <TH>Gerry Farish</TH>
+    <TH>(415)365-8775</TH>
+    <TH>127 Primrose Ave.,SF</TH>
+  <TR align=left>
+    <TH>Celia Brock</TH>
+    <TH>(707)874-3553</TH>
+    <TH>246 #3rd St.,Sonoma</TH>
+  <TR align=left>
+    <TH>Yves Grillet</TH>
+    <TH>(762)976-3665</TH>
+    <TH>778 Modernas,Barcelona</TH></TR></TBODY></TABLE>
+<P>То, что вы получили, является<B> основой реляционной базы данных</B> как и 
+было определено в начале этого обсуждения - а именно,<B> двухмерной (строка и 
+столбец) таблицей информации.</B> <BR>Однако, реляционные базы данных редко 
+состоят из одной таблицы. Такая таблица меньше, чем файловая система. Создав 
+несколько таблиц взаимосвязанной информации, вы сможете выполнить более сложные 
+и мощные операции с вашими данными. Мощность базы данных зависит от связи, 
+которую вы можете создать между фрагментами информации, а не от самого фрагмента 
+информации. <A name=Table>
+<P>
+<HR width="50%">
+
+<P>
+<H3>СВЯЗЫВАНИЕ ОДНОЙ ТАБЛИЦЫ С ДРУГОЙ</H3>
+<P>Позвольте нам использовать пример нашей адресной книги чтобы начать 
+обсуждение базы данных которая может реально использоваться в деловой ситуации. 
+Предположим, что персонажи в нашей первой таблице ( адресной книги ) - это 
+пациенты больницы. В другой таблице, мы могли бы запомнить дополнительную 
+информацию об этих пациентах. Столбцы второй таблицы могли бы быть помечены как 
+Пациент, Доктор, Страховка, и Баланс. <PRE>   Пациент   Доктор    Страховка    Баланс 
+ 
+   Farish    Drume     B.C./B.S.    $272.99 
+ 
+   Grillet   Halben    None         $44. 76 
+ 
+   Brock     Halben    Health,Inc.  $9077.47 
+ </PRE>Много мощных функций можно выполнить извлекая информацию из этих таблиц 
+согласно указанным параметрам, особенно когда эти параметры включают в себя 
+фрагменты информации связанные в различных таблицах друг с другом. Например, 
+возьмем - докторов. Предположим доктор Halben захотел получить номера телефонов 
+всех своих пациентов. Чтобы извлечь эту информацию, он мог бы связать таблицу с 
+номерами телефонов пациентов ( по адресной книге ) с таблицей которая бы 
+указывала, какой из пациентов - его. Хотя, в этом простом примере, он мог бы 
+держать это в голове и сразу получать номера телефонов пациентов Grillet и 
+Brock, эти таблицы могут быть слишком большими и слишком сложными. Программы 
+реляционной базы данных разрабатывались для того чтобы обрабатывать большие и 
+сложные совокупности данных такого типа, что очевидно является более 
+универсальным методом в деловом мире. Даже если бы база данных больницы 
+содержала сотни или тысячи имен - как это вероятно и бывает на практике - одна 
+команда SQL могла бы выдать доктору Halben информацию в которой он нуждался 
+почти немедленно. <A name=Lines>
+<P>
+<HR width="50%">
+
+<P>
+<H3>ПОРЯДОК СТРОК ПРОИЗВОЛЕН</H3>
+<P>Чтобы поддерживать максимальную гибкость, строки таблицы, по определению, не 
+должны находиться ни в каком определенном порядке. С этой точки зрения, в этом 
+структура базы данных отличается от нашей адресной книги. 
+<P>Вход в адресную книгу обычно упорядочивается в алфавитном порядке. В системах 
+с реляционной базой данных, имеется одна мощна возможность для пользователей - 
+это способность упорядочивать информацию так чтобы они могли восстанавливать ее. 
+
+<P>Рассмотрим вторую таблицу. Иногда Вам необходимо видеть эту информацию 
+упорядоченной в алфавитном порядке по именам, иногда в возрастающем или 
+убывающем порядке, а иногда сгруппированной по отношению к какому-нибудь 
+доктору. Наложение порядка набора в строках будет сталкиваться со способностью 
+заказчика изменять его, поэтому строки всегда рассматриваются как 
+неупорядоченные. По этой причине, вы не можете просто сказать:" Мы хотим 
+посмотреть пятую строку таблицы. " Пренебрегая порядком в котором данные 
+вводились или любым другим критерием, мы определим, не ту строку, хотя она и 
+будет пятой. Строки таблицы которые рассматриваются, не будут в какой-либо 
+определенной последовательности. <A name=IdenLine>
+<P>
+<HR width="50%">
+
+<P>
+<H3>ИДЕНТИФИКАЦИЯ СТРОК ( ПЕРВИЧНЫЕ КЛЮЧИ )</H3>
+<P>По этим и другим причинам, вы должны иметь столбец в вашей таблице который бы 
+уникально идентифицировал каждую строку. Обычно, этот столбец содержит номер - 
+например, номер пациента назначаемый каждому пациенту. Конечно, вы могли бы 
+использовать им пациентов, но возможно что имеется несколько Mary Smiths; и в 
+этом случае, вы не будете иметь другого способа чтобы отличить этих пациентов 
+друг от друга.
+<P>Вот почему номера так необходимы. Такой уникальный столбец (или уникальна 
+группа столбцов ), используемый чтобы идентифицировать каждую строку и хранить 
+все строки отдельно, называются - первичными ключами таблицы. 
+<P>Первичные ключи таблицы важный элемент в структуре базы данных. Они - основа 
+вашей системы записи в файл; и когда вы хотите найти определенную строку в 
+таблице, вы ссылаетесь к этому первичному ключу. Кроме того, первичные ключи 
+гарантируют, что ваши данные имеют определенную целостность. Если первичный ключ 
+правильно используетс и поддерживаетс, вы будете знать что нет пустых строк 
+таблицы и что кажда строка отличаетс от любой другой строки. Мы будем обсуждать 
+ключи и далее когда поговорим относительно справочной целостности в <A 
+href="ch19.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch19.shtml">Главе 
+19</A>. <A name=NumSt>
+<P>
+<HR width="50%">
+
+<P>
+<H3>СТОЛБЦЫ ИМЕНУЮТСЯ И НУМЕРУЮТСЯ</H3>
+<P>В отличие от строк, столбцы таблицы ( также называемые полями ) 
+упорядочиваются и именуются. Таким образом, в нашей таблице адресной книги, 
+возможно указать на " адрес столбца " или на " столбец 3 ". Конечно, это 
+означает что каждый столбец данной таблицы должен иметь уникальное им чтобы 
+избежать неоднозначности. Лучше всего если эти имена указывают на содержание 
+пол. В типовых таблицах этой книги, мы будем использовать такие сокращения для 
+имени столбца, как cname для имени заказчика, и odate для даты порядка. Мы также 
+дадим каждой таблице личный числовой номер столбца в качестве первичного ключа. 
+Следующий раздел будет объяснять эти таблицы и их ключи более подробно. <A 
+name=Data>
+<P>
+<HR width="50%">
+
+<P>
+<H3>ТИПОВАЯ БАЗА ДАННЫХ</H3>
+<P>Таблицы 1.1, 1.2, и 1.3 составляют реляционную базу данных которая является 
+минимально достаточной чтобы легко ее отслеживать, и достаточно полной, чтобы 
+иллюстрировать главные понятия и практику использования SQL. Эти таблицы 
+напечатаны в этой главе а также в <A 
+href="e.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/e.shtml">Приложении 
+E</A>. 
+<P>Так как они будут использоваться для иллюстрирования различных особенностей 
+SQL по всей этой книге, мы рекомендуем чтобы вы скопировали их, для удобства 
+ссылки к ним. 
+<P>Вы могли уже обратить внимание что первый столбец каждой таблицы содержит 
+номера чьи значения различны для каждой строки. Как вы наверное и предположили, 
+это - первичные ключи таблиц. Некоторые из этих номеров также показаны в 
+столбцах других таблиц. В этом нет ничего неверного. Они показывают связь между 
+строками которые используют значение принимаемое из первичного ключа, и строками 
+где это значение используется в самом первичном ключе. <PRE>Таблица 1.1:     Продавцы 
+ 
+      ---------------------------------------------- 
+        SNUM  |   SNAME   |  CITY        |   COMM 
+      --------|-----------|--------------|---------- 
+        1001  |  Peel     |  London      |    .12 
+        1002  |  Serres   |  San Jose    |    .13 
+        1004  |  Motika   |  London      |    .11 
+        1007  |  Rifkin   |  Barcelona   |    .15 
+        1003  |  Axelrod  |  New York    |    .10 
+       --------------------------------------------- 
+ 
+ 
+Таблица 1.2:     Заказчики 
+ 
+       ---------------------------------------------- 
+        CNUM  |  CNAME     | CITY    | RATING | SNUM 
+       -------|------------|---------|--------|------ 
+        2001  |  Hoffman   | London  |   100  | 1001 
+        2002  |  Giovanni  | Rome    |   200  | 1003 
+        2003  |  Liu       | SanJose |   200  | 1002 
+        2004  |  Grass     | Berlin  |   300  | 1002 
+        2006  |  Clemens   | London  |   100  | 1001 
+        2008  |  Cisneros  | SanJose |   300  | 1007 
+        2007  |  Pereira   | Rome    |   100  | 1004 
+       ---------------------------------------------- 
+ 
+Таблица 1.3:   Порядки 
+ 
+       ----------------------------------------------- 
+        ONUM  |    AMT    |    ODATE    | CNUM | SNUM 
+       -------|-----------|-------------|------|------ 
+        3001  |    18.69  |  10/03/1990 | 2008 | 1007 
+        3003  |   767.19  |  10/03/1990 | 2001 | 1001 
+        3002  |  1900.10  |  10/03/1990 | 2007 | 1004 
+        3005  |  5160.45  |  10/03/1990 | 2003 | 1002 
+        3006  |  1098.16  |  10/03/1990 | 2008 | 1007 
+        3009  |  1713.23  |  10/04/1990 | 2002 | 1003 
+        3007  |    75.75  |  10/04/1990 | 2004 | 1002 
+        3008  |  4723.00  |  10/05/1990 | 2006 | 1001 
+        3010  |  1309.95  |  10/06/1990 | 2004 | 1002 
+        3011  |  9891.88  |  10/06/1990 | 2006 | 1001 
+       ----------------------------------------------- 
+ </PRE>Например, поле snum в таблице Заказчиков указывает, какому продавцу 
+назначен данный заказчик. Номер пол snum связан с таблицей Продавцов, которая 
+дает информацию об этих продавцах. Очевидно, что продавец которому назначены 
+заказчики должен уже существовать - то есть, значение snum из таблицы Заказчиков 
+должно также быть представлено в таблице Продавцов. Если это так, то говорят, 
+что " система находится в состоянии справочной целостности ". Этот вывод будет 
+более полно и формально объяснен в <A 
+href="ch19.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch19.shtml">Главе 
+19</A>. 
+<P>
+<H6>ПРИМЕЧАНИЕ: Эти три представленных таблицы в тексте имеют русские имена - 
+Продавцов, Заказчиков и Порядков, и далее будут упоминаться именно под этими 
+именами. Имена любых других применяемых в книге таблиц будут написаны 
+по-английски что бы отличать их от наших базовых таблиц этой базы данных. Кроме 
+того в целях однозначности, имена заказчиков, продавцов, Системных Каталогов а 
+также полей в тексте, также будут даны на латыни. </H6>
+<P>Таблицы приведены как пример к похожей ситуации в реальной жизни, когда вы 
+будете использовать SQL чтобы следить за продавцами, их заказчиками, и порядками 
+заказчиков. Давайте рассмотрим эти три таблицы и значения их полей. Здесь 
+показаны столбцы Таблицы 1.1 <PRE>   ПОЛЕ              СОДЕРЖАНИЕ 
+  ---------    ---------------------------------------------- 
+   snum        уникальный номер назначенный каждому продавцу 
+                 ( " номер служащего " ). 
+   sname       им продавца. 
+ 
+   city         расположение продавца( город ). 
+ 
+   comm       комиссионные продавцов в десятичной форме. 
+ 
+Таблица 1.2 содержит следующие столбцы: 
+ 
+   ПОЛЕ               СОДЕРЖАНИЕ 
+  --------     --------------------------------------------------- 
+   cnum       уникальный номер назначенный каждому заказчику. 
+ 
+   cname      им заказчика. 
+ 
+   city        расположение заказчика( город ). 
+ 
+   rating      код указывающего уровень предпочтения данного заказчика 
+                перед другими. Более высокий номер указывают на большее 
+                предпочтение( рейтинг ). 
+   snum       номер продавца назначенного этому заказчику 
+                ( из таблицы Продавцов ) 
+ 
+ И имеются столбцы в Таблице 1.3: 
+ 
+    ПОЛЕ              СОДЕРЖАНИЕ 
+    ---------    --------------------------------------------------- 
+    onum      уникальный номер данный каждому приобретению. 
+ 
+    amt       значение суммы приобретений. 
+ 
+    odate     дата приобретения. 
+ 
+    cnum      номер заказчика делающего приобретение 
+               ( из таблицы Заказчиков ). 
+    snum      номер продавца продающего приобретение 
+               ( из таблицы Продавцов). 
+</PRE><A name=Res>
+<P>
+<HR width="50%">
+
+<P>
+<H3>РЕЗЮМЕ</H3>
+<P>Теперь вы знаете что такое реляционная база данных, понятие, которое звучит 
+сложнее чем есть на самом деле. Вы также изучили некоторые фундаментальные 
+принципы относительно того, как сделаны таблицы - как работают строки и столбцы, 
+как первичные ключи отличают строки друга друга, и как столбцы могут ссылаться к 
+значениям в других столбцах. 
+<P>Вы поняли что запись это синоним строки, и что поле это синоним столбца. Оба 
+термина встречаются в обсуждении SQL, и мы будем использовать их в равной 
+степени в этой книге. 
+<P>Вы теперь знакомы с таблицами примеров. Краткие и простые , они способны 
+показать большинство особенностей языка, как вы это увидите В некоторых случаях, 
+мы будем использовать другие таблицы или постулаты некоторых различных данных в 
+одной из этих таблиц чтобы показать вам некоторые другие возможности. 
+<P>Теперь вы готовы к углублению в SQL самостоятельно. Следующая глава даст вам 
+быстрый просмотр языка, и даст вам информацию, которая поможет Вам ссылаться к 
+уже пройденным местам. <A name=Work>
+<P>
+<HR width="50%">
+
+<P>
+<H3>РАБОТА С SQL</H3><PRE>1. Какое поле таблицы Заказчиков является первичным ключом ?
+<BR><BR>
+2. Что является столбцом 4 из таблицы Заказчиков ?
+<BR><BR>
+3. Как по другому называется строка? Столбец?
+<BR><BR>
+4. Почему вы может не запрашивать для просмотра первые пять строк 
+   таблицы? 
+<BR><BR> 
+( См. <A href="a.shtml.htm#1" tppabs="http://www.sql.ru/docs/sql/u_sql/a.shtml#1">Приложение A</A> для ответов. ) 
+</PRE>
+</TD></TR></TABLE>
+</TD></TR>
+<TR BGCOLOR=#6699CC><TD><TABLE WIDTH=100% BORDER=0 CELLSPACING=0 CELLPADDING=0><TR><TD BGCOLOR=#6699CC VALIGN=CENTER HEIGHT = 40><FONT SIZE=-10>
+<!--begin of Top100 logo-->
+<a href="javascript:if(confirm('http://top100.rambler.ru/top100/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://top100.rambler.ru/top100/'" tppabs="http://top100.rambler.ru/top100/">
+<img src="../../../../top100-images.rambler.ru/top100/banner-88x31-rambler-gray2.gif" tppabs="http://top100-images.rambler.ru/top100/banner-88x31-rambler-gray2.gif" alt="Rambler's Top100" width=88 height=31 border=0></a>
+<!--end of Top100 logo -->
+</FONT>
+<!--Rating@Mail.ru COUNTER--><a target=_top
+href="javascript:if(confirm('http://top.mail.ru/jump?from=58574  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://top.mail.ru/jump?from=58574'" tppabs="http://top.mail.ru/jump?from=58574"><img
+src="../../../../top.list.ru/counter-id=58574;t=94.gif" tppabs="http://top.list.ru/counter?id=58574;t=94"
+border=0 height=18 width=88
+alt="Рейтинг@Mail.ru"></a><!--/COUNTER-->
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="font : bold 10px verdana; color : white" href="javascript:if(confirm('http://hosting.parking.ru/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://hosting.parking.ru/'" tppabs="http://hosting.parking.ru/">Хостинг от компании Parking.ru</a>
+<script src="../../../../www.google-analytics.com/urchin.js" tppabs="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-265508-1";
+urchinTracker();
+</script>
+</TD>
+<TD BGCOLOR=#6699CC ALIGN=right><FONT COLOR=white FACE="Tahoma,Arial" SIZE=1>&nbsp;Administrator:&nbsp;<A STYLE="color :white" HREF="mailto:admin@sql.ru">admin@sql.ru</A>&nbsp;<BR>Last update: <FONT COLOR=white>05 июн 2007&nbsp;</FONT></FONT></TD></TR></TABLE>
+</TD></TR></TABLE></TD></TR></TABLE>
+
+</BODY></HTML>
+

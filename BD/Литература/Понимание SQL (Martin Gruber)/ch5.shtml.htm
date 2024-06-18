@@ -1,0 +1,536 @@
+<HTML>
+<HEAD>
+<TITLE>Понимание SQL. Глава 5. Использование специальных операторов в условиях. [SQL.RU]</TITLE>
+<META http-equiv="Content-Type" CONTENT="text/html; charset=windows-1251">
+<META HTTP-EQUIV="Window-target" CONTENT="_top">
+<META HTTP-EQUIV="Last-Modified" CONTENT="29-03-2001">
+<META NAME="Description" CONTENT="Использование языка SQL, создание клиент-серверных систем. Конференция по MSSQL, Oracle, Interbase, MySQL. Полезные ссылки, документация, рекомендации по разработке информационных систем, сертификация, заказ книг и многое другое.">
+<META NAME="Keywords" CONTENT="SQL, конференция, Database Server, Oracle, Interbase, MySQL, документация, статьи, примеры, книги, ссылки, сертификация, работа, СУБД">
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../form.css" tppabs="http://www.sql.ru/form.css">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" leftmargin="3" topmargin="3" marginheight="3" marginwidth="3">
+<noindex>
+<TABLE BGCOLOR="#000000" WIDTH=100% CELLPADDING=0 CELLSPACING=0 BORDER=0>
+<TR><TD>
+
+<TABLE WIDTH=100% CELLPADDING=0 CELLSPACING=1 BORDER=0>
+<TR BGCOLOR="#6699CC"><TD><TABLE CELLSPACING=0 CELLPADDING=0 WIDTH=100% BORDER=0 BGCOLOR="#6699CC">
+<TR><TD COLSPAN=3><IMG SRC="../../../images/blank.gif" tppabs="http://www.sql.ru/images/blank.gif" height=3 width=1 alt=""></TD></TR>
+<TR><TD VALIGN=TOP>&nbsp;<FONT FACE="Verdana,Arial" SIZE=5 COLOR=lightyellow>SQL.RU<BR><FONT SIZE=-5>&nbsp;client/server technologies</FONT></FONT><!--begin of Top100--><a href="javascript:if(confirm('http://top100.rambler.ru/top100/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://top100.rambler.ru/top100/'" tppabs="http://top100.rambler.ru/top100/"><img src="../../../../counter.rambler.ru/top100.cnt-236431.gif" tppabs="http://counter.rambler.ru/top100.cnt?236431" alt="Rambler's Top100" width=1 height=1 border=0></a><!--end of Top100 code--></TD>
+<TD WIDTH=468 HEIGHT=60 BGCOLOR=#6699CC ALIGN=RIGHT></TD>
+<TD WIDTH=2><IMG SRC="../../../images/blank.gif" tppabs="http://www.sql.ru/images/blank.gif" height=1 width=2 alt=""></TD></TR>                                                      	
+<TR HEIGHT=4><TD COLSPAN=3><IMG SRC="../../../images/blank.gif" tppabs="http://www.sql.ru/images/blank.gif" height=5 width=1 alt=""></TD></TR></TABLE>
+
+</TD></TR>
+
+<TR HEIGHT=15><TD bgcolor=#006699><FONT FACE="Verdana,Arial" SIZE=1 COLOR=WHITE><B><A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/'" tppabs="http://www.sql.ru/">&nbsp;<FONT COLOR=white>Главная</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/docs  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/docs'" tppabs="http://www.sql.ru/docs">&nbsp;<FONT COLOR=yellow>Документация</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/articles  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/articles'" tppabs="http://www.sql.ru/articles">&nbsp;<FONT COLOR=white>Статьи</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/books  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/books'" tppabs="http://www.sql.ru/books">&nbsp;<FONT COLOR=white>Книги</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/forum/actualforum.aspx  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/forum/actualforum.aspx'" tppabs="http://www.sql.ru/forum/actualforum.aspx">&nbsp;<FONT COLOR=white>Форум</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/poll  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/poll'" tppabs="http://www.sql.ru/poll">&nbsp;<FONT COLOR=white>Опросы</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/forum/actualtopics.aspx?bid=11  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/forum/actualtopics.aspx?bid=11'" tppabs="http://www.sql.ru/forum/actualtopics.aspx?bid=11">&nbsp;<FONT COLOR=white>Гостевая</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/subscribe  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/subscribe'" tppabs="http://www.sql.ru/subscribe">&nbsp;<FONT COLOR=white>Рассылка</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/job  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/job'" tppabs="http://www.sql.ru/job">&nbsp;<FONT COLOR=white>Работа</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/search  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/search'" tppabs="http://www.sql.ru/search">&nbsp;<FONT COLOR=white>Поиск</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/faq  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/faq'" tppabs="http://www.sql.ru/faq">&nbsp;<FONT COLOR=white>FAQ</FONT>&nbsp;</A>|</B></FONT></TD></TR>
+<TR><TD BGCOLOR=#F5F5F5>
+</noindex>
+
+<TABLE BORDER=0 CELLSPACING=10><TR><TD>
+<CENTER>
+<H2 class="headline">
+5. ИСПОЛЬЗОВАНИЕ СПЕЦИАЛЬНЫХ ОПЕРАТОРОВ В УСЛОВИЯХ</H2></CENTER> 
+В дополнении к реляционным и булевским 
+операторам обсуждаемым в <A href="ch4.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch4.shtml">Главе 4</A>, SQL использует специальные 
+операторы IN, BETWEEN, LIKE, и IS NULL. В этой главе, вы 
+узнаете как их использовать и как реляционные операторы позволяют 
+создавать более сложные и мощные предикаты. 
+Обсуждение оператора IS NULL  будет включать отсутствие данных и 
+значение NULL, которое указывает на то: что данные отсутствуют. 
+Вы также узнаете о разновидностях использования оператора NOT 
+применяющегося с этими операторами. 
+ <A name=5.1>
+<H3>ОПЕРАТОР IN</H3> 
+Оператор IN определяет набор значений в которое данное значение может 
+или не может быть включено. В соответствии с нашей учебной базой данных 
+на которой вы обучаетесь по настоящее времен, если вы хотите найти 
+всех продавцов, которые размещены в Barcelona или в London, вы должны 
+использовать следующий запрос ( вывод  показывается в Рисунке 5.1 ): 
+<PRE> 
+      SELECT * 
+         FROM Salespeople 
+         WHERE city = 'Barcelona' 
+            OR city = 'London'; 
+</PRE> 
+Имеется и более простой способ получить ту же информацию: 
+<PRE> 
+       SELECT * 
+          FROM Salespeople 
+          WHERE city IN ( 'Barcelona', 'London' ); 
+</PRE> 
+Вывод для этого запроса показывается в Рисунке 5.2. 
+<BR><BR> 
+Как вы можете видеть, IN определяет набор значений с помощью имен 
+членов набора заключенных в круглые скобки и отделенных запятыми. 
+Он затем проверяет различные значения указанного пол пытаясь найти 
+совпадение со значениями из набора. Если это случается, то предикат 
+верен. Когда набор содержит значения номеров а не символов, одиночные 
+кавычки опускаются. Давайте найдем всех заказчиков относящихся к 
+продавцам имеющих значения snum = 1001, 1007, и 1004. Вывод для 
+следующего запроса показан на Рисунке 5.3: 
+<PRE> 
+     SELECT * 
+        FROM Customers 
+        WHERE cnum IN ( 1001, 1007, 1004 ); 
+ 
+ 
+           ===============  SQL Execution Log ============ 
+          |                                               | 
+          | SELECT *                                      | 
+          | FROM  Salespeople                             | 
+          | WHERE city = 'Barcelona'                      | 
+          | OR city = 'London';                           | 
+          | ==============================================| 
+          |   snum      sname         city         comm   | 
+          | ------    ----------   -----------   -------  | 
+          |   1001      Peel         London        0.12   | 
+          |   1004      Motika       London        0.11   | 
+          |   1007      Rifkin       Barcelona     0.15   | 
+          |                                               | 
+           =============================================== 
+</PRE> 
+Рисунок 5.1   Нахождение продавцов в Барселоне и Лондоне 
+<PRE> 
+ 
+           ===============  SQL Execution Log ============ 
+          |                                               | 
+          | SELECT *                                      | 
+          | FROM  Salespeople                             | 
+          | WHERE city IN ('Barcelona', 'London';         | 
+          | ==============================================| 
+          |   snum      sname         city         comm   | 
+          | ------    ----------   -----------   -------  | 
+          |   1001      Peel         London        0.12   | 
+          |   1004      Motika       London        0.11   | 
+          |   1007      Rifkin       Barcelona     0.15   | 
+          |                                               | 
+           =============================================== 
+</PRE> 
+Рисунок 5.2     SELECT использует IN 
+<PRE> 
+           ===============  SQL Execution Log ============ 
+          | SELECT *                                      | 
+          | FROM  Customers                               | 
+          | WHERE snum IN ( 1001, 1007, 1004 );           | 
+          | ============================================= | 
+          |   snum     cname    city     rating    snum   | 
+          |  ------   --------  ------    ----   ------   | 
+          |   2001     Hoffman  London     100     1001   | 
+          |   2006     Clemens  London     100     1001   | 
+          |   2008     Cisneros San Jose   300     1007   | 
+          |   2007     Pereira  Rome       100     1004   | 
+            ============================================= 
+</PRE> 
+Рисунок 5.3: SELECT использует IN с номерами 
+<A name=5.2>
+<H3>ОПЕРАТОР BETWEEN</H3> 
+Оператор BETWEEN похож на оператор IN. В отличии от определения по 
+номерам из набора, как это делает IN,  BETWEEN определяет диапазон, значения 
+которого должны уменьшаться что делает предикат верным. Вы должны ввести 
+ключевое слово BETWEEN с начальным значением, ключевое AND и конечное 
+значение.  В отличие от IN, BETWEEN чувствителен к порядку, и первое значение 
+в предложении должно быть первым по алфавитному или числовому порядку. 
+(  Обратите Внимание что, в отличие от Английского языка, SQL не говорит что 
+"значение находится (между)BETWEEN  значением и значением", а просто 
+"значение  BETWEEN значение  значение". Это применимо и к оператору LIKE). 
+Следующий пример будет извлекать из таблицы Продавцов всех продавцов с 
+комиссионными между .10  и .12 (вывод  показывается в Рисунке 5.4): 
+<PRE> 
+          SELECT * 
+             FROM Salespeople 
+             WHERE comm BETWEEN .10 AND .12; 
+</PRE> 
+Для включенного оператора BETWEEN, значение совпадающее с любым из двух 
+значений границы ( в этом случае, .10 и .12 ) заставляет предикат быть верным. 
+ <PRE>
+            ===============  SQL Execution Log ============ 
+          | SELECT *                                      | 
+          | FROM  Salespeople                             | 
+          | WHERE comm BETWEEN .10 AND .12;               | 
+          | ==============================================| 
+          |   snum      sname         city         comm   | 
+          | ------    ----------   -----------   -------  | 
+          |   1001      Peel         London        0.12   | 
+          |   1004      Motika       London        0.11   | 
+          |   1003      Axelrod      New York      0.10   | 
+            ============================================= 
+</PRE> 
+   Рисунок 5.4: SELECT использует BETWEEN 
+<BR><BR> 
+SQL не делает непосредственной поддержки невключения BETWEEN. 
+Вы должны или определить ваши граничные значения так, чтобы 
+включающая интерпретация была приемлема, или сделать что-нибудь 
+типа этого: 
+<PRE> 
+      SELECT * 
+          FROM Salespeople 
+          WHERE ( comm BETWEEN .10, AND .12 ) 
+            AND NOT comm IN ( .10, .12 ); 
+</PRE> 
+Вывод для этого запроса  показывается в Рисунке 5.5. 
+ 
+По общему признанию, это немного неуклюже, но зато показывает 
+как эти новые операторы могут комбинироваться с операторами Буля 
+чтобы производить более сложные предикаты. В основном, вы 
+используете IN и BETWEEN также как вы использовали реляционные 
+операторы чтобы сравнивать значения, которые берутся либо из 
+набора ( для IN ) либо из диапазона ( для BETWEEN ). 
+<BR><BR> 
+Также, подобно реляционным операторам, BETWEEN  может работать 
+с символьными полями в терминах эквивалентов ASCII. Это означает 
+что вы можете использовать BETWEEN чтобы выбирать ряд значений 
+из упорядоченных по алфавиту значений. 
+<PRE> 
+           ===============  SQL Execution Log ============ 
+          |                                               | 
+          | SELECT *                                      | 
+          | FROM  Salespeople                             | 
+          | WHERE ( comm BETWEEN .10 AND .12              | 
+          | AND NOT comm IN ( .10 .12;                    | 
+          | ==============================================| 
+          |   snum      sname         city         comm   | 
+          | ------    ----------   -----------   -------  | 
+          |   1004      Motika       London        0.11   | 
+          |                                               | 
+           =============================================== 
+</PRE> 
+Рисунок 5.5: Сделать BETWEEN - невключенным 
+ 
+Этот запрос выбирает всех заказчиков чьи имена попали в определенный 
+алфавитный диапазон: 
+<PRE> 
+            SELECT * 
+               FROM Customers 
+               WHERE cname BETWEEN 'A' AND 'G'; 
+ </PRE>
+Вывод для этого запроса показывается в Рисунке 5.6. 
+<BR><BR> 
+Обратите Внимание что Grass и Giovanni отсутствуют, даже при 
+включенном BETWEEN. Это происходит из-за того что BETWEEN 
+сравнивает строки неравной длины. Строка 'G' более коротка чем 
+строка Giovanni, поэтому BETWEEN выводит 'G' с пробелами. Пробелы 
+предшествуют символам в алфавитном порядке ( в большинстве реа- 
+лизаций ), поэтому Giovanni не выбирается. То же самое происходит с 
+Grass. Важно помнить это когда вы используете BETWEEN для извлечения 
+значений из алфавитных диапазонов.  Обычно вы указываете диапазон с 
+помощью символа начала диапазона и символа конца( вместо которого 
+можно просто поставить z ). 
+<PRE> 
+           ===============  SQL Execution Log ============ 
+          |                                               | 
+          | SELECT *                                      | 
+          | FROM  Customers                               | 
+          | WHERE cname BETWEEN 'A' AND 'G';              | 
+          | ============================================= | 
+          |   cnum     cname    city     rating    snum   | 
+          |  ------   --------  ------    ----   ------   | 
+          |   2006     Clemens  London     100     1001   | 
+          |   2008     Cisneros San Jose   300     1007   | 
+          |                                               | 
+            ============================================= 
+</PRE> 
+Рисунок 5. 6: Использование BETWEEN в алфавитных порядках 
+ <A name=5.3>
+<H3>ОПЕРАТОР LIKE</H3> 
+LIKE применим только к полям типа CHAR или VARCHAR, с которыми 
+он используется чтобы находить подстроки. Т.е. он ищет поле символа 
+чтобы видеть, совпадает ли с условием часть его строки. 
+В качестве условия он использует групповые символы(wildkards) - 
+специальные символы которые могут соответствовать чему-нибудь. 
+ Имеются два типа групповых символов используемых с LIKE: 
+<BR><BR> 
+*  символ подчеркивания ( _ ) замещает любой одиночный символ. 
+   Например, 'b_t' будет соответствовать словам 'bat' или 
+   'bit', но не будет соответствовать 'brat'. 
+<BR><BR> 
+*  знак процента (%) замещает последовательность любого числа 
+   символов (включая символы нуля). Например '%p%t' будет 
+   соответствовать словам 'put', 'posit', или 'opt', но не 'spite'. 
+<BR><BR> 
+Давайте найдем всех заказчиков чьи имена начинаются с G ( вывод 
+показывается в Рисунке 5.7 ): 
+<PRE> 
+       SELECT 
+          FROM Customers 
+          WHERE cname LIKE 'G%'; 
+ 
+ 
+           ===============  SQL Execution Log ============ 
+          |                                               | 
+          | SELECT *                                      | 
+          | FROM  Customers                               | 
+          | WHERE cname LIKE 'G';                         | 
+          | ============================================= | 
+          |   cnum     cname    city     rating    snum   | 
+          |  ------   --------  ------    ----   ------   | 
+          |   2002     Giovanni Rome       200     1003   | 
+          |   2004     Grass    Berlin     300     1002   | 
+          |                                               | 
+            ============================================= 
+</PRE> 
+Рисунок 5. 7: SELECT использует LIKE с % 
+<BR><BR> 
+LIKE может быть удобен если вы ищете им или другое значение, и если 
+вы не помните как они точно пишутся. Предположим что вы неуверенны как 
+записано по буквам им одного из ваших продавцов Peal или Peel. 
+Вы можете просто использовать ту часть которую вы знаете и групповые 
+символы чтобы находить все возможные пары ( вывод этого запроса 
+показывается в Рисунке 5.8 ): 
+<PRE> 
+       SELECT * 
+          FROM Salespeople 
+          WHERE sname LIKE 'P _ _ l %'; 
+</PRE> 
+Групповые символы подчеркивания, каждый из которых представляет 
+один символ, добавят только два символа к уже существующим 'P' и 'l' , 
+поэтому им наподобие Prettel не может быть показано. 
+Групповой символ ' % ' - в конце строки необходим в большинстве 
+реализаций если длина пол sname больше чем число символов в имени 
+Peel ( потому что некоторые другие значения sname - длиннее чем 
+четыре символа ). В таком случае, значение пол sname , фактически 
+сохраняемое как им Peel, сопровождается рядом пробелов. 
+Следовательно, символ 'l' не будет рассматриваться концом строки. 
+Групповой символ ' % ' - просто соответствует этим пробелам. Это 
+необязательно, если пол sname имеет тип - VARCHAR. 
+<PRE> 
+ 
+           ===============  SQL Execution Log ============ 
+          |                                               | 
+          | SELECT *                                      | 
+          | FROM  Salespeople                             | 
+          | WHERE sname LIKE ' P  1% ';                   | 
+          | ==============================================| 
+          |   snum      sname         city         comm   | 
+          | ------    ----------   -----------   -------  | 
+          |   1001      Peel         London        0.12   | 
+          |                                               | 
+           =============================================== 
+</PRE> 
+ 
+Рисунок 5.8: SELECT использует LIKE с подчеркиванием (_) 
+<BR><BR> 
+А что же Вы будете делать если вам нужно искать знак процента или 
+знак подчеркивания в строке?  В LIKE предикате, вы можете определить 
+любой одиночный символ как символ ESC. Символ ESC используется 
+сразу перед процентом или подчеркиванием в предикате, и означает 
+что процент или подчеркивание будет интерпретироваться как символ 
+а не как групповой символ. Например, мы могли бы найти наш sname 
+столбец где присутствует подчеркивание, следующим образом: 
+<PRE> 
+          SELECT * 
+             FROM Salespeople 
+             WHERE sname LIKE '%/_%'ESCAPE'/'; 
+</PRE> 
+  С этими данными не будет никакого вывода, потому что мы не 
+включили никакого подчеркивания в им нашего продавца. Предложение 
+ESCAPE определяет '/ '  как символ ESC. Символ ESC используемый 
+в LIKE строке, сопровождается знаком процента, знаком подчеркивания, 
+или знаком ESCAPE, который будет искаться в столбце, а не обрабатывать- 
+с как групповой символ. 
+Символ ESC должен быть одиночным символом и применяться только к 
+одиночному символу сразу после него. 
+<BR><BR> 
+В примере выше, символ процента начала и символ процента окончания 
+обрабатываются как групповые символы; только подчеркивание 
+предоставлено само себе. 
+<BR><BR> 
+Как упомянуто выше, символ ESC может также использоваться 
+самостоятельно. Другими словами, если вы будете искать столбец с вашим сим- 
+волом ESC, вы просто вводите его дважды. Во-первых это будет означать 
+что символ ESC "берет следующий символ буквально как символ", и 
+во-вторых что символ ESC самостоятелен. 
+   Имеется предыдущий пример который пересмотрен чтобы искать 
+местонахождение строки '_/' в sname столбце: 
+<PRE> 
+     SELECT * 
+        FROM Salespeople 
+        WHERE sname LIKE ' % /_ / / %'ESCAPE'/'; 
+</PRE> 
+ Снова не будет никакого вывода с такими данными. 
+Строка сравнивается с содержанием любой последовательности символов 
+(%), сопровождаемых символом подчеркивания ( /_ ), символом ESC 
+( // ), и любой последовательностью символов в конце строки ( % ). 
+ <A name=5.4>
+<H3>РАБОТА С НУЛЕВЫМИ( NULL ) ЗНАЧЕНИЯМИ</H3> 
+ 
+Часто, будут иметься записи в таблице которые не имеют никаких 
+значений для каждого пол, например потому что информация не завершена, 
+или потому что это поле просто не заполнялось. SQL учитывает такой 
+вариант, позволяя  вам вводить значение NULL(ПУСТОЙ) в поле, 
+вместо значения. Когда значение пол равно NULL, это означает, что 
+программа базы данных специально промаркировала это поле как не 
+имеющее никакого значения для этой строки (или записи). 
+Это отличается от просто назначения полю, значения нуля или пробела, 
+которые база данных будет обрабатывать также как и любое другое 
+значение. Точно также, как NULL не является техническим значением, 
+оно не имеет и типа данных. Оно может помещаться в любой тип пол. 
+Тем ни менее, NULL в SQL часто упоминается как нуль. 
+<BR><BR> 
+Предположим, что вы получили нового заказчика который еще не был 
+назначен продавцу. Чем ждать продавца к которому его нужно назначить, 
+вы можете ввести заказчика в базу данных теперь же, так что он не 
+потеряется при перестановке. 
+<BR><BR> 
+Вы можете ввести строку для заказчика со значением NULL в поле snum 
+и заполнить это поле значением позже, когда продавец будет назначен. 
+ <A name=5.5>
+<H3>NULL ОПЕРАТОР</H3> 
+Так как NULL указывает на отсутствие значения, вы не можете знать 
+каков будет результат любого сравнения с использованием NULL. Когда 
+NULL сравнивается с любым значением, даже с другим таким же NULL, 
+результат будет ни верным ни неверным, он - неизвестен. 
+Неизвестный Булев, вообще ведет себя также как неверна строка, 
+которая произведя неизвестное значение в предикате не будет 
+выбрана запросом - имейте ввиду что в то врем как NOT(неверное) - 
+равняется верно, NOT (неизвестное) - равняется неизвестно. 
+  Следовательно, выражение типа 'city = NULL' или 'city IN (NULL)' 
+будет неизвестно, независимо от значения city. 
+  Часто вы должны делать различи между неверно и неизвестно 
+- между строками содержащими значения столбцов которые не 
+соответствуют условию предиката и которые содержат NULL в 
+столбцах. По этой причине, SQL предоставляет специальный оператор 
+IS, который используется с ключевым словом NULL, для размещения 
+значения NULL. 
+ Найдем все записи в нашей таблице Заказчиков с NULL значениями 
+в city столбце: 
+ <PRE>
+            SELECT * 
+               FROM Customers 
+               WHERE city IS NULL; 
+</PRE> 
+Здесь не будет никакого вывода, потому что мы не имеем никаких 
+значений NULL в наших типовых таблицах. Значения NULL - очень 
+важны, и мы вернемся к ним позже. 
+<A name=5.6>
+<H3>ИСПОЛЬЗОВАНИЕ NOT СО СПЕЦИАЛЬНЫМИ ОПЕРАТОРАМИ</H3> 
+ 
+Специальные операторы которые мы изучали в этой главе могут 
+немедленно предшествовать Булеву NOT. 
+<BR><BR> 
+Он противоположен реляционным операторам, которые должны иметь 
+оператор NOT - вводимым выражением. Например, если мы хотим устранить 
+NULL из нашего вывода, мы будем использовать NOT чтобы изменить на 
+противоположное значение предиката: 
+ <PRE>
+          SELECT * 
+             FROM Customers 
+             WHERE city NOT NULL; 
+</PRE> 
+При отсутствии значений NULL( как в нашем случае ), будет выведена вся 
+таблица Заказчиков.   Аналогично можно ввести следующее 
+<PRE> 
+           SELECT * 
+              FROM Customers 
+              WHERE NOT city IS NULL; 
+ 
+  - что также приемлемо. 
+ 
+Мы можем также использовать NOT с IN: 
+ 
+         SELECT * 
+            FROM Salespeople 
+            WHERE city NOT IN ( 'London', 'San Jose' ); 
+ 
+А это - другой способ подобного же выражения 
+ 
+       SELECT * 
+          FROM Salespeople 
+          WHERE NOT city IN ( 'London', ' San Jose' ); 
+</PRE> 
+Вывод для этого запроса показывается в Рисунке 5.9. 
+<BR><BR> 
+Таким же способом Вы можете использовать NOT BETWEEN и 
+NOT LIKE. 
+<PRE> 
+ 
+           ===============  SQL Execution Log ============ 
+          |                                               | 
+          | SELECT *                                      | 
+          | FROM  Salespeople                             | 
+          | WHERE sity NOT IN ('London', 'San Jose';      | 
+          | ==============================================| 
+          |   snum      sname         city         comm   | 
+          | ------    ----------   -----------   -------  | 
+          |   1003      Rifkin       Barcelona     0.15   | 
+          |   1007      Axelrod      New York      0.10   | 
+          |                                               | 
+           =============================================== 
+</PRE> 
+Рисунок 5. 9: Использование NOT с IN 
+ <A name=5.7>
+<H3>РЕЗЮМЕ</H3> 
+ 
+Теперь вы можете создавать предикаты в терминах связей специально 
+определенных SQL. Вы можете искать значения в определенном диапазоне 
+(BETWEEN) или в числовом наборе (IN), или вы можете искать 
+символьные значения которые соответствуют тексту внутри параметров 
+(LIKE). 
+   Вы также изучили некоторые вещи относительно того как SQL 
+поступает при отсутствии данных - что реальность мировой базы данных 
+- используя NULL вместо конкретных значений. Вы можете извлекать или 
+исключать значения NULL из вашего вывода используя  оператор IS NULL. 
+Теперь, когда вы имеете в вашем распоряжении весь набор стандартных 
+математических и специальных операторов, вы можете переходить к 
+специальным функциям SQL которые работают на всех группах значений,  а не 
+просто на одиночном значении, что важно. 
+ Это уже тема <A href="ch6.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch6.shtml">Главы 6</A>. 
+ <A name=5.8>
+<H3>РАБОТА С SQL</H3> 
+ 
+1. Напишите два запроса которые могли бы вывести все порядки 
+   на 3 или 4 Октября 1990 
+<BR><BR> 
+2. Напишите запрос который выберет всех заказчиков обслуживаемых 
+   продавцами Peel или Motika. ( Подсказка: из наших типовых таблиц, 
+   поле snum связывает вторую таблицу с первой ) 
+<BR><BR> 
+3. Напишите запрос, который может вывести всех заказчиков чьи 
+   имена начинаются с буквы попадающей в диапазон от A до G. 
+<BR><BR> 
+4. Напишите запрос который выберет всех пользователей чьи имена 
+   начинаются с буквы C. 
+<BR><BR> 
+5. Напишите запрос который выберет все порядки имеющие нулевые 
+   значения или NULL в поле amt(сумма). 
+<BR><BR> 
+(См.<A href="a.shtml.htm#5" tppabs="http://www.sql.ru/docs/sql/u_sql/a.shtml#5"> Приложение A</A> для ответов.) 
+
+
+</TD></TR></TABLE>
+</TD></TR>
+<TR BGCOLOR=#6699CC><TD><TABLE WIDTH=100% BORDER=0 CELLSPACING=0 CELLPADDING=0><TR><TD BGCOLOR=#6699CC VALIGN=CENTER HEIGHT = 40><FONT SIZE=-10>
+<!--begin of Top100 logo-->
+<a href="javascript:if(confirm('http://top100.rambler.ru/top100/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://top100.rambler.ru/top100/'" tppabs="http://top100.rambler.ru/top100/">
+<img src="../../../../top100-images.rambler.ru/top100/banner-88x31-rambler-gray2.gif" tppabs="http://top100-images.rambler.ru/top100/banner-88x31-rambler-gray2.gif" alt="Rambler's Top100" width=88 height=31 border=0></a>
+<!--end of Top100 logo -->
+</FONT>
+<!--Rating@Mail.ru COUNTER--><a target=_top
+href="javascript:if(confirm('http://top.mail.ru/jump?from=58574  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://top.mail.ru/jump?from=58574'" tppabs="http://top.mail.ru/jump?from=58574"><img
+src="../../../../top.list.ru/counter-id=58574;t=94.gif" tppabs="http://top.list.ru/counter?id=58574;t=94"
+border=0 height=18 width=88
+alt="Рейтинг@Mail.ru"></a><!--/COUNTER-->
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="font : bold 10px verdana; color : white" href="javascript:if(confirm('http://hosting.parking.ru/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://hosting.parking.ru/'" tppabs="http://hosting.parking.ru/">Хостинг от компании Parking.ru</a>
+<script src="../../../../www.google-analytics.com/urchin.js" tppabs="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-265508-1";
+urchinTracker();
+</script>
+</TD>
+<TD BGCOLOR=#6699CC ALIGN=right><FONT COLOR=white FACE="Tahoma,Arial" SIZE=1>&nbsp;Administrator:&nbsp;<A STYLE="color :white" HREF="mailto:admin@sql.ru">admin@sql.ru</A>&nbsp;<BR>Last update: <FONT COLOR=white>05 июн 2007&nbsp;</FONT></FONT></TD></TR></TABLE>
+</TD></TR></TABLE></TD></TR></TABLE>
+
+</BODY></HTML>
+

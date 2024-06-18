@@ -1,0 +1,580 @@
+<HTML>
+<HEAD>
+<TITLE>Понимание SQL. Глава 10. Вставка Одного Запроса Внутрь Другого. [SQL.RU]</TITLE>
+<META http-equiv="Content-Type" CONTENT="text/html; charset=windows-1251">
+<META HTTP-EQUIV="Window-target" CONTENT="_top">
+<META HTTP-EQUIV="Last-Modified" CONTENT="29-03-2001">
+<META NAME="Description" CONTENT="Использование языка SQL, создание клиент-серверных систем. Конференция по MSSQL, Oracle, Interbase, MySQL. Полезные ссылки, документация, рекомендации по разработке информационных систем, сертификация, заказ книг и многое другое.">
+<META NAME="Keywords" CONTENT="SQL, конференция, Database Server, Oracle, Interbase, MySQL, документация, статьи, примеры, книги, ссылки, сертификация, работа, СУБД">
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../form.css" tppabs="http://www.sql.ru/form.css">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" leftmargin="3" topmargin="3" marginheight="3" marginwidth="3">
+<noindex>
+<TABLE BGCOLOR="#000000" WIDTH=100% CELLPADDING=0 CELLSPACING=0 BORDER=0>
+<TR><TD>
+
+<TABLE WIDTH=100% CELLPADDING=0 CELLSPACING=1 BORDER=0>
+<TR BGCOLOR="#6699CC"><TD><TABLE CELLSPACING=0 CELLPADDING=0 WIDTH=100% BORDER=0 BGCOLOR="#6699CC">
+<TR><TD COLSPAN=3><IMG SRC="../../../images/blank.gif" tppabs="http://www.sql.ru/images/blank.gif" height=3 width=1 alt=""></TD></TR>
+<TR><TD VALIGN=TOP>&nbsp;<FONT FACE="Verdana,Arial" SIZE=5 COLOR=lightyellow>SQL.RU<BR><FONT SIZE=-5>&nbsp;client/server technologies</FONT></FONT><!--begin of Top100--><a href="javascript:if(confirm('http://top100.rambler.ru/top100/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://top100.rambler.ru/top100/'" tppabs="http://top100.rambler.ru/top100/"><img src="../../../../counter.rambler.ru/top100.cnt-236431.gif" tppabs="http://counter.rambler.ru/top100.cnt?236431" alt="Rambler's Top100" width=1 height=1 border=0></a><!--end of Top100 code--></TD>
+<TD WIDTH=468 HEIGHT=60 BGCOLOR=#6699CC ALIGN=RIGHT></TD>
+<TD WIDTH=2><IMG SRC="../../../images/blank.gif" tppabs="http://www.sql.ru/images/blank.gif" height=1 width=2 alt=""></TD></TR>                                                      	
+<TR HEIGHT=4><TD COLSPAN=3><IMG SRC="../../../images/blank.gif" tppabs="http://www.sql.ru/images/blank.gif" height=5 width=1 alt=""></TD></TR></TABLE>
+
+</TD></TR>
+
+<TR HEIGHT=15><TD bgcolor=#006699><FONT FACE="Verdana,Arial" SIZE=1 COLOR=WHITE><B><A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/'" tppabs="http://www.sql.ru/">&nbsp;<FONT COLOR=white>Главная</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/docs  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/docs'" tppabs="http://www.sql.ru/docs">&nbsp;<FONT COLOR=yellow>Документация</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/articles  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/articles'" tppabs="http://www.sql.ru/articles">&nbsp;<FONT COLOR=white>Статьи</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/books  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/books'" tppabs="http://www.sql.ru/books">&nbsp;<FONT COLOR=white>Книги</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/forum/actualforum.aspx  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/forum/actualforum.aspx'" tppabs="http://www.sql.ru/forum/actualforum.aspx">&nbsp;<FONT COLOR=white>Форум</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/poll  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/poll'" tppabs="http://www.sql.ru/poll">&nbsp;<FONT COLOR=white>Опросы</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/forum/actualtopics.aspx?bid=11  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/forum/actualtopics.aspx?bid=11'" tppabs="http://www.sql.ru/forum/actualtopics.aspx?bid=11">&nbsp;<FONT COLOR=white>Гостевая</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/subscribe  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/subscribe'" tppabs="http://www.sql.ru/subscribe">&nbsp;<FONT COLOR=white>Рассылка</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/job  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/job'" tppabs="http://www.sql.ru/job">&nbsp;<FONT COLOR=white>Работа</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/search  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/search'" tppabs="http://www.sql.ru/search">&nbsp;<FONT COLOR=white>Поиск</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/faq  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/faq'" tppabs="http://www.sql.ru/faq">&nbsp;<FONT COLOR=white>FAQ</FONT>&nbsp;</A>|</B></FONT></TD></TR>
+<TR><TD BGCOLOR=#F5F5F5>
+</noindex>
+
+<TABLE BORDER=0 CELLSPACING=10><TR><TD>
+<CENTER>
+<H2 class="headline">
+10. ВСТАВКА ОДНОГО ЗАПРОСА ВНУТРЬ ДРУГОГО</H2></CENTER>
+ 
+В КОНЕЦЕ <A href="ch9.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch9.shtml">ГЛАВЫ 9</A>, Мы говорили что запросы 
+могут управлять другими запросами. В этой главе, вы узнаете как это 
+делается ( большей частью ), помещая запрос внутрь предиката другого 
+запроса, и используя вывод внутреннего запроса в верном или неверном 
+условии предиката. Вы сможете выяснить какие виды операторов могут 
+использовать подзапросы и посмотреть как подзапросы работают со 
+средствами SQL , такими как DISTINCT, с составными функциями и 
+выводимыми выражения. Вы узнаете как использовать подзапросы с 
+предложением HAVING и получите некоторые наставления как правильно 
+использовать подзапросы. 
+<A name=10.1>
+<H3>КАК РАБОТАЕТ ПОДЗАПРОС?</H3>
+С помощью SQL вы можете вкладывать запросы внутрь друга друга. 
+Обычно, внутренний запрос генерирует значение которое проверяется в 
+предикате внешнего запроса, определяющего верно оно или нет. 
+Например, предположим что мы знаем им продавца: Motika, но не знаем 
+значение его пол snum, и хотим извлечь все порядки из таблицы Порядков. 
+Имеется один способ чтобы сделать это( вывод показывается в Рисунке 10.1 ): 
+<PRE>  
+    SELECT * 
+       FROM Orders 
+       WHERE snum = 
+           ( SELECT snum 
+                FROM Salespeople 
+                WHERE sname = 'Motika'); 
+</PRE> 
+Чтобы оценить внешний( основной ) запрос, SQL сначала должен оценить 
+внутренний запрос ( или подзапрос ) внутри предложения WHERE. Он 
+делает это так как и должен делать запрос имеющий единственную цель 
+- отыскать через таблицу Продавцов все строки, где поле sname равно 
+значению Motika, и затем извлечь значения пол snum этих строк. 
+ 
+Единственной найденной строкой естественно будет snum = 1004. Однако 
+SQL, не просто выдает это значение, а помещает его в предикат основного 
+запроса вместо самого подзапроса, так чтобы предиката прочитал что 
+<PRE>  
+       WHERE snum = 1004 
+ 
+ 
+               ===============  SQL Execution Log ============== 
+              |                                                 | 
+              | SELECT *                                        | 
+              | FROM  Orders                                    | 
+              | WHERE snum =                                    | 
+              | (SELECT snum                                    | 
+              | FROM Salespeople                                | 
+              | WHERE sname = 'Motika');                        | 
+              |=================================================| 
+              |   onum       amt      odate      cnum     snum  | 
+              |  -----     -------  ----------  -----    -----  | 
+              |   3002     1900.10  10/03/1990   2007     1004  | 
+              |                                                 | 
+               ================================================= 
+ 
+</PRE>  
+Рисунок 10.1:   Использование подзапроса 
+ <BR><BR> 
+Основной запрос затем выполняется как обычно с вышеупомянутыми 
+результатами. Конечно же, подзапрос должен выбрать один и только один 
+столбец, а тип данных этого столбца должен совпадать с тем значением с 
+которым он будет сравниваться в предикате. Часто, как показано выше, 
+выбранное поле и его значение будут иметь одинаковые имена( в этом 
+случае, snum ), но это необязательно. 
+ <BR><BR> 
+Конечно, если бы мы уже знали номер продавца Motika, мы могли бы 
+просто напечатать 
+ 
+             WHERE snum = 1004 
+ 
+и выполнять далее с подзапросом в целом, но это было бы не так универсально. Это будет продолжать работать даже если номер Motika изменился, 
+а, с помощью простого изменения имени в подзапросе, вы можете использовать его для чего угодно. 
+<A name=10.2>
+<H3>ЗНАЧЕНИЯ, КОТОРЫЕ МОГУТ ВЫДАВАТЬ ПОДЗАПРОСЫ</H3>Скорее всего было бы удобнее, чтобы наш подзапрос в предыдущем 
+примере возвращал одно и только одно значение. 
+ <BR><BR> 
+  Имея выбранным поле snum " WHERE city = "London" вместо 
+"WHERE sname = 'Motika", можно получить несколько различных 
+значений. Это может сделать уравнение в предикате основного запроса 
+невозможным для оценки верности или неверности, и команда выдаст 
+ошибку. 
+  <BR><BR>
+При использовании подзапросов в предикатах основанных на реляционных 
+операторах ( уравнениях или неравенствах, как объяснено в <A href="ch4.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch4.shtml">Главе 4</A> ), 
+вы должны убедиться что использовали подзапрос который будет выдавать 
+одну и только одну строку вывода. Если вы используете подзапрос 
+который не выводит никаких значений вообще, команда не потерпит 
+неудачи; но основной запрос не выведет никаких значений. 
+Подзапросы которые не производят никакого вывода (или нулевой вывод) 
+вынуждают рассматривать предикат ни как верный ни как неверный, 
+а как неизвестный. Однако, неизвестный предикат имеет тот же самый 
+эффект что и неверный: никакие строки не выбираются основным 
+запросом ( смотри <A href="ch5.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch5.shtml">Главу 5</A> для подробной информации о неизвестном 
+предикате ). 
+ <BR><BR> 
+Это плоха стратеги, чтобы делать что-нибудь подобное следующему: 
+<PRE>  
+                 SELECT * 
+                    FROM Orders 
+                    WHERE snum = 
+                      ( SELECT snum 
+                           FROM Salespeople 
+                           WHERE city = Barcelona ); 
+</PRE>  
+Поскольку мы имеем только одного продавца в Barcelona - Rifkin, то 
+подзапрос будет выбирать одиночное значение snum и следовательно будет 
+принят. Но это - только в данном случае. Большинство SQL баз данных имеют многочисленных пользователей, и если другой пользователь добавит нового продавца из Barcelona в таблицу, подзапрос выберет два значения, и ваша 
+команда потерпит неудачу. 
+<A name=10.3>
+<H3>DISTINCT С ПОДЗАПРОСАМИ</H3>Вы можете, в некоторых случаях, использовать DISTINCT чтобы вынудить 
+подзапрос генерировать одиночное значение. Предположим что мы хотим 
+найти все порядки кредитований для тех продавцов которые обслуживают 
+Hoffmanа ( cnum = 2001 ). 
+ <BR><BR> 
+ Имеется один способ чтобы сделать это ( вывод показывается в 
+Рисунке 10.2 ): 
+<PRE>  
+            SELECT * 
+               FROM Orders 
+               WHERE snum = 
+                  ( SELECT DISTINCT snum 
+                       FROM Orders 
+                       WHERE cnum = 2001 ); 
+ 
+ 
+               ===============  SQL Execution Log ============== 
+              |                                                 | 
+              | SELECT *                                        | 
+              | FROM  Orders                                    | 
+              | WHERE snum =                                    | 
+              | (SELECT DISTINCT snum                           | 
+              | FROM Orders                                     | 
+              | Where cnum = 2001);                             | 
+              | =============================================== | 
+              |   onum       amt      odate      cnum     snum  | 
+              |  -----   ---------  ---------   ------  ------- | 
+              |   3003      767.19  10/03/1990   2001     1001  | 
+              |   3008     4723.00  10/05/1990   2006     1001  | 
+              |   3011     9891.88  10/06/1990   2006     1001  | 
+                ================================================ 
+</PRE>  
+ 
+Рисунок 10.2: Использование DISTINCT чтобы вынудить получение одного 
+                    значения из подзапроса 
+ <BR><BR> 
+Подзапрос установил что значение пол snum совпало с Hoffman - 1001, и 
+затем основной запрос выделил все порядки с этим значением snum из таблицы Порядков( не разбирая, относятся они к Hoffman или нет). Так как 
+каждый заказчик назначен к одному и только этому продавцу, мы знаем что 
+каждая строка в таблице Порядков с данным значением cnum должна иметь 
+такое же значение snum. Однако так как там может быть любое число таких 
+строк, подзапрос мог бы вывести много ( хотя и идентичных ) значений snum 
+для данного пол cnum.   Аргумент DISTINCT предотвращает это. 
+Если наш подзапрос возвратит более одного значения, это будет указывать на 
+ошибку в наших данных - хороша вещь для знающих об этом. 
+ <BR><BR> 
+Альтернативный подход должен быть чтобы ссылаться к таблице Заказчиков 
+а не к таблице Порядков в подзапросе. Так как поле cnum - это первичный ключ таблицы Заказчика, запрос выбирающий его должен произвести 
+только одно значение. Это рационально только если вы как пользователь 
+имеете доступ к таблице Порядков но не к таблице Заказчиков. В этом случае, 
+вы можете использовать решение которое мы показали выше. ( SQL имеет 
+механизмы которые определяют - кто имеет привилегии чтобы делать что-то 
+в определенной таблице. Это будет объясняться в <A href="ch22.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch22.shtml">Главе 22</A>.) 
+Пожалуйста учтите, что методика используемая в предшествующем примере 
+применима только когда вы знаете, что два различных пол в таблице должны 
+всегда совпадать, как в нашем случае. Эта ситуация не является типичной в реляционных базах данных, она является исключением из правил. 
+<A name=10.4>
+<H3>ПРЕДИКАТЫ С ПОДЗАПРОСАМИ ЯВЛЯЮТСЯ НЕОБРАТИМЫМИ</H3>Вы должны обратить внимание что предикаты включающие подзапросы, 
+используют выражение 
+ 
+           &lt; скалярная форма &gt; &lt; оператор &gt; &lt; подзапрос &gt;, 
+а, не 
+           &lt; подзапрос &gt; &lt; оператор &gt; &lt; скалярное выражение &gt; 
+или, 
+           &lt; подзапрос &gt; &lt; оператор &gt; &lt; подзапрос &gt;. 
+ 
+Другими словами, вы не должны записывать предыдущий пример так: 
+<PRE>  
+                   SELECT * 
+                      FROM Orders 
+                      WHERE ( SELECT DISTINCT snum 
+                           FROM Orders 
+                           WHERE cnum = 2001 ) 
+                      = snum; 
+</PRE>  
+В строгой ANSI реализации, это приведет к неудаче, хотя некоторые программы 
+и позволяют делать такие вещи. ANSI также предохраняет вас от появления 
+обеих значений при сравнении, которые нужно вывести с помощью подзапроса. 
+<A name=10.5>
+<H3>ИСПОЛЬЗОВАНИЕ АГРЕГАТНЫХ ФУНКЦИЙ В ПОДЗАПРОСАХ</H3>
+Один тип функций, который автоматически может производить одиночное 
+значение для любого числа строк, конечно же, - агрегатная функция. 
+  <BR><BR>
+Любой запрос использующий одиночную функцию агрегата без предложения 
+GROUP BY будет выбирать одиночное значение для использования в основном 
+предикате.  Например, вы хотите увидеть все порядки имеющие сумму приобретений выше средней на 4-е Октября ( вывод показан на Рисунке 10.3 ): 
+<PRE>  
+             SELECT * 
+                 FROM Orders 
+                 WHERE amt &gt; 
+                    ( SELECT AVG (amt) 
+                         FROM Orders 
+                         WHERE odate = 10/04/1990 ); 
+ 
+               ===============  SQL Execution Log ============== 
+              |                                                 | 
+              | SELECT *                                        | 
+              | FROM  Orders                                    | 
+              | WHERE amt &gt;                                     | 
+              | (SELECT AVG (amt)                               | 
+              | FROM Orders                                     | 
+              | WHERE odate = 01/04/1990 );                     | 
+              | =============================================== | 
+              |   onum       amt      odate      cnum     snum  | 
+              |  -----    --------  ----------  -----    -----  | 
+              |   3002     1900.10  10/03/1990   2007     1004  | 
+              |   3005     2345.45  10/03/1990   2003     1002  | 
+              |   3006     1098.19  10/03/1990   2008     1007  | 
+              |   3009     1713.23  10/04/1990   2002     1003  | 
+              |   3008     4723.00  10/05/1990   2006     1001  | 
+              |   3010     1309.95  10/06/1990   2004     1002  | 
+              |   3011     9891.88  10/06/1990   2006     1001  | 
+                ================================================ 
+</PRE>  
+Рисунок 10.3: Выбор всех сумм со значением выше средней на 10/04/1990 
+ 
+Средняя сумма приобретений на 4 Октября - 1788.98 ( 1713.23 + 75.75) 
+делится пополам, что в целом равняется = 894.49. Все строки со значением в 
+поле amt выше этого - являются выбранными. 
+ <BR><BR> 
+Имейте ввиду что сгруппированные агрегатные функции, которые являются 
+агрегатными функциями определенными в терминах предложения GROUP BY, 
+могут производить многочисленные значения. Они, следовательно, не позволительны в подзапросах такого характера. Даже если GROUP BY и HAVING 
+используются таким способом, что только одна группа выводится с помощью 
+подзапроса, команда будет отклонена в принципе. Вы должны использовать 
+одиночную агрегатную функцию с предложением WHERE что устранит нежелательные группы. Например, следующий запрос который должен найти сред- 
+нее значение комиссионных продавца в Лондоне - 
+<PRE> 
+                SELECT AVG (comm) 
+                    FROM Salespeople 
+                    GROUP BY city 
+                    HAVlNG city = "London"; 
+</PRE> 
+не может использоваться в подзапросе! Во всяком случае это не лучший способ формировать запрос. Другим способом может быть - 
+<PRE> 
+                 SELECT AVG (comm) 
+                    FROM Salespeople 
+                    WHERE city = "London"; 
+</PRE>
+ <A name=10.6>
+<H3>ИСПОЛЬЗОВАНИЕ ПОДЗАПРОСОВ КОТОРЫЕ ВЫДАЮТ МНОГО СТРОК С ПОМОЩЬЮ ОПЕРАТОРА 
+IN</H3>Вы можете использовать подзапросы которые производят любое число 
+строк если вы используете специальный оператор IN ( операторы BETWEEN, 
+LIKE, и IS NULL не могут использоваться с подзапросами ). Как вы помните, 
+IN определяет набор значений, одно из которых должно совпадать с другим 
+термином уравнения предиката в порядке, чтобы предикат был верным. 
+Когда вы используете IN с подзапросом, SQL просто формирует этот набор из 
+вывода подзапроса. Мы можем, следовательно, использовать IN чтобы выполнить такой же подзапрос который не будет работать с реляционным оператором, и найти все атрибуты таблицы Порядков для продавца в Лондоне ( вывод 
+показывается в Рисунке 10.4 ): 
+<PRE> 
+            SELECT * 
+                FROM Orders 
+                WHERE snum IN 
+                     ( SELECT snum 
+                         FROM Salespeople 
+                         WHERE city = "LONDON" ); 
+ 
+ 
+               ===============  SQL Execution Log ============== 
+              |                                                 | 
+              | SELECT *                                        | 
+              | FROM  Orders                                    | 
+              | WHERE snum IN                                   | 
+              | (SELECT snum                                    | 
+              | FROM Salespeople                                | 
+              | WHERE city = 'London');                         | 
+              | =============================================== | 
+              |   onum       amt      odate      cnum     snum  | 
+              |  -----    --------  ----------  -----   ------  | 
+              |   3003      767.19  10/03/1990   2001     1001  | 
+              |   3002     1900.10  10/03/1990   2007     1004  | 
+              |   3006     1098.19  10/03/1990   2008     1007  | 
+              |   3008     4723.00  10/05/1990   2006     1001  | 
+              |   3011     9891.88  10/06/1990   2006     1001  | 
+                ================================================ 
+</PRE>  
+Рисунок 10. 4:  Использование подзапроса с IN 
+ <BR><BR> 
+В ситуации подобно этой, подзапрос - более прост для пользователя чтобы 
+понимать его и более прост для компьютера чтобы его выполнить, чем если 
+бы Вы использовали объединение: 
+<PRE>  
+       SELECT onum, amt, odate, cnum, Orders.snum 
+          FROM Orders, Salespeople 
+          WHERE Orders.snum = Salespeople.snum 
+              AND Salespeople.city = "London"; 
+</PRE>  
+Хотя это и произведет тот же самый вывод что и в примере с подзапросом, 
+SQL должен будет просмотреть каждую возможную комбинацию строк из 
+двух таблиц и проверить их снова по составному предикату. 
+Проще и эффективнее извлекать из таблицы Продавцов значения пол snum 
+где city = "London", и затем искать эти значения в таблице Порядков, как это 
+делается в варианте с подзапросом. Внутренний запрос дает нам snums=1001 
+и snum=1004. Внешний запрос, затем, дает нам строки из таблицы Порядков 
+где эти пол snum найдены. 
+  Строго говор, быстрее или нет работает вариант подзапроса, практически 
+зависит от реализации - в какой программе вы это используете. 
+Эта часть вашей программы называемой - оптимизатор, пытается найти 
+наиболее эффективный способ выполнения ваших запросов. 
+ <BR><BR> 
+Хороший оптимизатор во всяком случае преобразует вариант объединения 
+в подзапрос, но нет достаточно простого способа для вас чтобы выяснить 
+выполнено это или нет. Лучше сохранить ваши запросы в памяти чем полагаться полностью на оптимизатор. 
+ <BR><BR> 
+Конечно вы можете также использовать оператор IN, даже когда вы уверены что подзапрос произведет одиночное значение. В любой ситуации где 
+вы можете использовать реляционный оператор сравнения (=), вы можете 
+использовать IN. В отличие от реляционных операторов, IN не может заставить команду потерпеть неудачу если больше чем одно значение выбрано 
+подзапросом. Это может быть или преимуществом или недостатком. 
+Вы не увидите непосредственно вывода из подзапросов; если вы полагаете 
+что подзапрос собирается произвести только одно значение, а он производит 
+различные. Вы не сможете объяснить различи в выводе основного запроса. 
+Например, рассмотрим команду, которая похожа на предыдущую: 
+<PRE>  
+              SELECT onum, amt, odate 
+                  FROM Orders 
+                  WHERE snum = 
+                      ( SELECT  snum 
+                      FROM Orders 
+                      WHERE cnum = 2001 ); 
+</PRE>  
+Вы можете устранить потребность в DISTINCT используя IN вместо (=), 
+подобно этому: 
+<PRE>  
+              SELECT onum, amt, odate 
+                  FROM Orders 
+                  WHERE snum IN 
+                      ( SELECT snum 
+                      FROM Orders 
+                      WHERE cnum = 2001 ); 
+</PRE>  
+Что случится если есть ошибка и один из порядков был аккредитован к 
+различным продавцам? Версия использующая IN будет давать вам все 
+порядки для обоих продавцов. Нет никакого очевидного способа наблюдения за ошибкой, и поэтому сгенерированные отчеты или решения 
+сделанные на основе этого запроса не будут содержать ошибки. Вариант 
+использующий ( = ) , просто потерпит неудачу. 
+ <BR><BR> 
+ Это, по крайней мере, позволило вам узнать что имеется такая проблема. 
+Вы должны затем выполнять поиск неисправности, выполнив этот подза- 
+прос отдельно и наблюдая значения которые он производит. 
+ <BR><BR> 
+В принципе, если вы знаете что подзапрос должен( по логике) вывести 
+только одно значение, вы должны использовать = . 
+IN является подходящим, если запрос может ограниченно производить одно 
+или более значений, независимо от того ожидаете вы их или нет. 
+Предположим, мы хотим знать комиссионные всех продавцов обслуживаю- 
+щих заказчиков в Лондоне: 
+<PRE>  
+          SELECT comm 
+              FROM Salespeople 
+              WHERE snum IN 
+                ( SELECT snum 
+                    FROM Customers 
+                    WHERE city = "London" ); 
+</PRE>  
+Выводимыми для этого запроса, показанного в Рисунке 10.5, являются 
+значения комиссионных продавца Peel ( snum = 1001 ), который имеет 
+обоих заказчиков в Лондоне. Это - только для данного случая. 
+Нет никакой причины чтобы некоторые заказчики в Лондоне не могли быть 
+назначенными к кому-то еще. Следовательно, IN - это наиболее логична 
+форма чтобы использовать ее в запросе. 
+<PRE>  
+ 
+                   ===============  SQL Execution Log ============== 
+                  |                                                 | 
+                  | SELECT comm                                     | 
+                  | FROM  Salespeople                               | 
+                  | WHERE snum IN                                   | 
+                  | (SELECT snum                                    | 
+                  | FROM Customers                                  | 
+                  | WHERE city = 'London');                         | 
+                  | =============================================== | 
+                  |    comm                                         | 
+                  |  -------                                        | 
+                  |    0.12                                         | 
+                  |                                                 | 
+                  |                                                 | 
+                    ================================================ 
+ 
+</PRE>  
+Рисунок 10.5  Использование IN с подзапросом для вывода одного значения 
+ <BR><BR> 
+ 
+ Между прочим, префикс таблицы для пол city необязателен в предыду- 
+щем примере, несмотря на возможную неоднозначность между полями city 
+таблицы Заказчика и таблицы Продавцов. 
+ SQL всегда ищет первое поле в таблице обозначенной в предложении 
+FROM текущего подзапроса. 
+Если поле с данным именем там не найдено, проверяются внешние запросы. 
+В вышеупомянутом примере, "city" в предложении WHERE означает что имеется ссылка к Customer.city( поле city таблицы Заказчиков). 
+Так как таблица Заказчиков указана в предложении FROM текущего запроса, 
+SQL предполагает что это - правильно. Это предположение может быть отменено полным именем таблицы или префиксом псевдонима, о которых мы 
+поговорим позже когда будем говорить об соотнесенных подзапросах. Если 
+возможен беспорядок, конечно же, лучше всего использовать префиксы. 
+<H4>ПОДЗАПРОСЫ ВЫБИРАЮТ ОДИНОЧНЫЕ СТОЛБЦЫ</H4>Смысл всех подзапросов обсужденных в этой главе тот, что все они выбирают 
+одиночный столбец. Это обязательно, поскольку выбранный вывод сравнивает- 
+с одиночным значением. Подтверждением этому то, что SELECT *  не может использоваться в подзапросе. Имеется исключение из этого, когда подзап- 
+росы используются с оператором EXISTS, который мы будем представлять в <A href="ch12.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch12.shtml">
+Главе 12</A>. 
+
+<H4>ИСПОЛЬЗОВАНИЕ ВЫРАЖЕНИЙ В ПОДЗАПРОСАХ</H4>Вы можете использовать выражение основанное на столбце, а не просто сам 
+столбец, в предложении SELECT подзапроса. Это может быть выполнено или 
+с помощью реляционных операторов или с IN. Например, следующий запрос 
+использует реляционный оператор = ( вывод показывается в Рисунке 10.6 ): 
+<PRE>  
+             SELECT * 
+                FROM Customers 
+                WHERE cnum = 
+                    ( SELECT snum + 1000 
+                         FROM Salespeople 
+                         WHERE sname = Serres ); 
+</PRE>  
+Он находит всех заказчиков чье значение пол cnum равное 1000, выше пол 
+snum Serres. Мы предполагаем что столбец sname не имеет никаких двойных 
+значений ( это может быть предписано или UNIQUE INDEX, обсуждаемым 
+в <A href="ch17.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch17.shtml">Главе 17</A>, или ограничением UNIQUE, обсуждаемым в <A href="ch18.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch18.shtml">Главе 18</A> ); иначе 
+<PRE>  
+               ===============  SQL Execution Log ============ 
+              |                                               | 
+              | SELECT *                                      | 
+              | FROM  Customers                               | 
+              | WHERE cnum =                                  | 
+              | (SELECT snum + 1000                           | 
+              | WHERE Salespeople                             | 
+              | WHERE sname = 'Serres'                        | 
+              | ============================================= | 
+              |   cnum     cname     city    rating    snum   | 
+              |  -----    --------   ----    ------   -----   | 
+              |   2002    Giovanni   Rome       200    1003   | 
+                ============================================= 
+</PRE>  
+Рисунок 10.6: Использование подзапроса с выражением 
+ <BR><BR> 
+подзапрос может произвести многочисленные значения. Когда пол snum и 
+сnum не имеют такого простого функционального значения как например 
+первичный ключ , что не всегда хорошо, запрос типа вышеупомянутого 
+невероятно полезен. 
+<A name=10.7>
+<H3>ПОДЗАПРОСЫ В ПРЕДЛОЖЕНИИ HAVING</H3>Вы можете также использовать подзапросы внутри предложения HAVING. 
+Эти подзапросы могут использовать свои собственные агрегатные функции 
+если они не производят многочисленных значений или использовать 
+GROUP BY или HAVING. Следующий запрос является  этому примером 
+( вывод  показывается в Рисунке 10.7 ): 
+<PRE>  
+        SELECT rating, COUNT ( DISTINCT cnum ) 
+            FROM Customers 
+            GROUP BY rating 
+            HAVING rating &gt; 
+                ( SELECT AVG (rating) 
+                     FROM Customers 
+                     WHERE city = " San Jose'; 
+ 
+ 
+               ===============  SQL Execution Log ============ 
+              |                                               | 
+              | SELECT rating,count (DISTINCT cnum)           | 
+              | FROM  Customers                               | 
+              | GROUP BY rating                               | 
+              | HAVING rating &gt;                               | 
+              | (SELECT AVG (rating)snum + 1000               | 
+              | FROM Custimers                                | 
+              | WHERE city = 'San Jose'                       | 
+              |============================================   | 
+              |  rating                                       | 
+              | --------    --------                          | 
+              |   200             2                           | 
+               ================================================ 
+</PRE>  
+Рисунок 10.7: Нахождение заказчиков с оценкой выше среднего в San Jose 
+ <BR><BR> 
+Эта команда подсчитывает заказчиков с оценками выше среднего в San Jose. 
+Так как имеются другие оценки отличные от 300, они должны быть выведены 
+с числом номеров заказчиков которые имели эту оценку. 
+ <A name=10.8>
+<H3>РЕЗЮМЕ</H3>Теперь вы используете запросы в иерархической манере. Вы видели, что 
+использование результата одного запроса для управления другим, расширяет 
+возможности позволяющие выполнить большее количество функций. 
+Вы теперь понимаете как использовать подзапросы с реляционными опера- 
+торами также как и со специальным оператором IN, или в предложении 
+WHERE или в предложении HAVING внешнего запроса. 
+  <BR><BR>
+В следующих главах, мы будем разрабатывать подзапросы. 
+Сначала в <A href="ch11.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch11.shtml">Главе 11</A>, мы обсудим другой вид подзапроса, который выполняется 
+отдельно для каждой строки таблицы вызываемой во внешнем запросе. 
+Затем, в <A href="ch12.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch12.shtml">Главе 12</A> и <A href="ch13.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch13.shtml">13</A>, мы представим вас нескольким специальным операто- 
+рам которые функционируют на всех подзапросах, как это делает IN, за исключением когда эти операторы могут использоваться только в подзапросах. 
+ <A name=10.9>
+<H3>РАБОТА С SQL</H3>1. Напишите запрос, который бы использовал подзапрос для получения 
+   всех порядков для заказчика с именем Cisneros. 
+   Предположим, что вы не знаете номера этого заказчика, указываемого 
+   в поле cnum. 
+<BR><BR> 
+2. Напишите запрос который вывел бы имена и оценки всех заказчиков 
+   которые имеют усредненные порядки. 
+<BR><BR> 
+3. Напишите запрос который бы выбрал общую сумму всех приобретений 
+   в порядках для каждого продавца, у которого эта обща сумма больше 
+   чем сумма наибольшего порядка в таблице. 
+ 
+<BR><BR> 
+( См.<A href="a.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/a.shtml"> Приложение A </A>для ответов. ) 
+</PRE>
+</TD></TR></TABLE>
+</TD></TR>
+<TR BGCOLOR=#6699CC><TD><TABLE WIDTH=100% BORDER=0 CELLSPACING=0 CELLPADDING=0><TR><TD BGCOLOR=#6699CC VALIGN=CENTER HEIGHT = 40><FONT SIZE=-10>
+<!--begin of Top100 logo-->
+<a href="javascript:if(confirm('http://top100.rambler.ru/top100/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://top100.rambler.ru/top100/'" tppabs="http://top100.rambler.ru/top100/">
+<img src="../../../../top100-images.rambler.ru/top100/banner-88x31-rambler-gray2.gif" tppabs="http://top100-images.rambler.ru/top100/banner-88x31-rambler-gray2.gif" alt="Rambler's Top100" width=88 height=31 border=0></a>
+<!--end of Top100 logo -->
+</FONT>
+<!--Rating@Mail.ru COUNTER--><a target=_top
+href="javascript:if(confirm('http://top.mail.ru/jump?from=58574  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://top.mail.ru/jump?from=58574'" tppabs="http://top.mail.ru/jump?from=58574"><img
+src="../../../../top.list.ru/counter-id=58574;t=94.gif" tppabs="http://top.list.ru/counter?id=58574;t=94"
+border=0 height=18 width=88
+alt="Рейтинг@Mail.ru"></a><!--/COUNTER-->
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="font : bold 10px verdana; color : white" href="javascript:if(confirm('http://hosting.parking.ru/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://hosting.parking.ru/'" tppabs="http://hosting.parking.ru/">Хостинг от компании Parking.ru</a>
+<script src="../../../../www.google-analytics.com/urchin.js" tppabs="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-265508-1";
+urchinTracker();
+</script>
+</TD>
+<TD BGCOLOR=#6699CC ALIGN=right><FONT COLOR=white FACE="Tahoma,Arial" SIZE=1>&nbsp;Administrator:&nbsp;<A STYLE="color :white" HREF="mailto:admin@sql.ru">admin@sql.ru</A>&nbsp;<BR>Last update: <FONT COLOR=white>05 июн 2007&nbsp;</FONT></FONT></TD></TR></TABLE>
+</TD></TR></TABLE></TD></TR></TABLE>
+
+</BODY></HTML>
+

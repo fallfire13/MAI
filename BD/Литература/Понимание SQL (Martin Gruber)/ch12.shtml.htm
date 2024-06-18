@@ -1,0 +1,394 @@
+<HTML>
+<HEAD>
+<TITLE>Понимание SQL. Глава 12. Использование Оператора EXISTS. [SQL.RU]</TITLE>
+<META http-equiv="Content-Type" CONTENT="text/html; charset=windows-1251">
+<META HTTP-EQUIV="Window-target" CONTENT="_top">
+<META HTTP-EQUIV="Last-Modified" CONTENT="29-03-2001">
+<META NAME="Description" CONTENT="Использование языка SQL, создание клиент-серверных систем. Конференция по MSSQL, Oracle, Interbase, MySQL. Полезные ссылки, документация, рекомендации по разработке информационных систем, сертификация, заказ книг и многое другое.">
+<META NAME="Keywords" CONTENT="SQL, конференция, Database Server, Oracle, Interbase, MySQL, документация, статьи, примеры, книги, ссылки, сертификация, работа, СУБД">
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../form.css" tppabs="http://www.sql.ru/form.css">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" leftmargin="3" topmargin="3" marginheight="3" marginwidth="3">
+<noindex>
+<TABLE BGCOLOR="#000000" WIDTH=100% CELLPADDING=0 CELLSPACING=0 BORDER=0>
+<TR><TD>
+
+<TABLE WIDTH=100% CELLPADDING=0 CELLSPACING=1 BORDER=0>
+<TR BGCOLOR="#6699CC"><TD><TABLE CELLSPACING=0 CELLPADDING=0 WIDTH=100% BORDER=0 BGCOLOR="#6699CC">
+<TR><TD COLSPAN=3><IMG SRC="../../../images/blank.gif" tppabs="http://www.sql.ru/images/blank.gif" height=3 width=1 alt=""></TD></TR>
+<TR><TD VALIGN=TOP>&nbsp;<FONT FACE="Verdana,Arial" SIZE=5 COLOR=lightyellow>SQL.RU<BR><FONT SIZE=-5>&nbsp;client/server technologies</FONT></FONT><!--begin of Top100--><a href="javascript:if(confirm('http://top100.rambler.ru/top100/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://top100.rambler.ru/top100/'" tppabs="http://top100.rambler.ru/top100/"><img src="../../../../counter.rambler.ru/top100.cnt-236431.gif" tppabs="http://counter.rambler.ru/top100.cnt?236431" alt="Rambler's Top100" width=1 height=1 border=0></a><!--end of Top100 code--></TD>
+<TD WIDTH=468 HEIGHT=60 BGCOLOR=#6699CC ALIGN=RIGHT></TD>
+<TD WIDTH=2><IMG SRC="../../../images/blank.gif" tppabs="http://www.sql.ru/images/blank.gif" height=1 width=2 alt=""></TD></TR>                                                      	
+<TR HEIGHT=4><TD COLSPAN=3><IMG SRC="../../../images/blank.gif" tppabs="http://www.sql.ru/images/blank.gif" height=5 width=1 alt=""></TD></TR></TABLE>
+
+</TD></TR>
+
+<TR HEIGHT=15><TD bgcolor=#006699><FONT FACE="Verdana,Arial" SIZE=1 COLOR=WHITE><B><A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/'" tppabs="http://www.sql.ru/">&nbsp;<FONT COLOR=white>Главная</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/docs  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/docs'" tppabs="http://www.sql.ru/docs">&nbsp;<FONT COLOR=yellow>Документация</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/articles  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/articles'" tppabs="http://www.sql.ru/articles">&nbsp;<FONT COLOR=white>Статьи</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/books  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/books'" tppabs="http://www.sql.ru/books">&nbsp;<FONT COLOR=white>Книги</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/forum/actualforum.aspx  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/forum/actualforum.aspx'" tppabs="http://www.sql.ru/forum/actualforum.aspx">&nbsp;<FONT COLOR=white>Форум</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/poll  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/poll'" tppabs="http://www.sql.ru/poll">&nbsp;<FONT COLOR=white>Опросы</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/forum/actualtopics.aspx?bid=11  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/forum/actualtopics.aspx?bid=11'" tppabs="http://www.sql.ru/forum/actualtopics.aspx?bid=11">&nbsp;<FONT COLOR=white>Гостевая</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/subscribe  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/subscribe'" tppabs="http://www.sql.ru/subscribe">&nbsp;<FONT COLOR=white>Рассылка</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/job  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/job'" tppabs="http://www.sql.ru/job">&nbsp;<FONT COLOR=white>Работа</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/search  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/search'" tppabs="http://www.sql.ru/search">&nbsp;<FONT COLOR=white>Поиск</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/faq  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/faq'" tppabs="http://www.sql.ru/faq">&nbsp;<FONT COLOR=white>FAQ</FONT>&nbsp;</A>|</B></FONT></TD></TR>
+<TR><TD BGCOLOR=#F5F5F5>
+</noindex>
+
+<TABLE BORDER=0 CELLSPACING=10><TR><TD>
+<CENTER>
+<H2 class="headline">
+12. ИСПОЛЬЗОВАНИЕ ОПЕРАТОРА EXISTS</H2></CENTER> 
+Теперь, когда вы хорошо ознакомлены с подзапросами, 
+мы можем говорить о некоторых специальных операторах которые всегда 
+берут подзапросы как аргументы. Вы узнаете о первом из их в этой главе. 
+Остальные будут описан в следующей главе. 
+ <BR><BR> 
+Оператор EXISTS используется чтобы указать предикату, - производить ли 
+подзапросу вывод или нет. В этой главе, вы узнаете как использовать этот 
+оператор со стандартными и ( обычно ) соотнесенными подзапросами. 
+Мы будем также обсуждать специальные размышления которые перейдут в 
+игру когда вы будете использовать этот оператор как относительный агрегат, 
+как пустой указатель NULL, и как оператор Бул. Кроме того, вы можете повысить ваш профессиональный уровень относительно подзапросов исследуя их в более сложных прикладных программах чем те которые мы видели до 
+сих пор. 
+ <A name=12.1>
+<H3>КАК РАБОТАЕТ EXISTS?</H3>EXISTS - это оператор, который производит верное или неверное 
+значение, другими словами, выражение Бул ( см. <A href="ch4.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch4.shtml">Главу 4</A> для обзора этого термина ). 
+ <BR><BR>
+Это означает что он может работать автономно в предикате или в комбинации с другими выражениями Бул использующими Булевые операторы AND, 
+OR, и NOT.  Он берет подзапрос как аргумент и оценивает его как верный 
+если тот производит любой вывод или как неверный если тот не делает этого. 
+Этим он отличается от других операторов предиката, в которых он не может 
+быть неизвестным. Например, мы можем решить, извлекать ли нам некоторые 
+данные из таблицы Заказчиков если, и только если, один или более заказчиков в этой таблице находятся в San Jose ( вывод для этого запроса показывается в Рисунке 12.1 ): 
+<PRE> 
+              SELECT cnum, cname, city 
+                  FROM Customers 
+                  WHERE EXISTS 
+                      ( SELECT * 
+                          FROM Customers 
+                          WHERE city = " San Jose' ); 
+</PRE> 
+Внутренний запрос выбирает все данные для всех заказчиков в San Jose. 
+Оператор EXISTS во внешнем предикате отмечает, что некоторый вывод 
+был произведен подзапросом, и поскольку выражение EXISTS было полным предикатом, делает предикат верным. Подзапрос( не соотнесенный ) 
+был выполнен только один раз для всего внешнего запроса, и следова- 
+<PRE> 
+ 
+               ===============  SQL Execution Log ============ 
+              |                                               | 
+              | SELECT snum, sname, city                      | 
+              | FROM  Customers                               | 
+              | WHERE EXISTS                                  | 
+              | (SELECT *                                     | 
+              | FROM Customers                                | 
+              | WHERE city = 'San Jose');                     | 
+              | ============================================= | 
+              |   cnum     cname     city                     | 
+              |  -----    --------   ----                     | 
+              |   2001    Hoffman    London                   | 
+              |   2002    Giovanni   Rome                     | 
+              |   2003    Liu        San Jose                 | 
+              |   2004    Grass      Berlin                   | 
+              |   2006    Clemens    London                   | 
+              |   2008    Cisneros   San Jose                 | 
+              |   2007    Pereira    Rome                     | 
+                ============================================= 
+</PRE>  
+Рисунок 12.1 Использование оператора EXISTS 
+ <BR><BR> 
+тельно имеет одно значение во всех случаях. Поэтому EXISTS, когда используется этим способом, делает предикат верным или неверным для всех строк 
+сразу, что это не так уж полезно для извлечения определенной информации. 
+<A name=12.2>
+<H3>ВЫБОР СТОЛБЦОВ С ПОМОЩЬЮ EXISTS</H3>В вышеупомянутом примере, EXISTS должен быть установлен так чтобы 
+легко выбрать один столбец, вместо того, чтобы выбирать все столбцы 
+используя в выборе звезду( SELECT *) В этом состоит его отличие от 
+подзапроса который ( как вы видели ранее в <A href="ch10.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch10.shtml">Главе 10</A> мог выбрать толь- 
+ко один столбец ) . 
+Однако, в принципе он мало отличается при выборе EXISTS столбцов, 
+или когда выбираются все столбцы, потому что он просто замечает - 
+выполняется или нет вывод из подзапроса - а не использует выведенные значения. 
+ <A name=12.3>
+<H3>ИСПОЛЬЗОВАНИЕ EXISTS С СООТНЕСЕННЫМИ ПОДЗАПРОСАМИ</H3>В соотнесенном подзапросе, предложение EXISTS оценивается отдельно 
+для каждой строки таблицы им которой указано во внешнем запросе, 
+точно также как и другие операторы предиката, когда вы используете 
+соотнесенный подзапрос. Это дает возможность использовать EXISTS как 
+верный предикат, который генерирует различные ответы для каждой строки 
+таблицы указанной в основном запросе. Следовательно информация из внутреннего запроса, будет сохранена, если выведена непосредственно, когда вы 
+используете EXISTS таким способом. Например, мы можем вывести продавцов которые имеют многочисленных заказчиков ( вывод для этого запроса 
+показывается в Рисунке 12.2 ): 
+<PRE> 
+              SELECT DISTINCT snum 
+                  FROM Customers outer 
+                  WHERE EXISTS 
+                      ( SELECT * 
+                           FROM Customers inner 
+                           WHERE inner.snum = outer.snum 
+                               AND inner.cnum &lt; &gt; outer.cnum ); 
+ 
+ 
+               ===============  SQL Execution Log ============ 
+              |                                               | 
+              | SELECT DISTINCT cnum                          | 
+              | FROM  Customers outer                         | 
+              | WHERE EXISTS                                  | 
+              | (SELECT *                                     | 
+              | FROM Customers inner                          | 
+              | WHERE inner.snum = outer.snum                 | 
+              | AND inner.cnum &lt; &gt; outer.cnum);               | 
+              | ============================================= | 
+              |   cnum                                        | 
+              |  -----                                        | 
+              |   1001                                        | 
+              |   1002                                        | 
+                ============================================= 
+</PRE>  
+Рисунок 12. 2: Использование EXISTS с соотнесенным подзапросом 
+ <BR><BR> 
+Для каждой строки-кандидата внешнего запроса ( представляющей заказчика проверяемого в настоящее время ), внутренний запрос находит строки которые совпадают со значением пол snum ( которое имел продавец ), 
+но не со значением пол cnum ( соответствующего другим заказчикам ). 
+Если любые такие строки найдены внутренним запросом, это означает, 
+что имеются два разных заказчика обслуживаемых текущим продавцом 
+( то есть продавцом заказчика в текущей строке-кандидата из внешнего за- 
+проса ). Предикат EXISTS поэтому верен для текущей строки, и номер продавца пол (snum) таблицы указанной во внешнем запросе будет выведено. 
+Если был DISTINCT не указан, каждый из этих продавцов будет выбран 
+один раз для каждого заказчика к которому он назначен. 
+<A name=12.4>
+<H3>КОМБИНАЦИЯ ИЗ EXISTS И ОБЪЕДИНЕНИЯ</H3>Однако для нас может быть полезнее вывести больше информации об этих 
+продавцах а не только их номера. Мы можем сделать это объединив таблицу 
+Заказчиков с таблицей Продавцов ( вывод для запроса показывается в 
+Рисунке 12.3 ): 
+<PRE> 
+             SELECT DISTINCT first.snum, sname, first.city 
+                FROM Salespeople first, Customers second 
+                WHERE EXISTS 
+                   ( SELECT * 
+                      FROM Customers third 
+                      WHERE second.snum = third.snum 
+                            AND second.cnum &lt; &gt; third.cnum ) 
+                   AND first.snum = second.snum; 
+ 
+               ===============  SQL Execution Log ============ 
+              |                                               | 
+              | SELECT DISTINCT first.snum, sname, first.city | 
+              | FROM  Salespeople first, Customers second     | 
+              | WHERE EXISTS                                  | 
+              | (SELECT *                                     | 
+              | FROM Customers third                          | 
+              | WHERE second.snum = third.snum                | 
+              | AND second.cnum &lt; &gt; third.cnum)               | 
+              | AND first.snum = second.snum;                 | 
+              | ============================================= | 
+              |   cnum     cname     city                     | 
+              |  -----    --------   ----                     | 
+              |   1001    Peel       London                   | 
+              |   1002    Serres     San Jose                 | 
+                ============================================= 
+</PRE>  
+Рисунок 12.3: Комбинация EXISTS с объединением 
+  <BR><BR>
+Внутренний запрос здесь - как и в предыдущем варианте, фактически 
+сообщает, что псевдоним был изменен. Внешний запрос - это объединение 
+таблицы Продавцов с таблицей Заказчиков, наподобие того что мы видели 
+прежде. Новое предложение основного предиката ( AND first.snum = 
+second.snum ) естественно оценивается на том же самом уровне что и 
+предложение EXISTS. Это - функциональный предикат самого объединения, 
+сравнивающий две таблицы из внешнего запроса в терминах пол snum, 
+которое являются для них общим. Из-за Булева оператора AND, оба условия 
+основного предиката должны быть верны в порядке для верного предиката. 
+Следовательно, результаты подзапроса имеют смысл только в тех случаях 
+когда вторая часть запроса верна, а объединение - выполнимо. Таким образом, комбинация объединения и подзапроса может стать очень мощным 
+способом обработки данных. 
+<A name=12.5>
+<H3>ИСПОЛЬЗОВАНИЕ NOT EXISTS</H3>Предыдущий пример дал понять что EXISTS может 
+работать в комбинации с операторами Бул. Конечно, то что является самым простым 
+способом для использования и вероятно наиболее часто используется с EXISTS - это 
+оператор NOT. Один из способов которым мы могли бы найти всех продав- цов только 
+с одним заказчиком будет состоять в том, чтобы инвертировать наш предыдущий 
+пример. ( Вывод для этого запроса показывается в Рисунке 12.4:) SELECT DISTINCT 
+snum FROM Customers outer WHERE NOT EXISTS ( SELECT * FROM Customers inner WHERE 
+inner.snum = outer.snum AND inner.cnum &lt; &gt; outer.cnum ); <A name=12.6>
+<H3>EXISTS И АГРЕГАТЫ</H3>  Одна вещь которую EXISTS не может сделать - взять функцию агрегата 
+в подзапросе. Это имеет значение. Если функция агрегата находит любые 
+строки для операций с ними, EXISTS верен, не взирая на то, что это - значение функции ;  если же агрегатная функция не находит никаких строк, 
+EXISTS неправилен. 
+<PRE> 
+ 
+               ===============  SQL Execution Log ============ 
+              |                                               | 
+              | SELECT DISTINCT snum                          | 
+              | FROM  Salespeople outer                       | 
+              | WHERE NOT EXISTS                              | 
+              | (SELECT *                                     | 
+              | FROM Customers inner                          | 
+              | WHERE inner.snum = outer.snum                 | 
+              | AND inner.cnum &lt; &gt; outer.cnum);               | 
+              | ============================================= | 
+              |   cnum                                        | 
+              |  -----                                        | 
+              |   1003                                        | 
+              |   1004                                        | 
+              |   1007                                        | 
+                ============================================= 
+</PRE>  
+Рисунок 12.4: Использование EXISTS с NOT 
+ <BR><BR> 
+ 
+Попытка использовать агрегаты с EXISTS таким способом, вероятно 
+покажет что проблема неверно решалась от начала до конца. 
+ 
+Конечно, подзапрос в предикате EXISTS может также использовать один 
+или более из его собственных подзапросов. Они могут иметь любой из 
+различных типов которые мы видели ( или который мы будем видеть ). 
+Такие подзапросы, и любые другие в них, позволяют использовать агре- 
+гаты, если нет другой причины по которой они не могут быть использо- 
+ваны. Следующий раздел приводит этому пример. 
+  <BR><BR>
+В любом случае, вы можете получить тот же самый результат более легко, 
+выбрав поле которое вы использовали в агрегатной функции, вместо использования самой этой функции. Другими словами, предикат - 
+EXISTS (SELECT COUNT (DISTINCT sname) FROM Salespeople) 
+- будет эквивалентен - EXISTS (SELECT sname FROM Salespeople) 
+который был позволен выше. 
+ <A name=12.7>
+<H3>БОЛЕЕ УДАЧНЫЙ ПРИМЕР ПОДЗАПРОСА</H3>Возможные прикладные программы подзапросов могут становиться мно- 
+гократно вкладываемыми. 
+Вы можете вкладывать их два или более в одиночный запрос, и даже один 
+внутрь другого. Так как можно рассмотреть небольшой кусок чтобы получить всю картину работы этой команды, вы можете воспользоваться 
+способом в SQL, который может принимать различные команды из большинства других языков. 
+   <BR><BR>
+  Имеется запрос который извлекает строки всех продавцов которые имеют 
+заказчиков с больше чем одним текущим порядком. Это не обязательно са- 
+мое простое решение этой проблемы, но оно предназначено скорее показать 
+улучшенную логику SQL. Вывод этой информации связывает все три наши 
+типовых таблицы: 
+<PRE> 
+            SELECT * 
+               FROM Salespeople first 
+               WHERE EXISTS 
+                  ( SELECT * 
+                      FROM Customers second 
+                      WHERE first.snum = second.snum 
+                      AND 1 &lt; 
+                         ( SELECT COUNT (*) 
+                              FROM Orders 
+                              WHERE Orders.cnum = 
+                               second.cnum )); 
+ 
+</PRE>
+Вывод для этого запроса показывается в Рисунке 12.5. 
+<PRE> 
+               ===============  SQL Execution Log ============ 
+              |                                               | 
+              | FROM  Salespeople first                       | 
+              | WHERE EXISTS                                  | 
+              | (SELECT *                                     | 
+              | FROM Customers second                         | 
+              | WHERE first.snum = second.snum                | 
+              | AND 1 &lt;                                       | 
+              | (SELECT  CONT (*)                             | 
+              | FROM Orders                                   | 
+              | WHERE Orders.cnum = second.cnum));            | 
+              | ============================================= | 
+              |   cnum     cname     city         comm        | 
+              |  -----    --------   ----       --------      | 
+              |   1001    Peel       London         0.17      | 
+              |   1002    Serres     San Jose       0.13      | 
+              |   1007    Rifkin     Barselona      0.15      | 
+                ============================================= 
+</PRE>  
+Рисунок 12.5: Использование EXISTS с комплексным подзапросом 
+ <BR><BR> 
+Мы могли бы разобрать вышеупомянутый запрос примерно так: 
+  <BR><BR>
+Берем каждую строку таблицы Продавцов как строку-кандидат( внешний 
+запрос ) и выполняем подзапросы. Для каждой строки-кандидата из внешнего запроса, берем в соответствие каждую строку из таблицы Заказчиков( средний запрос ). Если текущая строка заказчиков не совпадает с текущей строкой продавца( т.е. если first.snum &lt; &gt; second.snum ), предикат 
+среднего запроса неправилен. Всякий раз, когда мы находим заказчика в 
+среднем запросе который совпадает с продавцом во внешнем запросе, мы 
+должны рассматривать сам внутренний запрос чтобы определить, будет ли 
+наш средний предикат запроса верен. 
+Внутренний запрос считает число порядков текущего заказчика ( из сред- 
+него запроса ). Если это число больший чем 1, предикат среднего запроса 
+верен, и строки выбираются. 
+Это делает EXISTS предикат внешнего запроса верным для текущей строки 
+продавца, и означает, что по крайней мере один из текущих заказчиков про- 
+давца имеет более чем один порядок. 
+  <BR><BR>
+Если это не кажется достаточно понятным для вас в этой точке разбора 
+примера, не волнуйтесь. Сложность этого примера - хороша независимо 
+от того, как часто будете Вы использовать ее в деловой ситуации. 
+Основная цель примеров такого типа состоит в том, чтобы показать вам 
+некоторые возможности которые могут оказаться в дальнейшем полезными. 
+После работы со сложными ситуациями подобно этой, простые запросы ко- 
+торые являются наиболее часто используемыми в SQL, покажутся Вам эле- 
+ментарными. 
+   <BR><BR>
+Кроме того, этот запрос, даже если он кажется удобным, довольно извилис- 
+тый способ извлечения информации и делает много работы. 
+Он связывает три разных таблицы чтобы дать вам эту информацию, а если 
+таблиц больше чем здесь указано, будет трудно получить ее напрямую 
+(хотя это не единственный способ, и не обязательно лучший способ в SQL). 
+Возможно вам нужно увидеть эту информацию относительно регулярной 
+основы - если, например, вы имеете премию в конце недели для продавца 
+который получил многочисленные порядки от одного заказчика. 
+В этом случае, он должен был бы вывести команду, и сохранить ее чтобы 
+использовать снова и снова по мере того как данные будут меняться 
+( лучше всего сделать это с помощью представления, которое мы будем 
+проходить в <A href="ch20.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch20.shtml">Главе 20</A> ). 
+ <A name=12.8>
+<H3>РЕЗЮМЕ</H3>EXISTS, хотя он и кажется простым, может быть одним из самых непонятных операторов SQL. Однако, он обладает гибкостью и мощностью. В этой 
+главе, вы видели и овладели большинством возможностей которые EXISTS 
+дает вам.  В дальнейшем, ваше понимание улучшенной логики подзапроса 
+расширится значительно. 
+    <BR><BR>
+Следующим шагом будет овладение трем другими специальными операто- 
+рами которые берут подзапросы как аргументы, это - ANY, ALL, и SOME. 
+Как вы увидите в <A href="ch13.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch13.shtml">Главе 13</A>, это - альтернативные формулировки некоторых 
+вещей которые вы уже использовали, но которые в некоторых случаях, могут 
+оказаться более предпочтительными. 
+ <A name=12.9>
+<H3>РАБОТА С SQL</H3>1. Напишите запрос который бы использовал оператор EXISTS для извлечения всех продавцов которые имеют заказчиков с оценкой 300. 
+<BR><BR> 
+2. Как бы вы решили предыдущую проблему используя объединение ? 
+<BR><BR> 
+3. Напишите запрос использующий оператор EXISTS который выберет 
+   всех продавцов с заказчиками размещенными в их городах которые ими 
+   не обслуживаются. 
+<BR><BR> 
+4. Напишите запрос который извлекал бы из таблицы Заказчиков каждого 
+   заказчика назначенного к продавцу который в данный момент имеет 
+   по крайней мере еще одного заказчика ( кроме заказчика которого вы 
+   выберете ) с порядками в таблице Порядков ( подсказка: это может 
+   быть похоже на структуру в примере с нашим трех-уровневым подзап- 
+   росом ). 
+<BR><BR> 
+( См. <A href="a.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/a.shtml">Приложение A</A> для ответов. ) 
+
+</TD></TR></TABLE>
+</TD></TR>
+<TR BGCOLOR=#6699CC><TD><TABLE WIDTH=100% BORDER=0 CELLSPACING=0 CELLPADDING=0><TR><TD BGCOLOR=#6699CC VALIGN=CENTER HEIGHT = 40><FONT SIZE=-10>
+<!--begin of Top100 logo-->
+<a href="javascript:if(confirm('http://top100.rambler.ru/top100/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://top100.rambler.ru/top100/'" tppabs="http://top100.rambler.ru/top100/">
+<img src="../../../../top100-images.rambler.ru/top100/banner-88x31-rambler-gray2.gif" tppabs="http://top100-images.rambler.ru/top100/banner-88x31-rambler-gray2.gif" alt="Rambler's Top100" width=88 height=31 border=0></a>
+<!--end of Top100 logo -->
+</FONT>
+<!--Rating@Mail.ru COUNTER--><a target=_top
+href="javascript:if(confirm('http://top.mail.ru/jump?from=58574  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://top.mail.ru/jump?from=58574'" tppabs="http://top.mail.ru/jump?from=58574"><img
+src="../../../../top.list.ru/counter-id=58574;t=94.gif" tppabs="http://top.list.ru/counter?id=58574;t=94"
+border=0 height=18 width=88
+alt="Рейтинг@Mail.ru"></a><!--/COUNTER-->
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="font : bold 10px verdana; color : white" href="javascript:if(confirm('http://hosting.parking.ru/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://hosting.parking.ru/'" tppabs="http://hosting.parking.ru/">Хостинг от компании Parking.ru</a>
+<script src="../../../../www.google-analytics.com/urchin.js" tppabs="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-265508-1";
+urchinTracker();
+</script>
+</TD>
+<TD BGCOLOR=#6699CC ALIGN=right><FONT COLOR=white FACE="Tahoma,Arial" SIZE=1>&nbsp;Administrator:&nbsp;<A STYLE="color :white" HREF="mailto:admin@sql.ru">admin@sql.ru</A>&nbsp;<BR>Last update: <FONT COLOR=white>05 июн 2007&nbsp;</FONT></FONT></TD></TR></TABLE>
+</TD></TR></TABLE></TD></TR></TABLE>
+
+</BODY></HTML>
+

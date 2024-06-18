@@ -1,0 +1,408 @@
+<HTML>
+<HEAD>
+<TITLE>Понимание SQL. Глава 10. Соотнесенные Подзапросы. [SQL.RU]</TITLE>
+<META http-equiv="Content-Type" CONTENT="text/html; charset=windows-1251">
+<META HTTP-EQUIV="Window-target" CONTENT="_top">
+<META HTTP-EQUIV="Last-Modified" CONTENT="29-03-2001">
+<META NAME="Description" CONTENT="Использование языка SQL, создание клиент-серверных систем. Конференция по MSSQL, Oracle, Interbase, MySQL. Полезные ссылки, документация, рекомендации по разработке информационных систем, сертификация, заказ книг и многое другое.">
+<META NAME="Keywords" CONTENT="SQL, конференция, Database Server, Oracle, Interbase, MySQL, документация, статьи, примеры, книги, ссылки, сертификация, работа, СУБД">
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../form.css" tppabs="http://www.sql.ru/form.css">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" leftmargin="3" topmargin="3" marginheight="3" marginwidth="3">
+<noindex>
+<TABLE BGCOLOR="#000000" WIDTH=100% CELLPADDING=0 CELLSPACING=0 BORDER=0>
+<TR><TD>
+
+<TABLE WIDTH=100% CELLPADDING=0 CELLSPACING=1 BORDER=0>
+<TR BGCOLOR="#6699CC"><TD><TABLE CELLSPACING=0 CELLPADDING=0 WIDTH=100% BORDER=0 BGCOLOR="#6699CC">
+<TR><TD COLSPAN=3><IMG SRC="../../../images/blank.gif" tppabs="http://www.sql.ru/images/blank.gif" height=3 width=1 alt=""></TD></TR>
+<TR><TD VALIGN=TOP>&nbsp;<FONT FACE="Verdana,Arial" SIZE=5 COLOR=lightyellow>SQL.RU<BR><FONT SIZE=-5>&nbsp;client/server technologies</FONT></FONT><!--begin of Top100--><a href="javascript:if(confirm('http://top100.rambler.ru/top100/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://top100.rambler.ru/top100/'" tppabs="http://top100.rambler.ru/top100/"><img src="../../../../counter.rambler.ru/top100.cnt-236431.gif" tppabs="http://counter.rambler.ru/top100.cnt?236431" alt="Rambler's Top100" width=1 height=1 border=0></a><!--end of Top100 code--></TD>
+<TD WIDTH=468 HEIGHT=60 BGCOLOR=#6699CC ALIGN=RIGHT></TD>
+<TD WIDTH=2><IMG SRC="../../../images/blank.gif" tppabs="http://www.sql.ru/images/blank.gif" height=1 width=2 alt=""></TD></TR>                                                      	
+<TR HEIGHT=4><TD COLSPAN=3><IMG SRC="../../../images/blank.gif" tppabs="http://www.sql.ru/images/blank.gif" height=5 width=1 alt=""></TD></TR></TABLE>
+
+</TD></TR>
+
+<TR HEIGHT=15><TD bgcolor=#006699><FONT FACE="Verdana,Arial" SIZE=1 COLOR=WHITE><B><A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/'" tppabs="http://www.sql.ru/">&nbsp;<FONT COLOR=white>Главная</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/docs  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/docs'" tppabs="http://www.sql.ru/docs">&nbsp;<FONT COLOR=yellow>Документация</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/articles  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/articles'" tppabs="http://www.sql.ru/articles">&nbsp;<FONT COLOR=white>Статьи</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/books  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/books'" tppabs="http://www.sql.ru/books">&nbsp;<FONT COLOR=white>Книги</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/forum/actualforum.aspx  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/forum/actualforum.aspx'" tppabs="http://www.sql.ru/forum/actualforum.aspx">&nbsp;<FONT COLOR=white>Форум</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/poll  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/poll'" tppabs="http://www.sql.ru/poll">&nbsp;<FONT COLOR=white>Опросы</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/forum/actualtopics.aspx?bid=11  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/forum/actualtopics.aspx?bid=11'" tppabs="http://www.sql.ru/forum/actualtopics.aspx?bid=11">&nbsp;<FONT COLOR=white>Гостевая</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/subscribe  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/subscribe'" tppabs="http://www.sql.ru/subscribe">&nbsp;<FONT COLOR=white>Рассылка</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/job  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/job'" tppabs="http://www.sql.ru/job">&nbsp;<FONT COLOR=white>Работа</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/search  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/search'" tppabs="http://www.sql.ru/search">&nbsp;<FONT COLOR=white>Поиск</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/faq  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/faq'" tppabs="http://www.sql.ru/faq">&nbsp;<FONT COLOR=white>FAQ</FONT>&nbsp;</A>|</B></FONT></TD></TR>
+<TR><TD BGCOLOR=#F5F5F5>
+</noindex>
+
+<TABLE BORDER=0 CELLSPACING=10><TR><TD>
+<CENTER>
+<H2 class="headline">
+11. СООТНЕСЕННЫЕ ПОДЗАПРОСЫ</H2></CENTER>В этой главе, мы представим вас типу 
+подзапроса о котором мы не говорили в <A href="ch10.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch10.shtml">Главе 10</A> - посвященной соотнесенному подзапросу. Вы узнаете как использовать соотнесенные подзапросы 
+в предложениях запросов WHERE и HAVING. 
+Сходства и различи между соотнесенными подзапросами и объединениями 
+будут обсуждаться далее, и вы сможете повысить ваше знание псевдонимов 
+и префиксов имени таблицы - когда они необходимы и как их использовать. 
+ <A name=11.1>
+<H3>КАК СФОРМИРОВАТЬ СООТНЕСЕННЫЙ ПОДЗАПРОС</H3>Когда вы используете подзапросы в SQL, вы можете обратиться к внутреннему запросу таблицы в предложении внешнего запроса FROM , сформировав - соотнесенный подзапрос. Когда вы делаете это, подзапрос выполняется неоднократно, по одному разу для каждой строки таблицы основного 
+запроса. 
+Соотнесенный подзапрос - один из большого количества тонких понятий 
+в SQL из-за сложности в его оценке. 
+Если вы сумеете овладеть им, вы найдете что он очень мощный, потому что 
+может выполнять сложные функции с помощью очень лаконичных указаний. 
+ <BR><BR> 
+    Например, имеется один способ найти всех заказчиков в порядках на 3-е 
+Октября ( вывод  показывается в Рисунке 11.1 ): 
+<PRE> 
+             SELECT * 
+                FROM Customers outer 
+                WHERE 10/03/1990 IN 
+                  ( SELECT odate 
+                       FROM Orders inner 
+                       WHERE outer.cnum = inner.cnum ); 
+</PRE> 
+ <A name=11.2>
+<H3>КАК РАБОТАЕТ СООТНЕСЕННЫЙ ПОДЗАПРОС</H3>В вышеупомянутом примере, "внутренний"(inner) и "внешний"(outer), это 
+псевдонимы, подробно обсужденным в <A href="ch9.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch9.shtml">Главе 9</A>. Мы выбрали эти имена для 
+большей ясности; они отсылают к значениям внутренних и внешних запросов, соответственно. Так как значение в поле cnum  внешнего запроса 
+меняется, внутренний запрос должен выполняться отдельно для каждой 
+строки внешнего запроса. Строка внешнего запроса для которого внутрен
+
+<PRE>
+ 
+               ===============  SQL Execution Log ============ 
+              |                                               | 
+              | SELECT *                                      | 
+              | FROM  Customers outer                         | 
+              | WHERE 10/03/1990 IN                           | 
+              | (SELECT odate                                 | 
+              | FROM Orders inner                             | 
+              | WHERE outer.cnum = inner.cnum);               | 
+              | ============================================= | 
+              |   cnum     cname     city    rating    snum   | 
+              |  -----    --------   ----    ------   -----   | 
+              |   2001    Hoffman    London     100    1001   | 
+              |   2003    Liu        San Jose   200    1002   | 
+              |   2008    Cisneros   San Jose   300    1007   | 
+              |   2007    Pereira    Rome       100    1004   | 
+                ============================================= 
+ </PRE> 
+ 
+Рисунок 11.1: Использование соотнесенного подзапроса 
+  <BR><BR>
+ний запрос каждый раз будет выполнен, называется - текущей 
+строкой-кандидатом. Следовательно, процедура оценки выполняемой 
+соотнесенным подзапросом - это: 
+  <BR><BR>
+1. Выбрать строку из таблицы именованной в внешнем запросе. 
+   Это будет текущая строка-кандидат. 
+  <BR><BR>
+2. Сохранить значения из этой строки-кандидата в псевдониме с именем 
+   в предложении FROM внешнего запроса. 
+  <BR><BR>
+3. Выполнить подзапрос. Везде, где псевдоним данный для внешнего 
+   запроса найден ( в этом случае "внешний" ), использовать значение 
+   для текущей строки-кандидата. Использование значения из строки- 
+   кандидата внешнего запроса в подзапросе называется - внешней 
+   ссылкой. 
+  <BR><BR>
+4. Оценить предикат внешнего запроса на основе результатов подзапроса 
+   выполняемого в шаге 3. Он определяет - выбирается ли строка-кандидат 
+   для вывода. 
+ <BR><BR> 
+5. Повторить процедуру для следующей строки-кандидата таблицы, и так 
+   далее пока все строки таблицы не будут проверены. 
+ <BR><BR> 
+В вышеупомянутом примере, SQL осуществляет следующую процедуру: 
+ <BR><BR> 
+1. Он выбирает строку Hoffman из таблицы Заказчиков. 
+ 
+2. Сохраняет эту строку как текущую строку-кандидат под псевдонимом - 
+    "внешним". 
+  <BR><BR>
+3. Затем он выполняет подзапрос. Подзапрос просматривает всю таблицу 
+   Порядков чтобы найти строки где значение cnum поле - такое же как 
+   значение outer.cnum, которое в настоящее время равно 2001, - поле 
+   cnum строки Hoffmanа. 
+   Затем он извлекает поле odate из каждой строки таблицы Порядков для 
+   которой это верно, и формирует набор значений пол odate. 
+ <BR><BR> 
+4.  Получив набор всех значений пол odate, для пол cnum = 2001, 
+   он проверяет предикат основного запроса чтобы видеть имеется ли значение на 3 Октября в этом наборе. Если это так(а это так), то он выбирает 
+   строку Hoffmanа для вывода ее из основного запроса. 
+ <BR><BR> 
+5. Он повторяет всю процедуру, используя строку Giovanni как строку-канди- 
+   дата, и затем сохраняет повторно пока каждая строка таблицы Заказчиков 
+   не будет проверена. 
+  <BR><BR>
+Как вы можете видеть, вычисления которые SQL выполняет с помощью этих 
+простых инструкций - это полный комплекс. Конечно, вы могли бы решить ту 
+же самую проблему используя объединение, следующего вида ( вывод для 
+этого запроса показывается в Рисунке 11.2 ): 
+<PRE>  
+              SELECT * 
+                 FROM Customers first, Orders second 
+                 WHERE first.cnum = second.cnum 
+                    AND second.odate = 10/03/1990; 
+</PRE>  
+Обратите внимание что Cisneros был выбран дважды, по одному разу для 
+каждого порядка который он имел для данной даты. Мы могли бы устранить это 
+используя SELECT DISTINCT вместо просто SELECT.  Но это необязательно 
+в варианте подзапроса. Оператор IN, используемый в варианте подзапроса, не 
+делает никакого различи между значениями которые выбираются подзапросом 
+один раз и значениями которые выбираются неоднократно.  Следовательно 
+DISTINCT необязателен. 
+<PRE> 
+               ===============  SQL Execution Log ============ 
+              |                                               | 
+              | SELECT *                                      | 
+              | FROM  Customers first, Orders second          | 
+              | WHERE first.cnum = second.cnum                | 
+              | (SELECT COUNT (*)                             | 
+              | FROM Customers                                | 
+              | WHERE snum = main.snum;                       | 
+              | ============================================= | 
+              |   cnum     cname                              | 
+              |  -----    --------                            | 
+              |   1001     Peel                               | 
+              |   1002     Serres                             | 
+                ============================================= 
+</PRE>  
+Рисунок 11. 2   Использование объединения вместо соотнесенного 
+                      подзапроса 
+ <BR><BR> 
+Предположим что мы хотим видеть имена и номера всех продавцов которые 
+имеют более одного заказчика. Следующий запрос выполнит это для вас 
+( вывод показывается в Рисунке 11.3 ): 
+<PRE> 
+             SELECT snum, sname 
+                FROM Salespeople main 
+                WHERE 1 &lt; 
+                    ( SELECT COUNT (*) 
+                         FROM Customers 
+                         WHERE snum = main.snum ); 
+</PRE>  
+Обратите внимание что предложение FROM подзапроса в этом примере не 
+использует псевдоним. При отсутствии имени таблицы или префикса псевдонима, SQL может для начала принять, что любое поле выводится из таблицы 
+с именем указанным в предложении FROM текущего запроса. Если поле с этим 
+именем отсутствует( в нашем случае - snum ) в той таблице, SQL будет проверять 
+внешние запросы. Именно поэтому, префикс имени таблицы обычно необходим в 
+соотнесенных подзапросах - для отмены этого предположения. Псевдонимы также 
+часто запрашиваются чтобы давать вам возможность ссылаться к той же самой 
+таблице во внутреннем и внешнем запросе без какой-либо неоднозначности. 
+ 
+<PRE> 
+               ===============  SQL Execution Log ============ 
+              |                                               | 
+              | SELECT snum sname                             | 
+              | FROM  Salespeople main                        | 
+              | WHERE 1 &lt;                                     | 
+              | AND second.odate = 10/03/1990;                | 
+              | ============================================= | 
+              |   cnum     cname     city    rating    snum   | 
+              |  -----    --------   ----    ------   -----   | 
+              |   2001    Hoffman    London     100    1001   | 
+              |   2003    Liu        San Jose   200    1002   | 
+              |   2008    Cisneros   San Jose   300    1007   | 
+              |   2007    Pereira    Rome       100    1004   | 
+                ============================================= 
+</PRE>  
+Рисунок 11.3: Нахождение продавцов с многочисленными заказчиками 
+ <A name=11.3>
+<H3>ИСПОЛЬЗОВАНИЕ СООТНЕСЕННЫХ ПОДЗАПРОСОВ ДЛЯ НАХОЖДЕНИЯ ОШИБОК</H3>Иногда полезно выполнять запросы которые разработаны специально так 
+чтобы находить ошибки. Это всегда возможно при дефектной информации 
+которую можно ввести в вашу базу данных, и, если она введена, бывает 
+трудно ее определить. Следующий запрос не должен производить никако- 
+го вывода. Он просматривает таблицу Порядков чтобы видеть совпадают 
+ли пол snum и cnum в каждой строке таблицы Заказчиков и выводит каж- 
+дую строку где этого совпадения нет. Другими словами, запрос выясняет, 
+тот ли продавец кредитовал каждую продажу ( он воспринимает поле cnum, 
+как первичный ключ таблицы Заказчиков, который не будет иметь никаких 
+двойных значений в этой таблице ). 
+<PRE> 
+        SELECT * 
+           FROM Orders main 
+           WHERE NOT snum = 
+              ( SELECT snum 
+                  FROM Customers 
+                  WHERE cnum = main.cnum ); 
+ 
+</PRE>  
+При использовании механизма справочной целостности ( обсужденного 
+в <A href="ch19.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch19.shtml">Главе 19</A> ), вы можете быть гарантированы от некоторых ошибок такого 
+вида. Этот механизм не всегда доступен, хотя его использование желательно во всех случаях, причем поиск ошибки запроса описанный выше, 
+может быть еще полезнее. 
+<A name=11.4>
+<H3>СРАВНЕНИЕ ТАБЛИЦЫ С СОБОЙ</H3> 
+Вы можете также использовать соотнесенный подзапрос основанный на 
+той же самой таблице что и основной запрос. Это даст вам возможность 
+извлечь определенные сложные формы произведенной информации. 
+Например, мы можем найти все порядки со значениями сумм приобретений выше среднего для их заказчиков ( вывод показан в Рисунке 11.4 ): 
+<PRE> 
+           SELECT * 
+              FROM Orders outer 
+              WHERE amt &gt; 
+                  ( SELECT AVG amt 
+                       FROM Orders inter 
+                       WHERE inner.cnum = outer.cnum ); 
+ 
+ 
+               ===============  SQL Execution Log ============== 
+              |                                                 | 
+              | SELECT *                                        | 
+              | FROM  Orders outer                              | 
+              | WHERE amt &gt;                                     | 
+              | (SELECT AVG (amt)                               | 
+              | FROM Orders inner                               | 
+              | WHERE inner.cnum = outer.cnum                   | 
+              | =============================================== | 
+              |   onum       amt      odate      cnum     snum  | 
+              |  -----    --------  ----------  -----   ------  | 
+              |   3006     1098.19  10/03/1990   2008     1007  | 
+              |   3010     1309.00  10/06/1990   2004     1002  | 
+              |   3011     9891.88  10/06/1990   2006     1001  | 
+                ================================================ 
+</PRE>  
+Рисунок 11.4: Соотнесение таблицы с собой 
+ <BR><BR> 
+Конечно, в нашей маленькой типовой таблице, где большинство заказчиков 
+имеют только один порядок, большинство значений являются одновременно 
+средними и следовательно не выбираются. Давайте введем команду другим 
+способом ( вывод показывается в Рисунке 11.5 ): 
+<PRE> 
+              SELECT * 
+                  FROM Orders outer 
+                  WHERE amt &gt; = 
+                      ( SELECT AVG (amt) 
+                          FROM Orders inner 
+                          WHERE inner.cnum = outer.cnum ); 
+ 
+               ===============  SQL Execution Log ============== 
+              |                                                 | 
+              | SELECT *                                        | 
+              | FROM  Orders outer                              | 
+              | WHERE amt &gt; =                                   | 
+              | (SELECT AVG (amt)                               | 
+              | FROM Orders inner                               | 
+              | WHERE inner.cnum = outer.cnum);                 | 
+              | =============================================== | 
+              |   onum       amt      odate      cnum     snum  | 
+              |  -----    --------  ----------  -----   ------  | 
+              |   3003      767.19  10/03/1990   2001     1001  | 
+              |   3002     1900.10  10/03/1990   2007     1004  | 
+              |   3005     5160.45  10/03/1990   2003     1002  | 
+              |   3006     1098.19  10/03/1990   2008     1007  | 
+              |   3009     1713.23  10/04/1990   2002     1003  | 
+              |   3010     1309.95  10/06/1990   2004     1002  | 
+              |   3011     9891.88  10/06/1990   2006     1001  | 
+                ================================================ 
+</PRE>  
+Рисунок 11.5: Выбираются порядки которые &gt; = средней сумме приобретений 
+                  для их заказчиков. 
+  <BR><BR>
+Различие, конечно, в том, что реляционный оператор основного предиката 
+включает значения которые равняются среднему ( что обычно означает 
+что они - единственные порядки для данных заказчиков ). 
+ <A name=11.5>
+<H3>СООТНЕСЕННЫЕ ПОДЗАПРОСЫ В ПРЕДЛОЖЕНИИ HAVING</H3>Также как предложение HAVING может брать подзапросы, он может брать и 
+соотнесенные подзапросы. Когда вы используете соотнесенный подзапрос 
+в предложении HAVING, вы должны ограничивать внешние ссылки к позициям которые могли бы непосредственно использоваться в самом предложе- 
+нии  HAVING. Вы можете вспомнить из <A href="ch6.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch6.shtml">Главы 6</A> что предложение HAVING 
+может использовать только агрегатные функции которые указаны в их 
+предложении SELECT или пол используемые в их предложении GROUP BY. 
+Они являются только внешними ссылками, которые вы можете делать. Все 
+это потому, что предикат предложения HAVING оценивается для каждой группы из внешнего запроса, а не для каждой строки. 
+Следовательно, подзапрос будет выполняться один раз для каждой группы выведенной из внешнего запроса, а не для каждой строки. 
+ <BR><BR> 
+Предположим что вы хотите суммировать значения сумм приобретений покупок 
+из таблицы Порядков, сгруппировав их по датам, удалив все даты где бы SUM 
+не был по крайней мере на 2000.00 выше максимальной ( MAX ) суммы: 
+<PRE> 
+           SELECT odate, SUM (amt) 
+              FROM Orders a 
+              GROUP BY odate 
+              HAVING SUM (amt) &gt; 
+                  ( SELECT 2000.00 + MAX (amt) 
+                       FROM Orders b 
+                       WHERE a.odate = b.odate ); 
+</PRE>  
+Подзапрос вычисляет значение MAX для всех строк с той же самой датой 
+что и у текущей агрегатной группы основного запроса. Это должно быть 
+выполнено, как и ранее, с использованием предложения WHERE. Сам 
+подзапрос не должен использовать предложения GROUP BY или HAVING. 
+ <A name=11.6>
+<H3>СООТНЕСЕННЫЕ ПОДЗАПРОСЫ И ОБЪЕДИНЕНИЯ</H3>Как вы и могли предположить, соотнесенные подзапросы по природе близки 
+к объединениям - они оба включают проверку каждой строки одной таблицы 
+с каждой строкой другой ( или псевдонимом из той же ) таблицы. 
+Вы найдете что большинство операций которые могут выполняться с одним 
+из них будут также работать и с другим. 
+ <BR><BR> 
+Однако имеется различие в прикладной программе между ними, такое как 
+вышеупомянутая потребность в использовании DISTINCT с объединением 
+и его  необязательность с подзапросом. Имеются также некоторые вещи 
+которые каждый может делать так, как этого не может другой. Подзапросы, 
+например, могут использовать агрегатную функцию в предикате, дела 
+возможным выполнение операций типа нашего предыдущего примера в 
+котором мы извлекли порядки усредненные для их заказчиков. 
+Объединения, с другой стороны, могут выводить строки из обеих сравниваемых таблиц, в то врем как вывод подзапросов используется только в 
+предикатах внешних запросов. Как правило, форма запроса которая кажется наиболее интуитивной будет вероятно лучшей в использовании, но 
+при этом хорошо бы знать обе техники для тех ситуаций когда та или иная 
+могут не работать. 
+ <A name=11.7>
+<H3>РЕЗЮМЕ</H3>Вы можете поздравлять себя с овладением большого куска из рассмотренных 
+понятий в SQL - соотнесенного подзапроса. Вы видели как соотнесенный 
+подзапрос связан с объединением, а также, как его можно использовать с 
+агрегатными функциями и в предложении HAVING. В общем, вы теперь 
+узнали все типы подзапросов полностью. 
+  <BR><BR>
+Следующий шаг - описание некоторых SQL специальных операторов. Они 
+берут подзапросы как аргументы, как это делает IN, но в отличие от IN, они 
+могут использоваться только в подзапросах. Первый из их, представленный 
+в <A href="ch12.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch12.shtml">Главе 12</A>, - называется EXISTS. 
+ <A name=11.8>
+<H3>РАБОТА С SQL</H3>1. Напишите команду SELECT использующую соотнесенный подзапрос, 
+   которая выберет имена и номера всех заказчиков с максимальными 
+   для их городов оценками. 
+<BR><BR> 
+2. Напишите два запроса которые выберут всех продавцов ( по их имени 
+   и номеру ) которые в своих городах имеют заказчиков которых они не 
+   обслуживают. Один запрос - с использованием объединения и один - 
+   с соотнесенным подзапросом. 
+   Которое из решений будет более изящным? 
+<BR><BR> 
+( Подсказка: один из способом это сделать, состоит в том, чтобы находить 
+  всех заказчиков не обслуживаемых данным продавцом и определить, 
+  находится ли каждый из них в городе продавца. ) 
+<BR><BR> 
+( См. <A href="a.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/a.shtml">Приложение A</A> для ответов. ) 
+
+</TD></TR></TABLE>
+</TD></TR>
+<TR BGCOLOR=#6699CC><TD><TABLE WIDTH=100% BORDER=0 CELLSPACING=0 CELLPADDING=0><TR><TD BGCOLOR=#6699CC VALIGN=CENTER HEIGHT = 40><FONT SIZE=-10>
+<!--begin of Top100 logo-->
+<a href="javascript:if(confirm('http://top100.rambler.ru/top100/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://top100.rambler.ru/top100/'" tppabs="http://top100.rambler.ru/top100/">
+<img src="../../../../top100-images.rambler.ru/top100/banner-88x31-rambler-gray2.gif" tppabs="http://top100-images.rambler.ru/top100/banner-88x31-rambler-gray2.gif" alt="Rambler's Top100" width=88 height=31 border=0></a>
+<!--end of Top100 logo -->
+</FONT>
+<!--Rating@Mail.ru COUNTER--><a target=_top
+href="javascript:if(confirm('http://top.mail.ru/jump?from=58574  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://top.mail.ru/jump?from=58574'" tppabs="http://top.mail.ru/jump?from=58574"><img
+src="../../../../top.list.ru/counter-id=58574;t=94.gif" tppabs="http://top.list.ru/counter?id=58574;t=94"
+border=0 height=18 width=88
+alt="Рейтинг@Mail.ru"></a><!--/COUNTER-->
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="font : bold 10px verdana; color : white" href="javascript:if(confirm('http://hosting.parking.ru/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://hosting.parking.ru/'" tppabs="http://hosting.parking.ru/">Хостинг от компании Parking.ru</a>
+<script src="../../../../www.google-analytics.com/urchin.js" tppabs="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-265508-1";
+urchinTracker();
+</script>
+</TD>
+<TD BGCOLOR=#6699CC ALIGN=right><FONT COLOR=white FACE="Tahoma,Arial" SIZE=1>&nbsp;Administrator:&nbsp;<A STYLE="color :white" HREF="mailto:admin@sql.ru">admin@sql.ru</A>&nbsp;<BR>Last update: <FONT COLOR=white>05 июн 2007&nbsp;</FONT></FONT></TD></TR></TABLE>
+</TD></TR></TABLE></TD></TR></TABLE>
+
+</BODY></HTML>
+

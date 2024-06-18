@@ -1,0 +1,334 @@
+<HTML>
+<HEAD>
+<TITLE>Понимание SQL. Глава 8. Запрашивание многочисленных таблиц также как одной. [SQL.RU]</TITLE>
+<META http-equiv="Content-Type" CONTENT="text/html; charset=windows-1251">
+<META HTTP-EQUIV="Window-target" CONTENT="_top">
+<META HTTP-EQUIV="Last-Modified" CONTENT="29-03-2001">
+<META NAME="Description" CONTENT="Использование языка SQL, создание клиент-серверных систем. Конференция по MSSQL, Oracle, Interbase, MySQL. Полезные ссылки, документация, рекомендации по разработке информационных систем, сертификация, заказ книг и многое другое.">
+<META NAME="Keywords" CONTENT="SQL, конференция, Database Server, Oracle, Interbase, MySQL, документация, статьи, примеры, книги, ссылки, сертификация, работа, СУБД">
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../form.css" tppabs="http://www.sql.ru/form.css">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" leftmargin="3" topmargin="3" marginheight="3" marginwidth="3">
+<noindex>
+<TABLE BGCOLOR="#000000" WIDTH=100% CELLPADDING=0 CELLSPACING=0 BORDER=0>
+<TR><TD>
+
+<TABLE WIDTH=100% CELLPADDING=0 CELLSPACING=1 BORDER=0>
+<TR BGCOLOR="#6699CC"><TD><TABLE CELLSPACING=0 CELLPADDING=0 WIDTH=100% BORDER=0 BGCOLOR="#6699CC">
+<TR><TD COLSPAN=3><IMG SRC="../../../images/blank.gif" tppabs="http://www.sql.ru/images/blank.gif" height=3 width=1 alt=""></TD></TR>
+<TR><TD VALIGN=TOP>&nbsp;<FONT FACE="Verdana,Arial" SIZE=5 COLOR=lightyellow>SQL.RU<BR><FONT SIZE=-5>&nbsp;client/server technologies</FONT></FONT><!--begin of Top100--><a href="javascript:if(confirm('http://top100.rambler.ru/top100/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://top100.rambler.ru/top100/'" tppabs="http://top100.rambler.ru/top100/"><img src="../../../../counter.rambler.ru/top100.cnt-236431.gif" tppabs="http://counter.rambler.ru/top100.cnt?236431" alt="Rambler's Top100" width=1 height=1 border=0></a><!--end of Top100 code--></TD>
+<TD WIDTH=468 HEIGHT=60 BGCOLOR=#6699CC ALIGN=RIGHT></TD>
+<TD WIDTH=2><IMG SRC="../../../images/blank.gif" tppabs="http://www.sql.ru/images/blank.gif" height=1 width=2 alt=""></TD></TR>                                                      	
+<TR HEIGHT=4><TD COLSPAN=3><IMG SRC="../../../images/blank.gif" tppabs="http://www.sql.ru/images/blank.gif" height=5 width=1 alt=""></TD></TR></TABLE>
+
+</TD></TR>
+
+<TR HEIGHT=15><TD bgcolor=#006699><FONT FACE="Verdana,Arial" SIZE=1 COLOR=WHITE><B><A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/'" tppabs="http://www.sql.ru/">&nbsp;<FONT COLOR=white>Главная</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/docs  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/docs'" tppabs="http://www.sql.ru/docs">&nbsp;<FONT COLOR=yellow>Документация</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/articles  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/articles'" tppabs="http://www.sql.ru/articles">&nbsp;<FONT COLOR=white>Статьи</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/books  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/books'" tppabs="http://www.sql.ru/books">&nbsp;<FONT COLOR=white>Книги</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/forum/actualforum.aspx  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/forum/actualforum.aspx'" tppabs="http://www.sql.ru/forum/actualforum.aspx">&nbsp;<FONT COLOR=white>Форум</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/poll  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/poll'" tppabs="http://www.sql.ru/poll">&nbsp;<FONT COLOR=white>Опросы</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/forum/actualtopics.aspx?bid=11  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/forum/actualtopics.aspx?bid=11'" tppabs="http://www.sql.ru/forum/actualtopics.aspx?bid=11">&nbsp;<FONT COLOR=white>Гостевая</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/subscribe  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/subscribe'" tppabs="http://www.sql.ru/subscribe">&nbsp;<FONT COLOR=white>Рассылка</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/job  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/job'" tppabs="http://www.sql.ru/job">&nbsp;<FONT COLOR=white>Работа</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/search  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/search'" tppabs="http://www.sql.ru/search">&nbsp;<FONT COLOR=white>Поиск</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/faq  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/faq'" tppabs="http://www.sql.ru/faq">&nbsp;<FONT COLOR=white>FAQ</FONT>&nbsp;</A>|</B></FONT></TD></TR>
+<TR><TD BGCOLOR=#F5F5F5>
+</noindex>
+
+<TABLE BORDER=0 CELLSPACING=10><TR><TD>
+<CENTER>
+<H2 class="headline">
+8. ЗАПРАШИВАНИЕ МНОГОЧИСЛЕННЫХ ТАБЛИЦ ТАКЖЕ КАК ОДНОЙ</H2></CENTER> 
+ 
+ДО ЭТОГО, КАЖДЫЙ ЗАПРОС КОТОРЫЙ МЫ ИССЛЕДОВАЛИ 
+основывался на одиночной таблице. 
+В этой главе, вы узнаете как сделать запрос любого числа таблиц с 
+помощью одной команды. Это - чрезвычайно мощное средство потому 
+что оно не только объединяет вывод из многочисленных таблиц, но и 
+определяет связи между ними. Вы обучитесь различным формам кото- 
+рые могут использовать эти связи, а также устанавливать и использовать 
+их, чтобы удовлетворять возможным специальным требованиям. 
+ <A name=8.1>
+<H3>ОБЪЕДИНЕНИЕ ТАБЛИЦ</H3> 
+ 
+  Одна из наиболее важных особенностей запросов SQL - это их способ- 
+ность определять связи между многочисленными таблицами и выводить 
+информацию из них в терминах этих связей, всю внутри одной команды. 
+Этот вид операции называется - объединением, которое является одним 
+из видов операций в реляционных базах данных. Как установлено в 
+<A href="ch1.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch1.shtml">Главе 1</A>, главное в реляционном подходе это связи 
+которые можно создавать между позициями данных в таблицах. 
+Используя объединения, мы непосредственно связываем информацию с 
+любым номером таблицы, и таким образом способны создавать связи 
+между сравнимыми фрагментами данных. 
+При объединении, таблицы представленные списком в предложении FROM 
+запроса, отделяются запятыми. Предикат запроса может ссылаться к лю- 
+бому столбцу любой связанной таблицы и, следовательно, может 
+использоваться для связи между ими. Обычно, предикат сравнивает значения в 
+столбцах различных таблиц чтобы определить, удовлетворяет ли WHERE 
+установленному условию. 
+ <A name=8.2>
+<H3>ИМЕНА ТАБЛИЦ И СТОЛБЦОВ</H3> 
+ 
+Полное имя столбца таблицы фактически состоит из имени таблицы, 
+сопровождаемого точкой и затем именем столбца. Имеются несколько 
+примеров имен : 
+<PRE> 
+                  Salespeople.snum 
+ 
+                  Salespeople.city 
+ 
+                  Orders.odate 
+</PRE> 
+До этого, вы могли опускать имена таблиц потому что вы запрашивали 
+только одну таблицу одновременно, а SQL достаточно интеллектуален 
+чтобы присвоить соответствующий префикс, имени таблицы. Даже когда 
+вы делаете запрос многочисленных таблиц, вы еще можете опускать имена 
+таблиц, если все ее столбцы имеют различные имена. Но это не всегда 
+так бывает. Например, мы имеем две типовые таблицы со столбцами 
+называемыми city. 
+  Если мы должны связать эти столбцы( кратковременно ), мы будем дол- 
+жны указать их с именами Salespeople.city или Customers.city, чтобы SQL 
+мог их различать. 
+ <A name=8.3>
+<H3>СОЗДАНИЕ ОБЪЕДИНЕНИЯ</H3> 
+ 
+Предположим что вы хотите поставить в соответствии вашему продавцу 
+ваших заказчиков в городе в котором они живут, поэтому вы увидите все 
+комбинации продавцов и заказчиков для этого города. Вы будете должны 
+брать каждого продавца и искать в таблице Заказчиков всех заказчиков 
+того же самого города. Вы могли бы сделать это, введя следующую коман- 
+ду ( вывод  показывается в Рисунке 8.1 ): 
+<PRE> 
+          SELECT Customers.cname, Salespeople.sname, 
+           Salespeople.city 
+             FROM Salespeople, Customers 
+             WHERE Salespeople.city = Customers.city; 
+ 
+ 
+                      ===============  SQL Execution Log ============ 
+              | SELECT Customers.cname, Salespeople.sname,    | 
+              | Salespeople.city                              | 
+              | FROM  Salespeople, Customers                  | 
+              | WHERE Salespeople.city = Customers.city       | 
+              | ============================================= | 
+              |   cname       cname            city           | 
+              |  -------     --------          ----           | 
+              |  Hoffman     Peel              London         | 
+              |  Hoffman     Peel              London         | 
+              |  Liu         Serres            San Jose       | 
+              |  Cisneros    Serres            San Jose       | 
+              |  Hoffman     Motika            London         | 
+              |  Clemens     Motika            London         | 
+                ============================================= 
+</PRE> 
+Рисунок 8.1: Объединение двух таблиц 
+<BR><BR> 
+   Так как это поле city имеется и в таблице Продавцов и таблице 
+Заказчиков, имена таблиц должны использоваться как префиксы. Хотя 
+это необходимо только когда два или более полей имеют одно и то же 
+им, в любом случае это хороша идея включать имя таблицы в объединение 
+для лучшего понимания и непротиворечивости. Несмотря на это, 
+мы будем, в наших примерах далее, использовать имена таблицы только 
+когда необходимо, так что будет ясно, когда они необходимы а когда нет. 
+   Что SQL в основном делает в объединении - так это исследует 
+каждую комбинацию строк двух или более возможных таблиц, и 
+проверяет эти комбинации по их предикатам. В предыдущем примере, 
+требовалась строка продавца Peel из таблицы Продавцов и объединение 
+ее с каждой строкой таблицы Пользователей, по одной в каждый момент 
+времени. 
+Если комбинация производит значение которое делает предикат верным, 
+и если поле city из строк таблиц Заказчика равно London, то  Peel - это 
+то запрашиваемое значение которое комбинация выберет для вывода. То же 
+самое будет затем выполнено для каждого продавца в таблице Продавцов 
+( у некоторых из которых не было никаких заказчиков в этих городах). 
+ <A name=8.4>
+<H3>ОБЪЕДИНЕНИЕ ТАБЛИЦ ЧЕРЕЗ СПРАВОЧНУЮ ЦЕЛОСТНОСТЬ</H3> 
+ 
+Эта особенность часто используется просто для эксплуатации связей 
+встроенных в базу данных. В предыдущем примере, мы установили 
+связь между двум таблицами в объединении. Это прекрасно. 
+Но эти таблицы, уже были соединены через snum поле. Эта связь 
+называется состоянием справочной целостности, как мы уже говорили 
+в Главе 1. Используя объединение можно извлекать данные в терминах 
+этой связи. Например, чтобы показать имена всех заказчиков соответст- 
+вующих продавцам которые их обслуживают, мы будем использовать 
+такой запрос: 
+<PRE> 
+             SELECT Customers.cname, Salespeople.sname 
+                FROM Customers, Salespeople 
+                WHERE Salespeople.snum = Customers.snum; 
+</PRE> 
+Вывод этого запроса  показывается в Рисунке 8.2. 
+<BR><BR> 
+Это - пример объединения, в котором столбцы используются для определения 
+предиката запроса, и в этом случае, snum столбцы из обеих таблиц, 
+удалены из вывода. И это прекрасно. 
+Вывод  показывает какие заказчики каким продавцом обслуживаются; 
+значения пол snum которые устанавливают связь - отсутствуют. Однако если 
+вы введете их в вывод, то вы должны или удостовериться что вывод понятен 
+сам по себе или обеспечить комментарий к данным при выводе. 
+<PRE> 
+ 
+               ===============  SQL Execution Log ============ 
+              | SELECT Customers.cname, Salespeople.sname,    | 
+              | FROM  Salespeople, Customers                  | 
+              | WHERE Salespeople.snum = Customers.snum       | 
+              | ============================================= | 
+              |   cname       sname                           | 
+              |  -------     --------                         | 
+              |  Hoffman     Peel                             | 
+              |  Giovanni    Axelrod                          | 
+              |  Liu         Serres                           | 
+              |  Grass       Serres                           | 
+              |  Clemens     Peel                             | 
+              |  Cisneros    Rifkin                           | 
+              |  Pereira     Motika                           | 
+                ============================================= 
+</PRE> 
+Рисунок 8.2:  Объединение продавцов с их заказчикам 
+<A name=8.5>
+<H3>ОБЪЕДИНЕНИЯ ТАБЛИЦ ПО РАВЕНСТВУ ЗНАЧЕНИЙ<BR>В СТОЛБЦАХ И ДРУГИЕ ВИДЫ 
+ОБЪЕДИНЕНИЙ</H3> 
+ 
+Объединения которые используют предикаты основанные на равенствах 
+называются - объединениями по равенству. Все наши примеры в этой главе 
+до настоящего времени, относились именно к этой категории, потому что все 
+условия в предложениях WHERE базировались на математических выражениях 
+использующих знак равно ( = ).  Строки 'city = 'London' и 
+'Salespeople.snum = Orders.snum ' - примеры таких типов равенств, найденных 
+в предикатах. 
+Объединения по равенству - это вероятно наиболее общий вид объединения, 
+но имеются и другие. Вы можете, фактически, использовать любой из 
+реляционных операторов в объединении. Здесь показан пример 
+другого вида объединения ( вывод показывается в Рисунке 8.3 ): 
+<PRE> 
+               SELECT sname, cname 
+                   FROM Salespeople, Customers 
+                   WHERE sname &lt; cname 
+                      AND rating &lt; 200; 
+ 
+ 
+               ===============  SQL Execution Log ============ 
+              | SELECT sname, cname                           | 
+              | FROM  Salespeople, Customers                  | 
+              | WHERE sname &lt; cname                           | 
+              | AND rating &lt; 200;                             | 
+              | ============================================= | 
+              |     sname       cname                         | 
+              |    --------    -------                        | 
+              |    Peel        Pereira                        | 
+              |    Motika      Pereira                        | 
+              |    Axelrod     Hoffman                        | 
+              |    Axelrod     Clemens                        | 
+              |    Axelrod     Pereira                        | 
+              |                                               | 
+                ============================================= 
+</PRE> 
+Рисунок 8.3: Объединение основанное на неравенстве 
+<BR><BR> 
+Эта команда не часто бывает полезна. Она воспроизводит все комбинации 
+имени продавца и имени заказчика так, что первый предшествует послед- 
+нему в алфавитном порядке, а последний имеет оценку меньше чем 200. 
+Обычно, вы не создаете сложных связей подобно этой, и, по этой причине, 
+вы вероятно будете строить наиболее общие объединения по равенству, но 
+вы должны хорошо знать и другие возможности. 
+ <A name=8.6>
+<H3>ОБЪЕДИНЕНИЕ БОЛЕЕ ДВУХ ТАБЛИЦ</H3> 
+ 
+Вы можете также создавать запросы объединяющие более двух таблиц. 
+Предположим что мы хотим найти все порядки заказчиков не находящихся 
+в тех городах где находятся их продавцы. Для этого необходимо связать 
+все три наши типовые таблицы ( вывод  показывается в Рисунке 8.4 ): 
+<PRE> 
+          SELECT onum, cname, Orders.cnum, Orders.snum 
+             FROM Salespeople, Customers,Orders 
+             WHERE Customers.city &lt; &gt; Salespeople.city 
+                AND Orders.cnum = Customers.cnum 
+                AND Orders.snum = Salespeople.snum; 
+ 
+ 
+            ===============  SQL Execution Log ============== 
+           |                                                 | 
+           | SELECT onum, cname, Orders.cnum, Orders.snum    | 
+           | FROM  Salespeople, Customers, Orders            | 
+           | WHERE Customers.city &lt; &gt; Salespeople.city       | 
+           | AND Orders.cnum = Customers.cnum                | 
+           | AND Orders.snum = Salespeople.snum;             | 
+           | =============================================== | 
+           |   onum    cname        cnum     snum            | 
+           |  ------  -------      -----    -----            | 
+           |   3001   Cisneros      2008     1007            | 
+           |   3002   Pereira       2007     1004            | 
+           |   3006   Cisneros      2008     1007            | 
+           |   3009   Giovanni      2002     1003            | 
+           |   3007   Grass         2004     1002            | 
+           |   3010   Grass         2004     1002            | 
+             =============================================== 
+</PRE> 
+Рисунок 8. 4: Объединение трех таблиц 
+<BR><BR> 
+Хотя эта команда выглядит скорее как комплексна, вы можете следовать 
+за логикой, просто проверяя - что заказчики не размещены в тех городах 
+где размещены их продавцы ( совпадение двух snum полей ), и что пере- 
+численные порядки - выполнены с помощью этих заказчиков( совпадение 
+порядков с полями cnum и snum в таблице Порядков ). 
+ <A name=8.7>
+<H3>РЕЗЮМЕ</H3>   
+ 
+ 
+Теперь вы больше не ограничиваетесь просмотром одной таблицы в каждый 
+момент времени. Кроме того, вы можете делать сложные сравнения между 
+любыми полями любого числа таблиц и использовать полученные результаты 
+чтобы решать какую информацию вы бы хотели видеть. Фактически, эта 
+методика настолько полезна для построения связей, что она часто используется 
+для создания их внутри одиночной таблицы. Это будет правильным: вы сможете 
+объединить таблицу с собой, а это очень удобна вещь. 
+ Это будет темой <A href="ch9.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch9.shtml">Главы 9</A>. 
+ <A name=8.8>
+<H3>РАБОТА С SQL</H3> 
+ 
+1. Напишите запрос который бы вывел список номеров порядков 
+   сопровождающихся именем заказчика который создавал эти порядки. 
+<BR><BR> 
+2. Напишите запрос который бы выдавал имена продавца и заказчика для 
+   каждого порядка после номера порядков. 
+<BR><BR> 
+3. Напишите запрос который бы выводил всех заказчиков обслуживаемых 
+   продавцом с комиссионными выше 12% . Выведите им заказчика, им 
+   продавца, и ставку комиссионных продавца. 
+<BR><BR> 
+4. Напишите запрос который вычислил бы сумму комиссионных продавца 
+  для каждого порядка заказчика с оценкой выше 100. 
+<BR><BR> 
+( См. <A href="a.shtml.htm#8" tppabs="http://www.sql.ru/docs/sql/u_sql/a.shtml#8">Приложение A</A> для ответов. ) 
+
+</TD></TR></TABLE>
+</TD></TR>
+<TR BGCOLOR=#6699CC><TD><TABLE WIDTH=100% BORDER=0 CELLSPACING=0 CELLPADDING=0><TR><TD BGCOLOR=#6699CC VALIGN=CENTER HEIGHT = 40><FONT SIZE=-10>
+<!--begin of Top100 logo-->
+<a href="javascript:if(confirm('http://top100.rambler.ru/top100/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://top100.rambler.ru/top100/'" tppabs="http://top100.rambler.ru/top100/">
+<img src="../../../../top100-images.rambler.ru/top100/banner-88x31-rambler-gray2.gif" tppabs="http://top100-images.rambler.ru/top100/banner-88x31-rambler-gray2.gif" alt="Rambler's Top100" width=88 height=31 border=0></a>
+<!--end of Top100 logo -->
+</FONT>
+<!--Rating@Mail.ru COUNTER--><a target=_top
+href="javascript:if(confirm('http://top.mail.ru/jump?from=58574  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://top.mail.ru/jump?from=58574'" tppabs="http://top.mail.ru/jump?from=58574"><img
+src="../../../../top.list.ru/counter-id=58574;t=94.gif" tppabs="http://top.list.ru/counter?id=58574;t=94"
+border=0 height=18 width=88
+alt="Рейтинг@Mail.ru"></a><!--/COUNTER-->
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="font : bold 10px verdana; color : white" href="javascript:if(confirm('http://hosting.parking.ru/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://hosting.parking.ru/'" tppabs="http://hosting.parking.ru/">Хостинг от компании Parking.ru</a>
+<script src="../../../../www.google-analytics.com/urchin.js" tppabs="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-265508-1";
+urchinTracker();
+</script>
+</TD>
+<TD BGCOLOR=#6699CC ALIGN=right><FONT COLOR=white FACE="Tahoma,Arial" SIZE=1>&nbsp;Administrator:&nbsp;<A STYLE="color :white" HREF="mailto:admin@sql.ru">admin@sql.ru</A>&nbsp;<BR>Last update: <FONT COLOR=white>05 июн 2007&nbsp;</FONT></FONT></TD></TR></TABLE>
+</TD></TR></TABLE></TD></TR></TABLE>
+
+</BODY></HTML>
+

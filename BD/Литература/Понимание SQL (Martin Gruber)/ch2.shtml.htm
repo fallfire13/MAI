@@ -1,0 +1,363 @@
+<HTML>
+<HEAD>
+<TITLE>Понимание SQL. Глава 2. SQL : Обзор. [SQL.RU]</TITLE>
+<META http-equiv="Content-Type" CONTENT="text/html; charset=windows-1251">
+<META HTTP-EQUIV="Window-target" CONTENT="_top">
+<META HTTP-EQUIV="Last-Modified" CONTENT="29-03-2001">
+<META NAME="Description" CONTENT="Использование языка SQL, создание клиент-серверных систем. Конференция по MSSQL, Oracle, Interbase, MySQL. Полезные ссылки, документация, рекомендации по разработке информационных систем, сертификация, заказ книг и многое другое.">
+<META NAME="Keywords" CONTENT="SQL, конференция, Database Server, Oracle, Interbase, MySQL, документация, статьи, примеры, книги, ссылки, сертификация, работа, СУБД">
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../form.css" tppabs="http://www.sql.ru/form.css">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" leftmargin="3" topmargin="3" marginheight="3" marginwidth="3">
+<noindex>
+<TABLE BGCOLOR="#000000" WIDTH=100% CELLPADDING=0 CELLSPACING=0 BORDER=0>
+<TR><TD>
+
+<TABLE WIDTH=100% CELLPADDING=0 CELLSPACING=1 BORDER=0>
+<TR BGCOLOR="#6699CC"><TD><TABLE CELLSPACING=0 CELLPADDING=0 WIDTH=100% BORDER=0 BGCOLOR="#6699CC">
+<TR><TD COLSPAN=3><IMG SRC="../../../images/blank.gif" tppabs="http://www.sql.ru/images/blank.gif" height=3 width=1 alt=""></TD></TR>
+<TR><TD VALIGN=TOP>&nbsp;<FONT FACE="Verdana,Arial" SIZE=5 COLOR=lightyellow>SQL.RU<BR><FONT SIZE=-5>&nbsp;client/server technologies</FONT></FONT><!--begin of Top100--><a href="javascript:if(confirm('http://top100.rambler.ru/top100/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://top100.rambler.ru/top100/'" tppabs="http://top100.rambler.ru/top100/"><img src="../../../../counter.rambler.ru/top100.cnt-236431.gif" tppabs="http://counter.rambler.ru/top100.cnt?236431" alt="Rambler's Top100" width=1 height=1 border=0></a><!--end of Top100 code--></TD>
+<TD WIDTH=468 HEIGHT=60 BGCOLOR=#6699CC ALIGN=RIGHT></TD>
+<TD WIDTH=2><IMG SRC="../../../images/blank.gif" tppabs="http://www.sql.ru/images/blank.gif" height=1 width=2 alt=""></TD></TR>                                                      	
+<TR HEIGHT=4><TD COLSPAN=3><IMG SRC="../../../images/blank.gif" tppabs="http://www.sql.ru/images/blank.gif" height=5 width=1 alt=""></TD></TR></TABLE>
+
+</TD></TR>
+
+<TR HEIGHT=15><TD bgcolor=#006699><FONT FACE="Verdana,Arial" SIZE=1 COLOR=WHITE><B><A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/'" tppabs="http://www.sql.ru/">&nbsp;<FONT COLOR=white>Главная</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/docs  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/docs'" tppabs="http://www.sql.ru/docs">&nbsp;<FONT COLOR=yellow>Документация</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/articles  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/articles'" tppabs="http://www.sql.ru/articles">&nbsp;<FONT COLOR=white>Статьи</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/books  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/books'" tppabs="http://www.sql.ru/books">&nbsp;<FONT COLOR=white>Книги</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/forum/actualforum.aspx  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/forum/actualforum.aspx'" tppabs="http://www.sql.ru/forum/actualforum.aspx">&nbsp;<FONT COLOR=white>Форум</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/poll  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/poll'" tppabs="http://www.sql.ru/poll">&nbsp;<FONT COLOR=white>Опросы</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/forum/actualtopics.aspx?bid=11  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/forum/actualtopics.aspx?bid=11'" tppabs="http://www.sql.ru/forum/actualtopics.aspx?bid=11">&nbsp;<FONT COLOR=white>Гостевая</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/subscribe  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/subscribe'" tppabs="http://www.sql.ru/subscribe">&nbsp;<FONT COLOR=white>Рассылка</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/job  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/job'" tppabs="http://www.sql.ru/job">&nbsp;<FONT COLOR=white>Работа</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/search  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/search'" tppabs="http://www.sql.ru/search">&nbsp;<FONT COLOR=white>Поиск</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/faq  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/faq'" tppabs="http://www.sql.ru/faq">&nbsp;<FONT COLOR=white>FAQ</FONT>&nbsp;</A>|</B></FONT></TD></TR>
+<TR><TD BGCOLOR=#F5F5F5>
+</noindex>
+
+<TABLE BORDER=0 CELLSPACING=10><TR><TD>
+<CENTER>
+<H2 class="headline">
+2. SQL : ОБЗОР</H2></CENTER>Эта глава познакомит вас со структурой SQL языка 
+а также с определенными общими выводами, такими как тип данных которые 
+эти поля могут содержать и некоторые области неоднозначностей которые 
+существуют в SQL. Она предназначена обеспечить связь с более конкретной 
+информацией в последующих главах. Вы не должны запоминать каждую 
+подробность упомянутую в этой главе. Краткий обзор представлен здесь в 
+одной удобно размещенной области, многие подробности которой вы можете 
+иметь чтобы в последствии ссылаться к ним по мере овладения языком. Мы 
+поместили все это в начало книги чтобы ориентировать вас на мир SQL без 
+упрощенного подхода к его проблемам и в тоже врем дать Вам привычные в 
+будущем места для ссылки к ним когда у Вас появятся вопросы. Этот материал 
+может стать более понятным когда мы перейдем к описанию конкретных 
+команд SQL,  начинающихся с <A href="ch3.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch3.shtml">Главы 3</A>. 
+ <A name=2.1>
+<H3>КАК РАБОТАЕТ SQL?</H3>SQL это язык ориентированный специально на реляционные базы данных. 
+Он устраняет много работы которую вы должны были бы сделать если бы 
+вы использовали универсальный язык программировани, например C. Чтобы 
+сформировать реляционную базу данных на C, вам необходимо было бы 
+начать с самого начала. Вы должны были бы определить объект - называемый 
+таблицей которая могла бы расти чтобы иметь любое число строк, а затем 
+создавать постепенно процедуры для помещения значений в нее и извлечения 
+из них. Если бы вы захотели найти некоторые определенные строки, вам 
+необходимо было бы выполнить по шагам процедуру, подобную следующей : 
+<BR><BR>
+1. Рассмотрите строку таблицы. 
+<BR><BR> 
+2. Выполните проверку - является ли эта строка одной из строк которая вам нужна. 
+<BR><BR> 
+3. Если это так, сохраните ее где-нибудь пока вся таблица не будет проверена. 
+<BR><BR> 
+4. Проверьте имеются ли другие строки в таблице. 
+<BR><BR> 
+5. Если имеются, возвратитесь на шаг 1. 
+<BR><BR> 
+6. Если строк больше нет, вывести все значения сохраненные в шаге 3. 
+<BR><BR> 
+( Конечно, это не фактический набор C команд, а только логика шагов 
+  которые должны были бы быть включены в реальную программу. ) 
+<BR><BR> 
+SQL сэкономит вам все это. Команды в SQL могут работать со всеми 
+группами таблиц как с единым объектом и могут обрабатывать любое 
+количество информации извлеченной или полученной из их, в виде 
+единого модуля. 
+ <A name=2.2>
+<H3>ЧТО ДЕЛАЕТ ANSI ?</H3>Как мы уже рассказывали в Введении,  стандарт SQL определяется с помощью 
+кода ANSI (Американский Национальный Институт Стандартов ). 
+SQL не изобретался ANSI. Это по существу изобретение IBM. Но другие 
+компании подхватили SQL сразу же, по крайней мере, одна компания (Oracle) 
+отбила у IBM право на рыночную продажу SQL продуктов. 
+<BR><BR> 
+После того как появился ряд конкурирующих программ SQL на рынке, 
+ANSI определил стандарт к которому они должны быть приведены 
+(определение таких стандартов и является функцией ANSI ). 
+Однако после этого, появились некоторые проблемы. Возникли они в результате 
+стандартизации ANSI в виде некоторых ограничений. Так как не всегда ANSI 
+определяет то, что является наиболее полезным, то программы пытаются 
+соответствовать стандарту ANSI не позволяя ему ограничивать их слишком 
+сильно. Это, в свою очередь, ведет к случайным несогласованности. 
+Программы Баз Данных обычно дают ANSI SQL дополнительные особенности 
+и часто ослабляют многие ограничения из большинства из них. 
+  Следовательно, общие разновидности ANSI будут также рассмотрены. 
+Хотя мы очевидно не сможем объять каждое исключение или разновидность, 
+удачные идеи имеют тенденцию к внедрению и использованию  в различных 
+программах даже когда они не определены стандартом ANSI. 
+ ANSI - это вид минимального стандарта и вы можете делать больше чем он 
+позволяет, хотя и должны выполнять его указания при выполнении задач 
+которые он определяет. 
+ <A name=2.3>
+<H3>ИНТЕРАКТИВНЫЙ И ВЛОЖЕННЫЙ SQL</H3> Имеются два SQL:  Интерактивный и Вложенный. 
+Большей частью, обе формы работают одинаково, но используются различно. 
+<BR><BR> 
+Интерактивный SQL используется для функционирования непосредственно 
+в базе данных чтобы производить вывод для использования его заказчиком. 
+В этой форме SQL, когда вы введете команду, она сейчас же выполнится 
+и вы сможете увидеть вывод (если он вообще получится) - немедленно. 
+<BR><BR> 
+Вложенный SQL состоит из команд SQL помещенных внутри программ, 
+которые обычно написаны на некотором другом языке (типа КОБОЛА или 
+Паскаль). 
+Это делает эти программы более мощными и эффективным. Однако, допуска 
+эти языки, приходится иметь дело с структурой SQL и стилем управления 
+данных который требует некоторых расширений к интерактивному SQL. 
+Передача SQL команд во вложенный SQL является выдаваемой ("passed off") 
+для переменных или параметров используемых программой в которую они были 
+вложены. 
+<BR><BR> 
+В этой книге, мы будем представлять SQL в интерактивной форме. Это 
+даст нам возможность обсуждать команды и их эффекты не заботясь о том как 
+они связаны с помощью интерфейса с другими языками. 
+Интерактивный SQL - это форма наиболее полезна непрограммистам. 
+Все что вы узнаете относительно интерактивного SQL в основном 
+применимо и к вложенной форме. Изменения необходимые для использования 
+вложенной формы будут использованы в последней главе этой книги. 
+ <A name=2.4>
+<H3>СУБПОДРАЗДЕЛЕНИЯ SQL</H3>И в интерактивной и во вложенной формах SQL, имеются многочисленные 
+части, или субподразделения. Так как вы вероятно столкнетесь с этой 
+терминологией при чтении SQL, мы дадим некоторые пояснения. 
+К сожалению, эти термины не используются повсеместно во всех 
+реализациях. Они подчеркиваются ANSI и полезны на концептуальном 
+уровне, но большинство SQL программ практически не обрабатывают их 
+отдельно, так что они по существу становятся функциональными 
+категориями команд SQL. 
+ 
+DDL ( Язык Определения Данных ) - так называемый Язык Описания Схемы 
+ в ANSI, состоит из команд которые создают объекты ( таблицы, индексы, 
+просмотры, и так далее ) в базе данных. 
+<BR><BR> 
+DML (Язык Манипулирования Данными) - это набор команд которые 
+определяют какие значения представлены в таблицах в любой момент времени. 
+DCD (Язык Управления Данными) состоит из средств которые определяют, 
+разрешить ли пользователю выполнять определенные действия или нет. 
+<BR><BR> 
+Они являются составными частями DDL в ANSI. Не забывайте эти имена. 
+Это не различные языки, а разделы команд SQL сгруппированных по их 
+функциям. 
+ <A name=2.5>
+<H3>РАЗЛИЧНЫЕ ТИПЫ ДАННЫХ</H3>Не все типы значений которые могут занимать пол таблицы - логически 
+одинаковые. Наиболее очевидное различие - между числами и текстом. 
+Вы не можете помещать числа в алфавитном порядке или вычитать одно 
+им из другого. Так как системы с реляционной базой данных базируются 
+на связях между фрагментами информации, различные типы данных должны 
+понятно отличаться друга от друга, так чтобы соответствующие процессы и 
+сравнения. могли быть в них выполнены. 
+<BR><BR> 
+В SQL, это делается с помощью назначения каждому полю - типа данных 
+который указывает на тип значения которое это поле может содержать. 
+Все значения в данном поле должны иметь одинаковый тип. В таблице 
+Заказчиков, например, cname и city - содержат строки текста для оценки, 
+snum, и cnum - это уже номера. По этой причине, вы не можете ввести 
+значение Highest(Наивысший) или значение None(Никакой) в поле rating, 
+которое имеет числовой тип данных. Это ограничение удачно, так как оно 
+налагает некоторую структурность на ваши данные. Вы часто будете сравни- 
+вать некоторые или все значения в данном поле, поэтому вы можете выполнять действие только на определенных строках а не на всех. Вы не могли 
+бы сделать этого если бы значения полей имели смешанный тип данных. 
+<BR><BR> 
+К сожалению, определение этих типов данных является основной областью 
+в которой большинство коммерческих программ баз данных и официальный 
+стандарт SQL, не всегда совпадают. ANSI SQL стандарт распознает только 
+текст и тип номера, в то врем как большинство коммерческих программ 
+используют другие специальные типы. 
+Такие как, DATA(ДАТА) и TIME(ВРЕМЯ) - фактически почти стандартные типы( хотя точный формат их меняется ). Некоторые пакеты также поддерживают такие типы, как например MONEY(ДЕНЬГИ) и BINARY 
+(ДВОИЧНЫЕ). (MONEY - это специальная система исчисления используемая компьютерами. 
+Вся информация в компьютере передается двоичными числами и затем 
+преобразовываются в другие системы, что бы мы могли легко использовать их 
+и понимать.) 
+<BR><BR> 
+ANSI определяет несколько различных типов значений чисел, различи 
+между которыми - довольно тонки и иногда их путают. Разрешенные ANSI 
+типы данных перечислены в Приложении B. 
+<BR><BR> 
+Сложность числовых типов ANSI можно, по крайней мере частично, объяснить 
+усилием сделать вложенный SQL, совместимым с рядом других языков. 
+<BR><BR> 
+Два типа чисел ANSI , INTEGER(ЦЕЛОЕ ЧИСЛО) и DECIMAL 
+(ДЕСЯТИЧНОЕ ЧИСЛО) ( которые можно сокращать как INT и DEC, 
+соответственно ), будут адекватны для наших целей, также как и для целей 
+большинства практических деловых прикладных программ. 
+Естественно, что тип ЦЕЛОЕ можно представить как ДЕСЯТИЧНОЕ ЧИСЛО 
+которое не содержит никаких цифр справа от десятичной точки. 
+<BR><BR> 
+Тип для текста - CHAR ( или СИМВОЛ ), который относится к строке текста. 
+Поле типа CHAR имеет определенную длину, которая определяется максималь- 
+ным числом символов которые могут быть введены в это поле. Больше всего 
+реализаций также имеют нестандартный тип называемый VARCHAR(ПЕРЕ- 
+МЕННОЕ ЧИСЛО СИМВОЛОВ), который является текстовой строкой которая 
+может иметь любую длину до определенного реализацией максимума (обычно 254 
+символа ). CHARACTER и VARCHAR значения включаются в  одиночные ка- 
+вычки как "текст". 
+Различие между CHAR и VARCHAR в том, что CHAR должен резервировать 
+достаточное количество памяти для максимальной длины строки, а VARCHAR 
+распределяет память так как это необходимо. 
+<BR><BR> 
+Символьные типы состоят из всех печатных символов, включая числа. 
+Однако, номер 1 не то же что символ "1". Символ "1" - только другой печат- 
+ный фрагмент текста, не определяемый системой как наличие числового значения 1. Например 1 + 1 = 2, но "1" + "1" не равняется "2". 
+Символьные значения сохраняются в компьютере как двоичные значения, 
+но показываются пользователю как печатный текст. Преобразование 
+следует за форматом определяемым системой которую вы используете. 
+Этот формат преобразования будет одним из двух стандартных типов 
+(возможно с расширениями) используемых в компьютерных системах: 
+в ASCII коде ( используемом во всех персональных и малых компьютерах ) 
+и EBCDIC коде (Расширенном Двоично-Десятичном Коде Обмена Информации) (используемом в больших компьютерах). 
+Определенные операции, такие как упорядочивание в алфавитном порядке 
+значений пол, будет изменяться вместе с форматом. Применение этих 
+двух форматов будет обсуждаться в <A href="ch4.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch4.shtml">Главе 4</A>. 
+<BR><BR> 
+Мы должны следить за рынком, а не ANSI, в использовании типа называемого 
+DATE(ДАТОЙ). ( В системе, которая не распознает тип ДАТА, вы конечно 
+можете объявить дату как символьное или числовое поле, но это сделает 
+большинство операций более трудоемкими. ) Вы должны смотреть свою 
+документацию по пакету программ которые вы будете использовать, чтобы выяснить точно, какие типы данных она поддерживает. 
+ <A name=2.6>
+<H3>SQL НЕСОГЛАСОВАННОСТИ</H3>Вы можете понять из предшествующего обсуждения, что имеются 
+самостоятельные несогласованности внутри продуктов мира SQL. 
+SQL появился из коммерческого мира баз данных как инструмент, и 
+был позже превращен в стандарт ANSI. К сожалению, ANSI не всегда 
+определяет наибольшую пользу, поэтому программы пытаются соответствовать 
+стандарту ANSI не позволяя ему ограничивать их слишком сильно. 
+ANSI - вид минимального стандарта - вы можете делать больше чем он это 
+позволяет, но вы должны быть способны получить те же самые результаты 
+что и при выполнении той же самой задачи. 
+ <A name=2.7>
+<H3>ЧТО ТАКОЕ - ПОЛЬЗОВАТЕЛЬ?</H3>SQL обычно находится в компьютерных системах которые имеют больше 
+чем одного пользователя, и следовательно должны делать различие между 
+ними ( ваше семейство PC может иметь любое число пользователей, но оно 
+обычно не имеет способов чтобы отличать одного от другого ). Обычно, в 
+такой системе, каждый пользователь имеет некий вид кода проверки прав 
+который идентифицирует его или ее (терминология  изменяется ). В начале 
+сеанса с компьютером, пользователь входит в систему (регистрируется), 
+сообща компьютеру кто этот пользователь, идентифицированный с помощью 
+определенного ID(Идентификатора). Любое количество людей использующих 
+тот же самый ID доступа, являются отдельными пользователями;  и аналогично, 
+один человек может представлять большое количество пользователей ( в разное 
+врем ), используя различные доступные Идентификаторы 
+ 
+SQL следует этому примеру. Действия в большинстве сред SQL приведены к 
+специальному доступному Идентификатору который точно соответствует 
+определенному пользователю. Таблица или другой объект принадлежит 
+пользователю, который имеет над ним полную власть. 
+Пользователь может или не может иметь привилегии чтобы выполнять действие 
+над объектом. Для наших целей, мы договоримся, что любой  пользователь имеет 
+привилегии необходимые чтобы выполнять любое действие,  пока мы не возвратимся специально к обсуждению привилегий в <A href="ch22.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch22.shtml">Главе 22</A>. 
+<BR><BR> 
+Специальное значение - USER(ПОЛЬЗОВАТЕЛЬ) может использоваться 
+как аргумент в команде. Оно указывает на доступный Идентификатор 
+пользователя, выдавшего команду. 
+<A name=2.8>
+<H3>УСЛОВИЯ И ТЕРМИНОЛОГИЯ</H3>Ключевые слова - это слова которые имеют специальное значение в SQL. 
+Они могут быть командами, но не текстом и не именами объектов. 
+Мы будем выделять ключевые слова печатая их ЗАГЛАВНЫМИ БУКВАМИ. 
+Вы должны соблюдать осторожность чтобы не путать ключевые слова 
+с терминами. 
+<BR><BR> 
+SQL имеет определенные специальные термины которые используются 
+чтобы описывать его. Среди них - такие слова как запрос, предложение, 
+и предикат, которые являются важнейшими в описании и понимании языка 
+но не означают что-нибудь самостоятельное для SQL. 
+<BR><BR> 
+Команды, или предложения, являются инструкциями которыми Вы обращаетесь 
+к SQL базе данных. 
+Команды состоят из одной или более отдельных логических частей называемых 
+предложениями. Предложения начинаются ключевым словом для которого они 
+являются проименованными, и состоят из ключевых слов и аргументов. 
+Например предложения с которыми вы можете сталкиваться - это " FROM 
+Salespeope " и " WHERE city = "London". Аргументы завершают или 
+изменяют значение предложения. В примерах выше, Salespeople - аргумент, 
+а FROM - ключевое слово предложения FROM. 
+Аналогично, " city = "London" " -  аргумент предложения WHERE. 
+Объекты - структуры в базе данных которым даны имена и сохраняются в 
+памяти. Они включают в себя базовые таблицы, представления ( два типа 
+таблиц ), и индексы. 
+Чтобы показать Вам как формируются команды, мы будем делать это на 
+примерах. Имеется, однако, более формальный метод описания команд 
+использующих стандартизированные условные обозначения. Мы будем 
+использовать его в более поздних главах, для удобства чтобы понимать эти 
+условные обозначения в случае если вы столкнетесь с ним в других SQL 
+документах. 
+Квадратные скобки ( [ ] ) будут указывать части которые могут не использоваться, а многоточия ( ... ) указывать что все предшествующее им может 
+повторяться любое число раз. 
+Слова обозначенные в угловых скобках (&lt;&gt;) - специальные термины 
+которые объясняют, что они собой представляют. Мы упростили 
+стандартную терминологию SQL значительно, но без ухудшения его 
+понимания. 
+ <A name=2.9>
+<H3>РЕЗЮМЕ</H3>Мы быстро прошли основы в этой главе. Но нашим намерением и было - 
+просто пролететь над основами SQL, так чтобы вы могли понять идею 
+относительно всего объема. 
+Когда мы возвратимся к основе в <A href="ch3.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch3.shtml">следующей главе</A>, некоторые вещи станут 
+более конкретными. Теперь вы знаете кое-что относительно SQL - какова 
+его структура, как он используется, как он представляет данные, и как 
+они определяются ( и некоторые несогласованности появляющиеся при этом ), 
+и некоторые условные обозначения и термины используемые чтобы описывать 
+их. 
+Все это - много информации для одной главы; мы не ожидаем что бы вы 
+запомнили все эти подробности, но вы сможете вернуться позже к ним если 
+понадобится. 
+По <A href="ch3.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch3.shtml">Главе 3</A>, мы будем идти, показывая конкретно, как формируются команды 
+и что они делают. Мы представим вам команду SQL используемую чтобы 
+извлекать информацию из таблиц, и которая является наиболее широко 
+используемой командой в SQL. К концу этой главы, вы будете способны 
+извлекать конкретную информацию из вашей базы данных с высокой степенью 
+точности. 
+<A name=2.10>
+<H3>РАБОТА С SQL</H3>1. Какое наибольшее основное различие между типами данных в SQL ? 
+<BR><BR> 
+2. Распознает ANSI тип данных DATA ? 
+<BR><BR> 
+3. Какой подраздел SQL используется чтобы помещать значения в 
+   таблицы ? 
+<BR><BR> 
+4. Что такое - ключевое слово ? 
+<BR><BR> 
+(См.<A href="a.shtml.htm#2" tppabs="http://www.sql.ru/docs/sql/u_sql/a.shtml#2"> Приложение A</A> для ответов.) 
+
+</TD></TR></TABLE>
+</TD></TR>
+<TR BGCOLOR=#6699CC><TD><TABLE WIDTH=100% BORDER=0 CELLSPACING=0 CELLPADDING=0><TR><TD BGCOLOR=#6699CC VALIGN=CENTER HEIGHT = 40><FONT SIZE=-10>
+<!--begin of Top100 logo-->
+<a href="javascript:if(confirm('http://top100.rambler.ru/top100/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://top100.rambler.ru/top100/'" tppabs="http://top100.rambler.ru/top100/">
+<img src="../../../../top100-images.rambler.ru/top100/banner-88x31-rambler-gray2.gif" tppabs="http://top100-images.rambler.ru/top100/banner-88x31-rambler-gray2.gif" alt="Rambler's Top100" width=88 height=31 border=0></a>
+<!--end of Top100 logo -->
+</FONT>
+<!--Rating@Mail.ru COUNTER--><a target=_top
+href="javascript:if(confirm('http://top.mail.ru/jump?from=58574  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://top.mail.ru/jump?from=58574'" tppabs="http://top.mail.ru/jump?from=58574"><img
+src="../../../../top.list.ru/counter-id=58574;t=94.gif" tppabs="http://top.list.ru/counter?id=58574;t=94"
+border=0 height=18 width=88
+alt="Рейтинг@Mail.ru"></a><!--/COUNTER-->
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="font : bold 10px verdana; color : white" href="javascript:if(confirm('http://hosting.parking.ru/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://hosting.parking.ru/'" tppabs="http://hosting.parking.ru/">Хостинг от компании Parking.ru</a>
+<script src="../../../../www.google-analytics.com/urchin.js" tppabs="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-265508-1";
+urchinTracker();
+</script>
+</TD>
+<TD BGCOLOR=#6699CC ALIGN=right><FONT COLOR=white FACE="Tahoma,Arial" SIZE=1>&nbsp;Administrator:&nbsp;<A STYLE="color :white" HREF="mailto:admin@sql.ru">admin@sql.ru</A>&nbsp;<BR>Last update: <FONT COLOR=white>05 июн 2007&nbsp;</FONT></FONT></TD></TR></TABLE>
+</TD></TR></TABLE></TD></TR></TABLE>
+
+</BODY></HTML>
+

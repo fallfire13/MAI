@@ -1,0 +1,568 @@
+<HTML>
+<HEAD>
+<TITLE>Понимание SQL. Глава 6. Обобщение данных с помощью агрегатных функций. [SQL.RU]</TITLE>
+<META http-equiv="Content-Type" CONTENT="text/html; charset=windows-1251">
+<META HTTP-EQUIV="Window-target" CONTENT="_top">
+<META HTTP-EQUIV="Last-Modified" CONTENT="29-03-2001">
+<META NAME="Description" CONTENT="Использование языка SQL, создание клиент-серверных систем. Конференция по MSSQL, Oracle, Interbase, MySQL. Полезные ссылки, документация, рекомендации по разработке информационных систем, сертификация, заказ книг и многое другое.">
+<META NAME="Keywords" CONTENT="SQL, конференция, Database Server, Oracle, Interbase, MySQL, документация, статьи, примеры, книги, ссылки, сертификация, работа, СУБД">
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../form.css" tppabs="http://www.sql.ru/form.css">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" leftmargin="3" topmargin="3" marginheight="3" marginwidth="3">
+<noindex>
+<TABLE BGCOLOR="#000000" WIDTH=100% CELLPADDING=0 CELLSPACING=0 BORDER=0>
+<TR><TD>
+
+<TABLE WIDTH=100% CELLPADDING=0 CELLSPACING=1 BORDER=0>
+<TR BGCOLOR="#6699CC"><TD><TABLE CELLSPACING=0 CELLPADDING=0 WIDTH=100% BORDER=0 BGCOLOR="#6699CC">
+<TR><TD COLSPAN=3><IMG SRC="../../../images/blank.gif" tppabs="http://www.sql.ru/images/blank.gif" height=3 width=1 alt=""></TD></TR>
+<TR><TD VALIGN=TOP>&nbsp;<FONT FACE="Verdana,Arial" SIZE=5 COLOR=lightyellow>SQL.RU<BR><FONT SIZE=-5>&nbsp;client/server technologies</FONT></FONT><!--begin of Top100--><a href="javascript:if(confirm('http://top100.rambler.ru/top100/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://top100.rambler.ru/top100/'" tppabs="http://top100.rambler.ru/top100/"><img src="../../../../counter.rambler.ru/top100.cnt-236431.gif" tppabs="http://counter.rambler.ru/top100.cnt?236431" alt="Rambler's Top100" width=1 height=1 border=0></a><!--end of Top100 code--></TD>
+<TD WIDTH=468 HEIGHT=60 BGCOLOR=#6699CC ALIGN=RIGHT></TD>
+<TD WIDTH=2><IMG SRC="../../../images/blank.gif" tppabs="http://www.sql.ru/images/blank.gif" height=1 width=2 alt=""></TD></TR>                                                      	
+<TR HEIGHT=4><TD COLSPAN=3><IMG SRC="../../../images/blank.gif" tppabs="http://www.sql.ru/images/blank.gif" height=5 width=1 alt=""></TD></TR></TABLE>
+
+</TD></TR>
+
+<TR HEIGHT=15><TD bgcolor=#006699><FONT FACE="Verdana,Arial" SIZE=1 COLOR=WHITE><B><A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/'" tppabs="http://www.sql.ru/">&nbsp;<FONT COLOR=white>Главная</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/docs  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/docs'" tppabs="http://www.sql.ru/docs">&nbsp;<FONT COLOR=yellow>Документация</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/articles  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/articles'" tppabs="http://www.sql.ru/articles">&nbsp;<FONT COLOR=white>Статьи</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/books  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/books'" tppabs="http://www.sql.ru/books">&nbsp;<FONT COLOR=white>Книги</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/forum/actualforum.aspx  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/forum/actualforum.aspx'" tppabs="http://www.sql.ru/forum/actualforum.aspx">&nbsp;<FONT COLOR=white>Форум</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/poll  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/poll'" tppabs="http://www.sql.ru/poll">&nbsp;<FONT COLOR=white>Опросы</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/forum/actualtopics.aspx?bid=11  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/forum/actualtopics.aspx?bid=11'" tppabs="http://www.sql.ru/forum/actualtopics.aspx?bid=11">&nbsp;<FONT COLOR=white>Гостевая</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/subscribe  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/subscribe'" tppabs="http://www.sql.ru/subscribe">&nbsp;<FONT COLOR=white>Рассылка</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/job  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/job'" tppabs="http://www.sql.ru/job">&nbsp;<FONT COLOR=white>Работа</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/search  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/search'" tppabs="http://www.sql.ru/search">&nbsp;<FONT COLOR=white>Поиск</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/faq  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/faq'" tppabs="http://www.sql.ru/faq">&nbsp;<FONT COLOR=white>FAQ</FONT>&nbsp;</A>|</B></FONT></TD></TR>
+<TR><TD BGCOLOR=#F5F5F5>
+</noindex>
+
+<TABLE BORDER=0 CELLSPACING=10><TR><TD>
+<CENTER>
+<H2 class="headline">
+6. ОБОБЩЕНИЕ ДАННЫХ С ПОМОЩЬЮ АГРЕГАТНЫХ ФУНКЦИЙ</H2></CENTER>
+В этой главе, вы перейдете от простого 
+использования запросов к извлечению значений из базы данных и 
+определению, как вы можете использовать эти значения чтобы получить 
+из них информацию. Это делается с помощью агрегатных или общих 
+функций которые берут группы значений из пол и сводят их до 
+одиночного значения. Вы узнаете как использовать эти функции, как 
+определить группы значений к которым они будут применяться, и как 
+определить какие группы выбираются для вывода. Вы будете также 
+видеть при каких условиях вы сможете объединить значения пол с 
+этой полученной информацией в одиночном запросе. 
+<A name=6.1>
+<H3>ЧТО ТАКОЕ АГРЕГАТНЫЕ ФУНКЦИИ ?</H3> 
+
+Запросы могут производить обобщенное групповое значение полей 
+точно также как и значение одного пол.  Это делает с помощью 
+агрегатных функций. Агрегатные функции производят одиночное 
+значение для всей группы таблицы. Имеется список этих функций: 
+<BR><BR>
+*  <B>COUNT</B> - 
+производит номера строк или не-NULL значения полей которые выбрал 
+запрос. 
+<BR><BR>
+*  <B>SUM</B> - 
+производит арифметическую сумму всех выбранных значений данного 
+пол. 
+<BR><BR>
+* <B>AVG</B> - 
+производит усреднение всех выбранных значений данного пол. 
+<BR><BR>
+* <B>MAX</B> - 
+производит наибольшее из всех выбранных значений данного пол. 
+<BR><BR>
+*  <B>MIN</B> - 
+производит наименьшее из всех выбранных значений данного 
+пол. 
+<A name=6.2>
+<H3>КАК ИСПОЛЬЗОВАТЬ АГРЕГАТНЫЕ ФУНКЦИИ ?</H3> 
+
+Агрегатные функции используются подобно именам полей в предложении 
+SELECT запроса, но с одним исключением, они берут имена пол как 
+аргументы. Только числовые пол могут использоваться с SUM и AVG. 
+С COUNT, MAX, и MIN, могут использоваться и числовые или 
+символьные пол. Когда они используются с символьными полями, 
+MAX и MIN будут транслировать их в эквивалент ASCII, который 
+должен сообщать, что MIN будет означать первое, а MAX последнее 
+значение в алфавитном порядке( выдача алфавитного упорядочения 
+обсуждается более подробно в <A href="ch4.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch4.shtml">Главе 4</A> ). 
+<BR><BR>
+Чтобы найти SUM всех наших покупок в таблицы Порядков, мы можем 
+ввести следующий запрос, с его выводом в Рисунке 6.1: 
+<PRE>
+    SELECT SUM ((amt)) 
+       FROM Orders; 
+
+
+   ===============  SQL Execution Log ============ 
+  |                                               | 
+  | SELECT SUM (amt)                              | 
+  | FROM  Orders;                                 | 
+  | ==============================================| 
+  |                                               | 
+  | -------                                       | 
+  | 26658.4                                       | 
+  |                                               | 
+  |                                               | 
+   =============================================== 
+</PRE>
+Рисунок 6.1: Выбор суммы 
+<BR><BR>
+Это конечно, отличается от выбора пол при котором возвращается 
+одиночное значение, независимо от того сколько строк находится в 
+таблице. Из-за этого, агрегатные функции и пол не могут выбираться 
+одновременно, пока предложение GROUP BY (описанное далее) 
+не будет использовано. 
+Нахождение усредненной суммы - это похожа операция ( вывод 
+следующего запроса показывается в Рисунке 6.2 ): 
+<PRE>
+    SELECT AVG (amt) 
+       FROM Orders; 
+
+   ===============  SQL Execution Log ============ 
+  |                                               | 
+  | SELECT AVG (amt)                              | 
+  | FROM  Orders;                                 | 
+  | ==============================================| 
+  |                                               | 
+  | -------                                       | 
+  | 2665.84                                       | 
+  |                                               | 
+  |                                               | 
+   =============================================== 
+</PRE>
+Рисунок 6.2: Выбор среднего 
+
+<A name=6.3>
+<H3>СПЕЦИАЛЬНЫЕ АТРИБУТЫ COUNT</H3> 
+
+Функция COUNT несколько отличается от всех. Она считает число 
+значений в данном столбце, или число строк в таблице. Когда она 
+считает значения столбца, она используется с DISTINCT чтобы 
+производить счет чисел различных значений в данном поле. Мы могли 
+бы использовать ее, например, чтобы сосчитать номера продавцов в 
+настоящее врем описанных в таблице Порядков ( вывод показывается 
+в Рисунке 6.3 ): 
+<PRE>
+      SELECT COUNT ( DISTINCT snum ) 
+	 FROM Orders; 
+</PRE>
+
+<H5>ИСПОЛЬЗОВАНИЕ DISTINCT</H5> 
+
+Обратите внимание в вышеупомянутом примере, что DISTINCT, 
+сопровождаемый именем пол с которым он применяется, помещен 
+в круглые скобки, но не сразу после SELECT, как раньше. 
+Этого использования DISTINCT с COUNT  применяемого к 
+индивидуальным столбцам, требует стандарт ANSI, но большое 
+количество программ не предъявляют к ним такого требования. 
+<PRE>
+
+   ===============  SQL Execution Log ============ 
+  |                                               | 
+  | SELECT COUNT (DISTINCT snum)                  | 
+  | FROM  Orders;                                 | 
+  | ==============================================| 
+  |                                               | 
+  | -------                                       | 
+  |       5                                       | 
+  |                                               | 
+  |                                               | 
+   =============================================== 
+</PRE>
+Рисунок 6.3: Подсчет значений пол 
+<BR><BR>
+Вы можете выбирать многочисленные счета( COUNT ) из полей с помощью 
+DISTINCT в одиночном запросе который, как мы видели в 
+<A href="ch3.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch3.shtml">Главе 3</A>, не 
+выполнялись когда вы выбирали строки с помощью DISTINCT. 
+DISTINCT может использоваться таким образом, с любой функцией агрегата, 
+но наиболее часто он используется с COUNT. С MAX и MIN, это просто 
+не будет иметь никакого эффекта, а SUM и AVG, вы обычно применяете 
+для включения повторяемых значений, так как они законно эффективнее 
+общих и средних значений всех столбцов. 
+
+<H5>ИСПОЛЬЗОВАНИЕ COUNT СО СТРОКАМИ, А НЕ ЗНАЧЕНИЯМИ</H5> 
+Чтобы подсчитать общее число строк в таблице, используйте функцию 
+COUNT со звездочкой вместо имени пол, как например в следующем 
+примере, вывод из которого показан на Рисунке 6.4: 
+<PRE>
+SELECT COUNT (*) 
+ FROM Customers 
+</PRE>
+COUNT со звездочкой включает и NULL и дубликаты, по этой причине 
+DISTINCT не может быть использован. DISTINCT может производить 
+более высокие номера чем COUNT особого пол, который удаляет все 
+<PRE>
+   ===============  SQL Execution Log ============ 
+  |                                               | 
+  | SELECT COUNT (*)                              | 
+  | FROM  Customers;                              | 
+  | ==============================================| 
+  |                                               | 
+  | -------                                       | 
+  |       7                                       | 
+  |                                               | 
+  |                                               | 
+   =============================================== 
+</PRE>
+Рисунок 6. 4: Подсчет строк вместо значений 
+<BR><BR>
+строки, имеющие избыточные или NULL данные в этом поле. 
+DISTINCT не применим c COUNT (*), потому, что он не имеет никакого 
+действия в хорошо разработанной и поддерживаемой базе данных. 
+В такой базе данных, не должно быть ни таких строк, которые бы являлись 
+полностью пустыми, ни дубликатов ( первые не содержат никаких 
+данных, а последние полностью избыточны ). Если, с другой стороны, 
+все таки имеются полностью пустые или избыточные строки, вы 
+вероятно не захотите чтобы COUNT скрыл от вас эту информацию. 
+
+<H5>ВКЛЮЧЕНИЕ ДУБЛИКАТОВ В АГРЕГАТНЫЕ ФУНКЦИИ</H5> 
+Агрегатные функции могут также ( в большинстве реализаций ) 
+использовать аргумент ALL, который помещается перед именем пол, 
+подобно DISTINCT, но означает противоположное: - включать дубликаты. 
+ANSI технически не позволяет этого для COUNT, но многие реализации 
+ослабляют это ограничение. 
+Различи между ALL и * когда они используются с COUNT - 
+<BR><BR>
+*  ALL использует имя_поля как аргумент. 
+<BR><BR>
+*  ALL не может подсчитать значения NULL. 
+<BR><BR>
+Пока * является единственным аргументом который включает NULL 
+значения, и он используется только с COUNT; функции отличные от 
+COUNT игнорируют значения NULL в любом случае. Следующая 
+команда подсчитает(COUNT) число не-NULL значений в поле rating 
+в таблице Заказчиков ( включая повторения ): 
+<PRE>
+     SELECT COUNT ( ALL rating ) 
+	FROM Customers; 
+</PRE>
+<A name=6.4>
+<H3>АГРЕГАТЫ ПОСТРОЕННЫЕ НА СКАЛЯРНОМ ВЫРАЖЕНИИ</H3> 
+ 
+До этого, вы использовали агрегатные функции с одиночными полями как 
+аргументами. Вы можете также использовать агрегатные функции с 
+аргументами которые состоят из скалярных выражений включающих одно 
+или более полей. ( Если вы это делаете, DISTINCT не разрешается. ) 
+Предположим, что таблица Порядков имеет еще один столбец который 
+хранит предыдущий неуплаченный баланс (поле blnc) для каждого заказчика. 
+Вы должны найти этот текущий баланс, добавлением суммы приобретений 
+к предыдущему балансу. 
+Вы можете найти наибольший неуплаченный баланс следующим образом: 
+<PRE> 
+             SELECT MAX ( blnc + (amt) ) 
+                FROM Orders; 
+</PRE> 
+Для каждой строки таблицы, этот запрос будет складывать blnc и amt 
+для этого заказчика и выбирать самое большое значение которое он 
+найдет. Конечно, пока заказчики могут иметь многочисленные порядки, 
+их неуплаченный баланс оценивается отдельно для каждого порядка. 
+Возможно, порядок с более поздней датой будет иметь самый большой 
+неуплаченный баланс. Иначе, старый баланс должен быть выбран как в 
+запросе выше. 
+   Фактически, имеются большое количество ситуаций в SQL где вы 
+можете использовать скалярные выражения с полями или вместо полей, 
+как вы увидите это в <A href="ch7.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch7.shtml">Главе 7</A>. 
+ <A name=6.5>
+<H3>ПРЕДЛОЖЕНИЕ GROUP BY</H3> 
+ 
+   Предложение GROUP BY позволяет вам определять подмножество 
+значений в особом поле в терминах другого пол, и применять функцию 
+агрегата к подмножеству. Это дает вам возможность объединять пол и 
+агрегатные функции в едином предложении SELECT. 
+Например, предположим что вы хотите найти наибольшую сумму приобретений 
+полученную каждым продавцом. Вы можете сделать раздельный 
+запрос для каждого из них, выбрав MAX (amt) из таблицы Порядков для 
+каждого значения пол snum. GROUP BY, однако, позволит Вам поместить их 
+все в одну команду: 
+<PRE> 
+                 SELECT snum, MAX (amt) 
+                    FROM Orders 
+                    GROUP BY snum; 
+</PRE> 
+Вывод для этого запроса  показывается в Рисунке 6.5. 
+<PRE> 
+           ===============  SQL Execution Log ============== 
+          |                                                 | 
+          | SELECT snum, MAX (amt)                          | 
+          | FROM  Orders                                    | 
+          | GROUP BY snum;                                  | 
+          | =============================================== | 
+          |  snum                                           | 
+          |  ------   --------                              | 
+          |   1001      767.19                              | 
+          |   1002     1713.23                              | 
+          |   1003       75.75                              | 
+          |   1014     1309.95                              | 
+          |   1007     1098.16                              | 
+          |                                                 | 
+            ================================================ 
+</PRE> 
+ 
+Рисунок 6.5: Нахождение максимальной суммы продажи у каждого продавца 
+<BR><BR> 
+GROUP BY  применяет агрегатные функции независимо от серий групп 
+которые определяются с помощью значения поля в целом. В этом случае, 
+каждая группа состоит из всех строк с тем же самым значением пол snum, 
+и MAX функция применяется отдельно для каждой такой группы. Это значение 
+пол, к которому применяется GROUP BY, имеет, по определению, только одно 
+значение на группу вывода, также как это делает агрегатная функция. 
+Результатом является совместимость которая позволяет агрегатам и полям 
+объединяться таким образом. 
+  Вы можете также использовать GROUP BY с многочисленными полями. 
+Совершенству вышеупомянутый пример далее, предположим что вы 
+хотите увидеть наибольшую сумму приобретений получаемую каждым 
+продавцом каждый день. Чтобы сделать это, вы должны сгруппировать 
+таблицу Порядков по датам продавцов, и применить функцию MAX к 
+каждой такой группе, подобно этому: 
+<PRE> 
+          SELECT snum, odate, MAX ((amt)) 
+              FROM Orders 
+              GROUP BY snum, odate; 
+</PRE> 
+Вывод для этого запроса  показывается в Рисунке 6.6. 
+<PRE> 
+           ===============  SQL Execution Log ============== 
+          |                                                 | 
+          | SELECT snum, odate, MAX (amt)                   | 
+          | FROM  Orders                                    | 
+          | GROUP BY snum, odate;                           | 
+          | =============================================== | 
+          |   snum        odate                             | 
+          |  ------     ----------     --------             | 
+          |   1001      10/03/1990       767.19             | 
+          |   1001      10/05/1990      4723.00             | 
+          |   1001      10/06/1990      9891.88             | 
+          |   1002      10/03/1990      5160.45             | 
+          |   1002      10/04/1990        75.75             | 
+          |   1002      10/06/1990      1309.95             | 
+          |   1003      10/04/1990      1713.23             | 
+          |   1014      10/03/1990      1900.10             | 
+          |   1007      10/03/1990      1098.16             | 
+          |                                                 | 
+            ================================================ 
+</PRE> 
+Рисунок 6.6: Нахождение наибольшей суммы приобретений на каждый день 
+<BR><BR> 
+ Конечно же, пустые группы, в дни когда текущий продавец не имел порядков, 
+не будут показаны в выводе. 
+ <A name=6.6>
+<H3>ПРЕДЛОЖЕНИЕ HAVING</H3> 
+ 
+Предположим, что в предыдущем примере, вы хотели бы увидеть только 
+максимальную сумму приобретений значение которой выше $3000.00. Вы 
+не сможете использовать агрегатную функцию в предложении WHERE 
+( если вы не используете подзапрос, описанный позже ), потому что 
+предикаты оцениваются в терминах одиночной строки, а агрегатные 
+функции оцениваются в терминах групп строк. Это означает что вы не 
+сможете сделать что-нибудь подобно следующему: 
+<PRE> 
+              SELECT snum, odate, MAX (amt) 
+                 FROM Oreders 
+                 WHERE MAX ((amt)) &gt; 3000.00 
+                 GROUP BY snum, odate; 
+</PRE> 
+Это будет отклонением от строгой интерпретации ANSI. Чтобы увидеть 
+максимальную стоимость приобретений свыше $3000.00, вы можете 
+использовать предложение HAVING. 
+Предложение HAVING определяет критерии используемые чтобы удалять 
+определенные группы из вывода, точно также как предложение WHERE 
+делает это для индивидуальных строк. 
+ Правильной командой будет следующая: 
+<PRE> 
+                SELECT snum, odate, MAX ((amt)) 
+                    FROM Orders 
+                    GROUP BY snum, odate 
+                    HAVING MAX ((amt)) &gt; 3000.00; 
+</PRE> 
+Вывод для этого запроса  показывается в Рисунке 6. 7. 
+ <PRE>
+           ===============  SQL Execution Log ============== 
+          |                                                 | 
+          | SELECT snum, odate, MAX (amt)                   | 
+          | FROM  Orders                                    | 
+          | GROUP BY snum, odate                            | 
+          | HAVING MAX (amt) &gt; 3000.00;                     | 
+          | =============================================== | 
+          |   snum        odate                             | 
+          |  ------     ----------     --------             | 
+          |   1001      10/05/1990      4723.00             | 
+          |   1001      10/06/1990      9891.88             | 
+          |   1002      10/03/1990      5160.45             | 
+          |                                                 | 
+            ================================================ 
+</PRE> 
+Рисунок 6. 7: Удаление групп агрегатных значений 
+<BR><BR> 
+Аргументы в предложении HAVING следуют тем же самым правилам 
+что и в предложении SELECT, состоящей из команд использующих 
+GROUP BY. Они должны иметь одно значение на группу вывода. 
+Следующая команда будет запрещена: 
+<PRE> 
+     SELECT snum, MAX (amt) 
+        FROM Orders 
+        GROUP BY snum 
+        HAVING odate = 10/03/1988; 
+</PRE> 
+Поле оdate не может быть вызвано предложением HAVING, потому что 
+оно может иметь ( и действительно имеет ) больше чем одно значение 
+на группу вывода. Чтобы избегать такой ситуации, предложение HAVING 
+должно ссылаться только на агрегаты и поля выбранные GROUP BY. 
+Имеется правильный способ сделать вышеупомянутый запрос( вывод 
+показывается в Рисунке 6.8 ): 
+<PRE> 
+             SELECT snum, MAX (amt) 
+                FROM Orders 
+                WHEREodate = 10/03/1990 
+                GROUP BY snum; 
+ 
+ 
+           ===============  SQL Execution Log ============== 
+          |                                                 | 
+          | SELECT snum, odate, MAX (amt)                   | 
+          | FROM  Orders                                    | 
+          | GROUP BY snum, odate;                           | 
+          | =============================================== | 
+          |   snum                                          | 
+          |  ------     --------                            | 
+          |   1001        767.19                            | 
+          |   1002       5160.45                            | 
+          |   1014       1900.10                            | 
+          |   1007       1098.16                            | 
+          |                                                 | 
+            ================================================ 
+</PRE> 
+Рисунок 6.8:  Максимальное значение суммы приобретений у каждого 
+                   продавца на 3 Октября 
+<BR><BR> 
+Поскольку пол odate нет, не может быть и выбранных полей, значение 
+этих данных меньше чем в некоторых других примерах. 
+Вывод должен вероятно включать что-нибудь такое что говорит - 
+" это - самые большие порядки на 3 Октября."  В <A href="ch7.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch7.shtml">Главе 7</A>, мы покажем как вставлять текст в ваш вывод. 
+  Как и говорилось ранее, HAVING может использовать только аргументы 
+которые имеют одно значение на группу вывода. Практически, ссылки 
+на агрегатные функции - наиболее общие, но и пол выбранные с помощью 
+GROUP BY также допустимы. Например, мы хотим увидеть наибольшие 
+порядки для Serres и Rifkin: 
+ <PRE>
+              SELECT snum, MAX (amt) 
+                 FROM Orders 
+                 GROUP BY snum 
+                 HAVING snum B (1002,1007); 
+</PRE> 
+Вывод для этого запроса  показывается в Рисунке 6.9. 
+ <PRE>
+           ===============  SQL Execution Log ============== 
+          |                                                 | 
+          | SELECT snum, MAX (amt)                          | 
+          | FROM  Orders                                    | 
+          | GROUP BY snum                                   | 
+          | HAVING snum IN ( 1002, 1007 );                  | 
+          | =============================================== | 
+          |   snum                                          | 
+          |  ------     --------                            | 
+          |   1002       5160.45                            | 
+          |   1007       1098.16                            | 
+          |                                                 | 
+            ================================================ 
+</PRE> 
+Рисунок 6. 9: Использование HAVING с GROUP BY полями 
+<A name=6.7> 
+
+<H3>НЕ ДЕЛАЙТЕ ВЛОЖЕННЫХ АГРЕГАТОВ</H3> 
+ 
+В строгой интерпретации ANSI SQL, вы не можете использовать агрегат 
+агрегата.  Предположим что вы хотите выяснить, в какой день имелась 
+наибольшая сумма приобретений. Если вы попробуете сделать это, 
+<PRE> 
+              SELECT odate, MAX ( SUM (amt) ) 
+                 FROM Orders 
+                 GROUP BY odate; 
+</PRE> 
+то ваша команда будет вероятно отклонена. ( Некоторые реализации не 
+предписывают этого ограничения, которое является выгодным, потому 
+что вложенные агрегаты могут быть очень полезны, даже если они и 
+несколько проблематичны.)  В вышеупомянутой команде, например, 
+SUM должен  применяться к каждой группе пол odate, а MAX ко 
+всем группам, производящим одиночное значение для всех групп. 
+Однако предложение GROUP BY подразумевает что должна иметься 
+одна строка вывода для каждой группы пол odate. 
+ <A name=6.8>
+<H3>РЕЗЮМЕ</H3>  
+ 
+ 
+Теперь вы используете запросы несколько по-другому. Способность 
+получать, а не просто размещать значения, очень мощна. 
+Это означает что вы не обязательно должны следить за определенной 
+информацией если вы можете сформулировать запрос так чтобы ее 
+получить. Запрос будет давать вам поминутные результаты, в то врем 
+как таблица общего или среднего значений будет хороша только некоторое 
+врем после ее модификации. Это не должно наводить на мысль, что 
+агрегатные функции могут полностью вытеснить потребность в 
+отслеживании информации такой например как эта. 
+  Вы можете  применять эти агрегаты для групп значений определенных 
+предложением GROUP BY. Эти группы имеют значение поля в целом, и 
+могут постоянно находиться внутри других групп которые имеют 
+значение поля в целом. В то же время, предикаты еще используются 
+чтобы определять какие строки агрегатной функции применяются. 
+  Объединенные вместе, эти особенности делают возможным, производить 
+агрегаты основанные на сильно определенных подмножествах значений в 
+поле. Затем вы можете определять другое условие для исключения 
+определенных результатов групп с предложением HAVING. 
+   Теперь , когда вы стали знатоком большого количества того как 
+запрос производит значения, мы покажем вам, в Главе 7, некоторые 
+вещи которые вы можете делать со значениями которые он производит. 
+ <A name=6.9>
+<H3>РАБОТА С SQL</H3> 
+ 
+<BR><BR> 
+1. Напишите запрос который сосчитал бы все суммы приобретений на 
+   3 Октября. 
+<BR><BR> 
+2. Напишите запрос который сосчитал бы число различных не-NULL 
+   значений пол city в таблице Заказчиков. 
+<BR><BR> 
+3. Напишите запрос который выбрал бы наименьшую сумму для 
+   каждого заказчика. 
+<BR><BR> 
+4. Напишите запрос который бы выбирал заказчиков в алфавитном 
+   порядке, чьи имена начинаются с буквы G. 
+<BR><BR> 
+5. Напишите запрос который выбрал бы высшую оценку в каждом городе. 
+<BR><BR> 
+6. Напишите запрос который сосчитал бы число заказчиков регистрирующих 
+   каждый день свои порядки. (Если продавец имел более одного 
+   порядка в данный день, он должен учитываться только один раз.) 
+
+<BR><BR> 
+(См.<A href="a.shtml.htm#6" tppabs="http://www.sql.ru/docs/sql/u_sql/a.shtml#6"> Приложение A</A> для ответов.) 
+</TD></TR></TABLE>
+</TD></TR>
+<TR BGCOLOR=#6699CC><TD><TABLE WIDTH=100% BORDER=0 CELLSPACING=0 CELLPADDING=0><TR><TD BGCOLOR=#6699CC VALIGN=CENTER HEIGHT = 40><FONT SIZE=-10>
+<!--begin of Top100 logo-->
+<a href="javascript:if(confirm('http://top100.rambler.ru/top100/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://top100.rambler.ru/top100/'" tppabs="http://top100.rambler.ru/top100/">
+<img src="../../../../top100-images.rambler.ru/top100/banner-88x31-rambler-gray2.gif" tppabs="http://top100-images.rambler.ru/top100/banner-88x31-rambler-gray2.gif" alt="Rambler's Top100" width=88 height=31 border=0></a>
+<!--end of Top100 logo -->
+</FONT>
+<!--Rating@Mail.ru COUNTER--><a target=_top
+href="javascript:if(confirm('http://top.mail.ru/jump?from=58574  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://top.mail.ru/jump?from=58574'" tppabs="http://top.mail.ru/jump?from=58574"><img
+src="../../../../top.list.ru/counter-id=58574;t=94.gif" tppabs="http://top.list.ru/counter?id=58574;t=94"
+border=0 height=18 width=88
+alt="Рейтинг@Mail.ru"></a><!--/COUNTER-->
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="font : bold 10px verdana; color : white" href="javascript:if(confirm('http://hosting.parking.ru/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://hosting.parking.ru/'" tppabs="http://hosting.parking.ru/">Хостинг от компании Parking.ru</a>
+<script src="../../../../www.google-analytics.com/urchin.js" tppabs="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-265508-1";
+urchinTracker();
+</script>
+</TD>
+<TD BGCOLOR=#6699CC ALIGN=right><FONT COLOR=white FACE="Tahoma,Arial" SIZE=1>&nbsp;Administrator:&nbsp;<A STYLE="color :white" HREF="mailto:admin@sql.ru">admin@sql.ru</A>&nbsp;<BR>Last update: <FONT COLOR=white>05 июн 2007&nbsp;</FONT></FONT></TD></TR></TABLE>
+</TD></TR></TABLE></TD></TR></TABLE>
+
+</BODY></HTML>
+

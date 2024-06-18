@@ -1,0 +1,344 @@
+<HTML>
+<HEAD>
+<TITLE>Понимание SQL. Глава 17. Создание таблиц. [SQL.RU]</TITLE>
+<META http-equiv="Content-Type" CONTENT="text/html; charset=windows-1251">
+<META HTTP-EQUIV="Window-target" CONTENT="_top">
+<META HTTP-EQUIV="Last-Modified" CONTENT="29-03-2001">
+<META NAME="Description" CONTENT="Использование языка SQL, создание клиент-серверных систем. Конференция по MSSQL, Oracle, Interbase, MySQL. Полезные ссылки, документация, рекомендации по разработке информационных систем, сертификация, заказ книг и многое другое.">
+<META NAME="Keywords" CONTENT="SQL, конференция, Database Server, Oracle, Interbase, MySQL, документация, статьи, примеры, книги, ссылки, сертификация, работа, СУБД">
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../form.css" tppabs="http://www.sql.ru/form.css">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" leftmargin="3" topmargin="3" marginheight="3" marginwidth="3">
+<noindex>
+<TABLE BGCOLOR="#000000" WIDTH=100% CELLPADDING=0 CELLSPACING=0 BORDER=0>
+<TR><TD>
+
+<TABLE WIDTH=100% CELLPADDING=0 CELLSPACING=1 BORDER=0>
+<TR BGCOLOR="#6699CC"><TD><TABLE CELLSPACING=0 CELLPADDING=0 WIDTH=100% BORDER=0 BGCOLOR="#6699CC">
+<TR><TD COLSPAN=3><IMG SRC="../../../images/blank.gif" tppabs="http://www.sql.ru/images/blank.gif" height=3 width=1 alt=""></TD></TR>
+<TR><TD VALIGN=TOP>&nbsp;<FONT FACE="Verdana,Arial" SIZE=5 COLOR=lightyellow>SQL.RU<BR><FONT SIZE=-5>&nbsp;client/server technologies</FONT></FONT><!--begin of Top100--><a href="javascript:if(confirm('http://top100.rambler.ru/top100/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://top100.rambler.ru/top100/'" tppabs="http://top100.rambler.ru/top100/"><img src="../../../../counter.rambler.ru/top100.cnt-236431.gif" tppabs="http://counter.rambler.ru/top100.cnt?236431" alt="Rambler's Top100" width=1 height=1 border=0></a><!--end of Top100 code--></TD>
+<TD WIDTH=468 HEIGHT=60 BGCOLOR=#6699CC ALIGN=RIGHT></TD>
+<TD WIDTH=2><IMG SRC="../../../images/blank.gif" tppabs="http://www.sql.ru/images/blank.gif" height=1 width=2 alt=""></TD></TR>                                                      	
+<TR HEIGHT=4><TD COLSPAN=3><IMG SRC="../../../images/blank.gif" tppabs="http://www.sql.ru/images/blank.gif" height=5 width=1 alt=""></TD></TR></TABLE>
+
+</TD></TR>
+
+<TR HEIGHT=15><TD bgcolor=#006699><FONT FACE="Verdana,Arial" SIZE=1 COLOR=WHITE><B><A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/'" tppabs="http://www.sql.ru/">&nbsp;<FONT COLOR=white>Главная</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/docs  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/docs'" tppabs="http://www.sql.ru/docs">&nbsp;<FONT COLOR=yellow>Документация</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/articles  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/articles'" tppabs="http://www.sql.ru/articles">&nbsp;<FONT COLOR=white>Статьи</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/books  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/books'" tppabs="http://www.sql.ru/books">&nbsp;<FONT COLOR=white>Книги</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/forum/actualforum.aspx  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/forum/actualforum.aspx'" tppabs="http://www.sql.ru/forum/actualforum.aspx">&nbsp;<FONT COLOR=white>Форум</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/poll  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/poll'" tppabs="http://www.sql.ru/poll">&nbsp;<FONT COLOR=white>Опросы</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/forum/actualtopics.aspx?bid=11  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/forum/actualtopics.aspx?bid=11'" tppabs="http://www.sql.ru/forum/actualtopics.aspx?bid=11">&nbsp;<FONT COLOR=white>Гостевая</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/subscribe  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/subscribe'" tppabs="http://www.sql.ru/subscribe">&nbsp;<FONT COLOR=white>Рассылка</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/job  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/job'" tppabs="http://www.sql.ru/job">&nbsp;<FONT COLOR=white>Работа</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/search  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/search'" tppabs="http://www.sql.ru/search">&nbsp;<FONT COLOR=white>Поиск</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/faq  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/faq'" tppabs="http://www.sql.ru/faq">&nbsp;<FONT COLOR=white>FAQ</FONT>&nbsp;</A>|</B></FONT></TD></TR>
+<TR><TD BGCOLOR=#F5F5F5>
+</noindex>
+
+<TABLE BORDER=0 CELLSPACING=10><TR><TD>
+<CENTER>
+<H2 class="headline">
+17. СОЗДАНИЕ ТАБЛИЦ</H2></CENTER>
+<HR width="50%">
+Вплоть до этого места, мы запрашивали таблицы 
+данных и выполняли команды по извлечению этих данных, считая, что 
+эти таблицы уже были созданы кем - то до нас . 
+Это действительно наиболее реальная ситуация, когда небольшое количество людей создают таблицы, которые затем используются другими 
+людьми. Наша цель состоит в том, чтобы охватив информацию сначала 
+более широко, перейти затем к более узким вопросам. 
+<BR><BR> 
+В этой главе, мы будем обсуждать создание, изменение, и удаление таблиц. 
+Все это относится к самим таблицам, а не к данным которые в них содержатся. Будете или не будете Вы выполнять эти операции самостоятельно, 
+но их концептуальное понимание увеличит ваше понимание языка SQL и 
+природу таблиц которые вы используете. Эта глава вводит нас в область 
+SQL называемую -  DDL(Язык Определения Данных), где создаются объекты данных SQL. 
+<BR><BR> 
+Эта глава также покажет другой вид объекта данных SQL  - Индекс. 
+Индексы используются чтобы делать поиск более эффективным и, иногда, 
+заставлять значения отличаться друга от друга. 
+Они обычно работают незаметно для Вас, но если вы попробуете поместить 
+значения в таблицу и они будут отклонены, из-за их неуникальности, это 
+будет означать что друга строка имеет то же самое значение для этого по- 
+л, и что это поле имеет уникальный индекс или ограничение которое предписывает ему уникальность. 
+Обсуждение вышеупомянутого, продолжится в <A href="ch18.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch18.shtml">Главе 18</A>. 
+
+<HR width="50%">
+<A name=17.1>
+<H3>КОМАНДА СОЗДАНИЯ ТАБЛИЦЫ</H3>Таблицы создаются командой CREATE TABLE. Эта команда создает пустую 
+таблицу - таблицу без строк. Значения вводятся с помощью DML команды 
+INSERT ( См. Главу 15). Команда CREATE TABLE в основном определяет 
+им  таблицы, в виде описания набора имен столбцов указанных в определенном 
+порядке. Она также определяет типы данных и размеры столбцов. Каждая 
+таблица должна иметь по крайней мере один столбец. 
+<BR><BR>
+Синтаксис команды CREATE TABLE: 
+<PRE> 
+    CREATE TABLE &lt;TABLE-NAME> 
+         ( &lt;COLUMN name> &lt;DATA type>[(&lt;SIZE>)], 
+         &lt;COLUMN name> &lt;DATA type> [(&lt;SIZE>)] ... ); 
+</PRE> 
+Как сказано в <A href="ch2.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch2.shtml">Главе 2</A>, типы данных значительно меняются от программы 
+к программе. Для совместимости со стандартом, они должны все, по край- 
+ней мере, поддерживать стандарт типа ANSI. Он описан в <A href="b.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/b.shtml">Приложении B</A>. 
+<BR><BR> 
+Так как пробелы используются для разделения частей команды SQL, они не 
+могут быть частью имени таблицы ( или любого другого объекта, такого как 
+индекс ). Подчеркивание ( _ ) - обычно используется для разделения слов в 
+именах таблиц. 
+ <BR><BR>
+Значение аргумента размера зависит от типа данных. Если вы его не указываете, ваша система сама будет назначать значение автоматически. Для числовых значений, это - лучший выход, потому что в этом случае, все ваши 
+пол такого типа получат один и тот же размер что освобождает вас от проблем их общей совместимости(см. <A href="ch14.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch14.shtml">Главу 14</A>). 
+Кроме того, использование аргумента размера с некоторыми числовым на- 
+борами, не совсем простой вопрос. Если вам нужно хранить большие числа, 
+вам несомненно понадобятся гарантии, что пол достаточно велики чтобы 
+вместить их. 
+ <BR><BR>
+Один тип данных для которого вы, в основном, должны назначать размер - 
+CHAR. 
+Аргумент размера - это целое число которое определяет максимальное число символов которое может вместить поле. Фактически, число символов по- 
+л может быть от нуля ( если поле - NULL ) до этого числа. 
+По умолчанию, аргумент размера = 1, что означает что поле может содержать только одну букву. 
+Это конечно не совсем то что вы хотите. 
+<BR><BR> 
+Таблицы принадлежат пользователю который их создал, и имена всех таблиц принадлежащих данному пользователю должны отличаться друга от 
+друга, как и имена всех столбцов внутри данной таблицы. Отдельные таблицы могут использовать одинаковые имена столбцов, даже если они принадлежат одному и тому же пользователю. Примером этому - столбец city в таблице Заказчиков и в таблице Продавцов. Пользователи не являющиеся владельцами таблиц могут ссылаться к этим таблицам с помощью имени владельца этих таблиц сопровождаемого точкой; например, таблица Employees 
+создана Smith будет называться Smith.Employees когда она упоминается 
+каким-то другим пользователем ( мы понимаем что Smith - это Идентификатор Разрешения (ID). 
+(ID) сообщаемый пользователем ( ваш разрешенный ID - это ваше им в SQL. 
+Этот вывод обсуждался в <A href="ch2.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch2.shtml">Главе 2</A>, и будет продолжен в <A href="ch22.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch22.shtml">Главе 22</A> ). 
+ <BR><BR>
+ 
+Эта команда будет создавать таблицу Продавцов: 
+<PRE> 
+  CREATE TABLE Saleepeople 
+      ( snum    integer, 
+        sname   char (10), 
+        city     char (10), 
+        comm   declmal ); 
+</PRE> 
+Порядок столбцов в таблице определяется порядком в котором они указаны. 
+Им столбца не должно разделяться при переносе строки ( что сделано для 
+удобочитаемости ), но отделяется запятыми. 
+ 
+<HR width="50%">
+<A name=17.2>
+<H3>ИНДЕКСЫ</H3> Индекс - это упорядоченный ( буквенный или числовой ) список столбцов или групп столбцов в таблице. Таблицы могут иметь большое количество строк, а, так как строки не находятся в каком-нибудь определенном порядке,  их поиск по указанному значению может потребовать времени. 
+Индексный адрес - это и забота, и в то же врем обеспечение способа 
+объединения всех значений в группы из одной или больше строк, которые отличаются одна от другой. В <A href="ch18.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch18.shtml">Главе 18</A>, мы будем описывать более 
+непосредственный способ который заставит ваши значения быть уникальными. Но этот метод не существует в ранних версиях SQL. Так как 
+уникальность часто необходима, индексы и использовались с этой 
+целью. 
+<BR><BR> 
+Индексы - это средство SQL, которое родил сам рынок, а не ANSI. 
+Поэтому, сам по себе стандарт ANSI в настоящее время не поддержи- 
+вает индексы, хотя они очень полезны и широко применяемы. 
+<BR><BR> 
+Когда вы создаете индекс в поле, ваша база данных запоминает соответствующий порядок всех значений этого пол в области памяти. Предположим что наша таблица Заказчиков имеет тысячи входов, а вы хотите 
+найти заказчика с номером=2999. Так как строки не упорядочены, ваша 
+программа будет просматривать всю таблицу, строку за строкой, проверяя каждый раз значение пол cnum на равенство значению 2999. 
+Однако, если бы имелся индекс в поле cnum , то программа могла бы 
+выйти на номер 2999 прямо по индексу и дать информацию о том как 
+найти правильную строку таблицы. 
+ <BR><BR>
+В то врем как индекс значительно улучшает эффективность запросов, 
+использование индекса несколько замедляет операции модификации 
+DML( такие как INSERT и DELETE ), а сам индекс занимает объем 
+памяти. Следовательно, каждый раз когда вы создаете таблицу Вы должны 
+принять решение, индексировать ее или нет. 
+Индексы могут состоять из многочисленных полей. Если больше чем одно 
+поле указывается для одного индекса, второе упорядочивается внутри первого, третье внутри второго, и так далее. Если вы имели первое и послед- 
+нее им в двух различных полях таблицы, вы могли бы создать индекс 
+который бы упорядочил предыдущее поле внутри последующего. 
+Это может быть выполнено независимо от способа упорядочивали столбцов в таблице. 
+<BR><BR> 
+Синтаксис для создания индекс - обычно следующий ( помните, что это 
+не ANSI стандарт ): 
+<PRE> 
+         CREATE INDEX &lt;INDEX name> ON &lt;TABLE name>(&lt;COLUMN name> [,&lt;COLUMN name>]...); 
+</PRE> 
+Таблица, конечно, должна уже быть создана и должна содержать им столбца. Им индекса не может быть использовано для чего-то другого в базе 
+данных ( любым пользователем ). Однажды созданный, индекс будет невидим 
+пользователю. SQL сам решает когда он необходим чтобы ссылаться на него 
+и делает это автоматически. 
+Если, например, таблица Заказчиков будет наиболее часто упоминаемой в 
+запросах продавцов к их собственной клиентуре, было бы правильно создать 
+такой индекс в поле snum таблицы Заказчиков. 
+<PRE> 
+     CREATE INDEX Clientgroup ON Customers (snum); 
+</PRE> 
+Теперь, тот продавец который имеет отношение к этой таблицы сможет найти 
+собственную клиентуру очень быстро. 
+ <HR width="50%">
+<A name=17.3> 
+<H3>УНИКАЛЬНОСТЬ ИНДЕКСА</H3> 
+ 
+Индексу в предыдущем примере, к счастью, не предписывается уникальность, 
+несмотря на наше замечание, что это является одним из назначений индекса. 
+Данный продавец может иметь любое число заказчиков. Однако, этого не случится если мы используем ключевое слово UNIQUE перед ключевым словом 
+INDEX. Поле сnum, в качестве первичного ключа, станет первым кандидатом 
+для уникального индекса: 
+<PRE> 
+       CREATE UNIQUE INDEX Custid ON Customers (cnum); 
+</PRE> 
+ПРИМЕЧАНИЕ: эта команда будет отклонена если уже имеются 
+идентичные значения в поле cnum. Лучший способ иметь дело с 
+индексами состоит в том, чтобы создавать их сразу после того, 
+как таблица создана и прежде, чем введены любые значения. Так 
+же обратите внимание что, для уникального индекса более чем 
+одного пол, это - комбинация значений, каждое из которых, 
+может и не быть уникальным. 
+ <BR><BR>
+Предыдущий пример - косвенный способ заставить поле cnum работать как 
+первичный ключ таблицы Заказчиков. Базы данных воздействуют на первичные и другие ключи более непосредственно. 
+Мы будем обсуждать этот вывод далее в <A href="ch18.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch18.shtml">Главах 18</A> и <A href="ch19.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch19.shtml">19</A>. 
+ 
+ <HR width="50%">
+<A name=17.4> 
+<H3>УДАЛЕНИЕ ИНДЕКСОВ</H3> 
+   Главным признаком индекса является его им - поэтому он может быть 
+удален. Обычно пользователи не знают о существовании индекса. SQL автоматически определяет позволено ли пользователю использовать индекс, и 
+если да, то разрешает использовать его. Однако, если вы хотите удалить 
+индекс, вы должны знать его им. Этот синтаксис используется для удаления индекса: 
+<PRE> 
+              DROP INDEX <INDEX name>; 
+</PRE> 
+Удаление индекса не воздействует на содержание полей. 
+ 
+ <HR width="50%">
+<A name=17.5> 
+<H3>ИЗМЕНЕНИЕ ТАБЛИЦЫ ПОСЛЕ 
+ТОГО КАК ОНА БЫЛА СОЗДАНА</H3> 
+ Команда ALTER TABLE не часть стандарта ANSI;  но это - широко доступна, и довольно содержательна форма, хотя ее возможности несколько ограничены. 
+Она используется чтобы изменить определение существующей таблицы. 
+Обычно, она добавляет столбцы к таблице. Иногда она может удалять 
+столбцы или изменять их размеры, а также в некоторых программах добавлять или удалять ограничения ( обсужденные в <A href="ch18.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch18.shtml">Главе 18</A> ). 
+Типичный синтаксис чтобы добавить столбец к таблице : 
+<PRE> 
+ ALTER TABLE &lt;TBODY>&lt;/TBODY>&lt;/TABLE>&lt;TABLE name>ADD &lt;COLUMN name> 
+                          &lt;DATA type> &lt;SIZE>; 
+</PRE> 
+Столбец будет добавлен со значением NULL для всех строк таблицы. 
+Новый столбец станет последним по порядку столбцом таблицы. Вообще 
+то, можно добавить сразу несколько новых столбцов, отделив их запятыми, в одной команде. Имеется возможность удалять или изменять столбцы. 
+Наиболее часто, изменением столбца может быть просто увеличение его 
+размера, или добавление( удаление ) ограничения. 
+Ваша система должна убедиться, что любые изменения не противоречат 
+существующим данным - например при попытке добавить ограничение к 
+столбцу который уже имел значение при нарушении которого ограничение 
+будет отклонено. Лучше всего дважды проверить это. 
+По крайней мере, посмотрите документацию вашей системы чтобы убедить- 
+с, гарантирует ли она что именно это было причиной. Из-за нестандартного характера команды ALTER TABLE, вам все равно необходимо посмотреть 
+тот раздел вашей системной документации где говорится об особых случаях. 
+<BR><BR> 
+ALTER TABLE - не действует, когда таблица должна быть переопределена, 
+но вы должны разрабатывать вашу базу данных по возможности так чтобы 
+не слишком ей в этом доверяться. Изменение структуры таблицы когда 
+она уже в использовании - опасно! Просмотрите внимательно таблицы, которые являясь вторичными таблицами с извлеченными данными из другой 
+таблицы ( <A href="ch20.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch20.shtml">смотри Главу 20</A> ),  не долго правильно работают, а программы 
+использующие вложенный SQL( <A href="ch25.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch25.shtml">Глава 25</A> ) выполняются неправильно или не 
+всегда правильно. Кроме того, изменение может стереть всех пользователей 
+имеющих разрешение обращаться к таблице. 
+По этим причинам, вы должны разрабатывать ваши таблицы так, чтобы использовать ALTER TABLE только в крайнем случае. 
+<BR><BR> 
+Если ваша система не поддерживает  ALTER TABLE , или если вы хотите 
+избежать ее использования, вы можете просто создать новую таблицу, с необходимыми изменениями при создании, и использовать команду INSERT с 
+SELECT * запросом чтобы переписать в нее данные из старой таблицы. 
+    Пользователям которым был предоставлен доступ к старой таблице 
+( см. <A href="ch22.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch22.shtml">Главу 22</A> ) должен быть предоставлен доступ к новой таблице. 
+ 
+ <HR width="50%">
+<A name=17.6> 
+<H3>УДАЛЕНИЕ ТАБЛИЦЫ</H3>
+ Вы должны быть собственником( т.е. быть создателем ) таблицы чтобы иметь 
+возможность удалить ее. Поэтому не волнуйтесь о случайном разрушении 
+ваших данных, SQL сначала потребует чтобы вы очистили таблицу прежде, 
+чем удалит ее из базы данных. Таблица с находящимися в ней строками, не 
+может быть удалена. Обратитесь к <A href="ch15.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch15.shtml">Главе 15</A> за подробностями относительно 
+того как удалять строки из таблицы. Синтаксис для удаления вашей таблицы, 
+если конечно она является пустой, следующая: 
+<PRE>
+          DROP TABLE &lt; table name &gt;; 
+</PRE> 
+При подаче этой команды, им таблицы больше не распознается и нет такой 
+команды которая могла быть дана этому объекту. Вы должны убедиться, что 
+эта таблица не ссылается внешним ключом к другой таблице( Внешние ключи обсуждаются в <A href="ch19.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch19.shtml">Главе 19</A> ), и что она не используется в определении Представления( <A href="ch20.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch20.shtml">Глава 20</A> ). 
+ <BR><BR>
+Эта команда фактически не является частью стандарта ANSI, но она обще поддерживаемая и полезна. К счастью, она более проста, и следовательно более непротиворечивая, чем ALTER TABLE .  ANSI просто не имеет способа 
+для определения разрушенных или неправильных таблиц. 
+ 
+<A name=17.7> 
+<HR width="50%">
+<H3>РЕЗЮМЕ</H3>
+ Теперь Вы уже бегло ориентируетесь в основах определений данных. 
+Вы можете создавать, изменять, и удалять таблицы. В то врем как 
+только первая из этих функций - часть официального стандарта SQL, 
+другие будут врем от времени меняться, особенно - ALTER TABLE. 
+DROP TABLE позволяет вам избавиться от таблиц которые бесполезны. 
+Она уничтожает только пустые таблицы, и следовательно не разрушает 
+данные. 
+  <BR><BR>
+Вы теперь знаете об индексах а также, как их создавать и  удалять. SQL 
+не дает вам большого управления над ими, так как реализация которую 
+вы используете довольно удачно определяет, как быстро выполняются 
+различные команды. Индексы - это один из инструментов дающий Вам 
+возможность воздействовать непосредственно на эффективность ваших 
+команд в SQL. Мы рассмотрели индексы здесь чтобы отличать их от ограничений, с которыми их нельзя путать. Ограничения - это тема 
+<A href="ch18.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch18.shtml">Главы 18</A> и <A href="ch19.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch19.shtml">Главы 19</A>. 
+ 
+ 
+ <HR width="50%">
+<A name=17.8> 
+<H3>РАБОТА С SQL</H3>
+ 
+1. Напишите предложение CREATE TABLE которое бы вывело нашу 
+   таблицу Заказчиков. 
+<BR><BR> 
+2. Напишите команду которая бы давала возможность пользователю 
+   быстро извлекать порядки сгруппированные по датам из таблицы 
+   Порядков. 
+<BR><BR> 
+3. Если таблица Порядков уже создана, как Вы можете заставить поле 
+   onum быть уникальным ( если допустить что все текущие значения 
+   уникальны ) ? 
+<BR><BR>
+4. Создайте индекс который бы разрешал каждому продавцу быстро 
+   отыскивать его порядки сгруппированные по датам. 
+<BR><BR>
+5. Предположим, что каждый продавец имеет только одного заказчика 
+   с данной оценкой, введите команду которая его извлечет. 
+<BR><BR>
+( См. <A href="a.shtml.htm#17" tppabs="http://www.sql.ru/docs/sql/u_sql/a.shtml#17">Приложение A</A> для ответов. ) 
+ 
+
+
+
+<TBODY></TBODY>
+</TD></TR></TABLE>
+</TD></TR>
+<TR BGCOLOR=#6699CC><TD><TABLE WIDTH=100% BORDER=0 CELLSPACING=0 CELLPADDING=0><TR><TD BGCOLOR=#6699CC VALIGN=CENTER HEIGHT = 40><FONT SIZE=-10>
+<!--begin of Top100 logo-->
+<a href="javascript:if(confirm('http://top100.rambler.ru/top100/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://top100.rambler.ru/top100/'" tppabs="http://top100.rambler.ru/top100/">
+<img src="../../../../top100-images.rambler.ru/top100/banner-88x31-rambler-gray2.gif" tppabs="http://top100-images.rambler.ru/top100/banner-88x31-rambler-gray2.gif" alt="Rambler's Top100" width=88 height=31 border=0></a>
+<!--end of Top100 logo -->
+</FONT>
+<!--Rating@Mail.ru COUNTER--><a target=_top
+href="javascript:if(confirm('http://top.mail.ru/jump?from=58574  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://top.mail.ru/jump?from=58574'" tppabs="http://top.mail.ru/jump?from=58574"><img
+src="../../../../top.list.ru/counter-id=58574;t=94.gif" tppabs="http://top.list.ru/counter?id=58574;t=94"
+border=0 height=18 width=88
+alt="Рейтинг@Mail.ru"></a><!--/COUNTER-->
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="font : bold 10px verdana; color : white" href="javascript:if(confirm('http://hosting.parking.ru/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://hosting.parking.ru/'" tppabs="http://hosting.parking.ru/">Хостинг от компании Parking.ru</a>
+<script src="../../../../www.google-analytics.com/urchin.js" tppabs="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-265508-1";
+urchinTracker();
+</script>
+</TD>
+<TD BGCOLOR=#6699CC ALIGN=right><FONT COLOR=white FACE="Tahoma,Arial" SIZE=1>&nbsp;Administrator:&nbsp;<A STYLE="color :white" HREF="mailto:admin@sql.ru">admin@sql.ru</A>&nbsp;<BR>Last update: <FONT COLOR=white>05 июн 2007&nbsp;</FONT></FONT></TD></TR></TABLE>
+</TD></TR></TABLE></TD></TR></TABLE>
+
+</BODY></HTML>
+

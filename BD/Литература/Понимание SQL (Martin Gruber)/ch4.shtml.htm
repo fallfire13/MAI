@@ -1,0 +1,454 @@
+<HTML>
+<HEAD>
+<TITLE>Понимание SQL. Глава 4. Использование реляционных и булевых операторов для создания более изощренных предикатов. [SQL.RU]</TITLE>
+<META http-equiv="Content-Type" CONTENT="text/html; charset=windows-1251">
+<META HTTP-EQUIV="Window-target" CONTENT="_top">
+<META HTTP-EQUIV="Last-Modified" CONTENT="29-03-2001">
+<META NAME="Description" CONTENT="Использование языка SQL, создание клиент-серверных систем. Конференция по MSSQL, Oracle, Interbase, MySQL. Полезные ссылки, документация, рекомендации по разработке информационных систем, сертификация, заказ книг и многое другое.">
+<META NAME="Keywords" CONTENT="SQL, конференция, Database Server, Oracle, Interbase, MySQL, документация, статьи, примеры, книги, ссылки, сертификация, работа, СУБД">
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../form.css" tppabs="http://www.sql.ru/form.css">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" leftmargin="3" topmargin="3" marginheight="3" marginwidth="3">
+<noindex>
+<TABLE BGCOLOR="#000000" WIDTH=100% CELLPADDING=0 CELLSPACING=0 BORDER=0>
+<TR><TD>
+
+<TABLE WIDTH=100% CELLPADDING=0 CELLSPACING=1 BORDER=0>
+<TR BGCOLOR="#6699CC"><TD><TABLE CELLSPACING=0 CELLPADDING=0 WIDTH=100% BORDER=0 BGCOLOR="#6699CC">
+<TR><TD COLSPAN=3><IMG SRC="../../../images/blank.gif" tppabs="http://www.sql.ru/images/blank.gif" height=3 width=1 alt=""></TD></TR>
+<TR><TD VALIGN=TOP>&nbsp;<FONT FACE="Verdana,Arial" SIZE=5 COLOR=lightyellow>SQL.RU<BR><FONT SIZE=-5>&nbsp;client/server technologies</FONT></FONT><!--begin of Top100--><a href="javascript:if(confirm('http://top100.rambler.ru/top100/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://top100.rambler.ru/top100/'" tppabs="http://top100.rambler.ru/top100/"><img src="../../../../counter.rambler.ru/top100.cnt-236431.gif" tppabs="http://counter.rambler.ru/top100.cnt?236431" alt="Rambler's Top100" width=1 height=1 border=0></a><!--end of Top100 code--></TD>
+<TD WIDTH=468 HEIGHT=60 BGCOLOR=#6699CC ALIGN=RIGHT></TD>
+<TD WIDTH=2><IMG SRC="../../../images/blank.gif" tppabs="http://www.sql.ru/images/blank.gif" height=1 width=2 alt=""></TD></TR>                                                      	
+<TR HEIGHT=4><TD COLSPAN=3><IMG SRC="../../../images/blank.gif" tppabs="http://www.sql.ru/images/blank.gif" height=5 width=1 alt=""></TD></TR></TABLE>
+
+</TD></TR>
+
+<TR HEIGHT=15><TD bgcolor=#006699><FONT FACE="Verdana,Arial" SIZE=1 COLOR=WHITE><B><A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/'" tppabs="http://www.sql.ru/">&nbsp;<FONT COLOR=white>Главная</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/docs  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/docs'" tppabs="http://www.sql.ru/docs">&nbsp;<FONT COLOR=yellow>Документация</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/articles  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/articles'" tppabs="http://www.sql.ru/articles">&nbsp;<FONT COLOR=white>Статьи</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/books  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/books'" tppabs="http://www.sql.ru/books">&nbsp;<FONT COLOR=white>Книги</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/forum/actualforum.aspx  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/forum/actualforum.aspx'" tppabs="http://www.sql.ru/forum/actualforum.aspx">&nbsp;<FONT COLOR=white>Форум</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/poll  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/poll'" tppabs="http://www.sql.ru/poll">&nbsp;<FONT COLOR=white>Опросы</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/forum/actualtopics.aspx?bid=11  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/forum/actualtopics.aspx?bid=11'" tppabs="http://www.sql.ru/forum/actualtopics.aspx?bid=11">&nbsp;<FONT COLOR=white>Гостевая</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/subscribe  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/subscribe'" tppabs="http://www.sql.ru/subscribe">&nbsp;<FONT COLOR=white>Рассылка</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/job  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/job'" tppabs="http://www.sql.ru/job">&nbsp;<FONT COLOR=white>Работа</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/search  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/search'" tppabs="http://www.sql.ru/search">&nbsp;<FONT COLOR=white>Поиск</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/faq  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/faq'" tppabs="http://www.sql.ru/faq">&nbsp;<FONT COLOR=white>FAQ</FONT>&nbsp;</A>|</B></FONT></TD></TR>
+<TR><TD BGCOLOR=#F5F5F5>
+</noindex>
+
+<TABLE BORDER=0 CELLSPACING=10><TR><TD>
+<CENTER>
+<H2 class="headline">
+4. ИСПОЛЬЗОВАНИЕ РЕЛЯЦИОННЫХ И БУЛЕВЫХ ОПЕРАТОРОВ ДЛЯ СОЗДАНИЯ БОЛЕЕ ИЗОЩРЕННЫХ 
+ПРЕДИКАТОВ</H2></CENTER>В <A href="ch3.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch3.shtml">Главе 3</A>, вы  узнали что предикаты могут 
+оценивать равенство оператора как верного или неверного. Они могут 
+также оценивать другие виды связей кроме равенств. Эта глава будет 
+исследовать другие реляционные операторы используемые в SQL. Вы 
+также узнаете как использовать операторы Буля, чтобы изменять и 
+объединять значения предиката. С помощью операторов Буля (или проще 
+говор логических  операторов), одиночный предикат может содержать 
+любое число условий. Это позволяет вам создавать очень сложные 
+предикаты. Использование круглых скобок в структуре этих сложных 
+предикатов будет также объясняться. 
+<A name=4.1>
+<H3>РЕЛЯЦИОННЫЕ ОПЕРАТОРЫ</H3> 
+ 
+Реляционный оператор - математический символ который указывает на 
+определенный тип сравнения между двум значениями. Вы уже видели как 
+используются равенства, такие как 2 + 3 = 5 или city = "London". 
+Но также имеются другие реляционные операторы. Предположим что вы 
+хотите видеть всех Продавцов с их комиссионными выше определенного 
+значения. Вы можете использовать тип сравнения  "больше чем" - (&gt;). 
+Реляционные операторы которыми располагает SQL : 
+<PRE> 
+           =      Равный к 
+ 
+           &gt;      Больше чем 
+ 
+           &lt;      Меньше чем 
+ 
+           &gt;=     Больше чем или равно 
+ 
+           &lt;=     Меньше чем или равно 
+ 
+           &lt; &gt;    Не равно 
+</PRE> 
+  Эти операторы имеют стандартные значения для числовых значений. 
+Для значения символа, их определение зависит от формата преобразования, 
+ASCII или EBCDIC, который вы используете. 
+SQL сравнивает символьные значения в терминах основных номеров как 
+определено в формате преобразования. Даже значение символа, такого как 
+"1", который  представляет номер, не обязательно равняется номеру который 
+он представляет.  Вы можете использовать реляционные операторы чтобы 
+установить алфавитный порядок - например, "a" &lt; "n"  где  средство a 
+первое в алфавитном порядке - но все это ограничивается с помощью 
+параметра преобразования формата. 
+<BR><BR> 
+И в ASCII и в EBCDIC, символы - по значению: меньше чем все другие 
+символы которым они предшествуют в алфавитном порядке и имеют один 
+вариант( верхний или нижний ). В ASCII, все символы верхнего регистра - 
+меньше чем все символы нижнего регистра, поэтому "Z" &lt; "a", а все 
+номера - меньше чем все символы, поэтому "1" &lt; "Z". То же относится и к 
+EBCDIC. Чтобы сохранить обсуждение более простым, мы допустим что вы 
+будете использовать текстовый формат ASCII.  Проконсультируйтесь с вашей 
+документацией системы если вы неуверенны какой формат вы используете 
+или как он работает. 
+Значения сравниваемые здесь называются - скалярными значениями. 
+Скалярные значения производятся скалярными выражениями; 1 + 2 - 
+это скалярное выражение которое производит скалярное значение 3. 
+Скалярное значение может быть символом или числом, хотя очевидно 
+что только номера используются с арифметическими операторами, 
+такими как  +(плюс) или *(звезда). 
+Предикаты обычно сравнивают значения скалярных величин, используя 
+или реляционные операторы или специальные операторы SQL чтобы 
+увидеть верно ли это сравнение. Некоторые операторы SQL описаны в 
+<A href="ch5.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch5.shtml">Главе 5</A>. 
+Предположим что вы хотите увидеть всех заказчиков с оценкой(rating) 
+выше 200. Так как 200 - это скалярное значение, как и значение в столбце 
+оценки, для их сравнения вы можете использовать реляционный оператор. 
+<PRE> 
+    SELECT * 
+       FROM Customers 
+       WHERE rating &gt; 200; 
+</PRE> 
+Вывод для этого запроса показывается в Рисунке 4.1. 
+<BR><BR> 
+Конечно, если бы мы захотели увидеть еще и заказчиков с оценкой 
+равной 200, мы стали бы использовать предикат 
+<PRE> 
+             rating &gt; = 200 
+</PRE><A name=4.2>
+<H3>БУЛЕВЫ ОПЕРАТОРЫ</H3> 
+Основные Булевы операторы также распознаются в SQL. Выражения 
+Буля - являются или верными или неверными, подобно предикатам. 
+Булевы операторы связывают одно или более верных/неверных 
+значений и производят единственное верное/или/неверное значение. 
+Стандартными операторами Буля распознаваемыми в SQL являются: 
+ 
+              AND,  OR, и NOT. 
+ <PRE>
+               ===============  SQL Execution Log ============ 
+              |                                               | 
+              | SELECT *                                      | 
+              | FROM  Customers                               | 
+              | WHERE rating &gt; 200;                           | 
+              | ============================================= | 
+              |   snum     cname    city     rating    snum   | 
+              |  -----   --------  --------  -----   ------   | 
+              |   2004     Crass    Berlin     300     1002   | 
+              |   2008     Cirneros San Jose   300     1007   | 
+                ============================================= 
+</PRE> 
+Рисунок 4.1:  Использование больше чем (&gt;) 
+ 
+ Существуют другие, более сложные, операторы Буля ( типа " исключенный 
+или " ),  но они могут быть сформированы из этих трех простых операторов 
+- AND, OR, NOT. 
+Как вы можете понять, Булева верн / неверна логика - основана на цифровой 
+компьютерной операции; и фактически, весь SQL( или любой другой язык ) 
+может быть сведен до уровня Булевой логики. 
+<BR><BR> 
+Операторы Буля и как они работают: 
+<BR><BR> 
+*  AND берет два Буля ( в форме A AND B) как аргументы и 
+   оценивает их по отношению к истине, верны ли они оба. 
+<BR><BR> 
+*  OR берет два Буля ( в форме A OR B) как аргументы и 
+   оценивает на правильность, верен ли один из них. 
+<BR><BR> 
+*  NOT берет одиночный Булев ( в форме NOT A) как аргументы 
+   и заменяет его значение с неверного на верное или верное на 
+   неверное. 
+<BR><BR> 
+Связывая предикаты с операторами Буля, вы можете значительно 
+увеличить их возможности. Предположим вы хотите видеть всех 
+заказчиков в San Jose которые имеют оценку(рейтинг) выше 200: 
+<PRE> 
+         SELECT  * 
+            FROM Customers 
+            WHERE city = " San Jose' 
+            AND rating &gt; 200; 
+</PRE> 
+ 
+Вывод для этого запроса  показан на Рисунке 4.2.  Имеется только один 
+заказчик который удовлетворяет этому условию. 
+<BR><BR> 
+Если вы же используете OR вы получите всех заказчиков которые 
+находились в San Jose или(OR) которые имели оценку выше 200. 
+<PRE> 
+ 
+               ===============  SQL Execution Log ============ 
+              |                                               | 
+              | SELECT *                                      | 
+              | FROM  Customers                               | 
+              | WHERE city = 'San Jose'                       | 
+              | AND rating &gt; 200;                             | 
+              | ============================================= | 
+              |   сnum     cname    city     rating    snum   | 
+              |  ------   --------  --------  ----    -----   | 
+              |   2008     Cirneros San Jose   300     1007   | 
+                ============================================= 
+</PRE> 
+ 
+Рисунок 4.2: SELECT использующий AND 
+<PRE> 
+ 
+           SELECT * 
+              FROM Customers 
+              WHERE city = " San Jose' 
+              OR rating &gt; 200; 
+</PRE> 
+Вывод для этого запроса показывается в Рисунке 4.3. 
+<BR><BR>  
+NOT может использоваться для инвертирования значений Буля. Имеется 
+пример запроса с NOT: 
+<PRE> 
+                    SELECT * 
+                       FROM Customers 
+                       WHERE city = " San Jose' 
+                       OR NOT rating &gt; 200; 
+</PRE> 
+Вывод этого запроса  показывается в Рисунке 4.4. 
+<PRE> 
+ 
+               ===============  SQL Execution Log ============ 
+              |                                               | 
+              | SELECT *                                      | 
+              | FROM  Customers                               | 
+              | WHERE city = 'San Jose'                       | 
+              | OR rating &gt; 200;                              | 
+              | ============================================= | 
+              |   сnum     cname    city     rating    snum   | 
+              |  -----    -------  --------  -----   ------   | 
+              |   2003     Liu      San Jose   200     1002   | 
+              |   2004     Grass    Berlin     300     1002   | 
+              |   2008     Cirneros San Jose   300     1007   | 
+                ============================================= 
+</PRE> 
+ 
+Рисунок 4.:3: SELECT использующий OR 
+<PRE> 
+               ===============  SQL Execution Log ============ 
+              |                                               | 
+              | SELECT *                                      | 
+              | FROM  Customers                               | 
+              | WHERE city = 'San Jose'                       | 
+              | OR NOT rating &gt; 200;                          | 
+              | ============================================= | 
+              |   cnum     cname    city     rating    snum   | 
+              |  ------   --------  ------   -----    -----   | 
+              |   2001     Hoffman  London     100     1001   | 
+              |   2002     Giovanni Rome       200     1003   | 
+              |   2003     Liu      San Jose   200     1002   | 
+              |   2006     Clemens  London     100     1001   | 
+              |   2008     Cirneros San Jose   300     1007   | 
+              |   2007     Pereira  Rome       100     1004   | 
+                ============================================= 
+</PRE> 
+Рисунок 4.4: SELECT использующий NOT 
+<BR><BR> 
+  Все записи за исключением Grass были выбраны. Grass не был в San Jose, 
+и его оценка была больше чем 200, так что он потерпел неудачу при обеих 
+проверках. В каждой из других строк встретился один или другой  или оба 
+критериев.  Обратите внимание что оператор NOT должен предшествовать 
+<BR><BR> 
+Булеву оператору, чье значение должно измениться, и не должен 
+помещаться перед реляционным оператором. Например неправильным 
+вводом оценки предиката будет: 
+<PRE> 
+                 rating NOT &gt; 200 
+</PRE> 
+Он выдаст другую отметку. А как SQL оценит следующее? 
+<PRE> 
+                   SELECT * 
+                      FROM Customers 
+                      WHERE NOT city = " San Jose' 
+                      OR rating &gt; 200; 
+</PRE> 
+NOT применяется здесь только к выражению city = 'SanJose', или к 
+выражению rating &gt; 200 тоже ?   Как и написано, правильный ответ будет 
+прежним. SQL может применять NOT с выражением Буля только сразу после 
+него. Вы можете получить другой результат при команде: 
+<PRE> 
+                   SELECT * 
+                      FROM Customers 
+                      WHERE NOT( city = " San Jose' 
+                      OR rating &gt; 200 ); 
+</PRE> 
+Здесь SQL понимает круглые скобки как означающие, что все внутри них 
+будет оцениваться первым и обрабатываться как единое выражение с 
+помощью всего что снаружи них ( это является стандартной интерпретацией в математике ). Другими словами, SQL берет каждую строку и 
+определяет, соответствует ли истине равенство city = " San Jose' или 
+равенство rating &gt; 200. 
+Если любое условие верно, выражение Буля внутри круглых скобок 
+верно. Однако, если выражение Буля внутри круглых скобок верно, 
+предикат как единое целое неверен, потому что NOT преобразует верно 
+в неверно и наоборот. 
+ 
+Вывод для этого запроса - показывается в Рисунке 4.5. 
+<BR><BR> 
+Имеется намеренно сложный пример. Посмотрим сможете ли вы проследить 
+его логику (вывод показан в Рисунке 4.6 ): 
+<PRE> 
+        SELECT * 
+           FROM Orders 
+             WHERE NOT ((odate = 10/03/1990 AND snum &gt;1002) 
+                OR amt &gt; 2000.00); 
+ 
+               ===============  SQL Execution Log ============ 
+              |                                               | 
+              | SELECT *                                      | 
+              | FROM  Customers                               | 
+              | WHERE NOT  (city = 'San Jose'                 | 
+              | OR rating &gt; 200);                             | 
+              | ============================================= | 
+              |   cnum     cname    city     rating    snum   | 
+              |  -----   --------  -------   -----   ------   | 
+              |   2001     Hoffman  London     100     1001   | 
+              |   2002     Giovanni Rome       200     1003   | 
+              |   2006     Clemens  London     100     1001   | 
+              |   2007     Pereira  Rome       100     1004   | 
+                ============================================= 
+</PRE> 
+Рисунок 4.5: SELECT использующий NOT и вводное предложение 
+ 
+<PRE> 
+               ===============  SQL Execution Log ============== 
+              |                                                 | 
+              | SELECT *                                        | 
+              | FROM  Orders                                    | 
+              | WHERE NOT ((odate = 10/03/1990 AND snum &gt; 1002) | 
+              | OR amt &gt; 2000.00);                              | 
+              | =============================================== | 
+              |   onum       amt      odate      cnum     snum  | 
+              |  ------   --------  ----------  -----    -----  | 
+              |   3003      767.19  10/03/1990   2001     1001  | 
+              |   3009     1713.23  10/04/1990   2002     1003  | 
+              |   3007       75.75  10/04/1990   2004     1002  | 
+              |   3010     1309.95  10/06/1990   2004     1002  | 
+               ================================================= 
+</PRE> 
+Рисунок 4.6:  Полный (комплексный) запрос 
+ 
+ 
+Несмотря на то что Булевы операторы индивидуально просты, они не так 
+просты когда комбинируются в комплексное выражение. 
+<BR><BR> 
+Способ оценки комплекса Булева состоит в том, чтобы оценивать 
+Булевы выражения наиболее глубоко вложенные в круглых скобках, 
+объединять их в единичное Булево значение, и затем объединять 
+его с верхними значениями. 
+  Имеется подробное объяснение того как пример выше был вычислен. 
+Наиболее глубоко вложенные выражения Буля в предикате - это 
+odate = 10/03/1990 и snum &gt; 1002 являются объединенными с 
+помощью AND, формируя одно выражение Буля которое будет 
+оценено как верное для всех строк в которых встретились оба эти 
+условия. Это составное Булево выражение (которое мы будем называть 
+Булево номер 1, или B1 для краткости) объединяется с выражением 
+(amt) &gt; 2000.00 (B2) с помощью OR, формируя третье выражение (B3), 
+которое является верным для данной строки, если или B1 или B2 
+- верны для этой строки. 
+     B3 полностью содержится в круглых скобках которым предшествует 
+NOT, формируя последнее выражение Буля(B4), которое является 
+условием предиката. 
+Таким образом B4, предикат запроса, - будет верен всякий раз, когда B3 
+неправилен. B3 - неправилен всегда, когда B1 и B2 - оба неверны. 
+B1 неправилен для строки если дата порядка строки не 10/03/1990, или 
+если значение snum не большее чем 1002.  B2  неправилен для всех строк, 
+значения суммы приобретений которых не превышает  2000.00. 
+Люба строка со значением выше 2000.00 сделает B2 - верным; в 
+результате B3 будет верен, а B4 нет.  Следовательно, все эти строки будут 
+удалены из вывода. 
+ Из оставшихся, строки которые на 3 Октября имеют snum &gt; 1002 ( такие 
+как строки для onum 3001 на 3 Октября со snum = 1007 ),  делают B1 
+верным, с помощью верного B3 и неверного предиката запроса. 
+Они будут также удалены из вывода. Вывод показан для строк которые 
+оставлены. 
+ 
+<A name=4.3>
+<H3>РЕЗЮМЕ</H3>
+В этой главе, вы значительно расширили ваше знакомство с предикатами. 
+Теперь вы можете находить значения которые связаны с данным значением 
+любым способом -  определяемым различными реляционными операторами. 
+ Вы можете также использовать операторы Буля AND и OR чтобы много 
+условий, каждое из которых автономно в предикатах, объединять в 
+единый предикат. 
+Оператор Буля NOT, как вы уже видели, может изменять значение 
+условия или группы условий на противоположное. 
+<BR><BR> 
+Булевы и Реляционные операторы могут эффективно управляться с помощью 
+круглых скобок, которые определяют порядок, в котором операции будут 
+выполнены. Эти операции применимы к любому уровню сложности и вы 
+поняли как сложные условия могут создаваться из этих простых частей. 
+<BR><BR> 
+Теперь, когда мы показали как используются стандартные математические 
+операторы, мы можем перейти к операторам которые являются 
+исключительными в SQL. Это мы сделаем в <A href="ch5.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch5.shtml">Главе 5</A>. 
+ <A name=4.4>
+<H3>РАБОТА С SQL</H3> 
+ 
+1. Напишите запрос который может дать вам все порядки со значениями 
+   суммы выше чем $1,000. 
+<BR><BR> 
+2. Напишите запрос который может выдать вам пол sname и city для всех 
+   продавцов в Лондоне с комиссионными выше  .10 . 
+<BR><BR> 
+3. Напишите запрос к таблице Заказчиков чей вывод может включить всех 
+   заказчиков с оценкой  =&lt; 100, если они не находятся в Риме. 
+<BR><BR> 
+4. Что может быть выведено в результате следующего запроса ? 
+<PRE> 
+              SELECT * 
+                 FROM Orders 
+                 WHERE (amt &lt; 1000 OR 
+                     NOT (odate = 10/03/1990 
+                         AND cnum &gt; 2003 )); 
+ </PRE>
+ 
+5. Что может быть выведено в результате следующего запроса ? 
+<PRE> 
+              SELECT * 
+                 FROM Orders 
+                 WHERE NOT ((odate = 10/03/1990 OR snum &gt; 1006) 
+                    AND amt &gt; = 1500 ); 
+</PRE> 
+ 
+6. Как можно проще переписать такой запрос ? 
+ <PRE>
+              SELECT snum, sname, city, comm 
+                 FROM Salespeople 
+                 WHERE ( comm &gt; + .12 OR 
+                    comm &lt; .14 ); 
+ 
+</PRE> 
+(См.<A href="a.shtml.htm#4" tppabs="http://www.sql.ru/docs/sql/u_sql/a.shtml#4"> Приложение A</A> для ответов.) 
+
+
+</TD></TR></TABLE>
+</TD></TR>
+<TR BGCOLOR=#6699CC><TD><TABLE WIDTH=100% BORDER=0 CELLSPACING=0 CELLPADDING=0><TR><TD BGCOLOR=#6699CC VALIGN=CENTER HEIGHT = 40><FONT SIZE=-10>
+<!--begin of Top100 logo-->
+<a href="javascript:if(confirm('http://top100.rambler.ru/top100/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://top100.rambler.ru/top100/'" tppabs="http://top100.rambler.ru/top100/">
+<img src="../../../../top100-images.rambler.ru/top100/banner-88x31-rambler-gray2.gif" tppabs="http://top100-images.rambler.ru/top100/banner-88x31-rambler-gray2.gif" alt="Rambler's Top100" width=88 height=31 border=0></a>
+<!--end of Top100 logo -->
+</FONT>
+<!--Rating@Mail.ru COUNTER--><a target=_top
+href="javascript:if(confirm('http://top.mail.ru/jump?from=58574  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://top.mail.ru/jump?from=58574'" tppabs="http://top.mail.ru/jump?from=58574"><img
+src="../../../../top.list.ru/counter-id=58574;t=94.gif" tppabs="http://top.list.ru/counter?id=58574;t=94"
+border=0 height=18 width=88
+alt="Рейтинг@Mail.ru"></a><!--/COUNTER-->
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="font : bold 10px verdana; color : white" href="javascript:if(confirm('http://hosting.parking.ru/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://hosting.parking.ru/'" tppabs="http://hosting.parking.ru/">Хостинг от компании Parking.ru</a>
+<script src="../../../../www.google-analytics.com/urchin.js" tppabs="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-265508-1";
+urchinTracker();
+</script>
+</TD>
+<TD BGCOLOR=#6699CC ALIGN=right><FONT COLOR=white FACE="Tahoma,Arial" SIZE=1>&nbsp;Administrator:&nbsp;<A STYLE="color :white" HREF="mailto:admin@sql.ru">admin@sql.ru</A>&nbsp;<BR>Last update: <FONT COLOR=white>05 июн 2007&nbsp;</FONT></FONT></TD></TR></TABLE>
+</TD></TR></TABLE></TD></TR></TABLE>
+
+</BODY></HTML>
+

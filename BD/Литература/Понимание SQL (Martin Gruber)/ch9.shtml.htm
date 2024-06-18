@@ -1,0 +1,424 @@
+<HTML>
+<HEAD>
+<TITLE>Понимание SQL. Глава 8. Объединение таблицы с собой. [SQL.RU]</TITLE>
+<META http-equiv="Content-Type" CONTENT="text/html; charset=windows-1251">
+<META HTTP-EQUIV="Window-target" CONTENT="_top">
+<META HTTP-EQUIV="Last-Modified" CONTENT="29-03-2001">
+<META NAME="Description" CONTENT="Использование языка SQL, создание клиент-серверных систем. Конференция по MSSQL, Oracle, Interbase, MySQL. Полезные ссылки, документация, рекомендации по разработке информационных систем, сертификация, заказ книг и многое другое.">
+<META NAME="Keywords" CONTENT="SQL, конференция, Database Server, Oracle, Interbase, MySQL, документация, статьи, примеры, книги, ссылки, сертификация, работа, СУБД">
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../form.css" tppabs="http://www.sql.ru/form.css">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" leftmargin="3" topmargin="3" marginheight="3" marginwidth="3">
+<noindex>
+<TABLE BGCOLOR="#000000" WIDTH=100% CELLPADDING=0 CELLSPACING=0 BORDER=0>
+<TR><TD>
+
+<TABLE WIDTH=100% CELLPADDING=0 CELLSPACING=1 BORDER=0>
+<TR BGCOLOR="#6699CC"><TD><TABLE CELLSPACING=0 CELLPADDING=0 WIDTH=100% BORDER=0 BGCOLOR="#6699CC">
+<TR><TD COLSPAN=3><IMG SRC="../../../images/blank.gif" tppabs="http://www.sql.ru/images/blank.gif" height=3 width=1 alt=""></TD></TR>
+<TR><TD VALIGN=TOP>&nbsp;<FONT FACE="Verdana,Arial" SIZE=5 COLOR=lightyellow>SQL.RU<BR><FONT SIZE=-5>&nbsp;client/server technologies</FONT></FONT><!--begin of Top100--><a href="javascript:if(confirm('http://top100.rambler.ru/top100/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://top100.rambler.ru/top100/'" tppabs="http://top100.rambler.ru/top100/"><img src="../../../../counter.rambler.ru/top100.cnt-236431.gif" tppabs="http://counter.rambler.ru/top100.cnt?236431" alt="Rambler's Top100" width=1 height=1 border=0></a><!--end of Top100 code--></TD>
+<TD WIDTH=468 HEIGHT=60 BGCOLOR=#6699CC ALIGN=RIGHT></TD>
+<TD WIDTH=2><IMG SRC="../../../images/blank.gif" tppabs="http://www.sql.ru/images/blank.gif" height=1 width=2 alt=""></TD></TR>                                                      	
+<TR HEIGHT=4><TD COLSPAN=3><IMG SRC="../../../images/blank.gif" tppabs="http://www.sql.ru/images/blank.gif" height=5 width=1 alt=""></TD></TR></TABLE>
+
+</TD></TR>
+
+<TR HEIGHT=15><TD bgcolor=#006699><FONT FACE="Verdana,Arial" SIZE=1 COLOR=WHITE><B><A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/'" tppabs="http://www.sql.ru/">&nbsp;<FONT COLOR=white>Главная</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/docs  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/docs'" tppabs="http://www.sql.ru/docs">&nbsp;<FONT COLOR=yellow>Документация</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/articles  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/articles'" tppabs="http://www.sql.ru/articles">&nbsp;<FONT COLOR=white>Статьи</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/books  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/books'" tppabs="http://www.sql.ru/books">&nbsp;<FONT COLOR=white>Книги</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/forum/actualforum.aspx  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/forum/actualforum.aspx'" tppabs="http://www.sql.ru/forum/actualforum.aspx">&nbsp;<FONT COLOR=white>Форум</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/poll  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/poll'" tppabs="http://www.sql.ru/poll">&nbsp;<FONT COLOR=white>Опросы</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/forum/actualtopics.aspx?bid=11  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/forum/actualtopics.aspx?bid=11'" tppabs="http://www.sql.ru/forum/actualtopics.aspx?bid=11">&nbsp;<FONT COLOR=white>Гостевая</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/subscribe  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/subscribe'" tppabs="http://www.sql.ru/subscribe">&nbsp;<FONT COLOR=white>Рассылка</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/job  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/job'" tppabs="http://www.sql.ru/job">&nbsp;<FONT COLOR=white>Работа</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/search  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/search'" tppabs="http://www.sql.ru/search">&nbsp;<FONT COLOR=white>Поиск</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/faq  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/faq'" tppabs="http://www.sql.ru/faq">&nbsp;<FONT COLOR=white>FAQ</FONT>&nbsp;</A>|</B></FONT></TD></TR>
+<TR><TD BGCOLOR=#F5F5F5>
+</noindex>
+
+<TABLE BORDER=0 CELLSPACING=10><TR><TD>
+<CENTER>
+<H2 class="headline">
+9. ОБЪЕДИНЕНИЕ ТАБЛИЦЫ С СОБОЙ</H2></CENTER> 
+ В <A href="ch8.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch8.shtml">ГЛАВЕ 8</A>, МЫ ПОКАЗАЛИ ВАМ КАК ОБЪЕДИНЯТЬ ДВЕ или более таблиц - вместе. 
+  Достаточно интересно то, что та же сама методика может использоваться 
+чтобы объединять вместе две копии одиночной таблицы. 
+В этой главе, мы будем исследовать этот процесс. Как вы видите, 
+объединение таблицы с самой собой, далеко не проста вещь, и может быть 
+очень полезным способом определять определенные виды связей между 
+пунктами данных в конкретной таблице. 
+ 
+<A name=9.1> 
+<H3>КАК ДЕЛАТЬ ОБЪЕДИНЕНИЕ ТАБЛИЦЫ С СОБОЙ ?</H3> 
+ 
+Для объединения таблицы с собой, вы можете сделать каждую строку 
+таблицы, одновременно, и комбинацией ее с собой и комбинацией с 
+каждой другой строкой таблицы. Вы затем оцениваете каждую комбинацию 
+в терминах предиката, также как в объединениях мультитаблиц. Это позволит 
+вам легко создавать определенные виды связей между различными позициями 
+внутри одиночной таблицы - с помощью обнаружения пар строк 
+со значением поля, например. 
+   Вы можете изобразить объединение таблицы с собой, как объединение 
+двух копий одной и той же таблицы. Таблица на самом деле не копируется, 
+но SQL выполняет команду так, как если бы это было сделано. 
+Другими словами, это объединение - такое же, как и любое другое объединение 
+между двум таблицами, за исключением того, что в данном случае 
+обе таблицы идентичны. 
+ 
+ <A name=9.2>
+<H3>ПСЕВДОНИМЫ</H3> 
+ 
+Синтаксис команды для объединения таблицы с собой, тот же что и для 
+объединения многочисленных таблиц, в одном экземпляре. 
+Когда вы объединяете таблицу с собой, все повторяемые имена столбца, 
+заполняются префиксами имени таблицы. Чтобы ссылаться к этим столб- 
+цам внутри запроса, вы должны иметь два различных имени для этой 
+таблицы. 
+  Вы можете сделать это с помощью определения временных имен 
+называемых - .переменными диапазона, переменными корреляции или просто 
+- псевдонимами 
+Вы определяете их в предложении FROM запроса. Это очень просто: вы 
+набираете им таблицы, оставляете пробел, и затем набираете псевдоним 
+для нее. 
+<BR><BR>
+Имеется пример который находит все пары заказчиков имеющих один и тот 
+же самый рейтинг ( вывод  показывается в Рисунке 9.1 ): 
+<PRE> 
+            SELECT first.cname, second.cname, first.rating 
+               FROM Customers first, Customers second 
+               WHERE first.rating = second.rating; 
+ 
+ 
+            ===============  SQL Execution Log ============== 
+           |                                                 | 
+           |    Giovanni     Giovanni                  200   | 
+           |    Giovanni     Liu                       200   | 
+           |    Liu          Giovanni                  200   | 
+           |    Liu          Liu                       200   | 
+           |    Grass        Grass                     300   | 
+           |    Grass        Cisneros                  300   | 
+           |    Clemens      Hoffman                   100   | 
+           |    Clemens      Clemens                   100   | 
+           |    Clemens      Pereira                   100   | 
+           |    Cisneros     Grass                     300   | 
+           |    Cisneros     Cisneros                  300   | 
+           |    Pereira      Hoffman                   100   | 
+           |    Pereira      Clemens                   100   | 
+           |    Pereira      Pereira                   100   | 
+           |                                                 | 
+             =============================================== 
+</PRE> 
+Рисунок 9.1: Объединение таблицы с собой 
+<BR><BR> 
+( обратите внимание что на Рисунке 9.1, как и в некоторых дальнейших 
+примерах, полный запрос не может уместиться в окне вывода, и следовательно 
+будет усекаться. ) 
+<BR><BR> 
+В вышеупомянутой команде, SQL ведет себя так, как если бы он соединял 
+две таблицы называемые 'первая и 'вторая'. Обе они - фактически, таблицы 
+Заказчика, но псевдонимы разрешают им быть обработанными независимо. 
+Псевдонимы первый и второй были установлены в предложении FROM 
+запроса, сразу после имени копии таблицы. 
+Обратите внимание что псевдонимы могут использоваться в предложении 
+SELECT, даже если они не определены в предложении FROM. 
+   Это - очень хорошо. SQL будет сначала допускать любые такие псевдонимы 
+на веру, но будет отклонять команду если они не определены далее в 
+предложении FROM запроса. 
+   Псевдоним существует - только пока команда выполняется ! 
+<BR><BR> 
+Когда запрос заканчивается, псевдонимы используемые в нем больше не 
+имеют никакого значения. 
+<BR><BR> 
+Теперь, когда имеются две копии таблицы Заказчиков, чтобы работать с 
+ними, SQL может обрабатывать эту операцию точно также как и любое 
+другое объединение - берет каждую строку из одного псевдонима и сравнивает 
+ее с каждой строкой из другого псевдонима. 
+ 
+<A name=9.3> 
+<H3>УСТРАНЕНИЕ ИЗБЫТОЧНОСТИ</H3> 
+ 
+Обратите внимание что наш вывод имеет два значение для каждой комбинации,
+причем второй раз в обратном порядке. Это потому, что каждое 
+значение показано первый раз в каждом псевдониме, и второй раз( сим- 
+метрично) в предикате. 
+Следовательно, значение A в псевдониме сначала выбирается в комбинации со 
+значением B во втором псевдониме, а затем значение A во втором 
+псевдониме выбирается в комбинации со значением B в первом псевдониме. 
+В нашем примере, Hoffman выбрался вместе с Clemens, а затем Clemens 
+выбрался вместе с Hoffman. Тот же самый случай с Cisneros и Grass, 
+Liu и Giovanni, и так далее. Кроме того каждая строка была сравнена 
+сама с собой, чтобы вывести строки такие как - Liu и Liu. 
+Простой способ избежать этого состoит в том, чтобы налагать порядок 
+на два значения, так чтобы один мог быть меньше чем другой или 
+предшествовал ему в алфавитном порядке. Это делает предикат 
+асимметричным, поэтому те же самые значения в обратном порядке не 
+будут выбраны снова, например: 
+<PRE> 
+            SELECT tirst.cname, second.cname, first.rating 
+               FROM Customers first, Customers second 
+               WHERE first.rating = second.rating 
+                  AND first.cname &lt; second.cname; 
+</PRE> 
+Вывод этого запроса  показывается в Рисунке 9.2. 
+<BR><BR> 
+Hoffman предшествует Periera в алфавитном порядке, поэтому комбинация 
+удовлетворяет обеим условиям предиката и появляется в выводе. Когда 
+та же сама комбинация появляется в обратном порядке - когда Periera 
+в псевдониме первой таблицы сравнивается с Hoffman во второй таблице 
+псевдонима - второе условие не встречается. 
+Аналогично Hoffman не выбирается при наличии того же рейтинга что и 
+он сам потому что его им не предшествует ему самому в алфавитном 
+порядке. Если бы вы захотели включить сравнение строк с ними же 
+<PRE> 
+              ===============  SQL Execution Log ============== 
+             |                                                 | 
+             | SELECT first.cname, second.cname, first.rating  | 
+             | FROM  Customers first, Customers second         | 
+             | WHERE first.rating = second.rating              | 
+             | AND first.cname &lt; second.cname                  | 
+             | =============================================== | 
+             |   cname      cname     rating                   | 
+             |  -------  ---------   -------                   | 
+             |  Hoffman    Pereira       100                   | 
+             |  Giovanni   Liu           200                   | 
+             |  Clemens    Hoffman       100                   | 
+             |  Pereira    Pereira       100                   | 
+             |  Gisneros   Grass         300                   | 
+              ================================================= 
+</PRE> 
+Рисунок 9.2: Устранение избыточности вывода в объединении с собой. 
+<BR><BR> 
+в запросах подобно этому, вы могли бы просто использовать 
+ &lt; =  вместо &lt;. 
+ 
+<A name=9.4> 
+<H3>ПРОВЕРКА ОШИБОК</H3> 
+ 
+Таким образом мы можем использовать эту особенность SQL для проверки 
+определенных видов ошибок. При просмотре таблицы Порядков, вы можете 
+видеть что пол cnum и snum должны иметь постоянную связь. 
+Так как каждый заказчик должен быть назначен к одному и только одному 
+продавцу, каждый раз когда определенный номер заказчика появляется в 
+таблице Порядков, он должен совпадать с таким же номером продавца. 
+Следующая команда будет определять любые несогласованности в этой 
+области: 
+<PRE> 
+             SELECT first.onum, tirst.cnum, first.snum, 
+              second.onum, second.cnum,second.snum 
+                FROM Orders first, Orders second 
+                WHERE first.cnum = second.cnum 
+                  AND first.snum &lt; &gt; second.snum; 
+</PRE> 
+Хотя это  выглядит сложно, логика этой команды достаточно проста. 
+Она будет брать первую строку таблицы Порядков, запоминать ее под 
+первым псевдонимом, и проверять ее в комбинации с каждой строкой 
+таблицы Порядков под вторым псевдонимом, одну за другой. Если комбинация
+строк удовлетворяет предикату, она выбирается для вывода. В этом 
+случае предикат будет рассматривать эту строку, найдет строку где поле 
+cnum=2008 а поле snum=1007, и затем рассмотрит каждую следующую 
+строку с тем же самым значением пол cnum. Если он находит что какая 
+-то из их имеет значение отличное от значения пол snum, предикат 
+будет верен, и выведет выбранные пол из текущей комбинации строк. 
+Если же значение snum с данным значением cnum в наш таблице сов- 
+падает, эта команда не произведет никакого вывода. 
+ 
+<A name=9.5> 
+<H3>БОЛЬШЕ ПСЕВДОНИМОВ</H3> 
+ 
+Хотя объединение таблицы с собой - это первая ситуация когда понятно 
+что псевдонимы необходимы, вы не ограничены в их использовании что 
+бы только отличать копию одной таблицы от ее оригинала. Вы можете 
+использовать псевдонимы в любое врем когда вы хотите создать альтернативные 
+имена для ваших таблиц в команде. Например, если ваши 
+таблицы имеют очень длинные и сложные имена, вы могли бы определить 
+простые односимвольные псевдонимы, типа a и b, и использовать их вместо 
+имен таблицы в предложении SELECT и предикате. Они будут также 
+использоваться с соотнесенными подзапросами(обсуждаемыми в <A href="ch11.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch11.shtml">Главе 11</A>). 
+ 
+<A name=9.6> 
+<H3>ЕЩЕ БОЛЬШЕ КОМПЛЕКСНЫХ ОБЪЕДИНЕНИЙ</H3> 
+ 
+Вы можете использовать любое число псевдонимов для одной таблицы 
+в запросе, хотя использование более двух в данном предложении 
+SELECT *  будет излишеством. 
+Предположим что вы еще не назначили ваших заказчиков к вашему 
+продавцу. Компании должна назначить каждому продавцу первоначально трех 
+заказчиков, по одному для каждого рейтингового значения. 
+Вы лично можете решить какого заказчика какому продавцу назначить, 
+но следующий запрос вы используете чтобы увидеть все возможные 
+комбинации заказчиков которых вы можете назначать. 
+( Вывод показывается в Рисунке 9.3 ): 
+<PRE> 
+             SELECT a.cnum, b.cnum, c.cnum 
+                 FROM Customers a, Customers b, Customers c 
+                 WHERE a.rating = 100 
+                   AND b.rating = 200 
+                   AND c.rating = 300; 
+ 
+              ===============  SQL Execution Log ============== 
+             |                                                 | 
+             | AND c.rating = 300;                             | 
+             | =============================================== | 
+             |   cnum       cnum        cnum                   | 
+             |  -----      ------     ------                   | 
+             |   2001       2002        2004                   | 
+             |   2001       2002        2008                   | 
+             |   2001       2003        2004                   | 
+             |   2001       2003        2008                   | 
+             |   2006       2002        2004                   | 
+             |   2006       2002        2008                   | 
+             |   2006       2003        2004                   | 
+             |   2006       2003        2008                   | 
+             |   2007       2002        2004                   | 
+             |   2007       2002        2008                   | 
+             |   2007       2003        2004                   | 
+             |   2007       2003        2008                   | 
+              ================================================= 
+</PRE> 
+ Рисунок 9.3  Комбинация пользователей с различными значениями рейтинга 
+<BR><BR>
+Как вы можете видеть, этот запрос находит все комбинации заказчиков с 
+трем значениями оценки, поэтому первый столбец состоит из заказчиков 
+с оценкой 100, второй с 200, и последний с оценкой 300. Они повторяются 
+во всех возможных комбинациях. Это - сортировка группировки которая 
+не может быть выполнена с GROUP BY или ORDER BY, поскольку они 
+сравнивают значения только в одном столбце вывода. 
+   Вы должны также понимать, что не всегда обязательно использовать 
+каждый псевдоним или таблицу которые упомянуты в предложении FROM 
+запроса, в предложении SELECT. Иногда, предложение или таблица становятся 
+запрашиваемыми исключительно потому что они могут вызываться в 
+предикате запроса. Например, следующий запрос находит всех заказчиков 
+размещенных в городах где продавец Serres ( snum 1002 ) имеет заказчиков 
+( вывод показывается в Рисунке 9.4 ): 
+<PRE> 
+                    SELECT b.cnum, b.cname 
+                       FROM Customers a, Customers b 
+                       WHERE a.snum = 1002 
+                          AND b.city = a.city; 
+ 
+ 
+              ===============  SQL Execution Log ============ 
+             |                                               | 
+             | SELECT b.cnum, b.cname                        | 
+             | FROM  Customers a, Customers b                | 
+             | WHERE a.snum = 1002                           | 
+             | AND b.city = a.city;                          | 
+             | ==============================================| 
+             |   cnum     cname                              | 
+             | ------   ---------                            | 
+             |   2003     Liu                                | 
+             |   2008     Cisneros                           | 
+             |   2004     Grass                              | 
+               ============================================= 
+</PRE> 
+Рисунок 9.4  Нахождение заказчиков в городах относящихся к Serres. 
+<BR><BR> 
+Псевдоним a будет делать предикат неверным за исключением случая 
+когда его значение столбца snum = 1002.   Таким образом псевдоним 
+опускает все, кроме заказчиков продавца Serres.  Псевдоним b будет 
+верным для всех строк с тем же самым значением города что и текущее 
+значение города для a; в ходе запроса, строка псевдонима b будет верна 
+один раз когда значение города представлено в a. 
+Нахождение этих строк псевдонима b - единственная цель псевдонима a, 
+поэтому мы не выбираем все столбцы подряд. Как вы можете видеть, 
+собственные заказчики Serres выбираются при нахождении их в том же 
+самом городе что и он сам, поэтому выбор их из псевдонима a необязателен. 
+Короче говоря, псевдоним находит строки заказчиков Serres, Liu и 
+Grass. Псевдоним b находит всех заказчиков размещенных в любом из их 
+городов ( San Jose и Berlin соответственно ) включая, конечно, самих - 
+Liu и Grass. 
+<BR><BR> 
+Вы можете также создать объединение которое включает и различные таблицы и 
+псевдонимы одиночной таблицы. Следующий запрос объединяет 
+таблицу Пользователей с собой: чтобы найти все пары заказчиков 
+обслуживаемых одним продавцом. В то же самое врем, этот запрос объединяет 
+заказчика с таблицей Продавцов с именем этого продавца ( вывод показан 
+на Рисунке 9.5 ): 
+<PRE> 
+        SELECT sname, Salespeople.snum, first.cname 
+        second.cname 
+           FROM Customers first, Customers second, Salespeople 
+           WHERE first.snum = second.snum 
+              AND Salespeople.snum = first.snum 
+              AND first.cnum &lt; second.cnum; 
+ 
+ 
+              ===============  SQL Execution Log ================== 
+             |                                                     | 
+             | SELECT cname, Salespeople.snum, first.cname         | 
+             | second.cname                                        | 
+             | FROM Customers first, Customers second, Salespeople | 
+             | WHERE first.snum  = second.snum                     | 
+             | AND Salespeople.snum = first.snum                   | 
+             | AND first.cnum &lt; second.cnum;                       | 
+             | ====================================================| 
+             |  cname      snum        cname       cname           | 
+             |  ------   ------      --------    --------          | 
+             |  Serres     1002        Liu         Grass           | 
+             |  Peel       1001        Hoffman     Clemens         | 
+              ===================================================== 
+</PRE> 
+Рисунок 9.5:  Объединение таблицы с собой и с другой таблицей 
+<BR><BR> 
+<A name=9.7> 
+<H3>РЕЗЮМЕ</H3> 
+Теперь Вы понимаете возможности объединения и можете использовать 
+их для ограничения связей с таблицей, между различными таблицами, или 
+в обоих случаях. Вы могли видеть некоторые возможности объединения при 
+использовании его способностей. Вы теперь познакомились с терминами 
+порядковые переменные, корреляционные переменные и предложения 
+(эта терминология будет меняться от изделия к изделию, так что мы предлагаем 
+Вам познакомится со всеми трем терминами ). Кроме того Вы поняли, 
+немного, как в действительности работают запросы. 
+<BR><BR> 
+ Следующим шагом после комбинации многочисленных таблиц или многочисленных 
+ копий одной таблицы в запросе, будет комбинация многочисленных 
+запросов, где один запрос будет производить вывод который будет затем 
+управлять работой другого запроса. Это другое мощное средство SQL, 
+о  котором мы расскажем в <A href="ch10.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch10.shtml">Главе 10</A> и более тщательно 
+в последующих главах. 
+ 
+<A name=9.8> 
+<H3>РАБОТА С SQL</H3> 
+1. Напишите запрос который бы вывел все пары продавцов живущих в 
+   одном и том же городе. Исключите комбинации продавцов с ними же, 
+   а также дубликаты строк выводимых в обратным порядке. 
+<BR><BR> 
+2. Напишите запрос который вывел бы все пары порядков по данным 
+   заказчикам, именам этих заказчиков, и исключал дубликаты из вывода, 
+   как в предыдущем вопросе. 
+<BR><BR> 
+3. Напишите запрос который вывел бы имена(cname) и города(city) всех 
+   заказчиков с такой же оценкой(rating) как у Hoffmanа. Напишите запрос 
+   использующий поле cnum Hoffmanа а не его оценку, так чтобы оно могло 
+  быть использовано если его оценка вдруг изменится. 
+<BR><BR> 
+( См. <A href="a.shtml.htm#9" tppabs="http://www.sql.ru/docs/sql/u_sql/a.shtml#9">Приложение A</A> для ответов. ) 
+</TD></TR></TABLE>
+</TD></TR>
+<TR BGCOLOR=#6699CC><TD><TABLE WIDTH=100% BORDER=0 CELLSPACING=0 CELLPADDING=0><TR><TD BGCOLOR=#6699CC VALIGN=CENTER HEIGHT = 40><FONT SIZE=-10>
+<!--begin of Top100 logo-->
+<a href="javascript:if(confirm('http://top100.rambler.ru/top100/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://top100.rambler.ru/top100/'" tppabs="http://top100.rambler.ru/top100/">
+<img src="../../../../top100-images.rambler.ru/top100/banner-88x31-rambler-gray2.gif" tppabs="http://top100-images.rambler.ru/top100/banner-88x31-rambler-gray2.gif" alt="Rambler's Top100" width=88 height=31 border=0></a>
+<!--end of Top100 logo -->
+</FONT>
+<!--Rating@Mail.ru COUNTER--><a target=_top
+href="javascript:if(confirm('http://top.mail.ru/jump?from=58574  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://top.mail.ru/jump?from=58574'" tppabs="http://top.mail.ru/jump?from=58574"><img
+src="../../../../top.list.ru/counter-id=58574;t=94.gif" tppabs="http://top.list.ru/counter?id=58574;t=94"
+border=0 height=18 width=88
+alt="Рейтинг@Mail.ru"></a><!--/COUNTER-->
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="font : bold 10px verdana; color : white" href="javascript:if(confirm('http://hosting.parking.ru/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://hosting.parking.ru/'" tppabs="http://hosting.parking.ru/">Хостинг от компании Parking.ru</a>
+<script src="../../../../www.google-analytics.com/urchin.js" tppabs="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-265508-1";
+urchinTracker();
+</script>
+</TD>
+<TD BGCOLOR=#6699CC ALIGN=right><FONT COLOR=white FACE="Tahoma,Arial" SIZE=1>&nbsp;Administrator:&nbsp;<A STYLE="color :white" HREF="mailto:admin@sql.ru">admin@sql.ru</A>&nbsp;<BR>Last update: <FONT COLOR=white>05 июн 2007&nbsp;</FONT></FONT></TD></TR></TABLE>
+</TD></TR></TABLE></TD></TR></TABLE>
+
+</BODY></HTML>
+

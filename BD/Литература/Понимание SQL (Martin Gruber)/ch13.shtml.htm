@@ -1,0 +1,746 @@
+<HTML>
+<HEAD>
+<TITLE>Понимание SQL. Глава 13. Использование Операторов ANY, ALL и SOME. [SQL.RU]</TITLE>
+<META http-equiv="Content-Type" CONTENT="text/html; charset=windows-1251">
+<META HTTP-EQUIV="Window-target" CONTENT="_top">
+<META HTTP-EQUIV="Last-Modified" CONTENT="29-03-2001">
+<META NAME="Description" CONTENT="Использование языка SQL, создание клиент-серверных систем. Конференция по MSSQL, Oracle, Interbase, MySQL. Полезные ссылки, документация, рекомендации по разработке информационных систем, сертификация, заказ книг и многое другое.">
+<META NAME="Keywords" CONTENT="SQL, конференция, Database Server, Oracle, Interbase, MySQL, документация, статьи, примеры, книги, ссылки, сертификация, работа, СУБД">
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../form.css" tppabs="http://www.sql.ru/form.css">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" leftmargin="3" topmargin="3" marginheight="3" marginwidth="3">
+<noindex>
+<TABLE BGCOLOR="#000000" WIDTH=100% CELLPADDING=0 CELLSPACING=0 BORDER=0>
+<TR><TD>
+
+<TABLE WIDTH=100% CELLPADDING=0 CELLSPACING=1 BORDER=0>
+<TR BGCOLOR="#6699CC"><TD><TABLE CELLSPACING=0 CELLPADDING=0 WIDTH=100% BORDER=0 BGCOLOR="#6699CC">
+<TR><TD COLSPAN=3><IMG SRC="../../../images/blank.gif" tppabs="http://www.sql.ru/images/blank.gif" height=3 width=1 alt=""></TD></TR>
+<TR><TD VALIGN=TOP>&nbsp;<FONT FACE="Verdana,Arial" SIZE=5 COLOR=lightyellow>SQL.RU<BR><FONT SIZE=-5>&nbsp;client/server technologies</FONT></FONT><!--begin of Top100--><a href="javascript:if(confirm('http://top100.rambler.ru/top100/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://top100.rambler.ru/top100/'" tppabs="http://top100.rambler.ru/top100/"><img src="../../../../counter.rambler.ru/top100.cnt-236431.gif" tppabs="http://counter.rambler.ru/top100.cnt?236431" alt="Rambler's Top100" width=1 height=1 border=0></a><!--end of Top100 code--></TD>
+<TD WIDTH=468 HEIGHT=60 BGCOLOR=#6699CC ALIGN=RIGHT></TD>
+<TD WIDTH=2><IMG SRC="../../../images/blank.gif" tppabs="http://www.sql.ru/images/blank.gif" height=1 width=2 alt=""></TD></TR>                                                      	
+<TR HEIGHT=4><TD COLSPAN=3><IMG SRC="../../../images/blank.gif" tppabs="http://www.sql.ru/images/blank.gif" height=5 width=1 alt=""></TD></TR></TABLE>
+
+</TD></TR>
+
+<TR HEIGHT=15><TD bgcolor=#006699><FONT FACE="Verdana,Arial" SIZE=1 COLOR=WHITE><B><A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/'" tppabs="http://www.sql.ru/">&nbsp;<FONT COLOR=white>Главная</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/docs  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/docs'" tppabs="http://www.sql.ru/docs">&nbsp;<FONT COLOR=yellow>Документация</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/articles  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/articles'" tppabs="http://www.sql.ru/articles">&nbsp;<FONT COLOR=white>Статьи</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/books  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/books'" tppabs="http://www.sql.ru/books">&nbsp;<FONT COLOR=white>Книги</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/forum/actualforum.aspx  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/forum/actualforum.aspx'" tppabs="http://www.sql.ru/forum/actualforum.aspx">&nbsp;<FONT COLOR=white>Форум</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/poll  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/poll'" tppabs="http://www.sql.ru/poll">&nbsp;<FONT COLOR=white>Опросы</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/forum/actualtopics.aspx?bid=11  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/forum/actualtopics.aspx?bid=11'" tppabs="http://www.sql.ru/forum/actualtopics.aspx?bid=11">&nbsp;<FONT COLOR=white>Гостевая</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/subscribe  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/subscribe'" tppabs="http://www.sql.ru/subscribe">&nbsp;<FONT COLOR=white>Рассылка</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/job  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/job'" tppabs="http://www.sql.ru/job">&nbsp;<FONT COLOR=white>Работа</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/search  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/search'" tppabs="http://www.sql.ru/search">&nbsp;<FONT COLOR=white>Поиск</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/faq  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/faq'" tppabs="http://www.sql.ru/faq">&nbsp;<FONT COLOR=white>FAQ</FONT>&nbsp;</A>|</B></FONT></TD></TR>
+<TR><TD BGCOLOR=#F5F5F5>
+</noindex>
+
+<TABLE BORDER=0 CELLSPACING=10><TR><TD>
+<CENTER>
+<H2 class="headline">
+13. ИСПОЛЬЗОВАНИЕ ОПЕРАТОРОВ ANY, ALL И SOME</H1></CENTER> 
+Теперь, когда вы овладели оператором EXISTS, 
+Вы узнаете приблизительно три специальных оператора ориентируемых 
+на подзапросы. 
+(Фактически, имеются только два, так как ANY и SOME - одно и то же.) 
+Если вы поймете работу этих операторов, вы будете понимать все типы 
+подзапросов предиката используемых в SQL . Кроме того, вы будете 
+представлены различным способам где данный запрос может быть 
+сформирован используя различные типы подзапросов предиката, и вы 
+поймете преимущества и недостатки каждого из этих подходов. 
+ <BR><BR> 
+ANY, ALL, и SOME напоминают EXISTS который воспринимает подзапросы 
+как аргументы; однако они отличаются от EXISTS тем, что используются сов- 
+местно с реляционными операторами. В этом отношении, они напоминают 
+оператор IN когда тот используется с подзапросами; они берут все значения 
+выведенные подзапросом и обрабатывают их как модуль. Однако, в отличие 
+от IN, они могут использоваться только с подзапросами. 
+ <A name=13.1>
+<H3>СПЕЦИАЛЬНЫЕ ОПЕРАТОРЫ ANY или SOME</H3>Операторы SOME и ANY - взаимозаменяемы везде и там где мы используем 
+ANY, SOME будет работать точно так же. Различие в терминологии состоит 
+в том чтобы позволить людям использовать тот термин который наиболее 
+однозначен. Это может создать проблему; потому что, как мы это увидим, 
+наша интуиция может иногда вводить в заблуждение. 
+ 
+Имеется новый способ нахождения продавца с заказчиками размещенными 
+в их городах ( вывод для этого запроса  показывается в Рисунке 13.1 ): 
+<PRE> 
+            SELECT * 
+               FROM Salespeople 
+               WHERE city = ANY 
+                  (SELECT city 
+                     FROM Customers ); 
+</PRE> 
+Оператор ANY берет все значения выведенные подзапросом, ( для этого 
+случая - это все значения city в таблице Заказчиков ), и оценивает их как 
+верные если любой(ANY) из их равняется значению города текущей строки 
+внешнего запроса. 
+<PRE> 
+ 
+               ===============  SQL Execution Log ============ 
+              | SELECT *                                      | 
+              | FROM  Salespeople                             | 
+              | WHERE city = ANY                              | 
+              | (SELECT  city                                 | 
+              | FROM Customers);                              | 
+              | ============================================= | 
+              |   cnum     cname     city         comm        | 
+              |  -----    --------   ----       --------      | 
+              |   1001    Peel       London         0.12      | 
+              |   1002    Serres     San Jose       0.13      | 
+              |   1004    Motika     London         0.11      | 
+                ============================================= 
+</PRE>  
+Рисунок 13. 1: Использование оператора ANY 
+ <BR><BR> 
+Это означает, что подзапрос должен выбирать значения такого же типа как 
+и те, которые сравниваются в основном предикате. 
+В этом его отличие от EXISTS, который просто определяет, производит ли под- 
+запрос результаты или нет, и фактически не использует эти результаты. 
+ <A name=13.2>
+<H3>ИСПОЛЬЗОВАНИЕ ОПЕРАТОРОВ IN ИЛИ EXISTS ВМЕСТО ОПЕРАТОРА ANY</H3> 
+Мы можем также использовать оператор IN чтобы создать запрос аналогичный предыдущему : 
+<PRE> 
+             SELECT * 
+                FROM Salespeople 
+                WHERE city IN 
+                    ( SELECT city 
+                         FROM Customers ); 
+</PRE>  
+Этот запрос будет производить вывод показанный в Рисунке 13.2. 
+ <BR><BR> 
+Однако, оператор ANY может использовать другие реляционные опера- 
+торы кроме равняется ( = ), и таким образом делать сравнения которые 
+являются выше возможностей IN. Например, мы могли бы найти всех 
+продавцов с их заказчиками которые следуют им в алфавитном порядке ( вывод показан на Рисунке 13.3) 
+<PRE> 
+             SELECT * 
+                FROM Salespeople 
+                WHERE sname &lt; ANY 
+                   ( SELECT cname 
+                       FROM Customers); 
+ 
+ 
+               ===============  SQL Execution Log ============ 
+              | SELECT *                                      | 
+              | FROM  Salespeople                             | 
+              | WHERE city IN                                 | 
+              | (SELECT  city                                 | 
+              | FROM Customers);                              | 
+              | ============================================= | 
+              |   cnum     cname     city         comm        | 
+              |  -----    --------   ----       --------      | 
+              |   1001    Peel       London         0.12      | 
+              |   1002    Serres     San Jose       0.13      | 
+              |   1004    Motika     London         0.11      | 
+                ============================================= 
+</PRE> 
+Рисунок 13. 2: Использование IN в качестве альтернативы к ANY 
+<PRE> 
+ 
+               ===============  SQL Execution Log ============ 
+              | SELECT *                                      | 
+              | FROM  Salespeople                             | 
+              | WHERE sname &lt; ANY                             | 
+              | (SELECT  cname                                | 
+              | FROM Customers);                              | 
+              | ============================================= | 
+              |   cnum     cname     city         comm        | 
+              |  -----    --------   ----       --------      | 
+              |   1001    Peel       London         0.12      | 
+              |   1004    Motika     London         0.11      | 
+              |   1003    Axelrod    New York       0.10      | 
+                ============================================= 
+</PRE> 
+Рисунок 13. 3: Использование оператора ANY с оператором "неравно" ( &lt; ) 
+ <BR><BR> 
+продавцов для их заказчиков которые упорядочены в алфавитном 
+порядке ( вывод показан на Рисунке 13.3) 
+<PRE> 
+             SELECT * 
+                FROM Salespeople 
+                WHERE sname &lt; ANY 
+                   ( SELECT cname 
+                       FROM Customers); 
+ 
+</PRE>  
+Все строки были выбраны для Serres и Rifkin, потому что нет других за- 
+казчиков чьи имена следовали бы за ими в алфавитном порядке. 
+Обратите внимание что это является d основным эквивалентом следую- 
+щему запросу с EXISTS, чей вывод показывается в Рисунке 13.4: 
+<PRE> 
+             SELECT * 
+                 FROM Salespeople outer 
+                 WHERE EXISTS 
+                     ( SELECT * 
+                          FROM Customers inner 
+                          WHERE outer.sname &lt; inner.cname ); 
+ 
+               ===============  SQL Execution Log ============ 
+              | SELECT *                                      | 
+              | FROM  Salespeople outer                       | 
+              | WHERE EXISTS                                  | 
+              | (SELECT *                                     | 
+              | FROM Customers inner                          | 
+              | WHERE outer.sname &lt; inner.cname);             | 
+              | ============================================= | 
+              |   cnum     cname     city         comm        | 
+              |  -----    --------   ----       --------      | 
+              |   1001    Peel       London         0.12      | 
+              |   1004    Motika     London         0.11      | 
+              |   1003    Axelrod    New York       0.10      | 
+                ============================================= 
+ </PRE> 
+Рисунок 13.4 Использование EXISTS как альтернатива оператору ANY 
+ <BR><BR> 
+Любой запрос который может быть сформулирован с ANY ( или, как мы 
+увидим, с ALL ),  мог быть также сформулирован с EXISTS, хотя наоборот 
+будет неверно. Строго говор, вариант с EXISTS не абсолютно идентичен 
+вариантам с ANY или с ALL из-за различи в том как обрабатываются пус- 
+тые( NULL ) значения ( что будет обсуждаться позже в этой главе ). Тем ни 
+менее, с технической точки зрения, вы могли бы делать это без ANY и ALL 
+если бы вы стали очень находчивы в использовании EXISTS ( и IS NULL ). 
+ <BR><BR> 
+ Большинство пользователей, однако, находят ANY и ALL более удобными 
+в использовании чем EXISTS, который требует соотнесенных подзапросов. 
+Кроме того, в зависимости от реализации, ANY и ALL могут, по крайней 
+мере в теории, быть более эффективными чем EXISTS. 
+Подзапросы ANY или ALL могут выполняться один раз и иметь вывод используемый чтобы определять предикат для каждой строки основного зап- 
+роса. EXISTS, с другой стороны, берет соотнесенный подзапрос, который 
+требует чтобы весь подзапрос повторно выполнялся для каждой строки 
+основного запроса. SQL пытается найти наиболее эффективный способ выполнения любой команды, и может попробовать преобразовать менее эффективную формулу запроса в более эффективную (но вы не можете всегда 
+рассчитывать на получение самой эффективной формулировки ). 
+ <BR><BR> 
+Основная причина для формулировки EXISTS как альтернативы ANY и ALL 
+в том что ANY и ALL могут быть несколько неоднозначен, из-за способа использования этого термина в Английском языке, как вы это скоро увидите. 
+С приходом понимания различия способов формулирования данного запроса, 
+вы сможете поработать над процедурами которые сейчас кажутся Вам трудными или неудобными. 
+ <A name=13.3>
+<H3>КАК ANY МОЖЕТ СТАТЬ НЕОДНОЗНАЧНЫМ</H3>Как подразумевалось выше, ANY не полностью однозначен. Если мы создаем запрос чтобы выбрать заказчиков которые имеют больший рейтинг 
+чем любой заказчик в Риме, мы можем получить вывод который несколько 
+отличался бы от того что мы ожидали ( как показано в Рисунке 13.5 ): 
+<PRE> 
+          SELECT * 
+              FROM Customers 
+              WHERE rating &gt; ANY 
+                  ( SELECT rating 
+                      FROM Customers 
+                      WHERE city = Rome ); 
+</PRE>  
+В Английском языке, способ которым мы обычно склонны интерпретировать 
+оценку  " больше чем любой ( где city = Rome ) " , должен вам сообщить 
+что это значение оценки должно быть выше чем значение оценки в каждом 
+случае где значение city = Rome. Однако это не так, в случае ANY - используемом в SQL .  ANY оценивает как верно, если подзапрос находит любое 
+значение которое делает условие верным. 
+<PRE> 
+               ===============  SQL Execution Log ============ 
+              |                                               | 
+              | SELECT *                                      | 
+              | FROM  Customers                               | 
+              | WHERE rating &gt; ANY                            | 
+              | (SELECT rating                                | 
+              | FROM Customers                                | 
+              | WHERE city = 'Rome');                         | 
+              | ============================================= | 
+              |   cnum     cname     city     rating   snum   | 
+              |  -----    --------   ----     ------  ------  | 
+              |   2002    Giovanni   Rome        200    1003  | 
+              |   2003    Liu        San Jose    200    1002  | 
+              |   2004    Grass      Berlin      300    1002  | 
+              |   2008    Cisneros   San Jose    300    1007  | 
+                ============================================= 
+</PRE>  
+Рисунок 13.5  Как оператор "больше чем"( &gt;) интерпретируется ANY 
+ <BR><BR> 
+Если мы оценим ANY способом использующим грамматику Английского 
+Языка, то только заказчики с оценкой 300 будут превышать Giovanni, 
+который находится в Риме и имеет оценку 200. Однако, подзапрос ANY 
+также находит Periera в Риме с оценкой 100. Так как все заказчики с 
+оценкой 200 были выше этой, они будут выбраны, даже если имелся другой заказчик из Рима(Giovanni) чья оценка не была выше ( фактически, 
+то что один из выбранных заказчиков также находится в Риме несущественно).  Так как подзапрос произвел по крайней мере одно значение которое сделает предикат верным в отношении этих строк, строки были 
+выбраны. 
+Чтобы дать другой пример, предположим что мы должны были выбирать 
+все порядки сумм приобретений которые были больше чем по крайней мере 
+один из порядков на 6-е Октября: 
+<PRE> 
+               SELECT * 
+                   FROM Orders 
+                   WHERE amt &gt; ANY 
+                        ( SELECT amt 
+                             FROM Orders 
+                             WHERE odate = 10/06/1990 ); 
+</PRE>  
+Вывод для этого запроса показывается в Рисунке 13.6. 
+ <BR><BR> 
+  Даже если сама высока сумма приобретений в таблице (9891.88) - имелась 
+на 6-е Октября, предыдущая строка имеет более высокое значение суммы чем 
+друга строка на 6-е Октября, которая имела значение суммы = 1309.95. 
+Имея реляционный оператор "&gt;="  вместо просто " &gt; ", эта строка будет 
+также выбрана, потому что она равна самой себе. 
+ <BR><BR> 
+Конечно, вы можете использовать ANY с другой SQL техникой, например 
+с техникой объединения. 
+Этот запрос будет находить все порядки со значением суммы меньшей чем 
+значение любой суммы для заказчика в San Jose. 
+( вывод  показывается в Рисунке 13.7 ): 
+<PRE> 
+            SELECT * 
+               FROM Orders 
+               WHERE amt &lt; ANY 
+                   ( SELECT amt 
+                        FROM Orders A, Customers b 
+                        WHERE a.cnum = b.cnum 
+                            AND b.city = " San Jose' ); 
+</PRE>  
+Даже если наименьший порядок в таблице был для заказчика из San Jose, 
+то был второй наибольший; следовательно почти все строки будут выбраны. 
+Простой способ запомнить, что  &lt; ANY  значение меньшее чем наибольшее 
+выбранное значение, а  &gt; ANY  значение большее чем наименьшее выбранное значение. 
+<PRE> 
+               ===============  SQL Execution Log ============== 
+              |                                                 | 
+              | SELECT *                                        | 
+              | FROM  Orders                                    | 
+              | WHERE amt &gt; ANY                                 | 
+              | (SELECT amt                                     | 
+              | FROM Orders                                     | 
+              | WHERE odate = 10/06/1990);                      | 
+              | =============================================== | 
+              |   onum       amt      odate      cnum     snum  | 
+              |  -----    --------  ----------  -----   ------  | 
+              |   3002     1900.10  10/03/1990   2007     1004  | 
+              |   3005     5160.45  10/03/1990   2003     1002  | 
+              |   3009     1713.23  10/04/1990   2002     1003  | 
+              |   3008     4723.00  10/05/1990   2006     1001  | 
+              |   3011     9891.88  10/06/1990   2006     1001  | 
+                ================================================ 
+</PRE>  
+Рисунок 13. 6: Выбранное значение больше чем любое(ANY) на 6-е Октября 
+<PRE> 
+               ===============  SQL Execution Log ============== 
+              |                                                 | 
+              | WHERE amt &gt; ANY                                 | 
+              | (SELECT amt                                     | 
+              | FROM Orders a, Customers b                      | 
+              | WHERE a.cnum = b.cnum                           | 
+              | AND b.city = 'San Jose');                       | 
+              | =============================================== | 
+              |   onum       amt      odate      cnum     snum  | 
+              |  -----    --------  ----------  -----   ------  | 
+              |   3001       18.69  10/03/1990   2008     1007  | 
+              |   3003      767.10  10/03/1990   2001     1001  | 
+              |   3002     1900.10  10/03/1990   2007     1004  | 
+              |   3006     1098.10  10/03/1990   2008     1007  | 
+              |   3009     1713.23  10/04/1990   2002     1003  | 
+              |   3007       75.10  10/04/1990   2004     1002  | 
+              |   3008     4723.00  10/05/1990   2006     1001  | 
+              |   3010     1309.88  10/06/1990   2004     1002  | 
+                ================================================ 
+</PRE>  
+Рисунок 13. 7:  Использование ANY с объединением 
+ <BR><BR> 
+Фактически, вышеуказанные команды весьма похожи на следующее - 
+(вывод показан на Рисунке 13.8) : 
+<PRE> 
+             SELECT * 
+                 FROM Orders 
+                 WHERE amt &lt; 
+                    ( SELECT MAX amt 
+                        FROM Orders A, Customers b 
+                        WHERE a.cnum = b.cnum 
+                             AND b.city = " San Jose' ); 
+ 
+ 
+               ===============  SQL Execution Log ============== 
+              |                                                 | 
+              | WHERE amt &lt;                                     | 
+              | (SELECT MAX (amt)                               | 
+              | FROM Orders a, Customers b                      | 
+              | WHERE a.cnum = b.cnum                           | 
+              | AND b.city = 'San Jose');                       | 
+              | =============================================== | 
+              |   onum       amt      odate      cnum     snum  | 
+              |  -----    --------  ----------  -----   ------  | 
+              |   3002     1900.10  10/03/1990   2007     1004  | 
+              |   3005     5160.45  10/03/1990   2003     1002  | 
+              |   3009     1713.23  10/04/1990   2002     1003  | 
+              |   3008     4723.00  10/05/1990   2006     1001  | 
+              |   3011     9891.88  10/06/1990   2006     1001  | 
+                ================================================ 
+</PRE>  
+Рисунок 13.8: Использование агрегатной функции вместо ANY 
+ <A name=13.4>
+<H3>СПЕЦИАЛЬНЫЙ ОПЕРАТОР ALL</H3>С помощью ALL, предикат является верным, если каждое значение выбранное подзапросом удовлетворяет условию в предикате внешнего запроса. 
+Если мы хотим пересмотреть наш предыдущий пример чтобы вывести толь- 
+ко тех заказчиков чьи оценки, фактически, выше чем у каждого заказчика в 
+Париже, мы можем ввести следующее чтобы произвести вывод показанный 
+в Рисунке 13.9: 
+<PRE> 
+             SELECT * 
+                FROM Customers 
+                WHERE rating &gt; ALL 
+                    (SELECT rating 
+                        FROM Customers 
+                        WHERE city = Rome ): 
+ 
+ 
+               ===============  SQL Execution Log ============ 
+              |                                               | 
+              | SELECT *                                      | 
+              | FROM  Customers                               | 
+              | WHERE rating &gt; ALL                            | 
+              | (SELECT rating                                | 
+              | FROM Customers                                | 
+              | WHERE city = 'Rome');                         | 
+              | ============================================= | 
+              |   cnum     cname     city     rating   snum   | 
+              |  -----    --------   ----     ------  ------  | 
+              |   2004    Grass      Berlin      300    1002  | 
+              |   2008    Cisneros   San Jose    300    1007  | 
+                ============================================= 
+</PRE>  
+Рисунок 13.9: Использование оператора ALL 
+ 
+ 
+Этот оператор проверяет значения оценки всех заказчиков в Риме. Затем 
+он находит заказчиков с оценкой большей чем у любого из заказчиков в 
+Риме. Сама высока оценка в Риме - у Giovanni( 200 ). Следовательно, 
+выбираются только значения выше этих 200. 
+ 
+Как и в случае с ANY, мы можем использовать EXISTS для производства 
+альтернативной формулировки такого же запроса - 
+( вывод показан на Рисунке 13.10 ): 
+<PRE> 
+          SELECT * 
+             FROM Customers outer 
+             WHERE NOT EXISTS 
+                ( SELECT * 
+                   FROM Customers inner 
+                   WHERE outer.rating &lt; = inner.rating 
+                   AND inner.city = 'Rome' ); 
+ 
+ 
+               ===============  SQL Execution Log ============ 
+              |                                               | 
+              | SELECT *                                      | 
+              | FROM  Customers outer                         | 
+              | WHERE NOT EXISTS                              | 
+              | (SELECT *                                     | 
+              | FROM Customers inner                          | 
+              | WHERE outer rating = inner.rating             | 
+              | AND inner.city = 'Rome');                     | 
+              | ============================================= | 
+              |   cnum     cname     city     rating   snum   | 
+              |  -----    --------   ----     ------  ------  | 
+              |   2004    Grass      Berlin      300    1002  | 
+              |   2008    Cisneros   San Jose    300    1007  | 
+                ============================================= 
+</PRE>  
+ Рисунок 13.10:  Использование EXISTS в качестве альтернативы к ALL 
+ <A name=13.5>
+<H3>РАВЕНСТВА И НЕРАВЕНСТВА</H3>ALL используется в основном с неравенствами чем с равенствами, так как 
+значение может быть "равным для всех" результатом подзапроса только 
+если все результаты, фактически, идентичны. 
+Посмотрите следующий запрос: 
+<PRE> 
+              SELECT * 
+                 FROM Customers 
+                 WHERE rating = ALL 
+                    ( SELECT rating 
+                        FROM Customers 
+                        WHERE city = " San Jose' ); 
+</PRE>  
+Эта команда допустима, но , c этими данными, мы не получим никакого 
+вывода. Только в единственном случае вывод будет выдан этим запросом - 
+если все значения оценки в San Jose окажутся идентичными. В этом случае, 
+можно сказать следующее : 
+<PRE> 
+              SELECT * 
+                 FROM Customers 
+                 WHERE rating = 
+                      ( SELECT DISTINCT rating 
+                         FROM Customers 
+                         WHERE city = " San Jose' ); 
+</PRE>  
+Основное различие в том, что эта последняя команда должна потерпеть 
+неудачу, если подзапрос выведет много значений, в то время как вариант 
+с ALL просто не даст никакого вывода. В общем, не самая удачная идея 
+использовать запросы которые работают только в определенных ситуациях 
+подобно этой. Так как ваша база данных будет постоянно меняться, это 
+неудачный способ, чтобы узнать о ее содержании. 
+Однако, ALL может более эффективно использоваться с неравенствами, то 
+есть с оператором "&lt; &gt;". Но учтите что сказанное в SQL что - значение 
+которое не равняется всем результатам подзапроса, - будет отличаться от 
+того же но сказанного с учетом грамматики Английского языка. 
+Очевидно, если подзапрос  возвращает много различных значений, как это 
+обычно бывает, ни одно отдельное значение не может быть равно им всем в 
+обычном смысле. В SQL, выражение - &lt; &gt; ALL - в действительности соответствует " не равен любому " результату подзапроса. Другими словами, 
+предикат верен, если данное значение не найдено среди результатов подзапро- 
+са. Следовательно, наш предыдущий пример противоположен по смыслу это- 
+му примеру (с выводом показанным в Рисунке 13.11): 
+<PRE> 
+ 
+          SELECT * 
+             FROM Customers 
+             WHERE rating &lt; &gt; ALL 
+             ( SELECT rating 
+                  FROM Customers 
+                  WHERE city = " San Jose' ); 
+ 
+ 
+               ===============  SQL Execution Log ============ 
+              |                                               | 
+              | SELECT *                                      | 
+              | FROM  Customers                               | 
+              | WHERE rating &lt; &gt; ALL                          | 
+              | (SELECT rating                                | 
+              | FROM Customers                                | 
+              | WHERE city = 'San Jose');                     | 
+              | ============================================= | 
+              |   cnum     cname     city     rating   snum   | 
+              |  -----    --------   ----     ------  ------  | 
+              |   2001    Hoffman    London      100    1001  | 
+              |   2006    Clemens    London      100    1001  | 
+              |   2007    Pereira    Rome        100    1004  | 
+                ============================================= 
+</PRE>  
+Рисунок 13.11: Использование ALL с &lt; &gt; 
+ <BR><BR> 
+Вышеупомянутый подзапрос выбирает все оценки для города San Jose. 
+Он выводит набор из двух значений: 200 ( для Liu ) и 300 (для Cisneros). 
+Затем, основной запрос, выбирает все строки, с оценкой не совпадающей 
+ни с одной из них - другими словами все строки с оценкой 100. Вы можете 
+сформулировать тот же самый запрос используя оператор NOT IN: 
+<PRE> 
+                 SELECT* 
+                    FROM Customers 
+                    WHERE rating NOT IN 
+                        ( SELECT rating 
+                            FROM Customers 
+                            WHERE city = " San Jose' ); 
+ 
+</PRE>  
+Вы могли бы также использовать оператор ANY: 
+<PRE> 
+ 
+          SELECT * 
+             FROM Customers 
+             WHERE NOT rating = ANY 
+                  ( SELECT rating 
+                       FROM Customers 
+                       WHERE city = " San Jose' ); 
+</PRE>  
+Вывод будет одинаков для всех трех условий. 
+ <A name=13.6>
+<H3>ПРАВИЛЬНОЕ ПОНИМАНИЕ ANY И ALL</H3>В SQL, сказать что - значение больше( или меньше ) чем любое(ANY) из на- 
+бора значений - тоже самое что сказать, что оно больше( или меньше ) чем 
+любое одно отдельное из этих значений. И наоборот, сказать что значение 
+не равно всему(ALL) набору значений, тоже что сказать, что нет такого значения в наборе которому оно равно. 
+ <A name=13.7>
+<H3>КАК ANY, ALL, И EXIST ПОСТУПАЮТ С ОТСУТСТВУЮЩИМИ И НЕИЗВЕСТНЫМИ ДАННЫМИ</H3> 
+Как было сказано, имеются некоторые различи между EXISTS и операто- 
+рами представленными в этой главе относительно того как они обрабатывают оператор NULL.  ANY и ALL также отличаются друг от друга тем как 
+они реагируют если подзапрос не произвел никаких значений чтобы использовать их в сравнении. Эти различи могут привести к непредвиденным ре- 
+зультатам на Ваши запросы, если вы не будете их учитывать. 
+ <A name=13.8>
+<H3>КОГДА ПОДЗАПРОС ВОЗВРАЩАЕТСЯ ПУСТЫМ</H3>Одно значительное различие между ALL и ANY - способ действия в cитуации 
+когда подзапрос не возвращает никаких значений. В принципе, всякий раз, ко- 
+гда допустимый подзапрос не в состоянии сделать вывод, ALL - автоматически 
+верен, а ANY автоматически неправилен. Это означает, что следующий запрос 
+<PRE> 
+            SELECT * 
+               FROM Customers 
+               WHERE rating &gt; ANY 
+                  ( SELECT rating 
+                      FROM Customers 
+                      WHERE city = Boston ); 
+</PRE>  
+не произведет никакого вывода, в то врем как запрос - 
+<PRE> 
+               SELECT 
+                  FROM Customers 
+                  WHERE rating &gt; ALL 
+                     ( SELECT rating 
+                          FROM Customers 
+                          WHERE city = 'Boston' ); 
+ </PRE> 
+выведет всю таблицу Заказчиков. Когда нет никаких заказчиков в Boston, 
+естественно, ни одно из этих сравнений не имеет значения. 
+ <A name=13.9>
+<H3>ANY И ALL ВМЕСТО EXISTS С ПУСТЫМ УКАЗАТЕЛЕМ( NULL )</H3>Значения NULL также имеют некоторые проблемы с операторами наподобие этих. Когда SQL сравнивает два значения в предикате, одно из кото- 
+рых пустое (NULL), то результат неизвестен ( смотрите <A href="ch5.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch5.shtml">Главу 5</A> ). 
+Неизвестный предикат, подобен неверному и является причиной того что 
+строка не выбирается, но работать он будет иначе в некоторых похожих 
+запросах, в зависимости от того, используют они ALL или ANY вместо 
+EXISTS. Рассмотрим наш предыдущий пример: 
+<PRE> 
+             SELECT * 
+                FROM Customers 
+                WHERE rating &gt; ANY 
+                    ( SELECT rating 
+                        FROM Customers 
+                        WHERE city = 'Rome' ); 
+</PRE>  
+  и еще один пример: 
+<PRE> 
+           SELECT * 
+              FROM Customers outer 
+              WHERE EXISTS 
+                 ( SELECT * 
+                     FROM Customers inner 
+                     WHERE outer.rating &gt; inner.rating 
+                     AND inner.city = 'Rome' ); 
+</PRE>  
+В общем, эти два запроса будут вести себя одинаково. Но предположим, 
+что появилось пустое(NULL) значение в столбце rating таблицы Заказчиков: 
+<PRE> 
+ 
+  CNUM        CNAME        CITY        RATING        SNUM 
+ 
+   2003         Liu          SanJose      NULL        1002 
+ 
+</PRE>  
+ В варианте с ANY, где оценка Liu выбрана основным запросом, значе- 
+ние NULL делает предикат неизвестным а строка Liu не выбирается 
+для вывода. Однако, в варианте с NOT EXISTS когда эта строка выбрана основным запросом, значение NULL используется в предикате под- 
+запроса, дела его неизвестным в каждом случае. Это означает что под- 
+запрос не будет производить никаких значений, и EXISTS будет неправилен. Это, естественно, делает оператор NOT EXISTS верным. Следовательно, строка Liu будет выбрана для вывода.  Это основное расхождение, в отличие от других типов предикатов, где значение EXISTS независимо от того верно оно или нет - всегда неизвестно. 
+Все это является аргументом в пользу использования варианта формулировки с ANY. 
+Мы не считаем что значение NULL является выше чем допустимое значе- 
+ние. Более того, результат будет тот же, если мы будем проверять для 
+более низкого значения. 
+ <A name=13.10>
+<H3>ИСПОЛЬЗОВАНИЕ COUNT ВМЕСТО EXISTS</H3>Подчеркнем, что все формулировки с ANY и ALL могут быть в точности 
+выполнены с EXISTS, в то врем как наоборот будет неверно. Хотя в этом 
+случае, также верно и то что EXISTS и NOT EXISTS подзапросы могут 
+обманывать при выполнении тех же самых подзапросов с COUNT(*) 
+в предложении SELECT подзапроса. Если больше чем ноль строк выводе 
+будет подсчитано, это эквивалентно EXISTS; в противном случае это работает также как NOT EXISTS. Следующее является этому примером (вывод 
+показывается в Рисунке 13.12 ): 
+<PRE> 
+ 
+              SELECT * 
+                 FROM Customers outer 
+                 WHERE NOT EXISTS 
+                     ( SELECT * 
+                         FROM Customers inner 
+                         WHERE outer.rating &lt; = inner.rating 
+                           AND inner.city = 'Rome' ); 
+ 
+ 
+               ===============  SQL Execution Log ============ 
+              |                                               | 
+              | SELECT *                                      | 
+              | FROM  Customers outer                         | 
+              | WHERE NOT EXISTS                              | 
+              | (SELECT *                                     | 
+              | FROM Customers inner                          | 
+              | WHERE outer.rating &lt;= inner.rating            | 
+              | AND inner.city = 'Rome');                     | 
+              | ============================================= | 
+              |   cnum     cname     city     rating   snum   | 
+              |  -----    --------   ----     ------  ------  | 
+              |   2004    Grass      Berlin      300    1002  | 
+              |   2008    Cisneros   San Jose    300    1007  | 
+                ============================================= 
+</PRE>  
+Рисунок 13.12: Использование EXISTS с соотнесенным подзапросом 
+ 
+ <BR><BR> 
+Это должно также быть выполнено как 
+<PRE> 
+            SELECT * 
+               FROM Customers outer 
+               WHERE 1 &gt; 
+                   ( SELECT COUNT (*) 
+                        FROM Customers inner 
+                        WHERE outer.rating &lt; = inner.rating 
+                           AND inner.city = 'Rome' ); 
+</PRE>  
+Вывод к этому запросу показывается в Рисунке 13.13. 
+Теперь Вы начинаете понимать сколько способов имеется в SQL. Если 
+это все кажется несколько путанным на этой стадии, нет причины волноваться. Вы обучаетесь чтобы использовать ту технику которая лучше всего 
+отвечает вашим требованиям и наиболее понятна для вас. 
+Начиная с этого места, мы хотим показать Вам большое количество воз- 
+можностей, что бы вы могли найти ваш собственный стиль. 
+<PRE> 
+ 
+               ===============  SQL Execution Log ============ 
+              |                                               | 
+              | SELECT *                                      | 
+              | FROM  Customers outer                         | 
+              | WHERE 1 &gt;                                     | 
+              | (SELECT COUNT (*)                             | 
+              | FROM Customers inner                          | 
+              | WHERE outer.rating &lt;= inner.rating            | 
+              | AND inner.city = 'Rome');                     | 
+              | ============================================= | 
+              |   cnum     cname     city     rating   snum   | 
+              |  -----    --------   ----     ------  ------  | 
+              |   2004    Grass      Berlin      300    1002  | 
+              |   2008    Cisneros   San Jose    300    1007  | 
+                ============================================= 
+</PRE>  
+Рисунок 13.13: Использование COUNT вместо EXISTS 
+<A name=13.11>
+<H3>РЕЗЮМЕ</H3>Итак, вы прошли много чего в этой главе. Подзапросы не проста тема, 
+и мы потратили много врем чтобы показать их разновидности и неоднозначности. То чему Вы теперь научились, вещи достаточно глубокие. 
+Вы знаете несколько технических решений одной проблемы, и поэтому вы 
+можете выбрать то которое более подходит вашим целям. Кроме того, вы 
+поняли, как различные формулировки будет обрабатывать пустые значения 
+(NULL) и ошибки. 
+ <BR><BR>
+Теперь, когда вы полностью изучили запросы, наиболее важный, и вероятно 
+наиболее сложный, аспект SQL, объем другого материала будет относительно 
+прост для понимания. 
+ <BR><BR>
+Мы имеем еще одну главу о запросах, которая покажет вам как объединить 
+выводы любого числа запросов в единое тело, с помощью формирования 
+объединения многочисленных запросов используя оператор UNION. 
+
+<A name=13.12>
+<H3>РАБОТА С SQL</H3>1. Напишите запрос который бы выбирал всех заказчиков чьи оценки 
+равны или больше чем люба( ANY ) оценка заказчика Serres. 
+<BR><BR>
+2. Что будет выведено вышеупомянутой командой? 
+<BR><BR>
+3. Напишите запрос использующий ANY или ALL, который бы находил всех 
+продавцов которые не имеют никаких заказчиков размещенных в их 
+городе. 
+<BR><BR>
+4. Напишите запрос который бы выбирал все порядки с суммой больше чем 
+люба ( в обычном смысле ) для заказчиков в Лондоне. 
+<BR><BR>
+5. Напишите предыдущий запрос с использованием - MAX. 
+<BR><BR>
+( См.<A href="a.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/a.shtml"> Приложение A</A> для ответов. )
+
+</TD></TR></TABLE>
+</TD></TR>
+<TR BGCOLOR=#6699CC><TD><TABLE WIDTH=100% BORDER=0 CELLSPACING=0 CELLPADDING=0><TR><TD BGCOLOR=#6699CC VALIGN=CENTER HEIGHT = 40><FONT SIZE=-10>
+<!--begin of Top100 logo-->
+<a href="javascript:if(confirm('http://top100.rambler.ru/top100/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://top100.rambler.ru/top100/'" tppabs="http://top100.rambler.ru/top100/">
+<img src="../../../../top100-images.rambler.ru/top100/banner-88x31-rambler-gray2.gif" tppabs="http://top100-images.rambler.ru/top100/banner-88x31-rambler-gray2.gif" alt="Rambler's Top100" width=88 height=31 border=0></a>
+<!--end of Top100 logo -->
+</FONT>
+<!--Rating@Mail.ru COUNTER--><a target=_top
+href="javascript:if(confirm('http://top.mail.ru/jump?from=58574  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://top.mail.ru/jump?from=58574'" tppabs="http://top.mail.ru/jump?from=58574"><img
+src="../../../../top.list.ru/counter-id=58574;t=94.gif" tppabs="http://top.list.ru/counter?id=58574;t=94"
+border=0 height=18 width=88
+alt="Рейтинг@Mail.ru"></a><!--/COUNTER-->
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="font : bold 10px verdana; color : white" href="javascript:if(confirm('http://hosting.parking.ru/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://hosting.parking.ru/'" tppabs="http://hosting.parking.ru/">Хостинг от компании Parking.ru</a>
+<script src="../../../../www.google-analytics.com/urchin.js" tppabs="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-265508-1";
+urchinTracker();
+</script>
+</TD>
+<TD BGCOLOR=#6699CC ALIGN=right><FONT COLOR=white FACE="Tahoma,Arial" SIZE=1>&nbsp;Administrator:&nbsp;<A STYLE="color :white" HREF="mailto:admin@sql.ru">admin@sql.ru</A>&nbsp;<BR>Last update: <FONT COLOR=white>05 июн 2007&nbsp;</FONT></FONT></TD></TR></TABLE>
+</TD></TR></TABLE></TD></TR></TABLE>
+
+</BODY></HTML>
+

@@ -1,0 +1,358 @@
+<HTML>
+<HEAD>
+<TITLE>Понимание SQL. Глава 15. Ввод, удаление и изменение значений полей. [SQL.RU]</TITLE>
+<META http-equiv="Content-Type" CONTENT="text/html; charset=windows-1251">
+<META HTTP-EQUIV="Window-target" CONTENT="_top">
+<META HTTP-EQUIV="Last-Modified" CONTENT="29-03-2001">
+<META NAME="Description" CONTENT="Использование языка SQL, создание клиент-серверных систем. Конференция по MSSQL, Oracle, Interbase, MySQL. Полезные ссылки, документация, рекомендации по разработке информационных систем, сертификация, заказ книг и многое другое.">
+<META NAME="Keywords" CONTENT="SQL, конференция, Database Server, Oracle, Interbase, MySQL, документация, статьи, примеры, книги, ссылки, сертификация, работа, СУБД">
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../form.css" tppabs="http://www.sql.ru/form.css">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" leftmargin="3" topmargin="3" marginheight="3" marginwidth="3">
+<noindex>
+<TABLE BGCOLOR="#000000" WIDTH=100% CELLPADDING=0 CELLSPACING=0 BORDER=0>
+<TR><TD>
+
+<TABLE WIDTH=100% CELLPADDING=0 CELLSPACING=1 BORDER=0>
+<TR BGCOLOR="#6699CC"><TD><TABLE CELLSPACING=0 CELLPADDING=0 WIDTH=100% BORDER=0 BGCOLOR="#6699CC">
+<TR><TD COLSPAN=3><IMG SRC="../../../images/blank.gif" tppabs="http://www.sql.ru/images/blank.gif" height=3 width=1 alt=""></TD></TR>
+<TR><TD VALIGN=TOP>&nbsp;<FONT FACE="Verdana,Arial" SIZE=5 COLOR=lightyellow>SQL.RU<BR><FONT SIZE=-5>&nbsp;client/server technologies</FONT></FONT><!--begin of Top100--><a href="javascript:if(confirm('http://top100.rambler.ru/top100/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://top100.rambler.ru/top100/'" tppabs="http://top100.rambler.ru/top100/"><img src="../../../../counter.rambler.ru/top100.cnt-236431.gif" tppabs="http://counter.rambler.ru/top100.cnt?236431" alt="Rambler's Top100" width=1 height=1 border=0></a><!--end of Top100 code--></TD>
+<TD WIDTH=468 HEIGHT=60 BGCOLOR=#6699CC ALIGN=RIGHT></TD>
+<TD WIDTH=2><IMG SRC="../../../images/blank.gif" tppabs="http://www.sql.ru/images/blank.gif" height=1 width=2 alt=""></TD></TR>                                                      	
+<TR HEIGHT=4><TD COLSPAN=3><IMG SRC="../../../images/blank.gif" tppabs="http://www.sql.ru/images/blank.gif" height=5 width=1 alt=""></TD></TR></TABLE>
+
+</TD></TR>
+
+<TR HEIGHT=15><TD bgcolor=#006699><FONT FACE="Verdana,Arial" SIZE=1 COLOR=WHITE><B><A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/'" tppabs="http://www.sql.ru/">&nbsp;<FONT COLOR=white>Главная</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/docs  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/docs'" tppabs="http://www.sql.ru/docs">&nbsp;<FONT COLOR=yellow>Документация</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/articles  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/articles'" tppabs="http://www.sql.ru/articles">&nbsp;<FONT COLOR=white>Статьи</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/books  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/books'" tppabs="http://www.sql.ru/books">&nbsp;<FONT COLOR=white>Книги</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/forum/actualforum.aspx  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/forum/actualforum.aspx'" tppabs="http://www.sql.ru/forum/actualforum.aspx">&nbsp;<FONT COLOR=white>Форум</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/poll  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/poll'" tppabs="http://www.sql.ru/poll">&nbsp;<FONT COLOR=white>Опросы</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/forum/actualtopics.aspx?bid=11  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/forum/actualtopics.aspx?bid=11'" tppabs="http://www.sql.ru/forum/actualtopics.aspx?bid=11">&nbsp;<FONT COLOR=white>Гостевая</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/subscribe  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/subscribe'" tppabs="http://www.sql.ru/subscribe">&nbsp;<FONT COLOR=white>Рассылка</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/job  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/job'" tppabs="http://www.sql.ru/job">&nbsp;<FONT COLOR=white>Работа</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/search  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/search'" tppabs="http://www.sql.ru/search">&nbsp;<FONT COLOR=white>Поиск</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/faq  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/faq'" tppabs="http://www.sql.ru/faq">&nbsp;<FONT COLOR=white>FAQ</FONT>&nbsp;</A>|</B></FONT></TD></TR>
+<TR><TD BGCOLOR=#F5F5F5>
+</noindex>
+
+<TABLE BORDER=0 CELLSPACING=10><TR><TD>
+<CENTER>
+<H2 class="headline">
+15. ВВОД, УДАЛЕНИЕ и ИЗМЕНЕНИЕ ЗНАЧЕНИЙ ПОЛЕЙ</H2></CENTER>Эта глава представляет команды которые 
+управляют значениями представляемыми в таблице. Когда вы закончите 
+эту главу, вы будете способны помещать строки в таблицу, удалять их, и 
+изменять индивидуальные значения представленные в каждой строке. 
+  Будет показано использование запросов в формировании полной группы строк для вставки, а также, как может использоваться предикат для 
+управления изменения значений и удаления строк. Материал в этой главе составляет полный объем знаний показывающий, как создавать и управлять информацией в базе данных. 
+  Более мощные способы проектировани предикатов будут обсуждены 
+в <A href="ch16.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch16.shtml">следующей главе</A>. 
+ <A name=15.1>
+<H3>КОМАНДЫ МОДИФИКАЦИИ ЯЗЫКА DML</H3>Значения могут быть помещены и удалены из полей, трем командами 
+языка DML ( Язык Манипулирования Данными ): 
+<PRE>
+INSERT  (ВСТАВИТЬ), 
+UPDATE (МОДИФИЦИРОВАТЬ), 
+DELETE  (УДАЛИТЬ). 
+</PRE>
+Не смущайтесь, все они упоминались ранее в SQL, как команды 
+модификации. 
+<A name=15.2>
+<H3>ВВОД ЗНАЧЕНИЙ</H3>Все строки в SQL вводятся с использованием команды модификации 
+INSERT. В самой простой форме, INSERT использует следующий синтаксис: 
+<PRE>
+INSERT INTO &lt;TABLE name>VALUES ( <VALUE>, <VALUE> . . .); 
+</PRE>
+Так, например, чтобы ввести строку в таблицу Продавцов, вы можете использовать следующее условие: 
+<PRE>
+
+INSERT INTO Salespeople 
+    VALUES (1001, 'Peel', 'London', .12); 
+</PRE>
+Команды DML не производят никакого вывода, но ваша программа должна 
+дать вам некоторое подтверждение того что данные были использованы. 
+ <BR><BR>
+Им таблицы ( в нашем случае - Salespeople (Продавцы)), должно быть 
+предварительно определено, в команде CREATE TABLE ( см. Главу 17 ), 
+а каждое значение пронумерованное в предложении значений, должно 
+совпадать с типом данных столбца, в который оно вставляется. В ANSI, 
+эти значения не могут составлять выражений, что означает что 3 - это 
+доступно, а  выражение 2 + 1 - нет. Значения, конечно же, вводятся в 
+таблицу в поименном порядке, поэтому первое значение с именем, 
+автоматически попадает в столбец 1, второе в столбец 2, на так далее. 
+
+<A name=15.3> 
+<H3>ВСТАВКА ПУСТЫХ УКАЗАТЕЛЕЙ (NULL)</H3> 
+Если вам нужно ввести пустое значение(NULL), вы вводите его точно так- 
+же как и обычное значение. Предположим, что еще не имелось пол city 
+для мистера Peel. Вы можете вставить его строку со значением=NULL 
+в это поле, следующим образом: 
+<PRE>
+
+INSERT INTO Salespeople 
+  VALUES (1001, 'Peel', NULL, .12); 
+</PRE>
+Так как значение NULL - это специальный маркер, а не просто символьное 
+значение, он не включается в одиночные кавычки. 
+
+<A name=15.4> 
+<H3>ИМЕНОВАНИЕ СТОЛБЦА ДЛЯ ВСТАВКИ (INSERT)</H3> 
+ 
+Вы можете также указывать столбцы, куда вы хотите вставить значение 
+имени. Это позволяет вам вставлять имена в любом порядке. 
+Предположим что вы берете значения для таблицы Заказчиков из отчета 
+выводимого на принтер, который помещает их в таком порядке: 
+city, cname, и cnum, и для упрощения, вы хотите ввести значения в 
+том же порядке: 
+<PRE>
+
+  INSERT INTO Customers (city, cnamе, cnum) 
+     VALUES ('London', 'Honman', 2001); 
+</PRE>
+Обратите внимание что столбцы rating и snum - отсутствуют. Это значит, 
+что эти строки автоматически установлены в значение - по умолчанию. 
+По умолчанию может быть введено или значение NULL или другое значе- 
+ние определяемое как - по умолчанию. Если ограничение запрещает использование значения NULL в данном столбце, и этот столбец не установлен как по умолчанию, этот столбец должен быть обеспечен значением 
+для любой команды INSERT которая относится к таблице( смотри <A href="ch18.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch18.shtml">Главу 18</A> 
+для информации об ограничениях на NULL и на "по умолчанию" ). 
+ 
+<A name=15.5> 
+<H3>ВСТАВКА РЕЗУЛЬТАТОВ ЗАПРОСА</H3> 
+Вы можете также использовать команду INSERT чтобы получать или вы- 
+бирать значения из одной таблицы и помещать их в другую, чтобы использовать их вместе с запросом. Чтобы сделать это, вы просто заменяете предложение VALUES (из предыдущего примера) на соответствующий запрос: 
+<PRE>
+
+    INSERT INTO Londonstaff 
+       SELECT * 
+	  FROM Salespeople 
+	  WHERE city = 'London'; 
+</PRE>
+Здесь выбираются все значения произведенные запросом - то есть все 
+строки из таблицы Продавцов со значениями city = "London" - и помещаются в таблицу называемую Londonstaff. Чтобы это работало, таблица 
+Londonstaff  должна отвечать следующим условиям: 
+ <BR><BR>
+*  Она должна уже быть создана командой CREATE TABLE. 
+ <BR><BR>
+*  Она должна иметь четыре столбца которые совпадают с таблицей  <BR><BR>
+Продавцов в терминах типа данных; то есть первый, второй, и так 
+далее, столбцы каждой таблицы, должны иметь одинаковый тип 
+данных ( причем они не должны иметь одинаковых имен ). 
+  <BR><BR>
+Общее правило то, что вставляемые столбцы таблицы, должны совпадать 
+со столбцами выводимыми подзапросом, в данном случае, для всей таб- 
+лицы Продавцов. 
+Londonstaff - это теперь независима таблица которая получила некоторые значения из таблицы Продавцов(Salespeople). Если значения в таблице 
+Продавцов будут вдруг изменены, это никак не отразится на таблице 
+Londonstaff ( хотя вы могли бы создать такой эффект, с помощью Представ- 
+лени( VIEW), описанного в <A href="ch20.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch20.shtml">Главе 20</A> ). 
+Так как или запрос или команда INSERT могут указывать столбцы по имени, вы можете, если захотите, переместить только выбранные столбцы а так- 
+же переупорядочить только те столбцы которые вы выбрали. 
+ <BR><BR>
+Предположим, например, что вы решили сформировать новую таблицу 
+с именем Daytotals, которая просто будет следить за общим количеством 
+долларов сумм приобретений упорядоченных на каждый день. Вы можете 
+ввести эти данные независимо от таблицы Порядков, но сначала вы должны 
+заполнить таблицу Daytotals информацией ранее представленной в таблице 
+Порядков. 
+  <BR><BR>
+Понимая что таблица Порядков охватывает последний финансовый год, а не 
+только несколько дней, как в нашем примере, вы можете видеть преимущество использования следующего условия INSERT в подсчете и вводе значений 
+
+  <PRE>
+  INSERT INTO Daytotals (date, total) 
+       SELECT odate, SUM (amt) 
+	  FROM Orders 
+	  GROUP BY odate; 
+</PRE>
+Обратите внимание что, как предложено ранее, имена столбцов таблицы 
+Порядков и таблицы Daytotals - не должны быть одинаковыми. Кроме того, 
+если дата приобретения и общее количество - это единственные столбцы в 
+таблице, и они находятся в данном порядке, их имена могут быть исключены 
+из вывода из-за их очевидной простоты. 
+
+<A name=15.6> 
+<H3>УДАЛЕНИЕ СТРОК ИЗ ТАБЛИЦ</H3>
+Вы можете удалять строки из таблицы командой модификации - DELETE. 
+Она может удалять только введенные строки, а не индивидуальные значе- 
+ни полей, так что параметр пол является необязательным или недоступным.  Чтобы удалить все содержание таблицы Продавцов, вы можете ввести следующее условие: 
+<PRE>
+
+     DELETE FROM Salespeople; 
+</PRE>
+Теперь когда таблица пуста ее можно окончательно удалить командой 
+DROP TABLE ( это объясняется в Главе 17 ). 
+
+Обычно, вам нужно удалить только некоторые определенные строки из таб- 
+лицы. Чтобы определить какие строки будут удалены, вы используете предикат, так же как вы это делали для запросов. Например, чтобы удалить продавца Axelrod из таблицы, вы можете ввести 
+<PRE>
+
+       DELETE FROM Salespeople 
+	  WHERE snum = 1003; 
+
+</PRE>
+Мы использовали поле snum вместо пол sname потому, что это лучшая 
+тактика при использовании первичных ключей когда вы хотите чтобы действию подвергалась одна и только одна строка. Для вас - это аналогично 
+действию первичного ключ. 
+Конечно, вы можете также использовать DELETE с предикатом который 
+бы выбирал группу строк, как показано в этом примере: 
+<PRE>
+
+     DELETE FROM Salespeople 
+	WHERE city = 'London'; 
+</PRE>
+<A name=15.7> 
+<H3>ИЗМЕНЕНИЕ ЗНАЧЕНИЙ ПОЛЯ</H3>
+Теперь, когда вы уже можете вводить и удалять строки таблицы, вы должны 
+узнать как изменять некоторые или все значения в существующей строке. 
+Это выполняется командой UPDATE. 
+Эта команда содержит предложение UPDATE в которой указано им используемой таблицы и предложение SET которое указывает на изменение которое 
+нужно сделать для определенного столбца. Например, чтобы изменить оценки 
+всех заказчиков на 200, вы можете ввести 
+<PRE>
+
+     UPDATE Customers 
+	SET rating = 200; 
+</PRE>
+<A name=15.8> 
+<H3>МОДИФИЦИРОВАНИЕ ТОЛЬКО ОПРЕДЕЛЕННЫХ СТРОК</H3> 
+Конечно, вы не всегда захотите указывать все строки таблицы для изменения 
+единственного значения, так что UPDATE, наподобие DELETE, может брать 
+предикаты. Вот как например можно выполнить изменение одинаковое для всех 
+заказчиков продавца Peel ( имеющего snum=1001 ): 
+ <PRE>
+
+	UPDATE Customers 
+	   SET rating = 200 
+	   WHERE snum = 1001; 
+</PRE>
+<A name=15.9> 
+<H3>КОМАНДА UPDATE ДЛЯ МНОГИХ СТОЛБЦОВ</H3> 
+Однако, вы не должны, ограничивать себя модифицированием единственного столбца с помощью команды UPDATE. Предложение SET может назначать любое число столбцов, отделяемых запятыми. Все указанные назначения могут 
+быть сделаны для любой табличной строки, но только для одной в каждый 
+момент времени. Предположим, что продавец Motika ушел на пенсию, и мы 
+хотим переназначить его номер новому продавцу: 
+<PRE>
+
+     UPDATE Salespeople 
+	SET sname = 'Gibson',city = 'Boston',comm = .10 
+	WHERE snum = 1004; 
+</PRE>
+Эта команда передаст новому продавцу Gibson, всех текущих заказчиков быв- 
+шего продавца Motika и порядки, в том виде в котором они были скомпонованы для Motika с помощью пол snum. 
+Вы не можете, однако, модифицировать сразу много таблиц в одной команде, 
+частично потому, что вы не можете использовать префиксы таблицы со столбцами измененными предложением SET.  Другими словами, вы не  можете 
+сказать - "SET Salespeople.sname = Gibson"  в команде UPDATE, вы можете 
+сказать только так - "SET sname = Gibson". 
+
+<A name=15.10> 
+<H3>ИСПОЛЬЗОВАНИЕ ВЫРАЖЕНИЙ ДЛЯ МОДИФИКАЦИИ</H3> 
+ Вы можете использовать скалярные выражения в предложении SET команды 
+UPDATE, однако, включив его в выражение пол которое будет изменено. 
+В этом их отличие от предложения VALUES команды INSERT, в котором 
+выражения не могут использоваться; это свойство скалярных выражений - 
+весьма полезна особенность. 
+Предположим, что вы решили удвоить комиссионные всем вашим продавцам. 
+Вы можете использовать следующее выражение: 
+<PRE>
+ 
+           UPDATE Salespeople 
+               SET comm = comm * 2; 
+</PRE> 
+Всякий раз, когда вы ссылаетесь к указанному значению столбца в предложении SET, произведенное значение может получится из текущей строки, прежде 
+в ней будут сделаны какие-то изменения с помощью команды UPDATE. 
+Естественно, вы можете скомбинировать эти особенности, и сказать, - удвоить 
+комиссию всем продавцам в Лондоне, таким предложением: 
+<PRE>
+ 
+               UPDATE Salespeople 
+                  SET comm = comm * 2 
+                  WHERE city = 'London'; 
+</PRE> 
+ 
+<A name=15.11> 
+<H3>МОДИФИЦИРОВАНИЕ ПУСТЫХ(NULL) ЗНАЧЕНИЙ</H3> 
+Предложение SET - это не предикат. Он может вводить пустые NULL значения 
+также как он вводил значения не используя какого-то специального синтаксиса 
+( такого например как IS NULL ). Так что, если вы хотите установить все оценки 
+заказчиков в Лондоне в NULL, вы можете ввести следующее предложение: 
+<PRE>
+ 
+             UPDATE customers 
+                SET rating = NULL 
+                WHERE city = 'London'; 
+</PRE> 
+что обнулит все оценки заказчиков в Лондоне. 
+ 
+<A name=15.12> 
+<H3>РЕЗЮМЕ</H3>
+ Теперь вы овладели мастерством управления содержанием вашей базы 
+данных с помощью трех простых команд: 
+<PRE>
+ 
+  INSERT          - используемой чтобы помещать строки в базу данных; 
+  DELETE         - чтобы удалять их; 
+  REFERENCES - чтобы изменять значения в уже вставленных строках. 
+</PRE> 
+Вы обучались использованию предиката с командами UPDATE и DELETE 
+чтобы определить, на которую из строк будет воздействовать команда. 
+Конечно, предикаты как таковые - не значимы для INSERT, потому что 
+обсуждаемая строка не существует в таблице до окончания выполнения 
+команды INSERT. Однако, вы можете использовать запросы с INSERT, 
+чтобы сразу помещать все наборы строк в таблицу. Причем это, вы можете делать со столбцами в любом порядке. 
+  Вы узнали, что значения по умолчанию, могут помещаться в столбцы, если вы не устанавливаете это значение явно. Вы также видели использование стандартного значения по умолчанию, которым является NULL. Кроме 
+того, вы поняли, что UPDATE может использовать выражение значения, 
+тогда как INSERT не может. 
+  Следующая глава расширит ваше познания, показав вам, как использовать подзапросы с этими командами. Эти подзапросы напоминают те, с которыми вы уже знакомы, но имеются некоторые специальные выводы и ограничения, когда подзапросы используются в командах DML, что мы будем  обсуждать в <A href="ch16.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch16.shtml">Главе 16</A>. 
+ 
+<A name=15.13> 
+<H3>РАБОТА С SQL</H3>  
+ 1. Напишите команду которая бы поместила следующие значения, в их 
+   нижеуказанном порядке, в таблицу Продавцов: 
+<PRE>
+ 
+               city  - San Jose, 
+               name - Bianco, 
+               comm - NULL, 
+               cnum  - 1100. 
+</PRE> 
+2. Напишите команду которая бы удалила все порядки заказчика Clemens 
+   из таблицы Порядков. 
+<BR><BR> 
+3. Напишите команду которая бы увеличила оценку всех заказчиков в Риме 
+   на 100. 
+<BR><BR> 
+4. Продавец Serres оставил компанию. Переназначьте его заказчиков продавцу Motika. 
+<BR><BR> 
+( См. <A href="a.shtml.htm#15" tppabs="http://www.sql.ru/docs/sql/u_sql/a.shtml#15">Приложение A</A> для ответов. ) 
+ 
+
+
+<TBODY></TBODY>
+</TD></TR></TABLE>
+</TD></TR>
+<TR BGCOLOR=#6699CC><TD><TABLE WIDTH=100% BORDER=0 CELLSPACING=0 CELLPADDING=0><TR><TD BGCOLOR=#6699CC VALIGN=CENTER HEIGHT = 40><FONT SIZE=-10>
+<!--begin of Top100 logo-->
+<a href="javascript:if(confirm('http://top100.rambler.ru/top100/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://top100.rambler.ru/top100/'" tppabs="http://top100.rambler.ru/top100/">
+<img src="../../../../top100-images.rambler.ru/top100/banner-88x31-rambler-gray2.gif" tppabs="http://top100-images.rambler.ru/top100/banner-88x31-rambler-gray2.gif" alt="Rambler's Top100" width=88 height=31 border=0></a>
+<!--end of Top100 logo -->
+</FONT>
+<!--Rating@Mail.ru COUNTER--><a target=_top
+href="javascript:if(confirm('http://top.mail.ru/jump?from=58574  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://top.mail.ru/jump?from=58574'" tppabs="http://top.mail.ru/jump?from=58574"><img
+src="../../../../top.list.ru/counter-id=58574;t=94.gif" tppabs="http://top.list.ru/counter?id=58574;t=94"
+border=0 height=18 width=88
+alt="Рейтинг@Mail.ru"></a><!--/COUNTER-->
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="font : bold 10px verdana; color : white" href="javascript:if(confirm('http://hosting.parking.ru/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://hosting.parking.ru/'" tppabs="http://hosting.parking.ru/">Хостинг от компании Parking.ru</a>
+<script src="../../../../www.google-analytics.com/urchin.js" tppabs="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-265508-1";
+urchinTracker();
+</script>
+</TD>
+<TD BGCOLOR=#6699CC ALIGN=right><FONT COLOR=white FACE="Tahoma,Arial" SIZE=1>&nbsp;Administrator:&nbsp;<A STYLE="color :white" HREF="mailto:admin@sql.ru">admin@sql.ru</A>&nbsp;<BR>Last update: <FONT COLOR=white>05 июн 2007&nbsp;</FONT></FONT></TD></TR></TABLE>
+</TD></TR></TABLE></TD></TR></TABLE>
+
+</BODY></HTML>
+

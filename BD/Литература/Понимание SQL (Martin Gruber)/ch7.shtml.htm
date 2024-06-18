@@ -1,0 +1,486 @@
+<HTML>
+<HEAD>
+<TITLE>Понимание SQL. Глава 7. Формирование выводов запросов. [SQL.RU]</TITLE>
+<META http-equiv="Content-Type" CONTENT="text/html; charset=windows-1251">
+<META HTTP-EQUIV="Window-target" CONTENT="_top">
+<META HTTP-EQUIV="Last-Modified" CONTENT="29-03-2001">
+<META NAME="Description" CONTENT="Использование языка SQL, создание клиент-серверных систем. Конференция по MSSQL, Oracle, Interbase, MySQL. Полезные ссылки, документация, рекомендации по разработке информационных систем, сертификация, заказ книг и многое другое.">
+<META NAME="Keywords" CONTENT="SQL, конференция, Database Server, Oracle, Interbase, MySQL, документация, статьи, примеры, книги, ссылки, сертификация, работа, СУБД">
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../form.css" tppabs="http://www.sql.ru/form.css">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" leftmargin="3" topmargin="3" marginheight="3" marginwidth="3">
+<noindex>
+<TABLE BGCOLOR="#000000" WIDTH=100% CELLPADDING=0 CELLSPACING=0 BORDER=0>
+<TR><TD>
+
+<TABLE WIDTH=100% CELLPADDING=0 CELLSPACING=1 BORDER=0>
+<TR BGCOLOR="#6699CC"><TD><TABLE CELLSPACING=0 CELLPADDING=0 WIDTH=100% BORDER=0 BGCOLOR="#6699CC">
+<TR><TD COLSPAN=3><IMG SRC="../../../images/blank.gif" tppabs="http://www.sql.ru/images/blank.gif" height=3 width=1 alt=""></TD></TR>
+<TR><TD VALIGN=TOP>&nbsp;<FONT FACE="Verdana,Arial" SIZE=5 COLOR=lightyellow>SQL.RU<BR><FONT SIZE=-5>&nbsp;client/server technologies</FONT></FONT><!--begin of Top100--><a href="javascript:if(confirm('http://top100.rambler.ru/top100/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://top100.rambler.ru/top100/'" tppabs="http://top100.rambler.ru/top100/"><img src="../../../../counter.rambler.ru/top100.cnt-236431.gif" tppabs="http://counter.rambler.ru/top100.cnt?236431" alt="Rambler's Top100" width=1 height=1 border=0></a><!--end of Top100 code--></TD>
+<TD WIDTH=468 HEIGHT=60 BGCOLOR=#6699CC ALIGN=RIGHT></TD>
+<TD WIDTH=2><IMG SRC="../../../images/blank.gif" tppabs="http://www.sql.ru/images/blank.gif" height=1 width=2 alt=""></TD></TR>                                                      	
+<TR HEIGHT=4><TD COLSPAN=3><IMG SRC="../../../images/blank.gif" tppabs="http://www.sql.ru/images/blank.gif" height=5 width=1 alt=""></TD></TR></TABLE>
+
+</TD></TR>
+
+<TR HEIGHT=15><TD bgcolor=#006699><FONT FACE="Verdana,Arial" SIZE=1 COLOR=WHITE><B><A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/'" tppabs="http://www.sql.ru/">&nbsp;<FONT COLOR=white>Главная</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/docs  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/docs'" tppabs="http://www.sql.ru/docs">&nbsp;<FONT COLOR=yellow>Документация</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/articles  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/articles'" tppabs="http://www.sql.ru/articles">&nbsp;<FONT COLOR=white>Статьи</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/books  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/books'" tppabs="http://www.sql.ru/books">&nbsp;<FONT COLOR=white>Книги</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/forum/actualforum.aspx  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/forum/actualforum.aspx'" tppabs="http://www.sql.ru/forum/actualforum.aspx">&nbsp;<FONT COLOR=white>Форум</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/poll  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/poll'" tppabs="http://www.sql.ru/poll">&nbsp;<FONT COLOR=white>Опросы</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/forum/actualtopics.aspx?bid=11  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/forum/actualtopics.aspx?bid=11'" tppabs="http://www.sql.ru/forum/actualtopics.aspx?bid=11">&nbsp;<FONT COLOR=white>Гостевая</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/subscribe  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/subscribe'" tppabs="http://www.sql.ru/subscribe">&nbsp;<FONT COLOR=white>Рассылка</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/job  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/job'" tppabs="http://www.sql.ru/job">&nbsp;<FONT COLOR=white>Работа</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/search  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/search'" tppabs="http://www.sql.ru/search">&nbsp;<FONT COLOR=white>Поиск</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/faq  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/faq'" tppabs="http://www.sql.ru/faq">&nbsp;<FONT COLOR=white>FAQ</FONT>&nbsp;</A>|</B></FONT></TD></TR>
+<TR><TD BGCOLOR=#F5F5F5>
+</noindex>
+
+<TABLE BORDER=0 CELLSPACING=10><TR><TD>
+<CENTER>
+<H2 class="headline">
+7. ФОРМИРОВАНИЕ ВЫВОДОВ ЗАПРОСОВ</H2></CENTER> 
+ 
+Эта глава расширит ваши возможности 
+в работе с выводом который производит запрос. 
+Вы узнаете как вставлять текст и константы между выбранных полей, 
+как использовать выбранные пол в математических выражениях, чьи 
+результаты затем становятся выводом, и как сделать чтобы ваши 
+значения выводились в определенном порядке. Эта последняя особенность 
+включена, чтобы упорядочивать ваш вывод по любым столбцам, 
+любым полученным значениям этого столбца, или по обеим. 
+ <A name=7.1>
+<H3>СТРОКИ И ВЫРАЖЕНИЯ</H3> 
+ 
+Большинство основанных на SQL баз данных предоставляют специальные 
+средства позволяющие Вам совершенствовать вывод ваших запросов. 
+Конечно, они претерпевают значительные изменения от программы к 
+программе, и их обсуждение здесь не входит в наши задачи, однако, 
+имеются пять особенностей созданных в стандарте SQL которые позволяют 
+вам делать больше чем просто вывод значений полей и агрегатных данных. 
+ 
+<H5>СКАЛЯРНОЕ ВЫРАЖЕНИЕ С ПОМОЩЬЮ ВЫБРАННЫХ ПОЛЕЙ</H5> 
+ 
+   Предположим что вы хотите выполнять простые числовые вычисления 
+данных чтобы затем помещать их в форму больше соответствующую вашим 
+потребностям. SQL позволяет вам помещать скалярные выражения и 
+константы среди выбранных полей. Эти выражения могут дополнять или 
+замещать поля в предложениях SELECT, и  могут включать в себя одно или 
+более выбранных полей. Например, вы можете пожелать,  представить 
+комиссионные вашего продавца в процентном отношении а не как десятичные 
+числа. Просто достаточно: 
+<PRE> 
+        SELECT snum, sname, city, comm * 100 
+            FROM Salespeople; 
+</PRE> 
+Вывод из этого запроса показывается в Рисунке 7.1. 
+
+<H5>СТОЛБЦЫ ВЫВОДА</H5> 
+Последний столбец предшествующего примера непомечен( т.е. без наименования), 
+потому что это - столбец вывода. Столбцы вывода - это столбцы данных 
+созданные запросом способом, иным чем просто извлечение их из таблицы. 
+Вы создаете их всякий раз, когда вы используете агрегатные функции 
+<PRE> 
+           ===============  SQL Execution Log ============ 
+          |                                               | 
+          | SELECT snum, sname, city, comm * 100          | 
+          | FROM  Salespeople;                            | 
+          | ==============================================| 
+          |   snum      sname       city                  | 
+          | ------    ---------  -----------   ---------  | 
+          |   1001      Peel       London      12.000000  | 
+          |   1002      Serres     San Jose    13.000000  | 
+          |   1004      Motika     London      11.000000  | 
+          |   1007      Rifkin     Barcelona   15.000000  | 
+          |   1003      Axelrod    New York    10.000000  | 
+          |                                               | 
+           =============================================== 
+</PRE> 
+Рисунок 7.1: Помещение выражения в вашем запросе 
+<BR><BR> 
+, константы, или выражения в предложении SELECT запроса. 
+Так как им столбца - один из атрибутов таблицы, столбцы которые приходят 
+не из таблиц не имеют никаких имен. Другими словами непомеченные, столбцы 
+вывода могут обрабатываться также как и столбцы извлеченные из таблиц, 
+почти во всех ситуациях. 
+
+<H5>ПОМЕЩЕНИЕ ТЕКСТА В ВАШЕМ ВЫВОДЕ ЗАПРОСА</H5> 
+Символ 'A', когда ничего не значит сам по себе, - является константой, 
+такой например как число 1. 
+Вы можете вставлять константы в предложение SELECT запроса, включая 
+и текст. Однако символьные константы, в отличие от числовых констант, 
+не могут использоваться в выражениях. Вы можете иметь выражение 1 + 2 
+в вашем предложении SELECT, но вы не можете использовать выражение 
+типа 'A' + 'B'; это приемлемо только если мы имеем в виду что 'A' и 'B' 
+это просто буквы, а не переменные и не символы. 
+   Тем ни менее, возможность вставлять текст в вывод ваших запросов очень 
+удобная штука. 
+   Вы можете усовершенствовать предыдущий пример представив комиссионные 
+как проценты со знаком процента (%). Это даст вам возможность помещать 
+в вывод такие единицы как символы и комментарии, как например в следующем 
+примере ( вывод показывается в Рисунке 7.2 ) 
+<PRE> 
+            SELECT snum, sname, city, ' % ', comm * 100 
+               FROM Salespeople; 
+ 
+ 
+           ===============  SQL Execution Log ============ 
+          |                                               | 
+          | SELECT snum, sname, city, '%' comm * 100      | 
+          | FROM  Salespeople;                            | 
+          | ==============================================| 
+          |   snum   sname      city                      | 
+          | ------  -------- -----------  ----  --------- | 
+          |   1001   Peel      London       %   12.000000 | 
+          |   1002   Serres    San Jose     %   13.000000 | 
+          |   1004   Motika    London       %   11.000000 | 
+          |   1007   Rifkin    Barcelona    %   15.000000 | 
+          |   1003   Axelrod   New York     %   10.000000 | 
+          |                                               | 
+           =============================================== 
+</PRE> 
+Рисунок 7.2: Вставка символов в ваш вывод 
+<BR><BR> 
+  Обратите внимание что пробел перед процентом вставляется как часть 
+строки. Эта же сама особенность может использоваться чтобы маркировать 
+вывод вместе с вставляемыми комментариями. Вы должны помнить, 
+что этот же самый комментарий будет напечатан в каждой строке вывода, 
+а не просто один раз для всей таблицы. Предположим что вы генерируете 
+вывод для отчета который бы указывал число порядков получаемых в течение 
+каждого дня. Вы можете промаркировать ваш вывод ( см. Рисунок 7.3 ) 
+сформировав запрос следующим образом: 
+<PRE> 
+           SELECT ' For ', odate, ', there are ', 
+              COUNT ( DISTINCT onum ), 'orders.' 
+              FROM Orders 
+              GROUP BY odate; 
+</PRE> 
+Грамматической некорректности вывода, на 5 Октября, невозможно 
+избежать не создав запроса, еще более сложного чем этот. 
+( Вы будете должны использовать два запроса с UNION, который 
+<PRE> 
+           ===============  SQL Execution Log ============== 
+          |                                                 | 
+          | SELECT 'For', odate, ', ' there are ' ,         | 
+          | COUNT (DISTINCT onum), ' orders '               | 
+          | FROM Orders                                     | 
+          | GROUP BY odate;                                 | 
+          | =============================================== | 
+          |           odate                                 | 
+          | ------  ----------   ---------  ------  ------- | 
+          |   For   10/03/1990 , there are       5  orders. | 
+          |   For   10/04/1990 , there are       2  orders. | 
+          |   For   10/05/1990 , there are       1  orders. | 
+          |   For   10/06/1990 , there are       2  orders. | 
+          |                                                 | 
+            ================================================ 
+</PRE> 
+Рисунок 7.3: Комбинация текста, значений поля, и агрегатов 
+<BR><BR> 
+мы будем описывать в Главе 14. )  Как вы можете видеть, одиночный 
+неизменный комментарий для каждой строки таблицы может быть очень 
+полезен, но имеет ограничения. Иногда изящнее и полезнее, произвести 
+один комментарий для всего вывода в целом, или производить свой собственный 
+комментарии для каждой строки. 
+  Различные программы использующие SQL часто обеспечивают специальные 
+средства типа генератора отчетов( например Report Writer), которые 
+разработаны чтобы форматировать и совершенствовать вывод. Вложенный 
+SQL может также эксплуатировать возможности того языка в который он 
+вложен. SQL сам по себе интересен  прежде всего при операциях с данными. 
+Вывод, по существу, это информация, и программа использующая 
+SQL может часто использовать эту информацию и помещать ее в более 
+привлекательную форму. Это, однако, вне сферы самой SQL. 
+<A name=7.2>
+<H3>УПОРЯДОЧЕНИЕ ВЫВОДА ПОЛЕЙ </H3> 
+ 
+Как мы подчеркивали, таблицы - это неупорядоченные наборы данных, и 
+данные которые выходят из них, не обязательно появляются в какой-то 
+определенной последовательности. SQL использует команду ORDER BY чтобы 
+позволять вам упорядочивать ваш вывод. Эта команда упорядочивает вывод 
+запроса согласно значениям в том или ином количестве выбранных 
+столбцов. Многочисленные столбцы упорядочиваются один внутри другого, 
+также как с GROUP BY, и вы можете определять возрастание ( ASC ) или 
+убывание ( DESC ) для каждого столбца. По умолчанию установлено - возрастание.   Давайте рассмотрим нашу таблицу порядка приводимую в 
+порядок с помощью номера заказчика ( обратите внимание на значения в 
+cnum столбце): 
+<PRE> 
+               SELECT * 
+                  FROM Orders 
+                  ORDER BY cnum DESC; 
+</PRE> 
+Вывод  показывается в Рисунке 7.4. 
+<PRE> 
+           ===============  SQL Execution Log ============== 
+          |                                                 | 
+          | SELECT *                                        | 
+          | FROM  Orders                                    | 
+          | ORDER BY cnum DESC;                             | 
+          | =============================================== | 
+          |   onum       amt      odate      cnum     snum  | 
+          |  ------   --------  ----------  -----    -----  | 
+          |   3001       18.69  10/03/1990   2008     1007  | 
+          |   3006     1098.16  10/03/1990   2008     1007  | 
+          |   3002     1900.10  10/03/1990   2007     1004  | 
+          |   3008     4723.00  10/05/1990   2006     1001  | 
+          |   3011     9891.88  10/06/1990   2006     1001  | 
+          |   3007       75.75  10/04/1990   2004     1002  | 
+          |   3010     1309.95  10/06/1990   2004     1002  | 
+          |   3005     5160.45  10/03/1990   2003     1002  | 
+          |   3009     1713.23  10/04/1990   2002     1003  | 
+          |   3003      767.19  10/03/1990   2001     1001  | 
+          |                                                 | 
+            ================================================ 
+</PRE> 
+Рисунок 7. 4: Упорядочение вывода с помощью убывания поля 
+<A name=7.3>
+<H3>УПОРЯДОЧЕНИЕ С ПОМОЩЬЮ МНОГОЧИСЛЕННЫХ СТОЛБЦОВ</H3> 
+ 
+Мы можем также упорядочивать таблицу с помощью другого столбца, 
+например с помощью пол amt, внутри упорядочения пол cnum. 
+( вывод показан в Рисунке 7.5 ): 
+<PRE> 
+            SELECT * 
+               FROM Orders 
+               ORDER BY cnum DESC, amt DESC; 
+ 
+           ===============  SQL Execution Log ============== 
+          |                                                 | 
+          | SELECT *                                        | 
+          | FROM  Orders                                    | 
+          | ORDER BY cnum DESC, amt DESC;                   | 
+          | =============================================== | 
+          |   onum       amt      odate      cnum     snum  | 
+          |  ------   --------  ----------  -----    -----  | 
+          |   3006     1098.16  10/03/1990   2008     1007  | 
+          |   3001       18.69  10/03/1990   2008     1007  | 
+          |   3002     1900.10  10/03/1990   2007     1004  | 
+          |   3011     9891.88  10/06/1990   2006     1001  | 
+          |   3008     4723.00  10/05/1990   2006     1001  | 
+          |   3010     1309.95  10/06/1990   2004     1002  | 
+          |   3007       75.75  10/04/1990   2004     1002  | 
+          |   3005     5160.45  10/03/1990   2003     1002  | 
+          |   3009     1713.23  10/04/1990   2002     1003  | 
+          |   3003      767.19  10/03/1990   2001     1001  | 
+          |                                                 | 
+            ================================================ 
+</PRE> 
+ 
+Рисунок 7.5: Упорядочение вывода с помощью многочисленных полей 
+ 
+   Вы можете использовать ORDER BY таким же способом сразу с любым 
+числом столбцов. Обратите внимание что, во всех случаях, столбцы которые 
+упорядочиваются должны быть указаны в выборе SELECT. 
+Это - требование ANSI которые в большинстве, но не всегда, предписано 
+системе. Следующая команда, например, будет запрещена: 
+<PRE> 
+              SELECT cname, city 
+                 FROM Customers 
+                 GROUP BY cnum; 
+</PRE> 
+Так как поле cnum не было выбранным полем, GROUP BY не cможет найти 
+его чтобы использовать для упорядочения вывода. Даже если ваша система 
+позволяет это, смысл упорядочения не будет понятен из вывода, так что 
+включение (в предложение SELECT) всех столбцов, используемых в предложении 
+ORDER BY, в принципе желательно. 
+ <A name=7.4>
+<H3>УПОРЯДОЧЕНИЕ АГРЕГАТНЫХ ГРУПП</H3> 
+ 
+ORDER BY может кроме того, использоваться с GROUP BY для  упорядочения 
+групп. Если это так, то ORDER BY всегда приходит последним. 
+Вот - пример из последней главы с добавлением предложения ORDER BY. 
+Перед сгруппированием вывода, порядок групп был произвольным; 
+и мы, теперь, заставим группы размещаться в последовательности: 
+<PRE> 
+                  SELECT snum, odate, MAX (amt) 
+                     FROM Orders 
+                     GROUP BY snum, odate 
+                     GROUP BY snum; 
+</PRE> 
+Вывод  показывается в Рисунке 7.6. 
+<PRE> 
+               ===============  SQL Execution Log ============== 
+              |                                                 | 
+              | SELECT snum, odate, MAX (amt)                   | 
+              | FROM  Orders                                    | 
+              | GROUP BY snum, odate                            | 
+              | ORDER BY snum ;                                 | 
+              | =============================================== | 
+              |    snum       odate        amt                  | 
+              |   -----     ----------  --------                | 
+              |    1001     10/06/1990    767.19                | 
+              |    1001     10/05/1990   4723.00                | 
+              |    1001     10/05/1990   9891.88                | 
+              |    1002     10/06/1990   5160.45                | 
+              |    1002     10/04/1990     75.75                | 
+              |    1002     10/03/1990   1309.95                | 
+              |    1003     10/04/1990   1713.23                | 
+              |    1004     10/03/1990   1900.10                | 
+              |    1007     10/03/1990   1098.16                | 
+              |                                                 | 
+                ================================================ 
+</PRE> 
+Рисунок 7. 6: Упорядочение с помощью группы 
+<BR><BR> 
+Так как мы не указывали на возрастание или убывание порядка, 
+возрастание используется по умолчанию. 
+ <A name=7.5>
+<H3>УПОРЯДОЧЕНИЕ ВЫВОДА ПО НОМЕРУ СТОЛБЦА</H3> 
+ 
+Вместо имен столбца, вы можете использовать их порядковые номера для 
+указания поля используемого в упорядочении вывода. Эти номера могут 
+ссылаться не на порядок столбцов в таблице, а на их порядок в выводе. 
+Другими словами, поле упомянутое в предложении SELECT первым, для 
+ORDER BY - это поле 1, независимо от того каким по порядку оно стоит в 
+таблице. Например, вы можете использовать следующую команду чтобы 
+увидеть определенные пол таблицы Продавцов, упорядоченными 
+в порядке убывани к наименьшему значению комиссионных ( вывод 
+показывается Рисунке 7.7 ): 
+<PRE> 
+              SELECT sname, comm 
+                 FROM Salespeople 
+                 GROUP BY 2 DESC; 
+ 
+ 
+               ===============  SQL Execution Log ============ 
+              |                                               | 
+              | (SELECT sname, comm                           | 
+              | FROM Salespeople                              | 
+              | ORDER BY 2 DESC;                              | 
+              | ============================================= | 
+              |    sname       comm                           | 
+              |   --------   --------                         | 
+              |   Peel           0.17                         | 
+              |   Serres         0.13                         | 
+              |   Rifkin         0.15                         | 
+              |                                               | 
+               =============================================== 
+</PRE> 
+ 
+ Рисунок 7. 7:  Упорядочение использующее номера 
+ 
+Одна из основных целей этой возможности ORDER BY - дать вам возможность 
+использовать GROUP BY со столбцами вывода также как и со столбцами таблицы. 
+Столбцы производимые агрегатной функцией, константы, 
+или выражения в предложении SELECT запроса, абсолютно пригодны для 
+использования с GROUP BY, если они ссылаются к ним с помощью номера. 
+Например, давайте сосчитаем порядки каждого из наших продавцов, и 
+выведем результаты в убывающем порядке, как показано в Рисунке 7.8: 
+<PRE> 
+            SELECT snum, COUNT ( DISTINCT onum ) 
+               FROM Orders 
+               GROUP BY snum 
+               ORDER BY 2 DESC; 
+ 
+               ===============  SQL Execution Log ============== 
+              |                                                 | 
+              | SELECT snum, odate, MAX (amt)                   | 
+              | FROM Orders                                     | 
+              | GROUP BY snum                                   | 
+              | ORDER BY 2 DESC;                                | 
+              | =============================================== | 
+              |    snum                                         | 
+              |   -----     ----------                          | 
+              |    1001             3                           | 
+              |    1002             3                           | 
+              |    1007             2                           | 
+              |    1003             1                           | 
+              |    1004             1                           | 
+              |                                                 | 
+                ================================================ 
+</PRE> 
+Рисунок 7.8: Упорядочение с помощью столбца вывода 
+<BR><BR> 
+   В этом случае, вы должны использовать номер столбца, так как столбец 
+вывода не имеет имени; и вы не должны использовать саму агрегатную 
+функцию. Строго говор по правилам ANSI SQL, следующее не будет работать, 
+хотя некоторые системы и пренебрегают этим требованием: 
+<PRE> 
+        SELECT snum, COUNT ( DISTINCT onum ) 
+           FROM Orders 
+           GROUP BY snum 
+           GROUP BY COUNTОМ ( DISTINCT onum ) DESC; 
+ </PRE>
+ Это будет отклонено большинством систем! 
+ <A name=7.6>
+<H3>УПОРЯДОЧЕНИЕ С ПОМОЩЬЮ ОПЕРАТОРА NULL</H3> 
+ 
+Если имеются пустые значения (NULL) в поле которое вы используете для 
+упорядочивания вашего вывода, они могут или следовать или предшествовать 
+каждому другому значению в поле. Это - возможность которую ANSI 
+оставил для индивидуальных программ. Данная программа использует ту 
+или иную форму. 
+ <A name=7.7>
+<H3>РЕЗЮМЕ</H3> 
+В этой главе, вы изучили как заставить ваши запросы делать больше, 
+чем просто выводить значения полей или объединять функциональные 
+данные таблиц. Вы можете использовать пол в выражениях: например, 
+вы можете умножить числовое поле на 10 или даже умножить его на 
+другое числовое поле. Кроме того, вы можете помещать константы, 
+включая и символы, в ваш вывод, что позволяет вам помещать текст 
+непосредственно в запрос и получать его в выводе вместе с данными 
+таблицы. 
+  Это дает вам возможность помечать или объяснять ваш вывод 
+  различными способами. 
+  Вы также изучили как упорядочивать ваш вывод.  Даже если таблица 
+сама по себе остается неупорядоченной, предложение ORDER BY дает 
+вам возможность управлять порядком вывода строк данного запроса. 
+Вывод запроса может быть в порядке возрастания или убывания, и 
+столбцы могут быть вложенными один внутрь другого. 
+  Понятие выводимых столбцов объяснялось в этой главе. Вы теперь знаете 
+  что выводимые столбцы можно использовать чтобы упорядочивать 
+вывод запроса, но эти столбцы - без имени, и следовательно должны 
+определяться их порядковым номером в предложении ORDER BY. 
+  Теперь, когда вы увидели что можно делать с выводом запроса основанного 
+на одиночной таблице, настало время чтобы перейти к возможностям 
+улучшенного запроса и узнать как сделать запрос любого числа 
+таблиц в одной команде, определив связи между ними как вы это обычно 
+делали. Это будет темой <A href="ch8.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch8.shtml">Главы 8</A>. 
+ <A name=7.8>
+<H3>РАБОТА С SQL</H3> 
+ 
+1. Предположим что каждый продавец имеет 12% комиссионных. 
+   Напишите запрос к таблице Порядков который мог бы вывести номер 
+   порядка, номер продавца, и сумму комиссионных продавца для этого 
+   порядка. 
+<BR><BR> 
+2. Напишите запрос к таблице Заказчиков который мог бы найти высшую 
+   оценку в каждом городе. Вывод должен быть в такой форме: 
+<PRE> 
+       For the city (city), the highest rating is: (rating). 
+</PRE> 
+3. Напишите запрос который выводил бы список заказчиков в нисходящем 
+   порядке. Вывод пол оценки( rating ) должен сопровождаться именем 
+   заказчика и его номером. 
+<BR><BR> 
+4. Напишите запрос который бы выводил общие порядки на каждый день и 
+   помещал результаты в нисходящем порядке. 
+<BR><BR> 
+( См.<A href="a.shtml.htm#7" tppabs="http://www.sql.ru/docs/sql/u_sql/a.shtml#7">Приложение A</A> для ответов. ) 
+</TD></TR></TABLE>
+</TD></TR>
+<TR BGCOLOR=#6699CC><TD><TABLE WIDTH=100% BORDER=0 CELLSPACING=0 CELLPADDING=0><TR><TD BGCOLOR=#6699CC VALIGN=CENTER HEIGHT = 40><FONT SIZE=-10>
+<!--begin of Top100 logo-->
+<a href="javascript:if(confirm('http://top100.rambler.ru/top100/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://top100.rambler.ru/top100/'" tppabs="http://top100.rambler.ru/top100/">
+<img src="../../../../top100-images.rambler.ru/top100/banner-88x31-rambler-gray2.gif" tppabs="http://top100-images.rambler.ru/top100/banner-88x31-rambler-gray2.gif" alt="Rambler's Top100" width=88 height=31 border=0></a>
+<!--end of Top100 logo -->
+</FONT>
+<!--Rating@Mail.ru COUNTER--><a target=_top
+href="javascript:if(confirm('http://top.mail.ru/jump?from=58574  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://top.mail.ru/jump?from=58574'" tppabs="http://top.mail.ru/jump?from=58574"><img
+src="../../../../top.list.ru/counter-id=58574;t=94.gif" tppabs="http://top.list.ru/counter?id=58574;t=94"
+border=0 height=18 width=88
+alt="Рейтинг@Mail.ru"></a><!--/COUNTER-->
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="font : bold 10px verdana; color : white" href="javascript:if(confirm('http://hosting.parking.ru/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://hosting.parking.ru/'" tppabs="http://hosting.parking.ru/">Хостинг от компании Parking.ru</a>
+<script src="../../../../www.google-analytics.com/urchin.js" tppabs="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-265508-1";
+urchinTracker();
+</script>
+</TD>
+<TD BGCOLOR=#6699CC ALIGN=right><FONT COLOR=white FACE="Tahoma,Arial" SIZE=1>&nbsp;Administrator:&nbsp;<A STYLE="color :white" HREF="mailto:admin@sql.ru">admin@sql.ru</A>&nbsp;<BR>Last update: <FONT COLOR=white>05 июн 2007&nbsp;</FONT></FONT></TD></TR></TABLE>
+</TD></TR></TABLE></TD></TR></TABLE>
+
+</BODY></HTML>
+

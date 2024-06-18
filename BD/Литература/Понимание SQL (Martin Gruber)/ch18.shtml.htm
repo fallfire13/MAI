@@ -1,0 +1,499 @@
+<HTML>
+<HEAD>
+<TITLE>Понимание SQL. Глава 18. Ограничение значений ваших данных. [SQL.RU]</TITLE>
+<META http-equiv="Content-Type" CONTENT="text/html; charset=windows-1251">
+<META HTTP-EQUIV="Window-target" CONTENT="_top">
+<META HTTP-EQUIV="Last-Modified" CONTENT="29-03-2001">
+<META NAME="Description" CONTENT="Использование языка SQL, создание клиент-серверных систем. Конференция по MSSQL, Oracle, Interbase, MySQL. Полезные ссылки, документация, рекомендации по разработке информационных систем, сертификация, заказ книг и многое другое.">
+<META NAME="Keywords" CONTENT="SQL, конференция, Database Server, Oracle, Interbase, MySQL, документация, статьи, примеры, книги, ссылки, сертификация, работа, СУБД">
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../form.css" tppabs="http://www.sql.ru/form.css">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" leftmargin="3" topmargin="3" marginheight="3" marginwidth="3">
+<noindex>
+<TABLE BGCOLOR="#000000" WIDTH=100% CELLPADDING=0 CELLSPACING=0 BORDER=0>
+<TR><TD>
+
+<TABLE WIDTH=100% CELLPADDING=0 CELLSPACING=1 BORDER=0>
+<TR BGCOLOR="#6699CC"><TD><TABLE CELLSPACING=0 CELLPADDING=0 WIDTH=100% BORDER=0 BGCOLOR="#6699CC">
+<TR><TD COLSPAN=3><IMG SRC="../../../images/blank.gif" tppabs="http://www.sql.ru/images/blank.gif" height=3 width=1 alt=""></TD></TR>
+<TR><TD VALIGN=TOP>&nbsp;<FONT FACE="Verdana,Arial" SIZE=5 COLOR=lightyellow>SQL.RU<BR><FONT SIZE=-5>&nbsp;client/server technologies</FONT></FONT><!--begin of Top100--><a href="javascript:if(confirm('http://top100.rambler.ru/top100/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://top100.rambler.ru/top100/'" tppabs="http://top100.rambler.ru/top100/"><img src="../../../../counter.rambler.ru/top100.cnt-236431.gif" tppabs="http://counter.rambler.ru/top100.cnt?236431" alt="Rambler's Top100" width=1 height=1 border=0></a><!--end of Top100 code--></TD>
+<TD WIDTH=468 HEIGHT=60 BGCOLOR=#6699CC ALIGN=RIGHT></TD>
+<TD WIDTH=2><IMG SRC="../../../images/blank.gif" tppabs="http://www.sql.ru/images/blank.gif" height=1 width=2 alt=""></TD></TR>                                                      	
+<TR HEIGHT=4><TD COLSPAN=3><IMG SRC="../../../images/blank.gif" tppabs="http://www.sql.ru/images/blank.gif" height=5 width=1 alt=""></TD></TR></TABLE>
+
+</TD></TR>
+
+<TR HEIGHT=15><TD bgcolor=#006699><FONT FACE="Verdana,Arial" SIZE=1 COLOR=WHITE><B><A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/'" tppabs="http://www.sql.ru/">&nbsp;<FONT COLOR=white>Главная</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/docs  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/docs'" tppabs="http://www.sql.ru/docs">&nbsp;<FONT COLOR=yellow>Документация</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/articles  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/articles'" tppabs="http://www.sql.ru/articles">&nbsp;<FONT COLOR=white>Статьи</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/books  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/books'" tppabs="http://www.sql.ru/books">&nbsp;<FONT COLOR=white>Книги</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/forum/actualforum.aspx  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/forum/actualforum.aspx'" tppabs="http://www.sql.ru/forum/actualforum.aspx">&nbsp;<FONT COLOR=white>Форум</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/poll  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/poll'" tppabs="http://www.sql.ru/poll">&nbsp;<FONT COLOR=white>Опросы</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/forum/actualtopics.aspx?bid=11  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/forum/actualtopics.aspx?bid=11'" tppabs="http://www.sql.ru/forum/actualtopics.aspx?bid=11">&nbsp;<FONT COLOR=white>Гостевая</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/subscribe  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/subscribe'" tppabs="http://www.sql.ru/subscribe">&nbsp;<FONT COLOR=white>Рассылка</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/job  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/job'" tppabs="http://www.sql.ru/job">&nbsp;<FONT COLOR=white>Работа</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/search  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/search'" tppabs="http://www.sql.ru/search">&nbsp;<FONT COLOR=white>Поиск</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/faq  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/faq'" tppabs="http://www.sql.ru/faq">&nbsp;<FONT COLOR=white>FAQ</FONT>&nbsp;</A>|</B></FONT></TD></TR>
+<TR><TD BGCOLOR=#F5F5F5>
+</noindex>
+
+<TABLE BORDER=0 CELLSPACING=10><TR><TD>
+<CENTER>
+<H2 class="headline">
+18. ОГРАНИЧЕНИЕ ЗНАЧЕНИЙ ВАШИХ ДАННЫХ</H2></CENTER> 
+ 
+В <A href="ch17.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch17.shtml">ГЛАВЕ 17</A>, Вы узнали как создаются таблицы. 
+Теперь более тщательно с этого места мы покажем вам как вы можете 
+устанавливать ограничения в таблицах. 
+Ограничения - это часть определений таблицы, которое ограничивает 
+значения которые вы можете вводить в столбцы. 
+До этого места в книге, единственным ограничением на значения которые 
+вы могли вводить, были тип данных и размер вводимых значений которые 
+должны быть совместимы с теми столбцами в которые эти значения помещаются ( как и определено в команде CREATE TABLE или команде ALTER 
+TABLE ). Ограничения дают вам значительно большие возможности и скоро 
+вы это увидите. Вы также узнаете как определять значения по умолчанию 
+в этой главе. 
+По умолчанию - это значение которое вставляется автоматически в любой 
+столбец таблицы, когда значение для этого столбца отсутствует в команде 
+INSERT для этой таблицы. NULL - это наиболее широко используемое 
+значение по умолчанию, но в этой главе будет показано как определять и 
+другие значения по умолчанию. 
+ <A name=18.1>
+<H3>ОГРАНИЧЕНИЕ ТАБЛИЦ</H3>Когда вы создаете таблицу ( или, когда вы ее изменяете ), вы можете помещать ограничение на значения которые могут быть введены в пол. Если вы 
+это сделали, SQL будет отклонять любые значения которые нарушают критерии которые вы определили. Имеется два основных типа ограничений - 
+ограничение столбца и ограничение таблицы. Различие между ними в том, 
+что ограничение столбца применяется только к индивидуальным столбцам, в 
+то врем как ограничение таблицы применяется к группам из одного и более 
+столбцов. 
+ <A name=18.2>
+<H3>ОБЪЯВЛЕНИЕ ОГРАНИЧЕНИЙ</H3> Вы вставляете ограничение столбца в конец имени столбца после типа данных и перед запятой. Ограничение таблицы помещаются в конец имени таблицы после последнего имени столбца, но перед заключительной круглой 
+скобкой. Далее показан синтаксис для команды CREATE TABLE, расширен- 
+ной для включения в нее ограничения: 
+<PRE> 
+      CREATE TABLE &lt; table name &gt; 
+         (&lt; column name &gt; <DATA type> &lt; column constraint &gt;, 
+         &lt; column name &gt; &lt; data type &gt; &lt; column constraint &gt; ... 
+         &lt; table constraint &gt; ( &lt; column name &gt; 
+         [, &lt; column name &gt; ])... ); 
+ 
+</PRE> 
+( Для краткости, мы опустили аргумент размера, который иногда используется с типом данных. )  Пол данные в круглых скобках после ограничения таблицы - это пол к которым применено это ограничение. 
+Ограничение столбца, естественно, применяется к столбцам, после чьих 
+имен оно следует. Остальная часть этой глава будет описывать различные типы ограничений и их использование. 
+ <A name=18.3>
+<H3>ИСПОЛЬЗОВАНИЕ ОГРАНИЧЕНИЙ ДЛЯ ИСКЛЮЧЕНИЯ ПУСТЫХ( NULL ) УКАЗАТЕЛЕЙ</H3>Вы можете использовать команду CREATE TABLE чтобы предохранить поле от разрешения в нем пустых(NULL) указателей с помощью ограничения NOT NULL. 
+Это ограничение накладывается только для разнообразных столбцов. 
+<BR><BR> 
+Вы можете вспомнить что NULL - это специальное обозначение которое 
+отмечает поле как пустое.  NULL может быть полезен, когда имеются случаи, когда вы хотите быть от них гарантированы. Очевидно, что первичные ключи никогда не должны быть пустыми , поскольку это будет подрывать их функциональные возможности. Кроме того, такие пол как 
+имена, требуют в большинстве случаев, определенных значений. 
+Например, вы вероятно захотите иметь имя для каждого заказчика в таблице Заказчиков. 
+Если вы поместите ключевые слова NOT NULL сразу после типа данных 
+( включая размер ) столбца, люба попытка поместить значение NULL 
+в это поле будет отклонена. В противном случае, SQL понимает, что NULL 
+разрешен. 
+<BR><BR> 
+Например, давайте улучшим наше определение таблицы Продавцов, не 
+позволяя помещать NULL значения в столбцы snum или sname : 
+<PRE> 
+       CREATE TABLE Salespeople 
+          ( Snum     integer NOT, 
+            Sname    char (10) NOT, 
+            city     char (10), 
+            comm     decimal); 
+</PRE> 
+Важно помнить, что любому столбцу с ограничением NOT NULL должно 
+быть установлено значение в каждом предложении INSERT воздействующем на таблицу. При отсутствии NULL, SQL может не иметь значений 
+для установки  в эти столбцы, если конечно значение по умолчанию, 
+описанное ранее в этой главе, уже не было назначено. 
+<BR><BR> 
+Если ваша система поддерживает использование ALTER TABLE чтобы 
+добавлять новые столбцы к уже существующей таблице, вы можете 
+вероятно помещать ограничение столбцов, типа NOT NULL, для этих 
+новых столбцов. Однако, если вы предписываете новому столбцу значение NOT NULL, текущая таблица должна быть пустой. 
+ <A name=18.4>
+<H3>УБЕДИТЕСЬ ЧТО ЗНАЧЕНИЯ - УНИКАЛЬНЫ</H3>    В <A href="ch17.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch17.shtml">Главе 17</A>, мы обсудили использование уникальных индексов чтобы 
+заставить пол иметь различные значения для каждой строки. Эта практика - осталась с прежних времен, когда SQL поддерживал ограничение 
+UNIQUE. Уникальность - это свойство данных в таблице, и поэтому его 
+более логично  назвать как ограничение этих данных, а не просто как 
+свойство логического отличия, связывающее объект данных ( индекс ). 
+  <BR><BR>
+Несомненно, уникальные индексы - один из самых простых и наиболее 
+эффективных методов предписания уникальности. По этой причине, не- 
+которые реализации ограничения UNIQUE используют уникальные индексы; то есть они создают индекс не сообща вам об этом.   Остается 
+фактом, что вероятность беспорядка в базе данных достаточно мала, 
+если вы предписываете уникальность вместе с ограничением. 
+
+<H4>УНИКАЛЬНОСТЬ КАК ОГРАНИЧЕНИЕ СТОЛБЦА</H4> Время от времени, вы хотите убедиться, что все значения, введенные в 
+столбец, отличаются друг от друга.  Например, первичные ключи достаточно ясно это показывают. 
+Если вы помещаете ограничение столбца UNIQUE в поле при создании 
+таблицы, база данных отклонит любую попытку ввода в это поле для од- 
+ной из строк, значения, которое уже представлено в другой строке. 
+Это ограничение может применяться только к полям которые были объявлены как непустые(NOT NULL), так как не имеет смысла позволить 
+одной строке таблицы иметь значение NULL, а затем исключать другие 
+строки с NULL значениями как дубликаты. 
+Имеется дальнейшее усовершенствование нашей команды создания таб- 
+лицы Продавцов : 
+<PRE> 
+ 
+      CREATE TABLE Salespeople 
+       ( Snum     integer NOT NULL UNIQUE, 
+         Sname    char (10) NOT NULL UNIQUE, 
+         city     char (10), 
+         comm     decimal ); 
+</PRE> 
+    Когда вы объявляете поле sname уникальным, убедитесь, что две 
+Mary Smith будут введены различными способами - например, Mary Smith 
+и M. Smith. В то же врем это не так уж необходимо с функциональной 
+точки зрения - потому что поле snum в качестве первичного ключа, все 
+равно обеспечит отличие этих двух строк - что проще для людей использующих данные в таблицах, чем помнить что эти Smith не идентичны. 
+Столбцы ( не первичные ключи ) чьи значения требуют уникальности, 
+называются ключами-кандидатами или уникальными ключами. 
+ 
+<H4>УНИКАЛЬНОСТЬ КАК ОГРАНИЧЕНИЕ ТАБЛИЦЫ</H4>Вы можете также определить группу полей как уникальную с помощью 
+команды ограничения таблицы - UNIQUE. Объявление группы полей уни- 
+кальной, отличается от объявления уникальными индивидуальных полей, 
+так как это комбинация значений, а не просто индивидуальное значение, 
+которое обязано быть уникальным. 
+Уникальность группы - это представление порядка, так что бы пары строк 
+со значениями столбцов  "a", "b"  и  "b", "a"  рассматривались отдельно од- 
+на от другой. 
+Наша база данных сделана так чтобы каждый заказчик был назначен од- 
+ному и только одному продавцу. Это означает что каждая комбинация но- 
+мера заказчика(cnum) и номера продавца(snum) в таблице Заказчиков должна быть уникальной. Вы можете убедиться в этом, создав таблицу Заказ- 
+чиков таким способом: 
+<PRE> 
+       CREATE TABLE Customers 
+          ( cnum       integer NOT NULL, 
+            cname      char (10) NOT NULL, 
+            city       char (10), 
+            rating     integer, 
+            snum       integer NOT NULL, 
+            UNIQUE  (cnum, snum)); 
+</PRE> 
+Обратите внимание что оба пол в ограничении таблицы UNIQUE все еще 
+используют ограничение столбца - NOT NULL . Если бы мы использовали 
+ограничение столбца UNIQUE  для пол cnum, такое ограничение таблицы 
+было бы необязательным. 
+Если значения пол cnum различно для каждой строки, то не может быть 
+двух строк с идентичной комбинацией значений полей cnum и snum.  То 
+же самое получится если мы объявим поле snum уникальным, хотя это и 
+не будет соответствовать нашему примеру, так как продавец будет назначен многочисленным заказчикам. Следовательно, ограничение таблицы - 
+UNIQUE,  наиболее полезно когда вы не хотите заставлять индивидуальные пол быть уникальными. 
+<BR><BR> 
+Предположим, например, что мы разработали таблицу чтобы следить за 
+всеми порядками каждый день для каждого продавца. Каждая строка такой 
+таблицы представляет сумму чисел любых порядков,  а не просто индивиду- 
+альный порядок. В этом случае, мы могли бы устранить некоторые возможные ошибки убедившись что на каждый день имеется не более чем одна 
+строка для данного продавца, или что каждая комбинация полей snum и 
+odate является уникальной. Вот как например мы могли бы создать таблицу 
+с именем Salestotal : 
+ 
+<PRE> 
+         CREATE TABLE Salestotal 
+          ( cnum     integer NOT NULL, 
+            odate    date NULL, 
+            totamt   decimal, 
+            UNIQUE   (snum, odate)); 
+</PRE> 
+Кроме того, имеется команда которую вы будете использовать чтобы 
+помещать текущие данные в эту таблицу: 
+<PRE> 
+            INSERT INTO Salestotal 
+               SELECT snum, odate, SUM (amt) 
+                  FROM Orders 
+                  GROUP BY snum, odate; 
+</PRE> <A name=18.5>
+<H3>ОГРАНИЧЕНИЕ ПЕРВИЧНЫХ КЛЮЧЕЙ</H3>До этого мы воспринимали первичные ключи исключительно как логические 
+понятия. Хоть мы и знаем что такое первичный ключ, и как он должен использоваться в любой таблице, мы не ведаем "знает" ли об этом SQL. 
+Поэтому мы использовали ограничение UNIQUE или уникальные индексы в 
+первичных ключах чтобы предписывать им уникальность. В более ранних 
+версиях языка SQL , это было необходимо, и могло выполняться этим способом. 
+Однако теперь, SQL поддерживает первичные ключи непосредственно с ограничением Первичный Ключ ( PRIMARE KEY ). 
+Это ограничение может быть доступным или недоступным вашей системе. 
+<BR><BR> 
+PRIMARY KEY может ограничивать таблицы или их столбцы. 
+Это ограничение работает так же как и ограничение UNIQUE, за исключением когда только один первичный ключ ( для любого числа столбцов ) может быть определен для данной таблицы. Имеется также различие между 
+первичными ключами и уникальностью столбцов в способе их использоваться с внешними ключами, о которых будет рассказано в <A href="ch19.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch19.shtml">Главе 19</A>. Синтаксис и определение их уникальности те же что и для ограничения UNIQUE. 
+<BR><BR> 
+Первичные ключи не могут позволить значений NULL. Это означает что, 
+подобно полям в ограничении UNIQUE, любое поле используемое в ограничении PRIMARY KEY должно уже быть объявлено NOT NULL . 
+Имеется улучшенный вариант создания нашей таблицы Продавцов : 
+<PRE> 
+       CREATE TABLE Salestotal 
+          ( snum     integer NOT NULL PRIMARY KEY, 
+            sname    char(10) NOT NULL UNIQUE, 
+            city     char(10), 
+            comm     decimal); 
+</PRE> 
+Как вы видите, уникальность (UNIQUE) полей может быть объявлена для той 
+же самой таблицы. Лучше всего помещать ограничение PRIMARY KEY в поле (или в поля) которое будет образовывать ваш уникальный идентификатор 
+строки, и сохранить ограничение UNIQUE для полей которые должны быть 
+уникальными логически ( такие как номера телефона или поле sname ), а не 
+для идентификации строк. 
+ 
+<H4>ПЕРВИЧНЫЕ КЛЮЧИ БОЛЕЕ ЧЕМ ОДНОГО ПОЛЯ</H4>Ограничение PRIMARY KEY может также быть применено для многочисленных полей, составлющих уникальную комбинацию значений. 
+Предположим что ваш первичный ключ - это им, и вы имеете первое им 
+и последнее им сохраненными в двух различных полях ( так что вы можете 
+организовывать данные с помощью любого из них ). Очевидно, что ни первое 
+ни последнее им нельзя заставить быть уникальным самостоятельно, но мы 
+можем каждую из этих двух комбинаций сделать уникальной. 
+ Мы можем применить ограничение таблицы PRIMARY KEY для пар: 
+<PRE> 
+        CREATE TABLE  Namefield 
+        ( firstname       char (10) NOT NULL, 
+          lastname        char (10) NOT NULL 
+          city            char (10), 
+          PRIMARY KEY  ( firstname, lastname )); 
+</PRE> 
+ 
+Одна проблема в этом подходе та, что мы можем вынудить появление 
+уникальности - например, введя Mary Smith и M. Smith. Это может 
+ввести в заблуждение, потому что ваши служащие могут не знать кто 
+из них кто. Обычно более надежный способ чтобы определять числовое 
+поле которое могло бы отличать одну строку от другой, это иметь первичный ключ, и применять ограничение UNIQUE для двух имен полей. 
+ <A name=18.6>
+<H3>ПРОВЕРКА ЗНАЧЕНИЙ ПОЛЕЙ</H3>Конечно, имеется любое число ограничений которые можно устанавливать для данных вводимых в ваши таблицы, чтобы видеть, например, 
+находятся ли данные в соответствующем диапазоне или правильном 
+формате, о чем SQL естественно не может знать заранее. 
+По этой причине, SQL обеспечивает вас ограничением CHECK, которое 
+позволяет вам установить условие которому должно удовлетворять значение вводимое в таблицу, прежде чем оно будет принято. Ограничение 
+CHECK состоит из ключевого слова CHECK сопровождаемого предложением предиката, который использует указанное поле. Любая попытка модифицировать или вставить значение пол которое могло бы сделать этот 
+предикат неверным - будет отклонена. 
+<BR><BR> 
+Давайте рассмотрим еще раз таблицу Продавцов. Столбец комиссионных 
+выражается десятичным числом и поэтому может быть умножен непосредственно на сумму приобретений в результате чего будет получена 
+сумма комиссионных(в долларах) продавца с установленным справа значком доллара( $ ) . 
+Кто-то может использовать понятие процента, однако ведь, можно об этом 
+и не знать. Если человек введет по ошибке 14 вместо .14 чтобы указать в 
+процентах свои комиссионные, это будет расценено как 14.0 , что является законным десятичным значением, и будет нормально воспринято системой. Чтобы предотвратить эту ошибку, мы можем наложить ограничение 
+столбца - CHECK чтобы убедиться что вводимое значение меньше чем 1. 
+<PRE> 
+       CREATE TABLE Salespeople 
+          ( snum     integer NOT NULL PRIMARY KEY, 
+            sname    char(10) NOT NULL UNIQUE, 
+            city     char(10), 
+            comm     decimal CHECK ( comm &lt; 1 )); 
+</PRE> 
+ 
+<H4>ИСПОЛЬЗОВАНИЕ - CHECK, ЧТОБЫ ПРЕДОПРЕДЕЛЯТЬ ДОПУСТИМОЕ ВВОДИМОЕ 
+ЗНАЧЕНИЕ</H4>Мы можем также использовать ограничение CHECK чтобы защитить от 
+ввода в поле определенных значений, и таким образом предотвратить ошибку.  Например, предположим, что единственными городами в которых мы 
+имели ведомства сбыта являются Лондон, Барселона, Сан Хосе, и  Нью Йорк. 
+Если вам известны все продавцы работающие в каждом из этих ведомств, нет 
+необходимости позволять ввод других значений. Если же нет, использование 
+ограничения может предотвратить опечатки и другие ошибки. 
+<PRE> 
+    CREATE TABLE Salespeople 
+        (snum     integer NOT NULL UNIQUE, 
+         sname    char(10) NOT NULL UNIQUE, 
+         city     char(10) CHECK, 
+        (city IN ('London', 'New York', 'San Jose', 'Barselona')), 
+         comm     decimal CHECK (comm &lt; 1 )); 
+</PRE> 
+Конечно, если вы собираетесь сделать это, вы должны быть уверены что 
+ваша компания не открыла уже новых других ведомств сбыта. Большинство программ баз данных поддерживают команду ALTER TABLE( см. 
+<A href="ch17.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch17.shtml">Главу 17</A> ) которая позволяет вам изменять определение таблицы, даже 
+когда она находится в использовании. Однако, изменение или удаление 
+ограничений не всегда возможно для этих команд, даже там где это вроде 
+бы поддерживается. 
+   Если вы использовали систему которая не может удалять ограничения, 
+вы будете должны создавать (CREATE) новую таблицу и передавать информацию из старой таблицы в нее всякий раз, когда вы хотите изменить ограничение. Конечно же Вы не захотите делать это часто, и со временем вообще перестанете это делать. 
+<BR><BR> 
+Создадим таблицу Порядков: 
+<PRE> 
+  CREATE TABLE Orders 
+    (onum     integer NOT NULL UNIQUE, 
+     amt      decimal, 
+     odate    date NOT NULL, 
+     cnum     integer NOT NULL, 
+     snum     integer NOT NULL); 
+</PRE> 
+Как мы уже говорили в <A href="ch2.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch2.shtml">Главе 2</A>, тип DATЕ(ДАТА) широко поддерживается, но не является частью стандарта ANSI. Что же делать если мы используем базу данных, которая следу ANSI, не распознает тип DATЕ? 
+Если мы объявим поле odate любым типом числа, мы не сможем использовать наклонную черту вправо (/) или черточку (-) в качестве раздели- 
+тел. Так как печатаемые номера - это символы ASCII, мы можем объявить тип поля  date - CHAR. Основная проблема в том, что мы будем 
+должны использовать одиночные кавычки всякий раз, когда ссылаемся 
+на значение пол odate в запросе. Нет более простого решения этой 
+проблемы там где тип DATЕ стал таким популярным. В качестве иллюстрации, давайте объявим поле odate - типом CHAR. Мы можем по край- 
+ней мере наложить на него наш формат с ограничением CHECK: 
+<PRE> 
+       CREATE TABLE Orders 
+         ( onum        integer NOT NULL UNIQUE, 
+           amt         decimal, 
+           odate       char (10) NOT NULL CHECK ( odate LIKE 
+                         '--/--/----'), 
+           cnum        NOT NULL, 
+           snum        NOT NULL ); 
+</PRE> 
+Кроме того, если вы хотите, вы можете наложить ограничение, гарантирующие что введенные символы - числа, и что они - в пределах значений 
+нашего диапазона. 
+ 
+<H4>ПРОВЕРКА УСЛОВИЙ БАЗИРУЮЩИЙСЯ НА МНОГОЧИСЛЕННЫХ ПОЛЯХ</H4>Вы можете также использовать CHECK в качестве табличного ограничения. 
+Это полезно в тех случаях когда вы хотите включить более одного пол 
+строки в условие. Предположим что комиссионные  .15 и выше, будут раз- 
+решены только для продавца из Барселоны. Вы можете указать это со следующим табличным ограничением CHECK : 
+<PRE> 
+       CREATE TABLE Salespeople 
+         ( snum       integer NOT NULL UNIQUE, 
+           sname      char (10) NOT NULL UNIQUE, 
+           city       char(10), 
+           comm       decimal, 
+           CHECK    (comm &lt; .15 OR city = 'Barcelona')); 
+ </PRE>
+ 
+Как вы можете видеть, два различных пол должны быть проверены 
+чтобы определить, верен предикат или нет. Имейте в виду, что это - два 
+разных пол одной и той же строки. Хотя вы можете использовать многочисленные поля, SQL не может проверить более одной строки одновременно. Вы не можете например использовать ограничение CHECK чтобы 
+удостовериться что все комиссионные в данном городе одинаковы. 
+Чтобы сделать это, SQL должен всякий раз просматривая другие строки 
+таблицы, когда вы модифицируете или вставляете строку, видеть, что значение комиссионных указано для текущего города. 
+SQL этого делать не умеет. 
+<BR><BR> 
+Фактически, вы могли бы использовать сложное ограничение CHECK для 
+вышеупомянутого, если бы знали заранее, каковы должны быть комиссионные в разных городах. Например, вы могли бы установить ограничение 
+типа этого: 
+<PRE> 
+     CHECK ( ( comm = .15 AND clty = 'London' ) 
+        OR ( comm = .14 AND city = 'Barcelona' ) 
+        OR ( comm = 11 AND city = 'San Jose').. ) 
+</PRE> 
+Вы получили идею. Чем налагать такой комплекс ограничений, вы могли 
+бы просто использовать представление с предложением WITH CHECK 
+OPTION которое имеет все эти условия в своем предикате ( смотри <A href="ch20.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch20.shtml">Главу 
+20</A> и <A href="ch21.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch21.shtml">21</A> для информации о представлении и о WITH CHECK OPTION). 
+Пользователи могут обращаться к представлению таблицы вместо самой 
+таблицы. Одним из преимуществ этого будет то, что процедура изменения 
+в ограничении не будет такой болезненной или трудоемкой. Представление 
+с WITH CHECK OPTION - хороший заменитель ограничению CHECK, 
+что будет показано в <A href="ch21.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch21.shtml">Главе 21</A>. 
+ 
+ <A name=18.7>
+<H3>УСТАНОВКА ЗНАЧЕНИЙ ПО УМОЛЧАНИЮ</H3>Когда вы вставляете строку в таблицу без указания значений в ней 
+для каждого пол, SQL должен иметь значение по умолчанию для 
+включения его в определенное поле, или же команда будет отклонена. 
+Наиболее общим значением по умолчанию является - NULL. 
+Это - значение по умолчанию для любого столбца, которому не было 
+дано ограничение NOT NULL или который имел другое назначение 
+по умолчанию. 
+<BR><BR> 
+Значение DEFAULT(ПО УМОЛЧАНИЮ) указывается в команде 
+CREATE TABLE тем же способом что и ограничение столбца, хотя, 
+с технической точки зрения, значение DEFAULT не ограничительного 
+свойства - оно не ограничивает значения которые вы можете вводить, 
+а просто определяет, что может случиться если вы не введете любое 
+из них. 
+Предположим что вы работаете в оффисе Нью Йорка и подавляющее 
+большинство ваших продавцов живут в Нью Йорке. Вы можете указать 
+Нью Йорк в качестве значения пол city, по умолчанию, для вашей 
+таблицы Продавцов: 
+<PRE> 
+       CREATE TABLE Salespeople 
+         ( snum     integer NOT NULL UNIQUE, 
+           sname    char(10) NOT NULL UNIQUE, 
+           city     char(10) DEFAULT = 'New York', 
+           comm     decimal CHECK (comm &lt; 1); 
+</PRE> 
+Конечно, вводить значение Нью Йорк в таблицу каждый раз когда назначается новый продавец, не такая уж необходимость, и можно просто 
+пренебречь им ( не ввод его ) даже если оно должно иметь некоторое 
+значение. Значение по умолчанию такого типа, более предпочтительно, 
+чем, например, длинный конторский номер указывающий на ваше собственное ведомство, в таблице Порядков. 
+Длинные числовые значения - более расположены к ошибке, поэтому 
+если подавляющее большинство ( или все ) ваших порядков должны 
+иметь ваш собственный конторский номер, желательно устанавливать 
+для них значение по умолчанию. 
+<BR><BR> 
+Другой способ использовать значение по умолчанию - это использовать 
+его как альтернативу для NULL. Так как NULL (фактически) неверен при 
+любом сравнении, ином чем IS NULL, он может быть исключен с помощью 
+большинства предикатов. Иногда, вам нужно видеть пустые значения ваших полей не обрабатывая их каким-то определенным образом. Вы можете 
+установить значение по умолчанию, типа нуль или пробел, которые функционально меньше по значению чем просто не установленное значение - 
+пустое значение(NULL). Различие между ними и обычным NULL в том, 
+что SQL будет обрабатывать их также как и любое другое значение. 
+<BR><BR> 
+Предположим, что заказчикам не назначены оценки изначально.  Каждые 
+шесть месяцев, вы повышаете оценку всем вашим заказчикам, имеющим 
+оценку ниже средней, включая и тех кто предварительно не имел никакого назначения оценки. Если вы хотите выбрать всех этих заказчиков как 
+группу, следующий запрос исключит всех заказчиков с оценкой = NULL: 
+<PRE> 
+         SELECT * 
+            FROM Customers 
+            WHERE rating &lt; = 100; 
+</PRE> 
+Однако, если вы назначили значение по умолчанию = 000,  в поле rating, 
+заказчики без оценок будут выбраны наряду с другими.  Приоритет каждого 
+метода - зависит от ситуации. 
+Если вы будете делать запрос с помощью пол оценки, то захотите ли Вы 
+включить строки без значений, или исключите их? 
+ Друга характеристика значений по умолчанию этого типа, позволит объявить 
+Вам поле оценки - как NOT NULL. 
+Если вы используете его по умолчанию, чтобы избежать значений = NULL, 
+то это - вероятно хороша защита от ошибок. 
+<BR><BR> 
+Вы можете также использовать ограничения UNIQUE или PRIMARY KEY 
+в этом поле. Если вы сделаете это, то, имеете в виду, что только одна строка 
+одновременно может иметь значение по умолчанию. Любую строку которая 
+содержит значение по умолчанию нужно будет модифицировать прежде, чем 
+друга строка с установкой по умолчанию будет вставлена. Это не так как 
+вы обычно используете значения по умолчанию, поэтому ограничения UNIQUE 
+и PRIMARY KEY ( особенно последнее ) обычно не устанавливаются для строк 
+со значениями по умолчанию. 
+ 
+ <A name=18.8>
+<H3>РЕЗЮМЕ</H3>Вы теперь владеете несколькими способами управления значениями 
+которые могут быть введены в ваши таблицы. Вы можете использовать 
+ограничение NOT NULL чтобы исключать NULL, ограничение UNIQUE 
+чтобы вынуждать все значения в группе из одного или более столбцов 
+отличаться друг от друга, ограничение PRIMARY KEY, для того чтобы 
+делать в основном то же самое что и UNIQUE но с различным окончанием, и наконец ограничение CHECK для определения ваших собственных сделанных на заказ условий, чтобы значения встреченные перед 
+ними могли бы быть введены. Кроме того, вы можете использовать предложение DEFAULT, которое будет автоматически вставлять значение по 
+умолчанию в любое поле с именем не указанным в INSERT, так же как 
+вставляется значение NULL когда предложение DEFAULT не установлено 
+и отсутствует ограничение NOT NULL. 
+ 
+FOREIGN KEY или REFERENCES ограничения о которых вы узнаете 
+в <A href="ch19.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch19.shtml">Главе 19</A> очень похожи на них, за исключением того, что они связывают группу из одного или более полей с другой группой, и таким образом 
+сразу воздействуют на значения которые могут быть введены в любую 
+из этих групп. 
+ <A name=18.9>
+<H3>РАБОТА С SQL</H3>1. Создайте таблицу Порядков так чтобы все значения пол onum, а также 
+   все комбинации полей cnum и snum отличались друг от друга, и так что 
+   бы значения NULL исключались из поля даты. 
+<BR><BR> 
+2. Создайте таблицу Продавцов так чтобы комиссионные, по умолчанию, 
+   составляли 10%,  не разрешались значения NULL, чтобы поле snum являлось первичным ключом, и чтобы все имена были в алфавитном порядке 
+   между A и M включительно( учитывая, что все имена будут напечатаны 
+   в верхнем регистре ). 
+<BR><BR> 
+3. Создайте таблицу Порядков, будучи уверенными в том что поле onum 
+   больше чем поле cnum, а cnum больше чем snum. Запрещены значения 
+   NULL в любом из этих трех полей. 
+<BR><BR> 
+( См. <A href="a.shtml.htm#18" tppabs="http://www.sql.ru/docs/sql/u_sql/a.shtml#18">Приложение A</A> для ответов. ) 
+ 
+</TD></TR></TABLE>
+</TD></TR>
+<TR BGCOLOR=#6699CC><TD><TABLE WIDTH=100% BORDER=0 CELLSPACING=0 CELLPADDING=0><TR><TD BGCOLOR=#6699CC VALIGN=CENTER HEIGHT = 40><FONT SIZE=-10>
+<!--begin of Top100 logo-->
+<a href="javascript:if(confirm('http://top100.rambler.ru/top100/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://top100.rambler.ru/top100/'" tppabs="http://top100.rambler.ru/top100/">
+<img src="../../../../top100-images.rambler.ru/top100/banner-88x31-rambler-gray2.gif" tppabs="http://top100-images.rambler.ru/top100/banner-88x31-rambler-gray2.gif" alt="Rambler's Top100" width=88 height=31 border=0></a>
+<!--end of Top100 logo -->
+</FONT>
+<!--Rating@Mail.ru COUNTER--><a target=_top
+href="javascript:if(confirm('http://top.mail.ru/jump?from=58574  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://top.mail.ru/jump?from=58574'" tppabs="http://top.mail.ru/jump?from=58574"><img
+src="../../../../top.list.ru/counter-id=58574;t=94.gif" tppabs="http://top.list.ru/counter?id=58574;t=94"
+border=0 height=18 width=88
+alt="Рейтинг@Mail.ru"></a><!--/COUNTER-->
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="font : bold 10px verdana; color : white" href="javascript:if(confirm('http://hosting.parking.ru/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://hosting.parking.ru/'" tppabs="http://hosting.parking.ru/">Хостинг от компании Parking.ru</a>
+<script src="../../../../www.google-analytics.com/urchin.js" tppabs="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-265508-1";
+urchinTracker();
+</script>
+</TD>
+<TD BGCOLOR=#6699CC ALIGN=right><FONT COLOR=white FACE="Tahoma,Arial" SIZE=1>&nbsp;Administrator:&nbsp;<A STYLE="color :white" HREF="mailto:admin@sql.ru">admin@sql.ru</A>&nbsp;<BR>Last update: <FONT COLOR=white>05 июн 2007&nbsp;</FONT></FONT></TD></TR></TABLE>
+</TD></TR></TABLE></TD></TR></TABLE>
+
+</BODY></HTML>
+

@@ -1,0 +1,718 @@
+<HTML>
+<HEAD>
+<TITLE>Понимание SQL. Приложение D. [SQL.RU]</TITLE>
+<META http-equiv="Content-Type" CONTENT="text/html; charset=windows-1251">
+<META HTTP-EQUIV="Window-target" CONTENT="_top">
+<META HTTP-EQUIV="Last-Modified" CONTENT="29-03-2001">
+<META NAME="Description" CONTENT="Использование языка SQL, создание клиент-серверных систем. Конференция по MSSQL, Oracle, Interbase, MySQL. Полезные ссылки, документация, рекомендации по разработке информационных систем, сертификация, заказ книг и многое другое.">
+<META NAME="Keywords" CONTENT="SQL, конференция, Database Server, Oracle, Interbase, MySQL, документация, статьи, примеры, книги, ссылки, сертификация, работа, СУБД">
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../form.css" tppabs="http://www.sql.ru/form.css">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" leftmargin="3" topmargin="3" marginheight="3" marginwidth="3">
+<noindex>
+<TABLE BGCOLOR="#000000" WIDTH=100% CELLPADDING=0 CELLSPACING=0 BORDER=0>
+<TR><TD>
+
+<TABLE WIDTH=100% CELLPADDING=0 CELLSPACING=1 BORDER=0>
+<TR BGCOLOR="#6699CC"><TD><TABLE CELLSPACING=0 CELLPADDING=0 WIDTH=100% BORDER=0 BGCOLOR="#6699CC">
+<TR><TD COLSPAN=3><IMG SRC="../../../images/blank.gif" tppabs="http://www.sql.ru/images/blank.gif" height=3 width=1 alt=""></TD></TR>
+<TR><TD VALIGN=TOP>&nbsp;<FONT FACE="Verdana,Arial" SIZE=5 COLOR=lightyellow>SQL.RU<BR><FONT SIZE=-5>&nbsp;client/server technologies</FONT></FONT><!--begin of Top100--><a href="javascript:if(confirm('http://top100.rambler.ru/top100/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://top100.rambler.ru/top100/'" tppabs="http://top100.rambler.ru/top100/"><img src="../../../../counter.rambler.ru/top100.cnt-236431.gif" tppabs="http://counter.rambler.ru/top100.cnt?236431" alt="Rambler's Top100" width=1 height=1 border=0></a><!--end of Top100 code--></TD>
+<TD WIDTH=468 HEIGHT=60 BGCOLOR=#6699CC ALIGN=RIGHT></TD>
+<TD WIDTH=2><IMG SRC="../../../images/blank.gif" tppabs="http://www.sql.ru/images/blank.gif" height=1 width=2 alt=""></TD></TR>                                                      	
+<TR HEIGHT=4><TD COLSPAN=3><IMG SRC="../../../images/blank.gif" tppabs="http://www.sql.ru/images/blank.gif" height=5 width=1 alt=""></TD></TR></TABLE>
+
+</TD></TR>
+
+<TR HEIGHT=15><TD bgcolor=#006699><FONT FACE="Verdana,Arial" SIZE=1 COLOR=WHITE><B><A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/'" tppabs="http://www.sql.ru/">&nbsp;<FONT COLOR=white>Главная</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/docs  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/docs'" tppabs="http://www.sql.ru/docs">&nbsp;<FONT COLOR=yellow>Документация</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/articles  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/articles'" tppabs="http://www.sql.ru/articles">&nbsp;<FONT COLOR=white>Статьи</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/books  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/books'" tppabs="http://www.sql.ru/books">&nbsp;<FONT COLOR=white>Книги</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/forum/actualforum.aspx  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/forum/actualforum.aspx'" tppabs="http://www.sql.ru/forum/actualforum.aspx">&nbsp;<FONT COLOR=white>Форум</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/poll  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/poll'" tppabs="http://www.sql.ru/poll">&nbsp;<FONT COLOR=white>Опросы</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/forum/actualtopics.aspx?bid=11  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/forum/actualtopics.aspx?bid=11'" tppabs="http://www.sql.ru/forum/actualtopics.aspx?bid=11">&nbsp;<FONT COLOR=white>Гостевая</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/subscribe  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/subscribe'" tppabs="http://www.sql.ru/subscribe">&nbsp;<FONT COLOR=white>Рассылка</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/job  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/job'" tppabs="http://www.sql.ru/job">&nbsp;<FONT COLOR=white>Работа</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/search  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/search'" tppabs="http://www.sql.ru/search">&nbsp;<FONT COLOR=white>Поиск</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/faq  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/faq'" tppabs="http://www.sql.ru/faq">&nbsp;<FONT COLOR=white>FAQ</FONT>&nbsp;</A>|</B></FONT></TD></TR>
+<TR><TD BGCOLOR=#F5F5F5>
+</noindex>
+
+<TABLE BORDER=0 CELLSPACING=10><TR><TD>
+<CENTER>
+<H2 class="headline">
+Приложение D</H2></CENTER>
+<HR width="50%">
+
+<H3>СИНТАКСИС И КОМАНДА ССЫЛКИ</H3>
+<P>Это приложение содержит более краткое описание различных команд SQL. Цель 
+состоит в том, чтобы дать вам быструю и точную ссылку и определение SQL. Первый 
+раздел этого приложения определяет элементы, используемые для создания команд 
+SQL; второй, подробности синтаксиса и предложения с кратким описанием самих 
+команд. Далее показаны стандартные условные обозначения ( они называются BNF 
+условиями): 
+<P>
+<LI>Ключевые cлова набираются в верхнем регистре.<BR><BR>
+<LI>SQL и другие специальные условия заключаются в угловые скобки и набираются 
+курсивом.(&lt; <I>and</I> &gt;) <BR><BR>
+<LI>Необязательные части команд находятся в квадратных скобках ( [and] ). 
+<BR><BR>
+<LI>Многоточие ( .... ) указывает на то что предшествующая часть команды может 
+повторяться любое число раз.<BR><BR>
+<LI>Вертикальна полоса ( | ) означает - то, что ей предшествует может быть 
+заменено на то что следует за ней.<BR><BR>
+<LI>Фигурные Скобки ( {and} ) указывают - все что внутри них, должно быть 
+расценено как целое, для оценки других символов ( например, вертикальных полос 
+или эллипсов ).<BR><BR>
+<LI>Двойное двоеточие и равняется (:: = ) означают - то что следует за ними 
+является определением того что им предшествует.<BR><BR>
+<P>Кроме того, мы будем использовать следующую последовательность (.,.. ) чтобы 
+указывать, что предшествующее этому может повторяться любое число раз с 
+индивидуальными событиями отделяемыми запятыми. Атрибуты которые не являются 
+частью официального стандарта будут отмечены как (*нестандартные*) в описании. 
+<P>
+<b>ОБРАТИТЕ ВНИМАНИЕ: Терминология которую мы используем здесь, не официальна 
+терминология ANSI. Официальная терминология может вас сильно запутать, поэтому 
+мы несколько ее упростили.<BR><BR>По этой причине, мы иногда используем условия 
+отличающиеся от ANSI, или используем те же самые условия но несколько 
+по-другому. Например, наше определение - &lt; predicate &gt; отличается от 
+используемой в ANSI комбинации стандартного определения &lt; predicate &gt; с 
+&lt; search condition &gt;. </b>
+<HR width="50%">
+
+<H3>SQL ЭЛЕМЕНТЫ</H3>
+<P>Этот раздел определяет элементы команд SQL. Они разделены на две категории: 
+<B>Основные элементы языка</B>, и <B>Функциональные элементы языка</B>.
+<P><B>Основные элементы</B> - это создаваемые блоки языка; когда SQL исследует 
+команду, то он сначала оценивает каждый символ в тексте команды в тер- минах 
+этих элементов. Разделители&lt; separator &gt; отделяют одну часть команды от 
+другой; все что находится между разделителями &lt; separator &gt; обрабатывается 
+как модуль. Основываясь на этом разделении, SQL и интерпретирует команду.
+<P><B>Функциональные элементы</B> - это разнообразные вещи отличающиеся от 
+ключевых слов, которые могут интерпретироваться как модули. Это - части команды, 
+отделяемые с помощью разделителей &lt; separator &gt;, имеющих специальное 
+значение в SQL. Некоторые из них являются специальными для определенных команд и 
+будут описаны вместе с этими командами по- зже, в этом приложении. Перечисленное 
+здесь, является общими элементы для всех описываемых команд. Функциональные 
+элементы могут определяться в терминах друг друга или даже в собственных 
+терминах. Например, предикат &lt; predicate &gt;, наш последний и наиболее 
+сложный случай, содержит предикат <PREDICATE>внутри собственного определения. 
+Это потому, что предикат &lt; predicate &gt; использующий AND или OR может 
+содержать любое число предикатов &lt; predicate &gt; которые могут работать 
+автономно. Мы представляли вам предикат &lt; predicate &gt; в отдельной секции в 
+этом приложении, из-за разнообразия и сложности этого функционального элемента 
+языка. Он будет постоянно присутствовать при обсуждении других функциональных 
+частей команд. 
+<P>
+<CENTER><B>ЭЛЕМЕНТЫ ЯЗЫКА БЕЙСИКА</B></CENTER><PRE>ЭЛЕМЕНТ          ОПРЕДЕЛЕНИЕ 
+
+&lt; separator &gt;     &lt; comment &gt; | &lt; space &gt; | &lt; newline &gt; 
+
+&lt; comment &gt;       --&lt; string &gt; &lt; newline &gt; 
+
+&lt; space &gt;         пробел 
+
+&lt; newline &gt;       реализационно-определяемый конец символьной строки 
+
+&lt; identifier &gt;    &lt; letter &gt;[{&lt; letter or digit &gt; | &lt; underscore}... ] 
+                  &lt; ИМЕЙТЕ ВВИДУ: Следу строгому стандарту ANSI, символы 
+                  должны быть набраны в верхнем регистра, а идентификатор
+		  &lt; identifier &gt; не должен быть длиннее 18-ти символов. 
+
+
+ЭЛЕМЕНТ             ОПРЕДЕЛЕНИЕ 
+&lt; underscore &gt;      - 
+
+&lt; percent sign &gt;    % 
+
+&lt; delimiter &gt;       любое из следующих: , ( ) &lt;  &gt; . : = + " - | &lt;&gt; 
+		  &gt; = &lt; = или &lt; string &gt; 
+		 
+&lt; string &gt;          [любой печатаемый текст в одиночных кавычках] 
+                    Примечание: В &lt; string &gt;, две последовательных одиночных 
+                    кавычки ( ' ' )  интерпретируются как одна ( ' ). 
+
+&lt; SQL term &gt;        окончание, зависящее от главного языка. 
+(*только вложенный*) 
+</PRE>
+<H4>ФУНКЦИОНАЛЬНЫЕ ЭЛЕМЕНТЫ</H4><PRE>Следующая таблица  показывает функциональные элементы команд SQL 
+и их определения: 
+
+ЭЛЕМЕНТ                ОПРЕДЕЛЕНИЕ 
+
+&lt; query &gt;              Предложение SELECT 
+
+&lt; subquery &gt;         Заключенное в круглых скобках предложение 
+		    SELECT внутри другого условия, которое, фактически, 
+		    оценивается отдельно для каждой строки-кандидата 
+		    другого предложения. 
+
+&lt; value expression &gt;      &lt; primary &gt; 
+		| &lt; primary &gt; &lt; operator &gt; &lt; primary &gt; 
+		| &lt; primary &gt; &lt; operator &gt; &lt; value expression &gt; 
+
+&lt; operator &gt;             любое из следующих:  +  -  /  * 
+
+&lt; primary &gt;               &lt; column name &gt; 
+		| &lt; literal &gt; 
+		| &lt; aggregate function &gt; 
+		| &lt; built-in constant &gt; 
+		| &lt; nonstandard function &gt; 
+
+&lt; literal &gt;              &lt; string &gt; | &lt; mathematical expressio 
+
+
+ЭЛЕМЕНТ                    ОПРЕДЕЛЕНИЕ 
+&lt; built-in constant &gt;     USER | &lt; implementation-dehned constant &gt; 
+
+&lt; table name &gt;           &lt; identifier &gt; 
+
+&lt; column spec &gt;         [&lt; table name &gt; | &lt; alias &gt;.]&lt; column name &gt; 
+
+&lt; grouping column &gt;   &lt; column spec &gt; | &lt; integer &gt; 
+
+&lt; ordering column &gt;     &lt; column spec &gt; | &lt; integer &gt; 
+
+&lt; colconstraint &gt;       NOT NULL | UNIQUE 
+		| CHECK (&lt; predicate &gt;) 
+		| PRIMARY KEY 
+		|  REFERENCES &lt; table name &gt;[(&lt; column name &gt;)] 
+
+&lt; tabconstraint &gt;         UNIQUE (&lt; column list &gt;) 
+		| CHECK (&lt; predicate &gt;) 
+		| PRIMARY KEY (&lt; column list &gt;) 
+		| FOREIGN KEY (&lt; column list &gt;) 
+		REFERENCES &lt; table name &gt;[(&lt; column list &gt;)] 
+
+&lt; defvalue &gt;          ЗНАЧЕНИЕ ПО УМОЛЧАНИЮ = &lt; value expression &gt; 
+
+&lt; data type &gt;         Допустимый тип данных ( См. <A href="b.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/b.shtml">Приложение B</A> 
+	       для описания типов обеспечиваемых ANSI или 
+	       <A href="c.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/c.shtml">Приложение C</A> для других общих типов. ) 
+
+&lt; size &gt;                Значение зависит от &lt; data type &gt;( См. <A href="b.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/b.shtml">Приложение B</A>. ) 
+
+&lt; cursor name &gt;        &lt; identifier &gt; 
+
+&lt; index name &gt;         &lt; identifier &gt; 
+
+&lt; synonym &gt;            &lt; identifier &gt;(*nonstandard*) 
+
+&lt; owner &gt;              &lt; Authorization ID &gt; 
+
+&lt; column list &gt;         &lt; column spec &gt; .,.. 
+
+&lt; value list &gt;           &lt; value expression &gt; .,.. 
+
+&lt; table reference &gt;      { &lt; table name &gt; [&lt; alias &gt;] } .,.. 
+
+</PRE>
+<HR width="50%">
+
+<H4>ПРЕДИКАТЫ</H4>
+<P>Следующее определяет список различных типов предиката &lt; predicate &gt; 
+описанных на следующих страницах: 
+<P><B>&lt; predicate &gt; ::= [NOT]</B> <PRE>	     { &lt; comparison predicate &gt; 
+	     | &lt; in predicate &gt; 
+	     | &lt; null predicate &gt; 
+	     | &lt; between predicate &gt; 
+	     | &lt; like predicate &gt; 
+	     | &lt; quantified predicate &gt; 
+	     | &lt; exists predicate &gt; } 
+	       [ANDI OR &lt; predicate &gt; ] 
+</PRE>&lt; predicate &gt; - это выражение, которое может быть верным, неверным, 
+или неизвестным, за исключением &lt; exists predicate &gt; и &lt; null predicate 
+&gt;, которые могут быть только верными или неверными. 
+<P>Будет получено неизвестно если NULL значения предотвращают вывод полученного 
+ответа. Это будет случаться всякий раз, когда NULL значение сравнивается с любым 
+значением. Стандартные операторы Буля - AND, OR, и NOT - могут использоваться с 
+предикатом<PREDICATE>. NOT верно = неверно, NOT неверно = верно, а NOT 
+неизвестно = неизвестно. Результаты AND и OR в комбинации с предикатами, 
+показаны в следующих таблицах: <PRE>		  AND 
+
+AND              Верно           Неверно           Неизвестно 
+Верно            верно           неверно           неизвестно 
+Неверно          неверно         неверно           неверно 
+Неизвестно       неизвестно      неверно           неизвестно 
+
+
+		  OR 
+
+OR               Верно          Неверно          Неизвестно 
+Верно            верно          верно            верно 
+Неверно          верно          неверно          неизвестно 
+Неизвестно       верно          неизвестно       неизвестно 
+
+</PRE>
+<P>Эти таблицы читаются способом наподобие таблицы умножения: вы объединяете 
+верные, неверные, или неизвестные значения из строк с их столбцами чтобы на 
+перекрестье получить результат. В таблице AND, например, третий столбец 
+(Неизвестно) и первая строка (Верно) на пересечении в верхнем правом углу дают 
+результат - неизвестно, другими словами: Верно AND Неизвестно = неизвестно. 
+Порядок вычислений определяется круглыми скобками. Они не представляются каждый 
+раз. NOT оценивается первым, далее AND и OR. Различные типы предикатов &lt; 
+predicate &gt; рассматриваются отдельно в следующем разделе. 
+<P>
+<HR width="40%">
+<B>&lt; comparison predicate &gt; (предикат сравнения)</B> 
+<P><B><I>Синтаксис</I></B> 
+<P>&lt; value expresslon &gt; &lt; relational op &gt; &lt; value expresslon &gt; 
+|<BR>&lt; subquery &gt; <BR>&lt; relatlonal op &gt; :: =<BR>=<BR>| &lt; <BR>| 
+&gt; <BR>| &lt; <BR>| &gt;= <BR>| &lt; &gt; <BR>
+<P>Если либо &lt; value expression &gt; = NULL, либо &lt; comparison predicate 
+&gt; = неизвестно; другими словами, это верно если сравнение верно или неверно 
+если сравнение неверно.<BR>&lt; relational op &gt; имеет стандартные 
+математические значения для числовых значений; для других типов значений, эти 
+значения определяются конкретной реализацией.<BR>Оба &lt; value expression &gt; 
+должны иметь сравнимые типы данных. Если подзапрос &lt; subquery &gt; 
+используется, он должен содержать одно выражение &lt; value expression &gt; в 
+предложении SELECT, чье значение будет заменять второе выражение &lt; value 
+expression &gt; в предикате сравнения &lt; comparision predicate &gt;, каждый 
+раз когда &lt; subquery &gt; действительно выполняется.
+<P>
+<HR width="40%">
+<B>&lt; between predicate &gt;</B> 
+<P><B><I>Синтаксис</I></B> 
+<P>&lt; value expression &gt; [NOT] BETWEEN &lt; value expression &gt;<BR>AND 
+&lt; value expression &gt; <BR>
+<P>&lt; between predicate &gt; - A BETWEEN B AND C , имеет такое же значение что 
+и &lt; predicate &gt; - ( A &gt;= B AND &lt; = C). &lt; between predicate &gt; 
+для которого A NOT BETWEEN B AND C, имеет такое же значение что и NOT ( BETWEEN 
+B AND C). &lt; value expression &gt; может быть выведено с помощью 
+нестандартного запроса &lt; subquery &gt; ( *nonstandard* ).
+<P>
+<HR width="40%">
+<B>&lt; in prediicate &gt;</B> 
+<P><B><I>Синтаксис</I></B> 
+<P>&lt; value expression &gt; [NOT] IN &lt; value list &gt; | &lt; subquery 
+&gt;<BR>
+<P>Список значений &lt; value list &gt; будет состоять из одного или более 
+перечисленных значений в круглых скобках и отделяемых запятыми, которые имеют 
+сравнимый с &lt; value expression &gt; тип данных. Если используется подзапрос 
+&lt; subquery &gt;, он должен содержать только одно выражение &lt; value 
+expression &gt; в предложении SELECT ( возможно и больше, но это уже будет вне 
+стандарта ANSI ). Подзапрос &lt; subquery &gt; фактически, выполняется отдельно 
+для каждой строки-кандидата основного запроса, и значения которые он выведет, 
+будут составлять список значений &lt; value list &gt; для этой строки. В любом 
+случае, предикат &lt; in predicate &gt; будет верен если выражение &lt; value 
+expression &gt; представленное в списке значений &lt; value list &gt;, если не 
+указан NOT. Фраза A NOT IN (B, C) является эквивалентом фразы NOT (A IN (B, C)). 
+
+<P>
+<HR width="40%">
+<B>&lt; like predicate &gt;</B> 
+<P><B><I>Синтаксис</I></B> 
+<P>&lt; charvalue &gt; [NOT] LIKE &lt; pattern &gt; [ESCAPE<BR>&lt; escapechar 
+&gt;] 
+<P>&lt; charvalue &gt; - это любое *нестандартное* выражение &lt; value 
+expression &gt; алфавитно-цифрового типа. &lt; charvalue &gt; может быть, в 
+соответствии со стандартом, только определенным столбцом &lt; column spec &gt;. 
+Образец &lt; pattern &gt; состоит из строки<STRING> которая будет проверена на 
+совпадение с &lt; charvalue &gt;. Символ окончания &lt; escapechar &gt; - это 
+одиночный алфавитно-цифровой символ. Совпадение произойдет, если верны следующие 
+условия : 
+<P></P>
+<LI>Для каждого символа подчеркивания &lt; underscore &gt; в образце &lt; 
+pattern &gt; которая не предшествует символу окончания &lt; escapechar &gt;, 
+имеется один соответствующий ему символ &lt; charvalue &gt;.<BR><BR>
+<LI>Для каждого &lt; percent sign &gt; в образце &lt; pattern &gt;, который не 
+предшествует &lt; escapechar &gt;, имеются нули или более соответствующие 
+символы в &lt; charvalue &gt;.<BR><BR>
+<LI>Для каждого &lt; escapechar &gt; в &lt; pattern &gt; который не предшествует 
+другому &lt; escapechar &gt;, нет никакого соответствующего символа в &lt; 
+charvalue &gt;.<BR><BR>
+<LI>Для каждого иного символа в &lt; pattern &gt;, один и тот же символ 
+устанавливается у соответствующей отметке в &lt; charvalue &gt;.<BR><BR>Если 
+совпадение произошло, &lt; like predicate &gt; - верен, если не был указан NOT. 
+Фраза NOT LIKE 'текст' - эквивалентна NOT ( A LIKE 'текст'). 
+<P>
+<HR width="40%">
+<B>&lt; null predicate &gt;</B> 
+<P><B><I>Синтаксис</I></B> 
+<P>&lt; column spec &gt; IS [NOT] NULL 
+<P>&lt; column spec &gt; = IS NULL, если NULL значение представлено в этом 
+столбце. Это сделает &lt; null predicate &gt; верным если не указан NULL. Фраза 
+&lt; column spec &gt; IS NOT NULL, имеет тот же результат что и NOT ( &lt; 
+column spec &gt; IS NULL ). 
+<P>
+<HR width="40%">
+<B>&lt; quantified predicate &gt;</B> 
+<P><B><I>Синтаксис</I></B> 
+<P>&lt; value expression &gt; &lt; relational op &gt;<BR>&lt; quantifier &gt; 
+&lt; subquery &gt; <BR>&lt; quantifier &gt; :: = ANY | ALL | SOME 
+<P>Предложение SELECT подзапроса &lt; subquery &gt; должно содержать одно и 
+только одно выражение значения &lt; value expression &gt;. Все значения 
+выведенные подзапросом &lt; subquery &gt; составляют набор результатов &lt; 
+result set &gt;. &lt; value expression &gt; сравнивается, используя оператор 
+связи &lt; relational operator &gt;, с каждым членом набора результатов &lt; 
+result set &gt;. Это сравнение оценивается следующим образом:
+<P></P>
+<LI>Если &lt; quantifier &gt; = ALL, и каждый член набора результатов &lt; 
+result set &gt; делает это сравнение верным, &lt; quantified predicate &gt; - 
+верен.<BR><BR>
+<LI>Если &lt; quantifier &gt; = ANY, и имеется по крайней мере один член из 
+набора результатов &lt; result set &gt; , который делает верным это сравнение, 
+то &lt; quantified predicate &gt; является верным.<BR><BR>
+<LI>Если набор результатов &lt; result set &gt; пуст, то &lt; quantified 
+predicate &gt; верен, если &lt; quantifier &gt; = ALL , и неверен если 
+иначе.<BR><BR>
+<LI>Если &lt; quantifier &gt; = SOME, эффект - тот же что и для ANY.<BR><BR>
+<LI>Если &lt; quantified predicate &gt; не верен и не неверен, он - неизвестен.
+<P>
+<HR width="40%">
+<B>&lt; exists predicate &gt;</B> 
+<P><B><I>Синтаксис:</I></B> 
+<P>EXISTS (&lt; subquery &gt;) 
+<P>Если подзапрос &lt; subquery &gt; выводит одну или более строк вывода, &lt; 
+exists predicate &gt; - верен; и неверен если иначе. 
+<P>
+<HR width="70%">
+
+<H3>SQL КОМАНДЫ</H3>
+<P>Этот раздел подробно описывает синтаксис различных команд SQL. Это даст вам 
+возможность быстро отыскивать команду, находить ее синтаксис и краткое описание 
+ее работы. <BR><BR>ИМЕЙТЕ ВВИДУ Команды которые начинаются словами - EXEC SQL, а 
+также команды или предложения заканчивающиеся словом - <SQL term>могут 
+использоваться только во вложенном SQL. 
+<P>
+<HR width="40%">
+
+<H5>BEGIN DECLARE SECTION (НАЧАЛО РАЗДЕЛА ОБЪЯВЛЕНИЙ)</H5>
+<P><B><I>Синтаксис</I></B> 
+<P>EXEC SQL BEGIN DECLARE SECTION &lt; SQL term &gt; &lt; host-language variable 
+declarations &gt; EXEC SQL END DECLARE SECTION &lt; SQL term &gt; 
+<P>Эта команда создает раздел программы главного языка для объявления в ней 
+главных переменных, которые будут использоваться во вкладываемых операторах SQL. 
+Переменна SQLCODE должна быть включена как одна из объявляемых переменных 
+главного языка. 
+<P>
+<HR width="40%">
+
+<H5>CLOSE CURSOR (ЗАКРЫТЬ КУРСОР)</H5>
+<P><B><I>Синтаксис</I></B> 
+<P>EXEC SQL CLOSE CURSOR &lt; cursor name &gt; &lt; SQL term &gt;; 
+<P>Эта команда указывает курсору закрыться, после чего ни одно значение не 
+сможет быть выбрано из него до тех пор пока он не будет снова открыт. 
+<P>
+<HR width="40%">
+
+<H5>COMMIT (WORK) (ФИКСАЦИЯ (ТРАНЗАКЦИИ))</H5>
+<P><B><I>Синтаксис</I></B> 
+<P>COMMIT WORK; 
+<P>Эта команда оставляет неизменными все изменения сделанных в базе данных, до 
+тех пор пока начавшаяся транзакция не закончится, и не начнется новая 
+транзакция. 
+<P>
+<HR width="40%">
+
+<H5>CREATE INDEX (СОЗДАТЬ ИНДЕКС)</H5>
+<P>(*NONSTANDARD*) (НЕСТАНДАРТНО) 
+<P><B><I>Синтаксис</I></B> 
+<P>CREATE [UNIQUE] INDEX &lt; Index name &gt;<BR>ON &lt; table name &gt; (&lt; 
+column list &gt;);<BR>
+<P>Эта команда создает эффективный маршрут с быстрым доступом для поиска строк 
+содержащих обозначенные столбцы. Если UNIQUE - указана, таблица не сможет 
+содержать дубликатов(двойников) значений в этих столбцах. 
+<P>
+<HR width="40%">
+
+<H5>CREATE SYNONYM (*NONSTANDARD*)<BR>(СОЗДАТЬ СИНОНИМ) ( *НЕСТАНДАРТНО* )</H5>
+<P><B><I>Синтаксис</I></B> 
+<P>CREATE IPUBLICl SYNONYM &lt; synonym &gt; FOR<BR>&lt; owner &gt;.&lt; table 
+name &gt;; 
+<P>Эта команда создает альтернативное(синоним) им для таблицы. Синоним 
+принадлежит его создателю, а сама таблица, обычно другому пользователю. 
+Используя синоним, его владелец может не ссылаться к таблице ее полным ( включая 
+им владельца ) именем. Если PUBLIC - указан, синоним принадлежит каталогу SYSTEM 
+и следовательно доступен всем пользователям. 
+<P>
+<HR width="40%">
+
+<H5>CREATE TABLE (СОЗДАТЬ ТАБЛИЦУ)</H5>
+<P><B><I>Синтаксис</I></B> 
+<P>CREATE TABLE &lt; table name &gt;<BR>({&lt; column name &gt; &lt; data type 
+&gt;[&lt; size &gt;]<BR>[&lt; colconstralnt &gt; . . .] <BR>[&lt; defvalue 
+&gt;]} . , . . &lt; tabconstraint &gt; . , . .); 
+<P>Команда создает таблицу в базе данных. Эта таблица будет принадлежать ее 
+создателю. Столбцы будут рассматриваться в поименном порядке. &lt; data type 
+&gt; - определяет тип данных который будет содержать столбец. Стандарт &lt; data 
+type &gt; описывается в <A 
+href="b.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/b.shtml">Приложении 
+B</A>; все прочие используемые типы данных &lt; data type &gt;, обсуждались в <A 
+href="c.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/c.shtml">Приложении 
+C</A>. Значение размера &lt; size &gt; зависит от типа данных &lt; data type 
+&gt;.<BR>&lt; colconstraint &gt; и &lt; tabconstraint &gt; налагают ограничения 
+на значения ко торые могут быть введены в столбцу. <BR>&lt; defvalue &gt; 
+определяет значение(по умолчанию) которое будет вставлено автоматически, если 
+никакого другого значения не указано для этой строки. ( См. <A 
+href="ch17.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch17.shtml">Главу 
+17</A> для подробностей о самой команде CREATE TABLE и<A 
+href="ch18.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch18.shtml">Главы 
+18</A> И <A 
+href="ch19.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch19.shtml">19</A> для 
+подробностей об ограничениях и о &lt; defvalue &gt; ). 
+<P>
+<HR width="40%">
+
+<H5>CREATE VIEW (СОЗДАТЬ ПРОСМОТР)</H5>
+<P><B><I>Синтаксис</I></B> 
+<P>CREATE VIEW &lt; table name &gt;<BR>AS &lt; query &gt; <BR>[WITH CHECK 
+OPTION]; 
+<P>Просмотр обрабатывается как люба таблица в командах SQL. Когда команда 
+ссылается на имя таблицы &lt; table name &gt;, запрос &lt; query &gt; 
+выполняется, и его вывод соответствует содержанию таблицы указанной в этой 
+команде. <BR>Некоторые просмотры могут модифицироваться, что означает, что 
+команды модификации могут выполняться в этих просмотрах и передаваться в 
+таблицу, на которую была ссылка в запросе &lt; query &gt;. Если указано 
+предложение WITH CHECK OPTION, эта модификация должны также удовлетворять 
+условию предиката &lt; predicate &gt; в запросе &lt; query &gt;. 
+<P>
+<HR width="40%">
+
+<H5>DECLARE CURSOR (ОБЪЯВИТЬ КУРСОР)</H5>
+<P><B><I>Синтаксис</B></I> 
+<P>EXEC SQL DECLARE &lt; cursor name &gt; CURSOR FOR <BR>&lt; query &gt;&lt; SQL 
+term &gt; 
+<P>Эта команда связывает им курсора &lt; cursor name &gt;, с запросом &lt; query 
+&gt;. Когда курсор открыт ( см. OPEN CURSOR ), запрос &lt; query &gt; выполняет 
+ся, и его результат может быть выбран(командой FETCH) для вывода. Если курсор 
+модифицируемый, таблица на которую ссылается запрос &lt; query &gt;, может 
+получить изменение содержания с помощью операции модификации в курсоре ( См. <A 
+href="ch25.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch25.shtml">Главу 
+25</A> о модифицируемых курсорах ). 
+<P>
+<HR width="40%">
+
+<H5>DELETE (УДАЛИТЬ)</H5>
+<P><B><I>Синтаксис</I></B> 
+<P>DELETE FROM &lt; table name &gt;<BR>{ [WHERE &lt; predicate &gt;]; } <BR>| 
+WHERE CURRENT OF &lt; cursorname &gt;&lt; SQL term &gt; 
+<P>Если предложение WHERE отсутствует, ВСЕ строки таблицы удаляются. Если 
+предложение WHERE использует предикат &lt; predicate &gt;, строки, ко торые 
+удовлетворяют условию этого предиката &lt; predicate &gt; удаляются. Если 
+предложение WHERE имеет аргумент CURRENT OF(ТЕКУЩИЙ) в имени курсора &lt; cursor 
+name &gt;, строка из таблицы &lt; table name &gt; на ко торую в данный момент 
+имеется ссылка с помощью имени курсора &lt; cursor name &gt; будет удалена. 
+Форма WHERE CURRENT может использоваться только во вложенном SQL, и только с 
+модифицируемыми курсорами. 
+<P>
+<HR eidth="40%">
+
+<H5>EXEC SQL (ВЫПОЛНИТЬ SQL)</H5>
+<P><B><I>Синтаксис</I></B> 
+<P>EXEC SQL &lt; embedded SQL command &gt; &lt; SQL term &gt; 
+<P>EXEC SQL используется чтобы указывать начало всех команд SQL, вложенных в 
+другой язык. 
+<P>
+<HR width="40%">
+
+<H5>FETCH (ВЫБОРКА)</H5>
+<P><B><I>Синтаксис</I></B> 
+<P>EXEC SQL FETCH &lt; cursorname &gt;<BR>INTO &lt; host-varlable llst &gt;&lt; 
+SQL term &gt;
+<P>FETCH принимает вывод из текущей строки запроса &lt; query &gt;, вставляет ее 
+в список главных переменных &lt; host-variable list &gt;, и перемещает кур сор 
+на следующую строку. Список &lt; host-variable list &gt; может включать 
+переменную indicator в качестве целевой переменной ( См. <A 
+href="ch25.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch25.shtml">Главу 
+25</A>. ) 
+<P>
+<HR width="40%">
+
+<H5>GRANT (ПЕРЕДАТЬ ПРАВА)</H5>
+<P><B><I>Синтаксис (стандартный)</I></B> 
+<P>GRANT ALL [PRIVILEGES]<BR>| {SELECT <BR>| INSERT <BR>| DELETE <BR>| UPDATE 
+[(&lt; column llst &gt;)] <BR>| REFERENCES [(&lt; column llst &gt;)l } . , . . 
+<BR>ON &lt; table name &gt; . , . .<BR>TO PUBLIC | &lt; Authorization ID &gt; . 
+, . .<BR>[WITH GRANT OPTION]; 
+<P>Аргумент ALL(ВСЕ), с или без PRIVILEGES(ПРИВИЛЕГИИ), включает каждую 
+привилегию в список привилегий. PUBLIC(ОБЩИЙ) включает всех существующих 
+пользователей и всех созданных в будущем. Эта команда дает возможность передать 
+права для выполнения действий в таблице с указанным именем. REFERENCES позволяет 
+дать права чтобы использовать столбцы в списке столбцов &lt; column list &gt; 
+как родительский ключ для внешнего ключа. Другие привилегии состоят из права 
+выполнять команды для которых привилегии указаны их именами в таблице. UPDATE, 
+подобен REFERENCES, и может накладывать ограничения на определенные столбцы. 
+GRANT OPTION дает возможность передавать эти привилегии другим пользователям. 
+<P><B><I>Синтаксис ( нестандартный )</I></B> 
+<P>GRANT DBA <BR>| RESOURCE <BR>| CONNECT ... . <BR>TO &lt; Authorization ID 
+&gt; . , . . <BR>[IDENTIFIED BY &gt; password &gt; 
+<P>CONNECT дает возможность передавать право на регистрации и некоторые другие 
+ограниченные права. RESOURCE дает пользователю право создавать таблицы. DBA дает 
+воз- можность передавать почти все права. IDENTIFIED BY используется вместе с 
+CONNECT, для создания или изменения пароля пользователя. 
+<P>
+<HR width="40%">
+
+<P>
+<H5>INSERT (ВСТАВКА)</H5>
+<P><B><I>Синтаксис</I></B> 
+<P>INSERT INTO &lt; table name &gt; (&lt; column llst &gt;)<BR>VALUES (&lt; 
+value llst &gt;) I &lt; query &gt;; 
+<P>INSERT создает одну или больше новых строк в таблице с именем &lt; table name 
+&gt;. Если используется предложение VALUES , их значения вставляются в таблицу с 
+именем &lt; table name &gt;. Если запрос &lt; query &gt; указан, каждая строка 
+вывода будет вставлена в таблицу с именем &lt; table name &gt;. Если список 
+столбцов &lt; column list &gt; отсутствует, все столбцы таблицы &lt; table name 
+&gt;, принимаются в упорядоченном виде. 
+<P>
+<HR width="40%">
+
+<P>
+<H5>OPEN CURSOR (ОТКРЫТЬ КУРСОР)</H5>
+<P><B><I>Синтаксис</I></B> 
+<P>EXEC SQL OPEN CURSOR &lt; cursorname &gt;&lt; SQL term &gt; 
+<P>OPEN CURSOR выполняет запрос связанный с курсором &lt; cursor name &gt;. 
+Вывод может теперь извлекать по одной строке для каждой команды FETCH. 
+<P>
+<HR width="40%">
+
+<P>
+<H5>REVOKE (*NONSTANDARD*)<BR>(ОТМЕНИТЬ ПОЛНОМОЧИЯ) (НЕСТАНДАРТНО)</H5>
+<P><B><I>Синтаксис</I></B> 
+<P>REVOKE { ALL [PRIVILEGES] <BR>| &lt; privilege &gt; . , . . } [ON &lt; table 
+name &gt;] <BR>FROM { PUBLIC <BR>| &lt; Authorization ID &gt; . , . . };
+<P>Привилегия &lt; privelege &gt; может быть любой из указанных в команде GRANT. 
+Пользователь дающий REVOKE должен иметь те же привилегии, что и пользователь 
+который давал GRANT. Предложение ON может быть использовано, если используется 
+привилегия специального типа для особого объекта. 
+<P>
+<HR width="40%">
+
+<P>
+<H5>ROLLBACK (WORK)<BR>(ОТКАТ) (ТРАНЗАКЦИИ)</H5>
+<P><B><I>Синтаксис</I></B> 
+<P>ROLLBACK WORK; 
+<P>Команда отменяет все изменения в базе данных, сделанные в течение те- кущей 
+транзакции. Она кроме того заканчивается текущую, и начинает новую транзакцию. 
+<P>
+<HR width="40%">
+
+<P>
+<H5>SELECT (ВЫБОР)</H5>
+<P><B><I>Синтаксис</I></B> 
+<P>SELECT { IDISTINCT | ALL] &lt; value expression &gt; . , . . } / * <BR>[INTO 
+&lt; host variable list &gt; (*embedded only*)] <BR>FROM &lt; table reference 
+&gt; . , . . <BR>[WHERE &lt; predicate &gt;] <BR>[GROUP BY &lt; grouping column 
+&gt; . , . .]<BR>[HAVING &lt; predicate &gt;] <BR>[ORDER BY &lt; ordering column 
+&gt; [ASC | DESC] . , . . ]; 
+<P>Это предложение организует запрос и выводит значения из базы данных (см. 
+Глава 3 - Глава 14 ). Применяются следующие правила: 
+<P></P>
+<LI>Если ни ALL, ни DISTINCT - не указаны, принимается - ALL.<BR><BR>
+<LI>Выражение &lt; value expression &gt; состоит из &lt; column spec &gt;, 
+агрегатной функции &lt; aggregate funct &gt;, нестандартной функции &lt; 
+nonstandard fu nction &gt;, постоянной &lt; constant &gt;, или любой их 
+комбинации с операторами в допустимых выражениях.<BR><BR>
+<LI>Ссылаемая таблица &lt; table reference &gt;, состоит из имени таблицы, 
+включая префикс владельца если текущий пользователь не владелец, или 
+синоним(нестандартно) для таблицы. Таблица может быть или базовой таблицей или 
+просмотром. В принципе, псевдоним может указать, как- ой синонимом используется 
+для таблицы только на врем текущей ко- манды. Имя таблицы или синоним должны 
+отделяться от псевдонима одним или более разделительными знаками &lt; separator 
+&gt;.<BR><BR>
+<LI>Если используется GROUP BY, все столбцы &lt; column spec &gt; используемые в 
+предложении SELECT, должны будут использоваться как группа столбцов &lt; 
+grouping column &gt;, если они не содержатся в агрегатной функции &lt; aggregate 
+funct &gt;. Вся группа столбцов &lt; grouping column &gt; должна быть 
+представлена среди выражений &lt; value expressions &gt; указанных в предложении 
+SELECT. Для каждой отдельной комбинации значений группы столбцов &lt; grouping 
+column &gt;, будет иметься одна и только одна строка вывода. <BR><BR>
+<LI>Если HAVING используется, предикат &lt; predicate &gt; применяется к каждой 
+строке произведенной предложением GROUP BY, и те строки которые сделают этот 
+предикат верным, будут выведены.<BR><BR>
+<LI>Если ORDER BY используется, вывод имеет определенную последовательность. 
+Каждый идентификатор столбца &lt; column identifer &gt; ссылается к указанному 
+&lt; value expression &gt; в предложении SELECT. Если это &lt; value expression 
+&gt; является указанным столбцом &lt; column spec &gt;, &lt; co lumn identifier 
+&gt; может быть таким же как &lt; column spec &gt;. Иначе &lt; co lumn 
+identifier &gt; может быть положительным целым числом, указываю щим место где 
+находится &lt; value expression &gt; в последовательности предложения SELECT. 
+Вывод будет сформирован так чтобы помещать значения содержащиеся в &lt; column 
+identifier &gt; в порядке возрастания, если DESC не указан. Имя идентификатора 
+столбца &lt; column identifier &gt; стоящее первым в предложении ORDER BY будет 
+предшествовать позже стоящим именам в определении последовательности вывода. 
+<P>Предложение SELECT оценивает каждую строку-кандидат таблицы в которой строки 
+показаны независимо. Строка-кандидат определяется следующим образом: 
+<P></P>
+<LI>Если только одна ссылаемая таблица &lt; table reference &gt; включена, 
+каждая строка этой таблица в свою очередь является строкой-кандидатом.<BR><BR>
+<LI>Если более одной ссылаемой таблицы &lt; table reference &gt; включено, 
+каждая строка каждой таблицы должна быть скомбинирована в свою очередь с каждой 
+комбинацией строк из всех других таблиц. Каждая такая комбинация будет в свою 
+очередь строкой-кандидатом. 
+<P>Каждая строка-кандидат производит значения, которые делают предикат &lt; 
+predicate &gt; в предложении WHERE верным, неверным, или неизвестным. Если GROUP 
+BY не используется, каждое &lt; value expression &gt; применяется в свою очередь 
+для каждой строки-кандидата чье значение делает предикат верным, и результатом 
+этой операции является вывод.<BR>Если GROUP BY используется, строки-кандидаты 
+комбинируются, используя агрегатные функции. Если никакого предиката &lt; 
+predicate &gt; не установлено, каждое выражение&lt; value expression &gt; 
+применяется к каждой строке-кандидату или к каждой группе. Если указан DISTINCT, 
+дубликаты( двойники) строк будут удалены из вывода. 
+<P>
+<HR width="40%">
+
+<P>
+<H5>UNION (ОБЪЕДИНЕНИЕ)</H5>
+<P><B><I>Синтаксис</I></B> 
+<P>&lt; query &gt; {UNION [ALL] &lt; query &gt; } . . . ; 
+<P>Вывод двух или более запросов &lt; query &gt; будет объединен. Каждый запрос 
+&lt; query &gt; должен содержать один и тот же номер &lt; value expression &gt; 
+в предложение SELECT и в таком порядке что 1.. n каждого, совместим по типу 
+данных &lt; data type &gt; и размеру &lt; size &gt; с 1.. n всех других. 
+<P>
+<HR width="40%">
+
+<P>
+<H5>UPDATE (МОДИФИКАЦИЯ)</H5>
+<P><B><I>Синтаксис</I></B> 
+<P>UPDATE &lt; table name &gt;<BR>SET { &lt; column name &gt; = &lt; value 
+expression &gt; } . , . .<BR>{[ WHERE &lt; predlcate &gt;]; } <BR>| {[WHERE 
+CURRENT OF &lt; cursorname &gt;] <BR>&lt; SQL term &gt;]} 
+<P>UPDATE изменяет значения в каждом столбце с именем &lt; column name &gt; на 
+соответствующее значение &lt; value expression &gt;. Если предложение WHERE 
+использует предикат &lt; predicate &gt;, то только строки таблиц чьи текущие 
+значения делают тот предикат &lt; predicate &gt; верным, могут быть изменены. 
+Если WHERE использует предложение CURRENT OF, то значения в строке таблицы с 
+именем &lt; table name &gt; находящиеся в курсоре с именем &lt; cursor name &gt; 
+меняются. WHERE CURRENT OF пригодно для использования только во вложенном SQL, и 
+только с модифицируемыми курсорами. При отсутствии предложения WHERE - все 
+строки меняются. 
+<P>
+<HR width="40%">
+
+<P>
+<H5>WHENEVER (ВСЯКИЙ РАЗ КАК)</H5>
+<P><B><I>Синтаксис</I></B> 
+<P>EXEC SQL WHENEVER &lt; SQLcond &gt; &lt; actlon &gt; &lt; SQL term 
+&gt;<BR>&lt; SQLcond &gt; :: = SQLERROR | NOT FOUND | SQLWARNING <BR>(последнее 
+- нестандартное) <BR>&lt; action &gt; :: = CONTINUE | GOTO &lt; target &gt; | 
+GOTO &lt; target &gt;<BR>&lt; target &gt; :: = зависит от главного языка 
+</P></LI>
+</TD></TR></TABLE>
+</TD></TR>
+<TR BGCOLOR=#6699CC><TD><TABLE WIDTH=100% BORDER=0 CELLSPACING=0 CELLPADDING=0><TR><TD BGCOLOR=#6699CC VALIGN=CENTER HEIGHT = 40><FONT SIZE=-10>
+<!--begin of Top100 logo-->
+<a href="javascript:if(confirm('http://top100.rambler.ru/top100/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://top100.rambler.ru/top100/'" tppabs="http://top100.rambler.ru/top100/">
+<img src="../../../../top100-images.rambler.ru/top100/banner-88x31-rambler-gray2.gif" tppabs="http://top100-images.rambler.ru/top100/banner-88x31-rambler-gray2.gif" alt="Rambler's Top100" width=88 height=31 border=0></a>
+<!--end of Top100 logo -->
+</FONT>
+<!--Rating@Mail.ru COUNTER--><a target=_top
+href="javascript:if(confirm('http://top.mail.ru/jump?from=58574  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://top.mail.ru/jump?from=58574'" tppabs="http://top.mail.ru/jump?from=58574"><img
+src="../../../../top.list.ru/counter-id=58574;t=94.gif" tppabs="http://top.list.ru/counter?id=58574;t=94"
+border=0 height=18 width=88
+alt="Рейтинг@Mail.ru"></a><!--/COUNTER-->
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="font : bold 10px verdana; color : white" href="javascript:if(confirm('http://hosting.parking.ru/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://hosting.parking.ru/'" tppabs="http://hosting.parking.ru/">Хостинг от компании Parking.ru</a>
+<script src="../../../../www.google-analytics.com/urchin.js" tppabs="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-265508-1";
+urchinTracker();
+</script>
+</TD>
+<TD BGCOLOR=#6699CC ALIGN=right><FONT COLOR=white FACE="Tahoma,Arial" SIZE=1>&nbsp;Administrator:&nbsp;<A STYLE="color :white" HREF="mailto:admin@sql.ru">admin@sql.ru</A>&nbsp;<BR>Last update: <FONT COLOR=white>05 июн 2007&nbsp;</FONT></FONT></TD></TR></TABLE>
+</TD></TR></TABLE></TD></TR></TABLE>
+
+</BODY></HTML>
+

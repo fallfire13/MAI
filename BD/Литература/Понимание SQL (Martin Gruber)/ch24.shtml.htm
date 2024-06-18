@@ -1,0 +1,738 @@
+<HTML>
+<HEAD>
+<TITLE>Понимание SQL. Глава 24. Как данные SQL содержатся в упорядоченном виде. [SQL.RU]</TITLE>
+<META http-equiv="Content-Type" CONTENT="text/html; charset=windows-1251">
+<META HTTP-EQUIV="Window-target" CONTENT="_top">
+<META HTTP-EQUIV="Last-Modified" CONTENT="29-03-2001">
+<META NAME="Description" CONTENT="Использование языка SQL, создание клиент-серверных систем. Конференция по MSSQL, Oracle, Interbase, MySQL. Полезные ссылки, документация, рекомендации по разработке информационных систем, сертификация, заказ книг и многое другое.">
+<META NAME="Keywords" CONTENT="SQL, конференция, Database Server, Oracle, Interbase, MySQL, документация, статьи, примеры, книги, ссылки, сертификация, работа, СУБД">
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../form.css" tppabs="http://www.sql.ru/form.css">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" leftmargin="3" topmargin="3" marginheight="3" marginwidth="3">
+<noindex>
+<TABLE BGCOLOR="#000000" WIDTH=100% CELLPADDING=0 CELLSPACING=0 BORDER=0>
+<TR><TD>
+
+<TABLE WIDTH=100% CELLPADDING=0 CELLSPACING=1 BORDER=0>
+<TR BGCOLOR="#6699CC"><TD><TABLE CELLSPACING=0 CELLPADDING=0 WIDTH=100% BORDER=0 BGCOLOR="#6699CC">
+<TR><TD COLSPAN=3><IMG SRC="../../../images/blank.gif" tppabs="http://www.sql.ru/images/blank.gif" height=3 width=1 alt=""></TD></TR>
+<TR><TD VALIGN=TOP>&nbsp;<FONT FACE="Verdana,Arial" SIZE=5 COLOR=lightyellow>SQL.RU<BR><FONT SIZE=-5>&nbsp;client/server technologies</FONT></FONT><!--begin of Top100--><a href="javascript:if(confirm('http://top100.rambler.ru/top100/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://top100.rambler.ru/top100/'" tppabs="http://top100.rambler.ru/top100/"><img src="../../../../counter.rambler.ru/top100.cnt-236431.gif" tppabs="http://counter.rambler.ru/top100.cnt?236431" alt="Rambler's Top100" width=1 height=1 border=0></a><!--end of Top100 code--></TD>
+<TD WIDTH=468 HEIGHT=60 BGCOLOR=#6699CC ALIGN=RIGHT></TD>
+<TD WIDTH=2><IMG SRC="../../../images/blank.gif" tppabs="http://www.sql.ru/images/blank.gif" height=1 width=2 alt=""></TD></TR>                                                      	
+<TR HEIGHT=4><TD COLSPAN=3><IMG SRC="../../../images/blank.gif" tppabs="http://www.sql.ru/images/blank.gif" height=5 width=1 alt=""></TD></TR></TABLE>
+
+</TD></TR>
+
+<TR HEIGHT=15><TD bgcolor=#006699><FONT FACE="Verdana,Arial" SIZE=1 COLOR=WHITE><B><A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/'" tppabs="http://www.sql.ru/">&nbsp;<FONT COLOR=white>Главная</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/docs  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/docs'" tppabs="http://www.sql.ru/docs">&nbsp;<FONT COLOR=yellow>Документация</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/articles  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/articles'" tppabs="http://www.sql.ru/articles">&nbsp;<FONT COLOR=white>Статьи</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/books  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/books'" tppabs="http://www.sql.ru/books">&nbsp;<FONT COLOR=white>Книги</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/forum/actualforum.aspx  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/forum/actualforum.aspx'" tppabs="http://www.sql.ru/forum/actualforum.aspx">&nbsp;<FONT COLOR=white>Форум</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/poll  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/poll'" tppabs="http://www.sql.ru/poll">&nbsp;<FONT COLOR=white>Опросы</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/forum/actualtopics.aspx?bid=11  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/forum/actualtopics.aspx?bid=11'" tppabs="http://www.sql.ru/forum/actualtopics.aspx?bid=11">&nbsp;<FONT COLOR=white>Гостевая</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/subscribe  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/subscribe'" tppabs="http://www.sql.ru/subscribe">&nbsp;<FONT COLOR=white>Рассылка</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/job  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/job'" tppabs="http://www.sql.ru/job">&nbsp;<FONT COLOR=white>Работа</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/search  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/search'" tppabs="http://www.sql.ru/search">&nbsp;<FONT COLOR=white>Поиск</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/faq  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/faq'" tppabs="http://www.sql.ru/faq">&nbsp;<FONT COLOR=white>FAQ</FONT>&nbsp;</A>|</B></FONT></TD></TR>
+<TR><TD BGCOLOR=#F5F5F5>
+</noindex>
+
+<TABLE BORDER=0 CELLSPACING=10><TR><TD>
+<CENTER>
+<H2 class="headline">
+24. КАК ДАННЫЕ SQL СОДЕРЖАТСЯ В УПОРЯДОЧЕННОМ ВИДЕ</H2></CENTER> 
+В этой главе, вы узнаете как типовая SQL база 
+данных сохраняет самоорганизованность. 
+Не удивительно, что самоорганизованность обеспечивается реляционной 
+базой данных, создаваемой и поддерживаемой с помощью программы. 
+Вы можете обращаться к этим таблицам самостоятельно для получения 
+информации о привилегиях, таблицах, индексах, и так далее. Эта глава 
+покажет вам некоторые типы содержащиеся в такой базе данных. 
+ <A name=24.1>
+<H3>КАТАЛОГ СИСТЕМЫ</H3> 
+ 
+Чтобы функционировать как SQL база данных, ваша компьютерная система 
+должна следить за многими различными вещами: таблицами, представления- 
+ми, индексами, синонимами, привилегиями, пользователями, и так далее. 
+Имеются различные способы делать это, но ясно, что наиболее логичный, 
+эффективный, и согласованный способ делать это в реляционной среде 
+состоит в том, чтобы сохранять эту информацию в таблицах.  Это дает возможность компьютеру размещать и управлять информацией в которой он 
+нуждается, используя те же самые процедуры которые он использует чтобы 
+размещать и управлять данными которые он хранит для вас. 
+Хотя это - вопрос конкретной программы, а не часть стандарта ANSI, большинство SQL баз данных, используют набор SQL таблиц хранящих служебную информацию для своих внутренних потребностей. Этот набор называется в различных публикациях как - системный каталог, словарь данных, 
+или просто системные таблицы ( Термин "словарь данных" может также 
+относится к общему архиву данных, включая информацию о физических 
+параметрах базы данных которые хранятся вне SQL. 
+Следовательно, имеются программы баз данных, которые имеют и системный каталог и словарь данных. ) 
+<BR><BR> 
+Таблицы системного каталога  - напоминают обычные SQL таблицы: те же 
+строки и столбцы данных. Например, одна таблица каталога обычно содержит информацию о таблицах существующих в базе данных, по одной строке на каждую таблицу базы данных; друга содержит информацию о раз- 
+личных столбцах таблиц, по одной строке на столбец, и так далее. 
+Таблицы каталога создаются и присваиваются с помощью самой базы данных, и идентифицируются с помощью специальных имен, таких например 
+как SYSTEM. База данных создает эти таблицы и модифицирует их автоматически; таблицы каталога не могут быть непосредственно подвергнуты 
+действию команды модификации. 
+<BR><BR> 
+Если это случится, это значительно запутает всю систему и сделает ее не- 
+работоспособной.  Однако, в большинстве систем, каталог может быть за- 
+прошен пользователем. Это очень полезно, потому что это дает вам возможность узнать кое-что о базе данных, которую вы используете. Конечно, 
+вся информация не всегда доступна всем пользователям. Подобно другим 
+таблицам, доступ к каталогу ограничен для пользователей без соответствующих привилегий. 
+Так как каталог принадлежит самой системе, имеется некоторая неясность 
+относительно того, кто имеет привилегии и кто может предоставить привилегии в этом каталоге. Обычно, привилегии каталога предоставляет суперпользователь, например, администратор системы, зарегистрированный как 
+SYSTEM или DBA.  Кроме того, некоторые привилегии могут предоставляться пользователям автоматически. 
+ <A name=24.2>
+<H3>ТИПИЧНЫЙ СИСТЕМНЫЙ КАТАЛОГ</H3> 
+ 
+Давайте рассмотрим некоторые таблицы которые мы могли бы найти в 
+типовом каталоге системы: 
+<PRE> 
+ Таблицы            Содержание 
+ -------------      ------------------------------------------- 
+ 
+ SYSTEMCATALOG      Таблицы (базовые и представления) 
+ 
+ SYSTEMCOLUMNS      Столбцы таблицы 
+ 
+ SYSTEMTABLES       Каталог Представления в SYSTEMCATALOG 
+ 
+ SYSTEMINDEXES      Индексы в таблице 
+ 
+ SYSTEMUSERAUTH     Пользователи базы данных 
+ 
+ SYSTEMTABAUTH      Объектные привилегии пользователей 
+ 
+ SYSTEMCOLAUTH      Столбцовые привилегии пользователей 
+ 
+ SYSTEMSYNONS       Синонимы для таблиц 
+</PRE>
+ 
+Теперь, если наш DBA предоставит пользователю Stephen право просматривать SYSTEMCATALOG  такой командой, 
+<PRE> 
+     GRANT SELECT ON SYSTEMCATALOG TO Stephen; 
+</PRE> 
+то Stephen сможет увидеть некоторую информацию обо всех таблицах 
+в базе данных ( мы имеем здесь пользователя DBA, пользователя Chris, 
+владельца трех наших типовых таблиц, а также Adrian владельца представления Londoncust ). 
+<PRE> 
+        SELECT tname, owner, numcolumns, type, CO 
+           FROM SYSTEMCATALOG; 
+ 
+ 
+         ===============  SQL Execution Log =============== 
+        |                                                  | 
+        | SELECT tname, owner, numcolumns, type, CO        | 
+        | FROM  SYSTEMCATALOG;                             | 
+        |                                                  | 
+        | ================================================ | 
+        |   tname          owner    numcolumns  type  CO   | 
+        | -------------   -------   ----------  ----  ---  | 
+        | SYSTEMCATALOG   SYSTEM            4     B        | 
+        | Salespeople     Chris             4     B        | 
+        | Customers       Chris             5     B        | 
+        | Londoncust      Adrian            5     V    Y   | 
+        | Orders          Chris             5     B        | 
+        |                                                  | 
+         ================================================== 
+</PRE> 
+Рисунок 24.1: Содержание таблицы SYSTEMCATALOG 
+<BR><BR> 
+Как вы можете видеть, каждая строка описывает свою  таблицу. 
+Первый столбец - им; второй - им пользователя который владеет ею; 
+третий - число столбцов которые содержит таблица; и четвертый - код 
+из одного символа, это или B ( для базовой таблицы ) или V ( для представления ). Последний столбец имеет пустые(NULL) значения, если его 
+тип не равен V; и этот столбец указывает, определена или нет возможность проверки. 
+Обратите внимание что SYSTEMCATALOG(СИСТЕМНЫЙ КАТАЛОГ) представлен как одна из таблиц в вышесказанном списке. Для 
+простоты, мы исключили остальные каталоги системы из вывода. Таблицы системного каталога обычно показываются в SYSTEMCATALOG. 
+ <A name=24.3>
+<H3>ИСПОЛЬЗОВАНИЕ ПРЕДСТАВЛЕНИЙ В ТАБЛИЦАХ КАТАЛОГА</H3> 
+ 
+Поскольку SYSTEMCATALOG - это таблица, вы можете использовать 
+ее в представлении. Фактически можно считать, что имеется такое представление с именем SYSTEMTABLES. 
+Это представление SYSTEMCATALOG содержит только те таблицы, которые входят в системный каталог; это обычно таблицы базы данных, типа 
+таблицы Продавцов, которые показаны в SYSTEMCATALOG, но не в SYS- 
+TEMTABLES. 
+Давайте предположим, что только таблицы каталога являются собственностью пользователя SYSTEM. Если вы захотите, вы можете определить другое 
+представление, которое бы специально исключало таблицы каталога из вы- 
+вода: 
+<PRE> 
+           CREATE VIEW Datatables 
+              AS SELECT * 
+                 FROM SYSTEMCATALOG 
+                 WHERE owner &lt; &gt; 'SYSTEM'; 
+</PRE> 
+<B>РАЗРЕШИТЬ  ПОЛЬЗОВАТЕЛЯМ ВИДЕТЬ(ТОЛЬКО) ИХ СОБСТВЕННЫЕ ОБЪЕКТЫ</B> 
+Кроме того, имеются другое использование представлений каталога. 
+Предположим вам нужно чтобы каждый пользователь был способен сделать запрос каталога, для получения информации только из таблиц которыми он владеет. Пока значение USER, в команде SQL постоянно для ID 
+доступа пользователя выдающего команду, оно может всегда быть использоваться, чтобы давать доступ пользователям только к их собственным 
+таблицам. 
+  Вы можете, для начала создать следующее представление: 
+<PRE> 
+               CREATE VIEW Owntables 
+                 AS SELECT * 
+                    FROM SYSTEMCATALOG 
+                    WHERE Owner = USER; 
+</PRE> 
+Теперь вы можете предоставить всем пользователям доступ к этому 
+представлению: 
+<PRE> 
+            GRANT SELECT ON Owntables TO PUBLIC; 
+</PRE> 
+Каждый пользователь теперь, способен выбирать (SELECT) только те 
+строки из SYSTEMCATALOG, владельцем которых он сам является. 
+<BR><BR> 
+ПРЕДСТАВЛЕНИЕ SYSTEMCOLUMNS  Одно небольшое добавление к этому, позволит каждому пользователю просматривать таблицу SYS- 
+TEMCOLUMNS для столбцов из его собственных таблиц. 
+Сначала, давайте рассмотрим ту часть таблицы SYSTEMCOLUMNS, которая 
+описывает наши типовые таблицы( другими словами, исключим сам каталог): 
+<PRE> 
+ tname        cname   datatype  cnumber  tabowner 
+ -----------  -----   --------  -------  -------- 
+ 
+ Salespeople  snum    integer      1      Diane 
+ 
+ Salespeople  sname   char         2      Diane 
+ 
+ Salespeople  city    char         3      Diane 
+ 
+ Salespeople  comm    decimal      4      Diane 
+ 
+ Customers    cnum    integer      1      Claire 
+ 
+ Customers    cname   char         2      Claire 
+ 
+ Customers    city    char         3      Claire 
+ 
+ Customers    rating  integer      4      Claire 
+ 
+ Customers    snum    integer      5      Claire 
+ 
+ Orders       onum    integer      1      Diane 
+ 
+ Orders       odate   date         2      Diane 
+ 
+ Orders       amt     decimal      3      Diane 
+ 
+ Orders       cnum    integer      4      Diane 
+ 
+ Orders       snum    integer      5      Diane 
+</PRE> 
+ Как вы можете видеть, каждая строка этой таблицы показывает столбец таблицы в базе данных. Все столбцы данной таблицы должны иметь разные имена, также как каждая таблица должна иметь данного пользователя, и наконец все комбинации пользователей, таблиц, и имен 
+столбцов должны различаться между собой. 
+    Следовательно табличные столбцы: tname ( им таблицы ), tabowner 
+( владелец таблицы ), и cname ( им столбца ), вместе составляют первичный ключ этой таблицы.   Столбец datatype( тип данных ) говорит 
+сам за себя.  Столбец cnumber ( номер столбца ) указывает на место- 
+положении этого столбца внутри таблицы. Для упрощения, мы опусти- 
+ли параметры длины столбца, точности, и масштаба. 
+ 
+Для справки, показана строка из SYSTFMCATALOG которая ссылается 
+к этой таблице: 
+<PRE> 
+tname          owner   numcolumns    type    CO 
+-------------  ------  -----------    -----  --- 
+ 
+SYSTEMCOLUMNS  System   8              B 
+</PRE> 
+ 
+Некоторые SQL реализации, будут обеспечивать вас большим количеством 
+данных чем показано в этих столбцах, но показанное являются основой для 
+любых реализаций. 
+<BR><BR> 
+Для иллюстрации процедуры предложенной в начале этого раздела, имеет- 
+с способ, позволяющий каждому пользователю видеть информацию SYS- 
+TEMCOLUMNS только для принадлежащих ему таблиц: 
+<PRE> 
+ 
+          CREATE VIEW Owncolumns 
+             AS SELECT * 
+                FROM SYSTEMCOLUMNS 
+                WHERE tabowner = USER; 
+ 
+          GRANT SELECT ON Owncolumns TO PUBLIC; 
+</PRE> 
+<A name=24.4> 
+ 
+<H3>КОММЕНТАРИЙ В СОДЕРЖАНИИ КАТАЛОГА </H3> 
+ 
+Большинство версий SQL, позволяют вам помещать комментарии(ремарки) 
+в специальные столбцы пояснений таблиц каталогов SYSTEMCATALOG 
+и SYSTEMCOLUMNS, что удобно, так как эти таблицы не всегда могут 
+объяснить свое содержание. Для простоты, мы пока исключали этот столбец из наших иллюстраций. 
+ Можно использовать команду COMMENT ON со строкой текста, чтобы 
+пояснить любую строку в одной из этих таблиц. Состояние - TABLE, для комментирования в SYSTEMCATALOG, и текст - COLUMN, для SYSTEM- 
+COLUMNS.      Например: 
+ <PRE>
+               COMMENT ON TABLE Chris.Orders 
+                  IS 'Current Customer Orders'; 
+</PRE> 
+Текст будет помещен в столбец пояснений SYSTEMCATALOG. Обычно, 
+максимальна длина таких пояснений - 254 символов. 
+ 
+Сам комментарий, указывается для конкретной строки, одна с tname=Orders, 
+а друга owner=Chris. Мы увидим этот комментарий в строке для таблицы 
+Порядков в SYSTEMCATALOG: 
+<PRE> 
+         SELECT tname, remarks 
+            FROM SYSTEMCATALOG 
+            WHERE tname = 'Orders' 
+               AND owner = 'Chris'; 
+</PRE> 
+   Вывод для этого запроса показывается в Рисунке 24.2. 
+ 
+SYSTEMCOLUMNS работает точно так же. Сначала, мы создаем комментарий 
+<PRE> 
+            COMMENT ON COLUMN Orders.onum 
+              IS 'Order #'; 
+</PRE> 
+ затем выбираем эту строку из SYSTEMCOLUMNS: 
+<PRE> 
+           SELECT cnumber, datatype, cname, remarks 
+              FROM SYSTEMCOLUMNS 
+              WHERE tname = 'Orders' 
+                 AND tabowner = 'Chris' 
+                 AND cname = onum; 
+</PRE> 
+Вывод для этого запроса показывается в Рисунке 24.3. 
+<BR><BR> 
+Чтобы изменить комментарий, вы можете просто ввести новую команду 
+COMMENT ON для той же строки. Новый комментарий будет записан 
+поверх старого. Если вы хотите удалить комментарий,  напишите поверх 
+него пустой комментарий, подобно следующему: 
+<PRE> 
+            COMMENT ON COLUMN Orders.onum 
+               IS "; 
+</PRE> 
+и этот пустой комментарий затрет предыдущий. 
+<PRE> 
+ 
+         ===============  SQL Execution Log =============== 
+        |                                                  | 
+        | SELECT tname, remarks                            | 
+        | FROM  SYSTEMCATALOG                              | 
+        | WHERE tname = 'Orders'                           | 
+        | AND owner = 'Chris'                              | 
+        | ;                                                | 
+        | ================================================ | 
+        |   tname          remarks                         | 
+        | -------------   -----------------------          | 
+        | Orders          Current Customers Orders         | 
+        |                                                  | 
+         ================================================== 
+ </PRE>
+   Рисунок 24.2:  Комментарий в SYSTEMCATALOG 
+<PRE> 
+ 
+         ===============  SQL Execution Log =============== 
+        |                                                  | 
+        | SELECT cnumber, datatype, cname, remarks         | 
+        | FROM  SYSTEMCOLUMNS                              | 
+        | WHERE tname = 'Orders'                           | 
+        | AND tabowner = 'Chris'                           | 
+        | AND cname = 'onum'                               | 
+        | ;                                                | 
+        | ================================================ | 
+        |   cnumber      datatype    cname    remarks      | 
+        | ----------     ---------   ------  ------------  | 
+        |          1     integer     onum    Orders #      | 
+        |                                                  | 
+         ================================================== 
+ </PRE>
+   Рисунок 24.3:   Комментарий в SYSTEMCOLUMNS 
+
+<A name=24.5> 
+<H3>ОСТАЛЬНОЕ ИЗ КАТАЛОГА</H3> 
+
+Здесь показаны оставшиеся из ваших системных таблиц определения, с 
+типовым запросом для каждого: 
+
+<A name=24.6>
+<H3>SYSTEMINDEXES - ИНДЕКСАЦИЯ В БАЗЕ ДАННЫХ</H3> 
+
+Имена столбцов в таблице SYSTEMINDEXES  и их описания - следующие: 
+<PRE>
+ СТОЛБЦЫ        ОПИСАНИЕ 
+ -------------  ----------------------------------------------- 
+
+ iname          Им индекса ( используемого для его исключения ) 
+
+ iowner         Им пользователя который создал индекс 
+
+ tname          Им таблицы которая содержит индекс 
+
+ cnumber        Номер столбца в таблице 
+
+ tabowner       Пользователь который владеет таблицей содержащей индекс 
+
+ numcolumns     Число столбцов в индексе 
+
+ cposition      Позиция текущего столбца среди набора индексов 
+
+ isunique       Уникален ли индекс ( Y или N ) 
+
+</PRE>
+ТИПОВОЙ ЗАПРОС   Индекс считается неуникальным, если он 
+вызывает продавца, в snum столбце таблицы Заказчиков: 
+<PRE>
+SELECT iname, iowner, tname, cnumber, isunique 
+FROM SYSTEMINDEXES 
+WHERE iname = 'salesperson'; 
+</PRE>
+Вывод для этого запроса показывается в Рисунке 24.4. 
+<PRE>
+
+ ===============  SQL Execution Log ================ 
+|                                                   | 
+| SELECT iname, iowner, tname, cnumber, isunique    | 
+| FROM  SYSTEMINDEXES                               | 
+| WHERE iname = 'salespeople'                       | 
+| ;                                                 | 
+| ================================================= | 
+|   iname      iowner   tname     cnumber  isunique | 
+| -----------  ------  ---------- -------  -------- | 
+| salesperson  Stephan  Customers       5   N       | 
+|                                                   | 
+ =================================================== 
+</PRE>
+Рисунок 24.4:  Строка из таблицы SYSTEMINDEXES 
+
+<A name=24.7>
+
+<H3>SYSTEMUSERAUTH - ПОЛЬЗОВАТЕЛЬСКИЕ И СИСТЕМНЫЕ ПРИВИЛЕГИИ В БАЗЕ ДАННЫХ</H3> 
+
+Имена столбцов для SYSTEMUSERAUTH и их описание, следующее: 
+<PRE>
+
+ СТОЛБЦЫ          ОПИСАНИЕ 
+ --------------   ----------------------------------------------- 
+
+ username         Идентификатор ( ID ) доступа пользователя 
+                 
+ password         Пароль пользователя вводимый при регистрации 
+
+ resource         Где пользователь имеет права RESOURCE 
+
+ dba              Где пользователь имеет права DBA 
+</PRE>
+Мы будем использовать простую схему системных привилегий, которая 
+представлена в Главе 22, где были представлены три системных привилегии - CONNECT( ПОДКЛЮЧИТЬ ), RESOURCE( РЕСУРСЫ ) 
+и DBA. 
+Все пользователи получают CONNECT по умолчанию при регистрации, 
+поэтому он не описан в таблице выше. Возможные состояния столбцов 
+resource и dba могут быть - Y ( Да, пользователь имеет привилегии) 
+или - No (Нет, пользователь не имеет привилегий). 
+<BR><BR>
+Пароли (password) доступны только высоко привилегированным 
+пользователям, если они существуют. Следовательно запрос этой 
+таблицы можно вообще делать только для информации относительно 
+привилегий системы и пользователей. 
+<BR><BR>
+ТИПОВОЙ ЗАПРОС  Чтобы найти всех пользователей которые 
+имеют привилегию RESOURCE, и увидеть какие из них - DBA, вы 
+можете ввести следующее условие: 
+<PRE>
+ SELECT username, dba 
+    FROM SYSTEMUSERAUTH 
+    WHERE resource = 'Y'; 
+</PRE>
+Вывод для этого запроса показывается в Рисунке 24.5. 
+
+<A name=24.8>
+<H3>SYSTEMTABAUTH - ПРИВИЛЕГИИ ОБЪЕКТА КОТОРЫЕ НЕ ОПРЕДЕЛЯЮТ СТОЛБЦЫ</H3> 
+
+Здесь показаны имена столбцов в таблице SYSTEMTABAUTH 
+и их описание: 
+
+<PRE>
+ COLUMN        ОПИСАНИЕ 
+ ------------  --------------------------------------------- 
+ username      Пользователь который имеет привилегии 
+
+ grantor       Пользователь который передает привилегии по имени пользователя 
+
+ tname         Им таблицы в которой существуют привилегии 
+
+ owner         Владелец tname 
+
+ selauth       Имеет ли пользователь привилегию SELECT 
+
+ insauth       Имеет ли пользователь привилегию INSERT 
+
+ delauth       Имеет ли пользователь привилегию DELETE 
+</PRE>
+
+Возможные значения для каждой из перечисленных привилегий объекта 
+( имена столбцов которых оканчиваются на auth ) - Y, N, и G. 
+G указывает что пользователь имеет привилегию с возможностью 
+передачи привилегий. В каждой строке, по крайней мере один из этих 
+столбцов должен иметь состояние отличное от N (другими словами, 
+иметь хоть какую-то привилегию ). 
+<PRE>
+ ===============  SQL Execution Log ================ 
+|                                                   | 
+| SELECT username, dba                              | 
+| FROM  SYSTEMUSERAUTH                              | 
+| WHERE resource = 'Y'                              | 
+| ;                                                 | 
+| ================================================= | 
+|   username    dba                                 | 
+| -----------  ------                               | 
+|  Diane         N                                  | 
+|  Adrian        Y                                  | 
+|                                                   | 
+ =================================================== 
+</PRE>
+Рисунок 24 .5: Пользователи которые имеют привилегию RESOURCE 
+<BR><BR>
+Первые четыре столбца этой таблицы составляют первичный ключ. Это 
+означает что каждая комбинация из tname, владелец-пользователь ( не 
+забудьте, что две различные таблицы с различными владельцами могут 
+иметь одно и тоже им ), пользователь и пользователь передающий права( гарантор ), должна быть уникальной. Каждая строка этой таблицы 
+содержит все привилегии ( которые не являются определенным столбцом ), предоставляются одним определенным пользователем другому 
+определенному пользователю в конкретном объекте. 
+UPDATE и REFERENCES, являются привилегиями, которые могут 
+быть определенными столбцами, и находиться в различных таблицах каталога. Если пользователь получает привилегии в таблице от более чем одного пользователя, такие привилегии могут быть отдельными строками созданными в этой таблице. Это необходимо для каскадного отслеживания
+при вызове привилегий. 
+<BR><BR>
+ТИПОВОЙ ЗАПРОС   Чтобы найти все привилегии SELECT, INSERT, 
+и DELETE, которые Adrian предоставляет пользователям в таблице Заказчиков, вы можете ввести следующее ( вывод показан в Рисунке 24.6 ): 
+<PRE>
+SELECT username, selauth, insauth, delauth 
+  FROM SYSTEMTABAUTH 
+  WHERE grantor = 'Adrian' 
+     ANDtname = 'Customers'; 
+
+===============  SQL Execution Log ================ 
+|                                                   | 
+| SELECT username, selauth, insauth, delauth        | 
+| FROM  SYSTEMTABAUTH                               | 
+| WHERE grantor = 'Adrian'                          | 
+| AND tname = 'Customers'                           | 
+| ;                                                 | 
+| ================================================= | 
+|   username   selauth  insauth  delauth            | 
+| -----------  -------  -------- --------           | 
+|  Claire      G        Y        N                  | 
+|  Norman      Y        Y        Y                  | 
+|                                                   | 
+=================================================== 
+</PRE>
+Рисунок 24. 6: Пользователи получившие привилегии от Adrian 
+<BR><BR>
+Выше показано, что Adrian предоставил Claire привилегии INSERT и SELECT 
+в таблице Заказчиков, позднее предоставив ей права на передачу привилегий. 
+Пользователю Norman, он предоставил привилегии SELECT, INSERT, и DELETE, 
+но не дал возможность передачи привилегий ни в одной из них. Если Claire 
+имела привилегию DELETE в таблице Заказчиков от какого-то другого источника, в этом запросе это показано не будет. 
+
+<A name=24.9> 
+<H3>SYSTEMCOLAUTH</H3> 
+<PRE>
+ СТОЛБЦЫ       ОПИСАНИЕ 
+ -----------   ------------------------------------------- 
+ 
+ username      Пользователь который имеет привилегии 
+
+ grantor       Пользователь который предоставляет привилегии другому пользователю 
+
+ tname         Им таблицы в которой существуют привилегии 
+
+ cname         Им столбца в котором существуют привилегии 
+
+ owner         Владелец tname 
+
+ updauth       Имеет ли пользователь привилегию UPDATE в этом столбце 
+
+ refauth       Имеет ли пользователь привилегию REFERENCES в этом столбце 
+</PRE>
+
+Столбцы updauth и refauth могут быть в состоянии Y, N, или G; но не могут 
+быть одновременно в состоянии N для одной и той же строки. 
+Это - первые пять столбцов таблицы, которые не составляют первичный ключ. 
+Он отличается от первичного ключа SYSTEMTABAUTH в котором содержится поле cname, указывающее на определенный столбец обсуждаемой таблицы для которой применяются одна или обе привилегии. Отдельна строка в этой таблице может существовать для каждого столбца в любой данной таблицы 
+в которой одному пользователю передаются привилегии  определенного столбца 
+с помощью другого пользователя. 
+Как и в случае с SYSTEMTABAUTH та же привилегия может быть описана 
+в более чем одной строке этой таблицы если она была передана более чем од- 
+ним пользователем. 
+<BR><BR>
+ТИПОВОЙ ЗАПРОС   Чтобы выяснить, в каких столбцах какой таблицы 
+вы имеете привилегию REFERENCES, вы можете ввести следующий запрос 
+( вывод показывается в Рисунке 24.7 ) 
+<PRE>
+SELECT owner, tname, cname 
+   FROM SYSTEMCOLAUTH 
+   WHERE refauth IN ('Y', 'G') 
+      AND username = USER 
+   ORDER BY 1, 2; 
+</PRE>
+который показывает, что эти две таблицы, которые имеют различных владельцев, но одинаковые им, в действительности, совершенно разные таблицы 
+( т.е. это не как два синонима для одной таблицы ). 
+<PRE>
+ ===============  SQL Execution Log ================ 
+|                                                   | 
+| SELECT OWNER, TNAME, CNAME                        | 
+| FROM  SYSTEMCOLAUTH                               | 
+| WHERE refaulth IN ('Y' , 'G' )                    | 
+| AND username = USER                               | 
+| ORDER BY 1, 2                                     | 
+| ;                                                 | 
+| ================================================= | 
+|   owner       tname       cname                   | 
+| -----------  -----------  -------                 | 
+|  Diane       Customers     cnum                   | 
+|  Diane       Salespeople   sname                  | 
+|  Diane       Salespeople   sname                  | 
+|  Gillan      Customers     cnum                   | 
+ =================================================== 
+</PRE>
+Рисунок 24. 7: Столбцы в пользователь имеет привилегию INSERT 
+<BR><BR>
+<A name=24.10> 
+<H3>SYSTEMSYNONS - СИНОНИМЫ ДЛЯ ТАБЛИЦ В БАЗЕ ДАННЫХ</H3> 
+
+Это - имена столбцов в таблице SYSTEMSYNONS и их описание: 
+<PRE>
+ СТОЛБЕЦ         ОПИСАНИЕ 
+ -------------   -------------------------------------------- 
+ synonym         Имя синонима 
+
+ synowner        Пользователь, который является владельцем 
+                 синонима ( может быть PUBLIC (ОБЩИЙ)) 
+
+ tname           Им таблицы используемой владельцем 
+
+ tabowner        Им пользователя который является владельцем таблицы 
+</PRE>
+ТИПОВОЙ ЗАПРОС   Предположим, что  Adrian имеет синоним 
+Clients для таблицы Заказчиков принадлежащей Diane, и что имеется 
+общий синоним Customers для этой же таблицы. Вы делаете запрос 
+таблицы для всех синонимов в таблице Заказчиков ( вывод  показывается в Рисунке 24.8 ): 
+<PRE>
+SELECT * 
+FROM SYSTEMSYNONS 
+WHERE tname = 'Customers' 
+
+
+ ===============  SQL Execution Log ================ 
+|                                                   | 
+| SELECT *                                          | 
+| FROM  SYSTEMSYNONS                                | 
+| WHERE tname = 'Customers'                         | 
+| ;                                                 | 
+| ================================================= | 
+| synonym       synowner    tname       tabowner    | 
+| -----------  -----------  ----------  ----------  | 
+|  Clients      Adrian      Customers   Diane       | 
+|  Customers    PUBLIC      Customers   Diane       | 
+|                                                   | 
+ =================================================== 
+</PRE>
+Рисунок 24.8: Синонимы для таблицы Заказчиков 
+<BR><BR>
+<A name=24.11> 
+<H3>ДРУГОЕ ИСПОЛЬЗОВАНИЕ КАТАЛОГА </H3> 
+
+Конечно, вы можете выполнять более сложные запросы в системном каталоге. 
+Объединения, например, могут быть очень удобны. Эта команда позволит вам 
+увидеть столбцы таблиц и базовые индексы установленные для каждого, 
+( вывод  показывается в Рисунке 24.9 ): 
+<PRE>
+SELECT a.tname, a.cname, iname, cposition 
+FROM SYSTEMCOLUMNS a, SYSTEMINDEXES b 
+WHERE a.tabowner = b. tabowner 
+   AND a.tname = b.tname 
+   AND a.cnumber = b.cnumber 
+ORDER BY 3 DESC, 2; 
+</PRE>
+Она  показывает два индекса, один для таблицы Заказчиков и один для таблицы Продавцов. 
+Последний из них - это одностолбцовый индекс с именем salesno в поле 
+snum; он был помещен первым из-за сортировки по убыванию ( в обратном 
+алфавитном порядке ) в столбце iname. Другой индекс, custsale, используется продавцами чтобы отыскивать своих заказчиков. Он основывается на комбинации полей snum и cnum внутри таблицы Заказчиков, с полем snum 
+приходящим в индексе первым, как это и показано с помощью пол cposition. 
+
+<PRE>
+ ===============  SQL Execution Log ================ 
+|                                                   | 
+| SELECT a.tname, a.cname, iname, cposition         | 
+| FROM  SYSTEMCOLUMNS a, SYSTEMINDEXES b            | 
+| WHERE a.tabowner = b.tabowner                     | 
+| AND a.tname = b.tname                             | 
+| AND a.cnumber = b.cnumber                         | 
+| ORDER BY 3 DESC, 2;                               | 
+|                                                   | 
+| ================================================= | 
+|    tname       cname     iname     cposition      | 
+|   -----------  -------  --------  ------------    | 
+|   Salespeople   sname   salesno              1    | 
+|   Customers     cnum    custsale             2    | 
+|   Customers     snum    custsale             1    | 
+|                                                   | 
+ =================================================== 
+</PRE>
+Рисунок 24.9  Столбцы и их индексы 
+<BR><BR>
+Подзапросы также могут быть использованы. Имеется способ увидеть данные столбца только для столбцов из таблиц каталога: 
+<PRE>
+SELECT * 
+FROM SYSTEMCOLUMNS 
+WHERE tname IN 
+( SELECT tname 
+    FROM SYSTEMCATALOG); 
+</PRE>
+Для простоты, мы не будем показывать вывод этой команды, которая состоит 
+из одного входа для каждого столбца каждой таблицы каталога. Вы могли бы 
+поместить этот запрос в представление, назвав его, например, SYSTEMTABCOLS, для представления SYSTEMTABLES. 
+
+<A name=24.12>
+<H3>РЕЗЮМЕ</H3> 
+
+Итак, система SQL использует набор таблиц, называемый системным каталогом в структуре базы данных. Эти таблицы могут запрашиваться но модифицироваться. Кроме того, вы можете добавлять комментарии столбцов в 
+( и удалять их из) таблицы SYSTEMCATALOG и SYSTEMCOLUMNS. 
+Создание представлений в этих таблицах - превосходный способ точно определить, какая пользовательская информация может быть доступной. 
+Теперь, когда вы узнали о каталоге, вы завершили ваше обучение SQL 
+в диалоговом режиме. <A href="ch25.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch25.shtml">Следующая глава</A> этой книги расскажет вам как 
+SQL используется в программах которые написаны прежде всего на 
+других языках но которые способны извлечь пользу из возможностей SQL, 
+взаимодействуя с его таблицами базы данных. 
+
+<A name=24.13>
+<H3>РАБОТА С SQL</H3> 
+
+1. Сделайте запрос каталога чтобы вывести, для каждой таблицы имеющей 
+более чем четыре столбца, имя таблицы, имя владельца, а также 
+им столбцов и тип данных этих столбцов. 
+<BR><BR>
+2. Сделайте запрос каталога чтобы выяснить, сколько синонимов существует для каждой таблицы в базе данных.  Не забудьте, что один и тот же 
+синоним принадлежащий двум различным пользователям - это фактически 
+два разных синонима. 
+<BR><BR>
+3. Выясните сколько таблиц имеют индексы в более чем пятидести процентов их столбцов. 
+<BR><BR>
+( См. <A href="a.shtml.htm#24" tppabs="http://www.sql.ru/docs/sql/u_sql/a.shtml#24">Приложение A</A> для ответов. )
+
+</TD></TR></TABLE>
+</TD></TR>
+<TR BGCOLOR=#6699CC><TD><TABLE WIDTH=100% BORDER=0 CELLSPACING=0 CELLPADDING=0><TR><TD BGCOLOR=#6699CC VALIGN=CENTER HEIGHT = 40><FONT SIZE=-10>
+<!--begin of Top100 logo-->
+<a href="javascript:if(confirm('http://top100.rambler.ru/top100/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://top100.rambler.ru/top100/'" tppabs="http://top100.rambler.ru/top100/">
+<img src="../../../../top100-images.rambler.ru/top100/banner-88x31-rambler-gray2.gif" tppabs="http://top100-images.rambler.ru/top100/banner-88x31-rambler-gray2.gif" alt="Rambler's Top100" width=88 height=31 border=0></a>
+<!--end of Top100 logo -->
+</FONT>
+<!--Rating@Mail.ru COUNTER--><a target=_top
+href="javascript:if(confirm('http://top.mail.ru/jump?from=58574  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://top.mail.ru/jump?from=58574'" tppabs="http://top.mail.ru/jump?from=58574"><img
+src="../../../../top.list.ru/counter-id=58574;t=94.gif" tppabs="http://top.list.ru/counter?id=58574;t=94"
+border=0 height=18 width=88
+alt="Рейтинг@Mail.ru"></a><!--/COUNTER-->
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="font : bold 10px verdana; color : white" href="javascript:if(confirm('http://hosting.parking.ru/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://hosting.parking.ru/'" tppabs="http://hosting.parking.ru/">Хостинг от компании Parking.ru</a>
+<script src="../../../../www.google-analytics.com/urchin.js" tppabs="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-265508-1";
+urchinTracker();
+</script>
+</TD>
+<TD BGCOLOR=#6699CC ALIGN=right><FONT COLOR=white FACE="Tahoma,Arial" SIZE=1>&nbsp;Administrator:&nbsp;<A STYLE="color :white" HREF="mailto:admin@sql.ru">admin@sql.ru</A>&nbsp;<BR>Last update: <FONT COLOR=white>05 июн 2007&nbsp;</FONT></FONT></TD></TR></TABLE>
+</TD></TR></TABLE></TD></TR></TABLE>
+
+</BODY></HTML>
+

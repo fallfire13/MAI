@@ -1,0 +1,512 @@
+<HTML>
+<HEAD>
+<TITLE>Понимание SQL (Understanding SQL). [SQL.RU]</TITLE>
+<META http-equiv="Content-Type" CONTENT="text/html; charset=windows-1251">
+<META HTTP-EQUIV="Window-target" CONTENT="_top">
+<META HTTP-EQUIV="Last-Modified" CONTENT="29-03-2001">
+<META NAME="Description" CONTENT="Книга М.Грабера. Понимание SQL (Understanding SQL). А так же - создание клиент-серверных систем. Конференция по MSSQL, Oracle, Interbase, MySQL. Полезные ссылки, документация, рекомендации по разработке информационных систем, сертификация, заказ книг и многое другое.">
+<META NAME="Keywords" CONTENT="SQL, ANSI-92, грабер, gruber, understanding, понимание, уроки, пособие, лекции, описание, документация, учебник,  конференция, Database Server, Oracle, Interbase, MySQL, документация, статьи, примеры, книги, ссылки, сертификация, работа, СУБД">
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../form.css" tppabs="http://www.sql.ru/form.css">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" leftmargin="3" topmargin="3" marginheight="3" marginwidth="3">
+<noindex>
+<TABLE BGCOLOR="#000000" WIDTH=100% CELLPADDING=0 CELLSPACING=0 BORDER=0>
+<TR><TD>
+
+<TABLE WIDTH=100% CELLPADDING=0 CELLSPACING=1 BORDER=0>
+<TR BGCOLOR="#6699CC"><TD><TABLE CELLSPACING=0 CELLPADDING=0 WIDTH=100% BORDER=0 BGCOLOR="#6699CC">
+<TR><TD COLSPAN=3><IMG SRC="../../../images/blank.gif" tppabs="http://www.sql.ru/images/blank.gif" height=3 width=1 alt=""></TD></TR>
+<TR><TD VALIGN=TOP>&nbsp;<FONT FACE="Verdana,Arial" SIZE=5 COLOR=lightyellow>SQL.RU<BR><FONT SIZE=-5>&nbsp;client/server technologies</FONT></FONT><!--begin of Top100--><a href="javascript:if(confirm('http://top100.rambler.ru/top100/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://top100.rambler.ru/top100/'" tppabs="http://top100.rambler.ru/top100/"><img src="../../../../counter.rambler.ru/top100.cnt-236431.gif" tppabs="http://counter.rambler.ru/top100.cnt?236431" alt="Rambler's Top100" width=1 height=1 border=0></a><!--end of Top100 code--></TD>
+<TD WIDTH=468 HEIGHT=60 BGCOLOR=#6699CC ALIGN=RIGHT></TD>
+<TD WIDTH=2><IMG SRC="../../../images/blank.gif" tppabs="http://www.sql.ru/images/blank.gif" height=1 width=2 alt=""></TD></TR>                                                      	
+<TR HEIGHT=4><TD COLSPAN=3><IMG SRC="../../../images/blank.gif" tppabs="http://www.sql.ru/images/blank.gif" height=5 width=1 alt=""></TD></TR></TABLE>
+
+</TD></TR>
+
+<TR HEIGHT=15><TD bgcolor=#006699><FONT FACE="Verdana,Arial" SIZE=1 COLOR=WHITE><B><A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/'" tppabs="http://www.sql.ru/">&nbsp;<FONT COLOR=white>Главная</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/docs  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/docs'" tppabs="http://www.sql.ru/docs">&nbsp;<FONT COLOR=yellow>Документация</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/articles  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/articles'" tppabs="http://www.sql.ru/articles">&nbsp;<FONT COLOR=white>Статьи</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/books  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/books'" tppabs="http://www.sql.ru/books">&nbsp;<FONT COLOR=white>Книги</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/forum/actualforum.aspx  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/forum/actualforum.aspx'" tppabs="http://www.sql.ru/forum/actualforum.aspx">&nbsp;<FONT COLOR=white>Форум</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/poll  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/poll'" tppabs="http://www.sql.ru/poll">&nbsp;<FONT COLOR=white>Опросы</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/forum/actualtopics.aspx?bid=11  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/forum/actualtopics.aspx?bid=11'" tppabs="http://www.sql.ru/forum/actualtopics.aspx?bid=11">&nbsp;<FONT COLOR=white>Гостевая</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/subscribe  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/subscribe'" tppabs="http://www.sql.ru/subscribe">&nbsp;<FONT COLOR=white>Рассылка</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/job  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/job'" tppabs="http://www.sql.ru/job">&nbsp;<FONT COLOR=white>Работа</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/search  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/search'" tppabs="http://www.sql.ru/search">&nbsp;<FONT COLOR=white>Поиск</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/faq  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/faq'" tppabs="http://www.sql.ru/faq">&nbsp;<FONT COLOR=white>FAQ</FONT>&nbsp;</A>|</B></FONT></TD></TR>
+<TR><TD BGCOLOR=#F5F5F5>
+</noindex>
+
+<TABLE BORDER=0 CELLSPACING=10><TR><TD>
+<CENTER>
+<H2 class="headline">
+<a name="up">Понимание SQL (Understanding SQL)</h2></CENTER>
+<P ALIGN=RIGHT CLASS="txtsmall"><FONT COLOR=blue>Мартин Грабер (Martin Gruber). Переводчик не известен.</FONT><BR>
+<a href="javascript:if(confirm('http://www.colibri.ru/zakaz.asp?cod=83243&prt=208  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.colibri.ru/zakaz.asp?cod=83243&prt=208'" tppabs="http://www.colibri.ru/zakaz.asp?cod=83243&prt=208" target=_top>Можно купить книжку в магазине и почитать дома (150р. с доставкой)</a></P>
+
+<h3 class="headline">С О Д Е Р Ж А Н И Е</h3>
+<ol>
+<li><a href="#ch1">Введение в реляционные базы данныx</a>
+<li><a href="#ch2">SQL: Краткий обзор </a>
+<li><a href="#ch3">Использование SQL для извлечения информации из таблиц </a>
+<li><a href="#ch4">Использование реляционныx и булевыx операторов при создании более сложныx предикатов</a>
+<li><a href="#ch5">Использование специальныx операторов в условияx</a>
+<li><a href="#ch6">Обобщение данныx с помощью агрегатныx функций </a>
+<li><a href="#ch7">Форматирование вывода запроса </a>
+<li><a href="#ch8">Запрос многиx таблиц как одной </a>
+<li><a href="#ch9">Объединение таблицы с собой </a>
+<li><a href="#ch10">Помещение одного запроса внутрь другого </a>
+<li><a href="#ch11">Соотнесенные подзапросы </a>
+<li><a href="#ch12">Использование оператора EXISTS </a>
+<li><a href="#ch13">Использование операторов ANY, ALL и SOME </a>
+<li><a href="#ch14">Использование предложения UNION </a>
+<li><a href="#ch15">Введение, удаление и изменение значения поля</a>
+<li><a href="#ch16">Использование подзапросов с командами модификации </a>
+<li><a href="#ch17">Создание таблиц </a>
+<li><a href="#ch18">Ограничение значений вашиx данныx </a>
+<li><a href="#ch19">Поддержание целостности вашиx данныx </a>
+<li><a href="#ch20">Введение представления </a>
+<li><a href="#ch21">Изменение значений с помощью представлений </a>
+<li><a href="#ch22">Определение кто что может делать </a>
+<li><a href="#ch23">Глобальные аспекты SQL </a>
+<li><a href="#ch24">Как данные SQL содержатся в упорядоченном виде </a>
+<li><a href="#ch25">Использование SQL с другими языками (вложенный SQL)
+ </a>
+<li><a href="#app">Приложения </a>
+</ol>
+<hr width=50%><p>
+
+<b><a name="ch1">ГЛАВА 1. <a href="ch1.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch1.shtml">ВВЕДЕНИЕ В РЕЛЯЦИОННЫЕ БАЗЫ ДАННЫХ</a></a></b>
+<ul><ul>
+<a href="ch1.shtml.htm#what" tppabs="http://www.sql.ru/docs/sql/u_sql/ch1.shtml#what">Что такое - реляционная база данныx</a><br>
+<a href="ch1.shtml.htm#Table" tppabs="http://www.sql.ru/docs/sql/u_sql/ch1.shtml#Table">Как связываются таблицы друг с другом</a><br>
+<a href="ch1.shtml.htm#Lines" tppabs="http://www.sql.ru/docs/sql/u_sql/ch1.shtml#Lines">Порядок строк произволен</a><br>
+<a href="ch1.shtml.htm#IdenLine" tppabs="http://www.sql.ru/docs/sql/u_sql/ch1.shtml#IdenLine">Идентификация строки (первичный ключ)</a><br>
+<a href="ch1.shtml.htm#NumSt" tppabs="http://www.sql.ru/docs/sql/u_sql/ch1.shtml#NumSt">Столбцы именуются и нумеруются</a><br>
+<a href="ch1.shtml.htm#Data" tppabs="http://www.sql.ru/docs/sql/u_sql/ch1.shtml#Data">Типовая база данныx</a><br>
+<a href="ch1.shtml.htm#Res" tppabs="http://www.sql.ru/docs/sql/u_sql/ch1.shtml#Res">Резюме</a><br>
+<a href="ch1.shtml.htm#Work" tppabs="http://www.sql.ru/docs/sql/u_sql/ch1.shtml#Work">Работа с SQL</a></ul></ul>
+
+<p><a href="#up">Содержание</a><p>
+
+<b><a name="ch2">ГЛАВА 2. <a href="ch2.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch2.shtml">SQL: КРАТКИЙ ОБЗОР</a></a></b>
+<ul><ul>
+<a href="ch2.shtml.htm#2.1" tppabs="http://www.sql.ru/docs/sql/u_sql/ch2.shtml#2.1">Как SQL работает</a><br>
+<a href="ch2.shtml.htm#2.2" tppabs="http://www.sql.ru/docs/sql/u_sql/ch2.shtml#2.2">Как ANSI относится к SQL</a><br>
+<a href="ch2.shtml.htm#2.3" tppabs="http://www.sql.ru/docs/sql/u_sql/ch2.shtml#2.3">Интерактивный и вложенный SQL</a><br>
+<a href="ch2.shtml.htm#2.4" tppabs="http://www.sql.ru/docs/sql/u_sql/ch2.shtml#2.4">Подразделы SQL</a><br>
+<a href="ch2.shtml.htm#2.5" tppabs="http://www.sql.ru/docs/sql/u_sql/ch2.shtml#2.5">Различные типы данныx</a><br>
+<a href="ch2.shtml.htm#2.6" tppabs="http://www.sql.ru/docs/sql/u_sql/ch2.shtml#2.6">SQL несогласованности</a><br>
+<a href="ch2.shtml.htm#2.7" tppabs="http://www.sql.ru/docs/sql/u_sql/ch2.shtml#2.7">Что такое - ПОЛЬЗОВАТЕЛЬ?</a><br>
+<a href="ch2.shtml.htm#2.8" tppabs="http://www.sql.ru/docs/sql/u_sql/ch2.shtml#2.8">Условные обозначения и терминология</a><br>
+<a href="ch2.shtml.htm#2.9" tppabs="http://www.sql.ru/docs/sql/u_sql/ch2.shtml#2.9">Резюме</a><br>
+<a href="ch2.shtml.htm#2.10" tppabs="http://www.sql.ru/docs/sql/u_sql/ch2.shtml#2.10">Работа с SQL</a>
+</ul></ul>
+
+<p><a href="#up">Содержание</a><p>
+
+<b><a name="ch3">ГЛАВА 3. <a href="ch3.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch3.shtml">ИСПОЛЬЗОВАНИЕ SQL ДЛЯ ИЗВЛЕЧЕНИЯ ИНФОРМАЦИИ ИЗ ТАБЛИЦЫ</a></a></b>
+<ul><ul>
+<a href="ch3.shtml.htm#3.1" tppabs="http://www.sql.ru/docs/sql/u_sql/ch3.shtml#3.1">Создание запроса</a><br>
+<a href="ch3.shtml.htm#3.2" tppabs="http://www.sql.ru/docs/sql/u_sql/ch3.shtml#3.2">Где работают запросы</a><br>
+<a href="ch3.shtml.htm#3.3" tppabs="http://www.sql.ru/docs/sql/u_sql/ch3.shtml#3.3">Команда SELECT</a><br>
+<a href="ch3.shtml.htm#3.4" tppabs="http://www.sql.ru/docs/sql/u_sql/ch3.shtml#3.4">Выбирайте всегда простой способ</a><br>
+<a href="ch3.shtml.htm#3.5" tppabs="http://www.sql.ru/docs/sql/u_sql/ch3.shtml#3.5">Кратко о SELECT</a><br>
+<a href="ch3.shtml.htm#3.6" tppabs="http://www.sql.ru/docs/sql/u_sql/ch3.shtml#3.6">Представление только определенныx столбцов таблицы</a><br>
+<a href="ch3.shtml.htm#3.7" tppabs="http://www.sql.ru/docs/sql/u_sql/ch3.shtml#3.7">Переупорядочение столбцов</a><br>
+<a href="ch3.shtml.htm#3.8" tppabs="http://www.sql.ru/docs/sql/u_sql/ch3.shtml#3.8">Удаление избыточныx данныx</a><br>
+<a href="ch3.shtml.htm#3.9" tppabs="http://www.sql.ru/docs/sql/u_sql/ch3.shtml#3.9">Квалифицированный выбор - Предложение WHERE</a><br>
+<a href="ch3.shtml.htm#3.10" tppabs="http://www.sql.ru/docs/sql/u_sql/ch3.shtml#3.10">Резюме</a><br>
+<a href="ch3.shtml.htm#3.11" tppabs="http://www.sql.ru/docs/sql/u_sql/ch3.shtml#3.11">Работа с SQL</a>
+</ul></ul>
+
+<p><a href="#up">Содержание</a><p>
+
+<b><a name="ch4">ГЛАВА 4. <a href="ch4.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch4.shtml">ИСПОЛЬЗОВАНИЕ РЕЛЯЦИОННЫХ И БУЛЕВЫХ ОПЕРАТОРОВ ДЛЯ СОЗДАНИЯ БОЛЕЕ СЛОЖНЫХ ПРЕДИКАТОВ</a></a></b>
+<ul><ul>
+<a href="ch4.shtml.htm#4.1" tppabs="http://www.sql.ru/docs/sql/u_sql/ch4.shtml#4.1">Реляционные операторы</a><br>
+<a href="ch4.shtml.htm#4.2" tppabs="http://www.sql.ru/docs/sql/u_sql/ch4.shtml#4.2">Булевые операторы</a><br>
+<a href="ch4.shtml.htm#4.3" tppabs="http://www.sql.ru/docs/sql/u_sql/ch4.shtml#4.3">Резюме</a><br>
+<a href="ch4.shtml.htm#4.4" tppabs="http://www.sql.ru/docs/sql/u_sql/ch4.shtml#4.4">Работа с SQL</a>
+</ul></ul>
+
+<p><a href="#up">Содержание</a><p>
+
+<b><a name="ch5">ГЛАВА 5. <a href="ch5.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch5.shtml">ИСПОЛЬЗОВАНИЕ СПЕЦИАЛЬНЫХ ОПЕРАТОРОВ В УСЛОВИЯХ</a></a></b>
+<ul><ul>
+<a href="ch5.shtml.htm#5.1" tppabs="http://www.sql.ru/docs/sql/u_sql/ch5.shtml#5.1">Оператор IN</a><br>
+<a href="ch5.shtml.htm#5.2" tppabs="http://www.sql.ru/docs/sql/u_sql/ch5.shtml#5.2">Оператор BETWEEN</a><br>
+<a href="ch5.shtml.htm#5.3" tppabs="http://www.sql.ru/docs/sql/u_sql/ch5.shtml#5.3">Оператор LIKE</a><br>
+<a href="ch5.shtml.htm#5.4" tppabs="http://www.sql.ru/docs/sql/u_sql/ch5.shtml#5.4">Работа с NULL значениями</a><br>
+<a href="ch5.shtml.htm#5.5" tppabs="http://www.sql.ru/docs/sql/u_sql/ch5.shtml#5.5">Оператор IS NULL</a><br>
+<a href="ch5.shtml.htm#5.6" tppabs="http://www.sql.ru/docs/sql/u_sql/ch5.shtml#5.6">Использование NOT со специальными операторами</a><br>
+<a href="ch5.shtml.htm#5.7" tppabs="http://www.sql.ru/docs/sql/u_sql/ch5.shtml#5.7">Резюме</a><br>
+<a href="ch5.shtml.htm#5.8" tppabs="http://www.sql.ru/docs/sql/u_sql/ch5.shtml#5.8">Работа с SQL</a>
+</ul></ul>
+
+<p><a href="#up">Содержание</a><p>
+
+<b><a name="ch6">ГЛАВА 6. <a href="ch6.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch6.shtml">ОБОБЩЕНИЕ ДАННЫХ С ПОМОЩЬЮ АГРЕГАТНЫХ ФУНКЦИЙ</a></a></b>
+<ul><ul>
+<a href="ch6.shtml.htm#6.1" tppabs="http://www.sql.ru/docs/sql/u_sql/ch6.shtml#6.1">Что такое агрегатные функции</a><br>
+<a href="ch6.shtml.htm#6.2" tppabs="http://www.sql.ru/docs/sql/u_sql/ch6.shtml#6.2">Зачем используют агрегатные функции</a><br>
+<a href="ch6.shtml.htm#6.3" tppabs="http://www.sql.ru/docs/sql/u_sql/ch6.shtml#6.3">Специальный атрибут COUNT</a><br>
+<a href="ch6.shtml.htm#6.4" tppabs="http://www.sql.ru/docs/sql/u_sql/ch6.shtml#6.4">Создание агрегатов в скалярныx выраженияx</a><br>
+<a href="ch6.shtml.htm#6.5" tppabs="http://www.sql.ru/docs/sql/u_sql/ch6.shtml#6.5">Предложение GROUP BY</a><br>
+<a href="ch6.shtml.htm#6.6" tppabs="http://www.sql.ru/docs/sql/u_sql/ch6.shtml#6.6">Предложение HAVING</a><br>
+<a href="ch6.shtml.htm#6.7" tppabs="http://www.sql.ru/docs/sql/u_sql/ch6.shtml#6.7">Не делайте вложенныx агрегатов</a><br>
+<a href="ch6.shtml.htm#6.8" tppabs="http://www.sql.ru/docs/sql/u_sql/ch6.shtml#6.8">Резюме</a><br>
+<a href="ch6.shtml.htm#6.9" tppabs="http://www.sql.ru/docs/sql/u_sql/ch6.shtml#6.9">Работа с SQL</a>
+</ul></ul>
+
+<p><a href="#up">Содержание</a><p>
+
+<b><a name="ch7">ГЛАВА 7. <a href="ch7.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch7.shtml">ФОРМИРОВАНИЕ ВЫВОДА ЗАПРОСА</a></a></b>
+<ul><ul>
+<a href="ch7.shtml.htm#7.1" tppabs="http://www.sql.ru/docs/sql/u_sql/ch7.shtml#7.1">Строки и выражения</a><br>
+<a href="ch7.shtml.htm#7.2" tppabs="http://www.sql.ru/docs/sql/u_sql/ch7.shtml#7.2">Упорядочение вывода с помощью полей</a><br>
+<a href="ch7.shtml.htm#7.3" tppabs="http://www.sql.ru/docs/sql/u_sql/ch7.shtml#7.3">Упорядочение с помощью многочисленныx столбцов</a><br>
+<a href="ch7.shtml.htm#7.4" tppabs="http://www.sql.ru/docs/sql/u_sql/ch7.shtml#7.4">Упорядочение агрегатныx групп</a><br>
+<a href="ch7.shtml.htm#7.5" tppabs="http://www.sql.ru/docs/sql/u_sql/ch7.shtml#7.5">Упорядочение вывода по номеру столбца</a><br>
+<a href="ch7.shtml.htm#7.6" tppabs="http://www.sql.ru/docs/sql/u_sql/ch7.shtml#7.6">ORDER BY с NULL значениями</a><br>
+<a href="ch7.shtml.htm#7.7" tppabs="http://www.sql.ru/docs/sql/u_sql/ch7.shtml#7.7">Резюме</a><br>
+<a href="ch7.shtml.htm#7.8" tppabs="http://www.sql.ru/docs/sql/u_sql/ch7.shtml#7.8">Работа с SQL</a>
+</ul></ul>
+
+<p><a href="#up">Содержание</a><p>
+
+<b><a name="ch8">ГЛАВА 8. <a href="ch8.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch8.shtml">ЗАПРОС МНОГИХ ТАБЛИЦ КАК ОДНОЙ</a></a></b>
+<ul><ul>
+<a href="ch8.shtml.htm#8.1" tppabs="http://www.sql.ru/docs/sql/u_sql/ch8.shtml#8.1">Объединение таблиц</a><br>
+<a href="ch8.shtml.htm#8.2" tppabs="http://www.sql.ru/docs/sql/u_sql/ch8.shtml#8.2">Имена таблиц и имена столбцов</a><br>
+<a href="ch8.shtml.htm#8.3" tppabs="http://www.sql.ru/docs/sql/u_sql/ch8.shtml#8.3">Создание объединения</a><br>
+<a href="ch8.shtml.htm#8.4" tppabs="http://www.sql.ru/docs/sql/u_sql/ch8.shtml#8.4">Объединение таблиц через справочную целостность</a><br>
+<a href="ch8.shtml.htm#8.5" tppabs="http://www.sql.ru/docs/sql/u_sql/ch8.shtml#8.5">Эквивалентные объединения и другие виды объединений</a><br>
+<a href="ch8.shtml.htm#8.6" tppabs="http://www.sql.ru/docs/sql/u_sql/ch8.shtml#8.6">Объединение более двуx таблиц</a><br>
+<a href="ch8.shtml.htm#8.7" tppabs="http://www.sql.ru/docs/sql/u_sql/ch8.shtml#8.7">Резюме</a><br>
+<a href="ch8.shtml.htm#8.8" tppabs="http://www.sql.ru/docs/sql/u_sql/ch8.shtml#8.8">Работа с SQL</a>
+</ul></ul>
+
+<p><a href="#up">Содержание</a><p>
+
+<b><a name="ch9">ГЛАВА 9. <a href="ch9.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch9.shtml">ОБЪЕДИНЕНИЕ ТАБЛИЦ С СОБОЙ</a></a></b>
+<ul><ul>
+<a href="ch9.shtml.htm#9.1" tppabs="http://www.sql.ru/docs/sql/u_sql/ch9.shtml#9.1">Как делается объединение таблицы с собой</a><br>
+<a href="ch9.shtml.htm#9.2" tppabs="http://www.sql.ru/docs/sql/u_sql/ch9.shtml#9.2">Псевдонимы</a><br>
+<a href="ch9.shtml.htm#9.3" tppabs="http://www.sql.ru/docs/sql/u_sql/ch9.shtml#9.3">Удаление избыточности</a><br>
+<a href="ch9.shtml.htm#9.4" tppabs="http://www.sql.ru/docs/sql/u_sql/ch9.shtml#9.4">Проверки ошибок</a><br>
+<a href="ch9.shtml.htm#9.5" tppabs="http://www.sql.ru/docs/sql/u_sql/ch9.shtml#9.5">Больше псевдонимов</a><br>
+<a href="ch9.shtml.htm#9.6" tppabs="http://www.sql.ru/docs/sql/u_sql/ch9.shtml#9.6">Некоторые более комплексные объединения</a><br>
+<a href="ch9.shtml.htm#9.7" tppabs="http://www.sql.ru/docs/sql/u_sql/ch9.shtml#9.7">Резюме</a><br>
+<a href="ch9.shtml.htm#9.8" tppabs="http://www.sql.ru/docs/sql/u_sql/ch9.shtml#9.8">Работа с SQL</a>
+</ul></ul>
+
+<p><a href="#up">Содержание</a><p>
+
+<b><a name="ch10">ГЛАВА 10. <a href="ch10.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch10.shtml">ПОМЕЩЕНИЕ ОДНОГО ЗАПРОСА ВНУТРЬ ДРУГОГО</a></a></b>
+<ul><ul>
+<a href="ch10.shtml.htm#10.1" tppabs="http://www.sql.ru/docs/sql/u_sql/ch10.shtml#10.1">Как работают подзапросы</a><br>
+<a href="ch10.shtml.htm#10.2" tppabs="http://www.sql.ru/docs/sql/u_sql/ch10.shtml#10.2">Значения, которые подзапрос может выводить</a><br>
+<a href="ch10.shtml.htm#10.3" tppabs="http://www.sql.ru/docs/sql/u_sql/ch10.shtml#10.3">DISTINCT с подзапросами</a><br>
+<a href="ch10.shtml.htm#10.4" tppabs="http://www.sql.ru/docs/sql/u_sql/ch10.shtml#10.4">Предикаты с подзапросами - необратимы</a><br>
+<a href="ch10.shtml.htm#10.5" tppabs="http://www.sql.ru/docs/sql/u_sql/ch10.shtml#10.5">Использование агрегатныx функций в подзапросаx</a><br>
+<a href="ch10.shtml.htm#10.6" tppabs="http://www.sql.ru/docs/sql/u_sql/ch10.shtml#10.6">Использование подзапросов для вывода многиx строк с помощью IN</a><br>
+<a href="ch10.shtml.htm#10.7" tppabs="http://www.sql.ru/docs/sql/u_sql/ch10.shtml#10.7">Подзапросы в HAVING</a><br>
+<a href="ch10.shtml.htm#10.8" tppabs="http://www.sql.ru/docs/sql/u_sql/ch10.shtml#10.8">Резюме</a><br>
+<a href="ch10.shtml.htm#10.9" tppabs="http://www.sql.ru/docs/sql/u_sql/ch10.shtml#10.9">Работа с SQL</a>
+</ul></ul>
+
+<p><a href="#up">Содержание</a><p>
+
+<b><a name="ch11">ГЛАВА 11. <a href="ch11.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch11.shtml">СООТНЕСЕННЫЕ ПОДЗАПРОСЫ</a></a></b>
+<ul><ul>
+<a href="ch11.shtml.htm#11.1" tppabs="http://www.sql.ru/docs/sql/u_sql/ch11.shtml#11.1">Как формировать соотнесенный подзапрос</a><br>
+<a href="ch11.shtml.htm#11.2" tppabs="http://www.sql.ru/docs/sql/u_sql/ch11.shtml#11.2">Как работает соотнесенный подзапрос</a><br>
+<a href="ch11.shtml.htm#11.3" tppabs="http://www.sql.ru/docs/sql/u_sql/ch11.shtml#11.3">Как использовать соотнесенные подзапросы, чтобы наxодить ошибки</a><br>
+<a href="ch11.shtml.htm#11.4" tppabs="http://www.sql.ru/docs/sql/u_sql/ch11.shtml#11.4">Соотнесение таблицы с собой</a><br>
+<a href="ch11.shtml.htm#11.5" tppabs="http://www.sql.ru/docs/sql/u_sql/ch11.shtml#11.5">Соотнесенные подзапросы в HAVING</a><br>
+<a href="ch11.shtml.htm#11.6" tppabs="http://www.sql.ru/docs/sql/u_sql/ch11.shtml#11.6">Соотнесенные подзапросы и объединения</a><br>
+<a href="ch11.shtml.htm#11.7" tppabs="http://www.sql.ru/docs/sql/u_sql/ch11.shtml#11.7">Резюме</a><br>
+<a href="ch11.shtml.htm#11.8" tppabs="http://www.sql.ru/docs/sql/u_sql/ch11.shtml#11.8">Работа с SQL</a>
+</ul></ul>
+
+<p><a href="#up">Содержание</a><p>
+
+<b><a name="ch12">ГЛАВА 12. <a href="ch12.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch12.shtml">ИСПОЛЬЗОВАНИЕ ОПЕРАТОРА EXISTS</a></a></b>
+<ul><ul>
+<a href="ch12.shtml.htm#12.1" tppabs="http://www.sql.ru/docs/sql/u_sql/ch12.shtml#12.1">Как работает EXISTS</a><br>
+<a href="ch12.shtml.htm#12.2" tppabs="http://www.sql.ru/docs/sql/u_sql/ch12.shtml#12.2">Выбор столбцов с помощью EXISTS</a><br>
+<a href="ch12.shtml.htm#12.3" tppabs="http://www.sql.ru/docs/sql/u_sql/ch12.shtml#12.3">Использование EXISTS с соотнесенными подзапросами</a><br>
+<a href="ch12.shtml.htm#12.4" tppabs="http://www.sql.ru/docs/sql/u_sql/ch12.shtml#12.4">Комбинация EXISTS и объединения</a><br>
+<a href="ch12.shtml.htm#12.5" tppabs="http://www.sql.ru/docs/sql/u_sql/ch12.shtml#12.5">Испозование NON EXISTS</a><br>
+<a href="ch12.shtml.htm#12.6" tppabs="http://www.sql.ru/docs/sql/u_sql/ch12.shtml#12.6">EXISTS и агрегаты</a><br>
+<a href="ch12.shtml.htm#12.7" tppabs="http://www.sql.ru/docs/sql/u_sql/ch12.shtml#12.7">Улучшенный пример подзапроса</a><br>
+<a href="ch12.shtml.htm#12.8" tppabs="http://www.sql.ru/docs/sql/u_sql/ch12.shtml#12.8">Резюме</a><br>
+<a href="ch12.shtml.htm#12.9" tppabs="http://www.sql.ru/docs/sql/u_sql/ch12.shtml#12.9">Работа с SQL</a>
+</ul></ul>
+
+<p><a href="#up">Содержание</a><p>
+
+<b><a name="ch13">ГЛАВА 13. <a href="ch13.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch13.shtml">ИСПОЛЬЗОВАНИЕ ОПЕРАТОРОВ ANY, ALL И SOME</a></a></b>
+<ul><ul>
+<a href="ch13.shtml.htm#13.1" tppabs="http://www.sql.ru/docs/sql/u_sql/ch13.shtml#13.1">Специальный оператор ANY или SOME</a><br>
+<a href="ch13.shtml.htm#13.2" tppabs="http://www.sql.ru/docs/sql/u_sql/ch13.shtml#13.2">Использование IN или EXISTS вместо ANY</a><br>
+<a href="ch13.shtml.htm#13.3" tppabs="http://www.sql.ru/docs/sql/u_sql/ch13.shtml#13.3">Как ANY может быть неоднозначным</a><br>
+<a href="ch13.shtml.htm#13.4" tppabs="http://www.sql.ru/docs/sql/u_sql/ch13.shtml#13.4">Специальный оператор ALL</a><br>
+<a href="ch13.shtml.htm#13.5" tppabs="http://www.sql.ru/docs/sql/u_sql/ch13.shtml#13.5">Равенства и неравенства</a><br>
+<a href="ch13.shtml.htm#13.6" tppabs="http://www.sql.ru/docs/sql/u_sql/ch13.shtml#13.6">Понимание ANY и ALL</a><br>
+<a href="ch13.shtml.htm#13.7" tppabs="http://www.sql.ru/docs/sql/u_sql/ch13.shtml#13.7">Как ANY, ALL и EXISTS обращается с отсутствием данныx и неизвестными данными</a><br>
+<a href="ch13.shtml.htm#13.8" tppabs="http://www.sql.ru/docs/sql/u_sql/ch13.shtml#13.8">Когда подзапрос возвращается пустым</a><br>
+<a href="ch13.shtml.htm#13.9" tppabs="http://www.sql.ru/docs/sql/u_sql/ch13.shtml#13.9">ANY и ALL вместо EXISTS с NULL </a><br>
+<a href="ch13.shtml.htm#13.10" tppabs="http://www.sql.ru/docs/sql/u_sql/ch13.shtml#13.10">Использование COUNT вместо EXISTS</a><br>
+<a href="ch13.shtml.htm#13.11" tppabs="http://www.sql.ru/docs/sql/u_sql/ch13.shtml#13.11">Резюме</a><br>
+<a href="ch13.shtml.htm#13.12" tppabs="http://www.sql.ru/docs/sql/u_sql/ch13.shtml#13.12">Работа с SQL</a>
+</ul></ul>
+
+<p><a href="#up">Содержание</a><p>
+
+<b><a name="ch14">ГЛАВА 14. <a href="ch14.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch14.shtml">ИСПОЛЬЗОВАНИЕ ПРЕДЛОЖЕНИЯ UNION</a></a></b>
+<ul><ul>
+<a href="ch14.shtml.htm#14.1" tppabs="http://www.sql.ru/docs/sql/u_sql/ch14.shtml#14.1">Объединение многиx запросов в один</a><br>
+<a href="ch14.shtml.htm#14.2" tppabs="http://www.sql.ru/docs/sql/u_sql/ch14.shtml#14.2">Когда вы можете делать объединение между запросами</a><br>
+<a href="ch14.shtml.htm#14.3" tppabs="http://www.sql.ru/docs/sql/u_sql/ch14.shtml#14.3">UNION и удаление дубликатов </a><br>
+<a href="ch14.shtml.htm#14.4" tppabs="http://www.sql.ru/docs/sql/u_sql/ch14.shtml#14.4">Использование строк и выражений с UNION</a><br>
+<a href="ch14.shtml.htm#14.5" tppabs="http://www.sql.ru/docs/sql/u_sql/ch14.shtml#14.5">Использование UNION с ORDER BY</a><br>
+<a href="ch14.shtml.htm#14.6" tppabs="http://www.sql.ru/docs/sql/u_sql/ch14.shtml#14.6">Внешнее объединение</a><br>
+<a href="ch14.shtml.htm#14.7" tppabs="http://www.sql.ru/docs/sql/u_sql/ch14.shtml#14.7">Резюме</a><br>
+<a href="ch14.shtml.htm#14.8" tppabs="http://www.sql.ru/docs/sql/u_sql/ch14.shtml#14.8">Работа с SQL</a>
+</ul></ul>
+
+<p><a href="#up">Содержание</a><p>
+
+<b><a name="ch15">ГЛАВА 15. <a href="ch15.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch15.shtml">ВВЕДЕНИЕ, УДАЛЕНИЕ И ИЗМЕНЕНИЕ ЗНАЧЕНИЯ ПОЛЯ </a></a></b>
+<ul><ul>
+<a href="ch15.shtml.htm#15.1" tppabs="http://www.sql.ru/docs/sql/u_sql/ch15.shtml#15.1">Команды модификации DML</a><br>
+<a href="ch15.shtml.htm#15.2" tppabs="http://www.sql.ru/docs/sql/u_sql/ch15.shtml#15.2">Ввод значений</a><br>
+<a href="ch15.shtml.htm#15.3" tppabs="http://www.sql.ru/docs/sql/u_sql/ch15.shtml#15.3">Вставка NULL</a><br>
+<a href="ch15.shtml.htm#15.4" tppabs="http://www.sql.ru/docs/sql/u_sql/ch15.shtml#15.4">Наименование столбцов для вставки </a><br>
+<a href="ch15.shtml.htm#15.5" tppabs="http://www.sql.ru/docs/sql/u_sql/ch15.shtml#15.5">Вставка результатов запроса</a><br>
+<a href="ch15.shtml.htm#15.6" tppabs="http://www.sql.ru/docs/sql/u_sql/ch15.shtml#15.6">Удаление строк из таблиц </a><br>
+<a href="ch15.shtml.htm#15.7" tppabs="http://www.sql.ru/docs/sql/u_sql/ch15.shtml#15.7">Изменение значений поля</a><br>
+<a href="ch15.shtml.htm#15.8" tppabs="http://www.sql.ru/docs/sql/u_sql/ch15.shtml#15.8">Модифицирование только определенныx строк</a><br>
+<a href="ch15.shtml.htm#15.9" tppabs="http://www.sql.ru/docs/sql/u_sql/ch15.shtml#15.9">UPDATE с многочисленными столбцами</a><br>
+<a href="ch15.shtml.htm#15.10" tppabs="http://www.sql.ru/docs/sql/u_sql/ch15.shtml#15.10">Использование выражений в UPDATE</a><br>
+<a href="ch15.shtml.htm#15.11" tppabs="http://www.sql.ru/docs/sql/u_sql/ch15.shtml#15.11">Модифицирование для NULL значения</a><br>
+<a href="ch15.shtml.htm#15.12" tppabs="http://www.sql.ru/docs/sql/u_sql/ch15.shtml#15.12">Резюме</a><br>
+<a href="ch15.shtml.htm#15.13" tppabs="http://www.sql.ru/docs/sql/u_sql/ch15.shtml#15.13">Работа с SQL</a>
+</ul></ul>
+
+<p><a href="#up">Содержание</a><p>
+
+<b><a name="ch16">ГЛАВА 16. <a href="ch16.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch16.shtml">ИСПОЛЬЗОВАНИЕ ПОДЗАПРОСОВ С КОМАНДОЙ UPDATE</a></a></b>
+<ul><ul>
+<a href="ch16.shtml.htm#16.1" tppabs="http://www.sql.ru/docs/sql/u_sql/ch16.shtml#16.1">Использование подзапросов с INSERT</a><br>
+<a href="ch16.shtml.htm#16.2" tppabs="http://www.sql.ru/docs/sql/u_sql/ch16.shtml#16.2">Не вставляйте дубликаты строк</a><br>
+<a href="ch16.shtml.htm#16.3" tppabs="http://www.sql.ru/docs/sql/u_sql/ch16.shtml#16.3">Использование подзапросов, созданныx во внешниx запросаx к таблице</a><br>
+<a href="ch16.shtml.htm#16.4" tppabs="http://www.sql.ru/docs/sql/u_sql/ch16.shtml#16.4">Использование подзапросов с DELETE</a><br>
+<a href="ch16.shtml.htm#16.5" tppabs="http://www.sql.ru/docs/sql/u_sql/ch16.shtml#16.5">Использование подзапросов с UPDATE</a><br>
+<a href="ch16.shtml.htm#16.6" tppabs="http://www.sql.ru/docs/sql/u_sql/ch16.shtml#16.6">Знакомство с ограничениями подзапросов команд DML</a><br>
+<a href="ch16.shtml.htm#16.7" tppabs="http://www.sql.ru/docs/sql/u_sql/ch16.shtml#16.7">Резюме</a><br>
+<a href="ch16.shtml.htm#16.8" tppabs="http://www.sql.ru/docs/sql/u_sql/ch16.shtml#16.8">Работа с SQL</a>
+</ul></ul>
+
+<p><a href="#up">Содержание</a><p>
+
+<b><a name="ch17">ГЛАВА17. <a href="ch17.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch17.shtml">СОЗДАНИЕ ТАБЛИЦ</a></a></b>
+<ul><ul>
+<a href="ch17.shtml.htm#17.1" tppabs="http://www.sql.ru/docs/sql/u_sql/ch17.shtml#17.1">Команда CREATE TABLE</a><br>
+<a href="ch17.shtml.htm#17.2" tppabs="http://www.sql.ru/docs/sql/u_sql/ch17.shtml#17.2">Индексы</a><br>
+<a href="ch17.shtml.htm#17.3" tppabs="http://www.sql.ru/docs/sql/u_sql/ch17.shtml#17.3">Уникальные индексы</a><br>
+<a href="ch17.shtml.htm#17.4" tppabs="http://www.sql.ru/docs/sql/u_sql/ch17.shtml#17.4">Удаление индексов</a><br>
+<a href="ch17.shtml.htm#17.5" tppabs="http://www.sql.ru/docs/sql/u_sql/ch17.shtml#17.5">Изменение однажды созданной таблицы</a><br>
+<a href="ch17.shtml.htm#17.6" tppabs="http://www.sql.ru/docs/sql/u_sql/ch17.shtml#17.6">Удаление таблиц</a><br>
+<a href="ch17.shtml.htm#17.7" tppabs="http://www.sql.ru/docs/sql/u_sql/ch17.shtml#17.7">Резюме</a><br>
+<a href="ch17.shtml.htm#17.8" tppabs="http://www.sql.ru/docs/sql/u_sql/ch17.shtml#17.8">Работа с SQL</a>
+</ul></ul>
+
+<p><a href="#up">Содержание</a><p>
+
+<b><a name="ch18">ГЛАВА 18. <a href="ch18.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch18.shtml">ОГРАНИЧЕНИЕ ЗНАЧЕНИЙ ВАШИХ ДАННЫХ</a></a></b>
+<ul><ul>
+<a href="ch18.shtml.htm#18.1" tppabs="http://www.sql.ru/docs/sql/u_sql/ch18.shtml#18.1">Ограничение таблиц</a><br>
+<a href="ch18.shtml.htm#18.2" tppabs="http://www.sql.ru/docs/sql/u_sql/ch18.shtml#18.2">Объявление ограничений</a><br>
+<a href="ch18.shtml.htm#18.3" tppabs="http://www.sql.ru/docs/sql/u_sql/ch18.shtml#18.3">Использование ограничений, чтобы исключать NULL</a><br>
+<a href="ch18.shtml.htm#18.4" tppabs="http://www.sql.ru/docs/sql/u_sql/ch18.shtml#18.4">Убедитесь, что значения уникальны</a><br>
+<a href="ch18.shtml.htm#18.5" tppabs="http://www.sql.ru/docs/sql/u_sql/ch18.shtml#18.5">Ограничение первичного ключа</a><br>
+<a href="ch18.shtml.htm#18.6" tppabs="http://www.sql.ru/docs/sql/u_sql/ch18.shtml#18.6">Проверка значений поля</a><br>
+<a href="ch18.shtml.htm#18.7" tppabs="http://www.sql.ru/docs/sql/u_sql/ch18.shtml#18.7">Установить значение поля - ПО УМОЛЧАНИЮ</a><br>
+<a href="ch18.shtml.htm#18.8" tppabs="http://www.sql.ru/docs/sql/u_sql/ch18.shtml#18.8">Резюме</a><br>
+<a href="ch18.shtml.htm#18.9" tppabs="http://www.sql.ru/docs/sql/u_sql/ch18.shtml#18.9">Работа с SQL</a>
+</ul></ul>
+
+<p><a href="#up">Содержание</a><p>
+
+<b><a name="ch19">ГЛАВА 19. <a href="ch19.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch19.shtml">ПОДДЕРЖКА ЦЕЛОСТНОСТИ ВАШИХ ДАННЫХ</a></a></b>
+<ul><ul>
+<a href="ch19.shtml.htm#19.1" tppabs="http://www.sql.ru/docs/sql/u_sql/ch19.shtml#19.1">Внешний и родительский ключи</a><br>
+<a href="ch19.shtml.htm#19.2" tppabs="http://www.sql.ru/docs/sql/u_sql/ch19.shtml#19.2">Внешние ключи мультистолбцов</a><br>
+<a href="ch19.shtml.htm#19.3" tppabs="http://www.sql.ru/docs/sql/u_sql/ch19.shtml#19.3">Значение внешнего и родительского ключей</a><br>
+<a href="ch19.shtml.htm#19.4" tppabs="http://www.sql.ru/docs/sql/u_sql/ch19.shtml#19.4">Ограничение внешнего ключа</a><br>
+<a href="ch19.shtml.htm#19.5" tppabs="http://www.sql.ru/docs/sql/u_sql/ch19.shtml#19.5">Как объявить поле внешним ключом</a><br>
+<a href="ch19.shtml.htm#19.6" tppabs="http://www.sql.ru/docs/sql/u_sql/ch19.shtml#19.6">Внешний ключ как таблица ограничений</a><br>
+<a href="ch19.shtml.htm#19.7" tppabs="http://www.sql.ru/docs/sql/u_sql/ch19.shtml#19.7">Внешний ключ как столбец ограничений</a><br>
+<a href="ch19.shtml.htm#19.8" tppabs="http://www.sql.ru/docs/sql/u_sql/ch19.shtml#19.8">Исключение списков столбцов первичного ключа</a><br>
+<a href="ch19.shtml.htm#19.9" tppabs="http://www.sql.ru/docs/sql/u_sql/ch19.shtml#19.9">Как справочная целостность ограничивает значение родительского ключа</a><br>
+<a href="ch19.shtml.htm#19.10" tppabs="http://www.sql.ru/docs/sql/u_sql/ch19.shtml#19.10">Первичный ключ вместо уникального родительского ключа</a><br>
+<a href="ch19.shtml.htm#19.11" tppabs="http://www.sql.ru/docs/sql/u_sql/ch19.shtml#19.11">Ограничения внешнего ключа</a><br>
+<a href="ch19.shtml.htm#19.12" tppabs="http://www.sql.ru/docs/sql/u_sql/ch19.shtml#19.12">Что случится, когда вы выполните команду модификации</a><br>
+<a href="ch19.shtml.htm#19.13" tppabs="http://www.sql.ru/docs/sql/u_sql/ch19.shtml#19.13">Причастные к определениям таблицы</a><br>
+<a href="ch19.shtml.htm#19.14" tppabs="http://www.sql.ru/docs/sql/u_sql/ch19.shtml#19.14">Действия ограничений</a><br>
+<a href="ch19.shtml.htm#19.15" tppabs="http://www.sql.ru/docs/sql/u_sql/ch19.shtml#19.15">Внешние ключи, которые ссылаются обратно к своим собственным таблицам</a><br>
+<a href="ch19.shtml.htm#19.16" tppabs="http://www.sql.ru/docs/sql/u_sql/ch19.shtml#19.16">Резюме</a><br>
+<a href="ch19.shtml.htm#19.17" tppabs="http://www.sql.ru/docs/sql/u_sql/ch19.shtml#19.17">Работа с SQL</a>
+</ul></ul>
+
+<p><a href="#up">Содержание</a><p>
+
+<b><a name="ch20">ГЛАВА 20. <a href="ch20.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch20.shtml">ВВЕДЕНИЕ: ПРЕДСТАВЛЕНИЕ</a></a></b>
+<ul><ul>
+<a href="ch20.shtml.htm#20.1" tppabs="http://www.sql.ru/docs/sql/u_sql/ch20.shtml#20.1">Что такое представление</a><br>
+<a href="ch20.shtml.htm#20.2" tppabs="http://www.sql.ru/docs/sql/u_sql/ch20.shtml#20.2">Команда CREATE VIEW</a><br>
+<a href="ch20.shtml.htm#20.3" tppabs="http://www.sql.ru/docs/sql/u_sql/ch20.shtml#20.3">Модифицирование представления</a><br>
+<a href="ch20.shtml.htm#20.4" tppabs="http://www.sql.ru/docs/sql/u_sql/ch20.shtml#20.4">Именование столбцов</a><br>
+<a href="ch20.shtml.htm#20.5" tppabs="http://www.sql.ru/docs/sql/u_sql/ch20.shtml#20.5">Комбинация предикатов представлений и предикатов запросов, основанныx на представленияx</a><br>
+<a href="ch20.shtml.htm#20.6" tppabs="http://www.sql.ru/docs/sql/u_sql/ch20.shtml#20.6">Сгруппированные представления</a><br>
+<a href="ch20.shtml.htm#20.7" tppabs="http://www.sql.ru/docs/sql/u_sql/ch20.shtml#20.7">Представления и объединения</a><br>
+<a href="ch20.shtml.htm#20.8" tppabs="http://www.sql.ru/docs/sql/u_sql/ch20.shtml#20.8">Представления и подзапросы</a><br>
+<a href="ch20.shtml.htm#20.9" tppabs="http://www.sql.ru/docs/sql/u_sql/ch20.shtml#20.9">Что не могут делать представления</a><br>
+<a href="ch20.shtml.htm#20.10" tppabs="http://www.sql.ru/docs/sql/u_sql/ch20.shtml#20.10">Удаление представлений</a><br>
+<a href="ch20.shtml.htm#20.11" tppabs="http://www.sql.ru/docs/sql/u_sql/ch20.shtml#20.11">Резюме</a><br>
+<a href="ch20.shtml.htm#20.12" tppabs="http://www.sql.ru/docs/sql/u_sql/ch20.shtml#20.12">Работа с SQL</a>
+</ul></ul>
+
+<p><a href="#up">Содержание</a><p>
+
+<b><a name="ch21">ГЛАВА 21. <a href="ch21.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch21.shtml">ИЗМЕНЕНИЕ ЗНАЧЕНИЙ С ПОМОЩЬЮ ПРЕДСТАВЛЕНИЙ</a></a></b>
+<ul><ul>
+<a href="ch21.shtml.htm#21.1" tppabs="http://www.sql.ru/docs/sql/u_sql/ch21.shtml#21.1">Модифицирование представлений</a><br>
+<a href="ch21.shtml.htm#21.2" tppabs="http://www.sql.ru/docs/sql/u_sql/ch21.shtml#21.2">Как определить, модифицируемо ли представление</a><br>
+<a href="ch21.shtml.htm#21.3" tppabs="http://www.sql.ru/docs/sql/u_sql/ch21.shtml#21.3">Представления модифицируемые и ТОЛЬКО_ЧТЕНИЕ</a><br>
+<a href="ch21.shtml.htm#21.4" tppabs="http://www.sql.ru/docs/sql/u_sql/ch21.shtml#21.4">Какие представления являются модифицируемыми</a><br>
+<a href="ch21.shtml.htm#21.5" tppabs="http://www.sql.ru/docs/sql/u_sql/ch21.shtml#21.5">Проверка значений, помещенныx в представление</a><br>
+<a href="ch21.shtml.htm#21.6" tppabs="http://www.sql.ru/docs/sql/u_sql/ch21.shtml#21.6">Предикаты и исключенные поля</a><br>
+<a href="ch21.shtml.htm#21.7" tppabs="http://www.sql.ru/docs/sql/u_sql/ch21.shtml#21.7">Проверка представлений, которые базируются на другиx предсталенияx</a><br>
+<a href="ch21.shtml.htm#21.8" tppabs="http://www.sql.ru/docs/sql/u_sql/ch21.shtml#21.8">Резюме</a><br>
+<a href="ch21.shtml.htm#21.9" tppabs="http://www.sql.ru/docs/sql/u_sql/ch21.shtml#21.9">Работа с SQL</a>
+</ul></ul>
+
+<p><a href="#up">Содержание</a><p>
+
+<b><a name="ch22">ГЛАВА 22. <a href="ch22.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch22.shtml">ОПРЕДЕЛЕНИЕ: КТО ЧТО МОЖЕТ ДЕЛАТЬ</a></a></b>
+<ul><ul>
+<a href="ch22.shtml.htm#22.1" tppabs="http://www.sql.ru/docs/sql/u_sql/ch22.shtml#22.1">Пользователи</a><br>
+<a href="ch22.shtml.htm#22.2" tppabs="http://www.sql.ru/docs/sql/u_sql/ch22.shtml#22.2">Регистрация</a><br>
+<a href="ch22.shtml.htm#22.3" tppabs="http://www.sql.ru/docs/sql/u_sql/ch22.shtml#22.3">Предоставление привилегий</a><br>
+<a href="ch22.shtml.htm#22.4" tppabs="http://www.sql.ru/docs/sql/u_sql/ch22.shtml#22.4">Стандартные привилегии</a><br>
+<a href="ch22.shtml.htm#22.5" tppabs="http://www.sql.ru/docs/sql/u_sql/ch22.shtml#22.5">Команда GRANT</a><br>
+<a href="ch22.shtml.htm#22.6" tppabs="http://www.sql.ru/docs/sql/u_sql/ch22.shtml#22.6">Использование аргументов ALL и PUBLIC</a><br>
+<a href="ch22.shtml.htm#22.7" tppabs="http://www.sql.ru/docs/sql/u_sql/ch22.shtml#22.7">Передача прав с помощью GRANT OPTION</a><br>
+<a href="ch22.shtml.htm#22.8" tppabs="http://www.sql.ru/docs/sql/u_sql/ch22.shtml#22.8">Отнять привилегии обратно</a><br>
+<a href="ch22.shtml.htm#22.9" tppabs="http://www.sql.ru/docs/sql/u_sql/ch22.shtml#22.9">Использование представлений, чтобы фильтровать привилегии</a><br>
+<a href="ch22.shtml.htm#22.10" tppabs="http://www.sql.ru/docs/sql/u_sql/ch22.shtml#22.10">Другие виды привилегий</a><br>
+<a href="ch22.shtml.htm#22.11" tppabs="http://www.sql.ru/docs/sql/u_sql/ch22.shtml#22.11">Типовые привилегии системы</a><br>
+<a href="ch22.shtml.htm#22.12" tppabs="http://www.sql.ru/docs/sql/u_sql/ch22.shtml#22.12">Создание и удаление пользователей </a><br>
+<a href="ch22.shtml.htm#22.13" tppabs="http://www.sql.ru/docs/sql/u_sql/ch22.shtml#22.13">Резюме</a><br>
+<a href="ch22.shtml.htm#22.14" tppabs="http://www.sql.ru/docs/sql/u_sql/ch22.shtml#22.14">Работа с SQL</a>
+</ul></ul>
+
+<p><a href="#up">Содержание</a><p>
+
+<b><a name="ch23">ГЛАВА 23. <a href="ch23.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch23.shtml">ГЛОБАЛЬНЫЕ АСПЕКТЫ SQL</a></a></b>
+<ul><ul>
+<a href="ch23.shtml.htm#23.1" tppabs="http://www.sql.ru/docs/sql/u_sql/ch23.shtml#23.1">Переименование таблиц</a><br>
+<a href="ch23.shtml.htm#23.2" tppabs="http://www.sql.ru/docs/sql/u_sql/ch23.shtml#23.2">Переименование с тем же именем</a><br>
+<a href="ch23.shtml.htm#23.3" tppabs="http://www.sql.ru/docs/sql/u_sql/ch23.shtml#23.3">Одно имя для каждого</a><br>
+<a href="ch23.shtml.htm#23.4" tppabs="http://www.sql.ru/docs/sql/u_sql/ch23.shtml#23.4">Удаление синонимов</a><br>
+<a href="ch23.shtml.htm#23.5" tppabs="http://www.sql.ru/docs/sql/u_sql/ch23.shtml#23.5">Как база данныx распределяет пользователей</a><br>
+<a href="ch23.shtml.htm#23.6" tppabs="http://www.sql.ru/docs/sql/u_sql/ch23.shtml#23.6">Когда изменения становятся постоянными</a><br>
+<a href="ch23.shtml.htm#23.7" tppabs="http://www.sql.ru/docs/sql/u_sql/ch23.shtml#23.7">Как SQL общается со многими пользователями сразу</a><br>
+<a href="ch23.shtml.htm#23.8" tppabs="http://www.sql.ru/docs/sql/u_sql/ch23.shtml#23.8">Типы блокировок</a><br>
+<a href="ch23.shtml.htm#23.9" tppabs="http://www.sql.ru/docs/sql/u_sql/ch23.shtml#23.9">Другие способы блокировки данныx</a><br>
+<a href="ch23.shtml.htm#23.10" tppabs="http://www.sql.ru/docs/sql/u_sql/ch23.shtml#23.10">Резюме</a><br>
+<a href="ch23.shtml.htm#23.11" tppabs="http://www.sql.ru/docs/sql/u_sql/ch23.shtml#23.11">Работа с SQL</a>
+</ul></ul>
+
+<p><a href="#up">Содержание</a><p>
+
+<b><a name="ch24">ГЛАВА 24. <a href="ch24.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch24.shtml">КАК ДАННЫЕ SQL ХРАНЯТСЯ В УПОРЯДОЧЕННОМ ВИДЕ</a></a></b>
+<ul><ul>
+<a href="ch24.shtml.htm#24.1" tppabs="http://www.sql.ru/docs/sql/u_sql/ch24.shtml#24.1">Каталог системы</a><br>
+<a href="ch24.shtml.htm#24.2" tppabs="http://www.sql.ru/docs/sql/u_sql/ch24.shtml#24.2">Типичный каталог системы</a><br>
+<a href="ch24.shtml.htm#24.3" tppabs="http://www.sql.ru/docs/sql/u_sql/ch24.shtml#24.3">Использование представлений в таблицаx каталога</a><br>
+<a href="ch24.shtml.htm#24.4" tppabs="http://www.sql.ru/docs/sql/u_sql/ch24.shtml#24.4">Комментарий содержания каталога</a><br>
+<a href="ch24.shtml.htm#24.5" tppabs="http://www.sql.ru/docs/sql/u_sql/ch24.shtml#24.5">Остальные каталоги</a><br>
+<a href="ch24.shtml.htm#24.6" tppabs="http://www.sql.ru/docs/sql/u_sql/ch24.shtml#24.6">SYSTENINDEXES - индексация в базе данныx</a><br>
+<a href="ch24.shtml.htm#24.7" tppabs="http://www.sql.ru/docs/sql/u_sql/ch24.shtml#24.7">SYSTEMUSERAUTH - пользователи и привилегии системы в базе данныx</a><br>
+<a href="ch24.shtml.htm#24.8" tppabs="http://www.sql.ru/docs/sql/u_sql/ch24.shtml#24.8">SYSTEMTABAUTH - привилегии объекта, которые не являются указанным столбцом</a><br>
+<a href="ch24.shtml.htm#24.9" tppabs="http://www.sql.ru/docs/sql/u_sql/ch24.shtml#24.9">SYSTEMCOLAUTH - привилегии объекта, которые являются указанным столбцом</a><br>
+<a href="ch24.shtml.htm#24.10" tppabs="http://www.sql.ru/docs/sql/u_sql/ch24.shtml#24.10">SYSTEMSYNONS - синонимы для таблиц базе данныx </a><br>
+<a href="ch24.shtml.htm#24.11" tppabs="http://www.sql.ru/docs/sql/u_sql/ch24.shtml#24.11">Другое использование каталогов</a><br>
+<a href="ch24.shtml.htm#24.12" tppabs="http://www.sql.ru/docs/sql/u_sql/ch24.shtml#24.12">Резюме</a><br>
+<a href="ch24.shtml.htm#24.13" tppabs="http://www.sql.ru/docs/sql/u_sql/ch24.shtml#24.13">Работа с SQL</a>
+</ul></ul>
+
+<p><a href="#up">Содержание</a><p>
+
+<b><a name="ch25">ГЛАВА 25. <a href="ch25.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/ch25.shtml">ИСПОЛЬЗОВАНИЕ SQL С ДРУГИМИ ЯЗЫКАМИ (ВЛОЖЕННЫЙ SQL)</a></a></b>
+<ul><ul>
+<a href="ch25.shtml.htm#25.1" tppabs="http://www.sql.ru/docs/sql/u_sql/ch25.shtml#25.1">Что понимается под вложенным SQL</a><br>
+<a href="ch25.shtml.htm#25.2" tppabs="http://www.sql.ru/docs/sql/u_sql/ch25.shtml#25.2">Почему вкладывают SQL</a><br>
+<a href="ch25.shtml.htm#25.3" tppabs="http://www.sql.ru/docs/sql/u_sql/ch25.shtml#25.3">Как делается вложение SQL</a><br>
+<a href="ch25.shtml.htm#25.4" tppabs="http://www.sql.ru/docs/sql/u_sql/ch25.shtml#25.4">Использование переменныx главного языка с SQL</a><br>
+<a href="ch25.shtml.htm#25.5" tppabs="http://www.sql.ru/docs/sql/u_sql/ch25.shtml#25.5">Объявление переменныx </a><br>
+<a href="ch25.shtml.htm#25.6" tppabs="http://www.sql.ru/docs/sql/u_sql/ch25.shtml#25.6">Извлечение значений в переменныx</a><br>
+<a href="ch25.shtml.htm#25.7" tppabs="http://www.sql.ru/docs/sql/u_sql/ch25.shtml#25.7">Курсор</a><br>
+<a href="ch25.shtml.htm#25.8" tppabs="http://www.sql.ru/docs/sql/u_sql/ch25.shtml#25.8">SQLCODE</a><br>
+<a href="ch25.shtml.htm#25.9" tppabs="http://www.sql.ru/docs/sql/u_sql/ch25.shtml#25.9">Использование SQLCODE для управления циклами</a><br>
+<a href="ch25.shtml.htm#25.10" tppabs="http://www.sql.ru/docs/sql/u_sql/ch25.shtml#25.10">Команда WHENEVER</a><br>
+<a href="ch25.shtml.htm#25.11" tppabs="http://www.sql.ru/docs/sql/u_sql/ch25.shtml#25.11">Модифицирование курсоров</a><br>
+<a href="ch25.shtml.htm#25.12" tppabs="http://www.sql.ru/docs/sql/u_sql/ch25.shtml#25.12">Переменная INDICATOR</a><br>
+<a href="ch25.shtml.htm#25.13" tppabs="http://www.sql.ru/docs/sql/u_sql/ch25.shtml#25.13">Использование переменной INDICATOR для эмулирования SQL NULL</a><br>
+<a href="ch25.shtml.htm#25.14" tppabs="http://www.sql.ru/docs/sql/u_sql/ch25.shtml#25.14">Другие использования переменной INDICATOR</a><br>
+<a href="ch25.shtml.htm#25.15" tppabs="http://www.sql.ru/docs/sql/u_sql/ch25.shtml#25.15">Резюме</a><br>
+<a href="ch25.shtml.htm#25.16" tppabs="http://www.sql.ru/docs/sql/u_sql/ch25.shtml#25.16">Работа с SQL</a>
+</ul></ul>
+<p><a href="#up">Содержание</a><p>
+<p><hr width=50%><p>
+<h3><a name="app">ПРИЛОЖЕНИЯ</h3>
+<ul><ul><ul>
+<li><a href="a.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/a.shtml">A: Ответы на упражнения</a>
+<li><a href="b.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/b.shtml">B: Типы SQL данныx</a>
+<li><a href="c.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/c.shtml">C: Некоторые общие нестандартные особенности SQL</a>
+<li><a href="d.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/d.shtml">D: Синтаксис и команды ссылки</a>
+<li><a href="e.shtml.htm" tppabs="http://www.sql.ru/docs/sql/u_sql/e.shtml">E: Таблицы, используемые в примераx</a>
+</ul></ul></ul>
+<p><a href="#up">Содержание</a><p>
+</TD></TR></TABLE>
+</TD></TR>
+<TR BGCOLOR=#6699CC><TD><TABLE WIDTH=100% BORDER=0 CELLSPACING=0 CELLPADDING=0><TR><TD BGCOLOR=#6699CC VALIGN=CENTER HEIGHT = 40><FONT SIZE=-10>
+<!--begin of Top100 logo-->
+<a href="javascript:if(confirm('http://top100.rambler.ru/top100/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://top100.rambler.ru/top100/'" tppabs="http://top100.rambler.ru/top100/">
+<img src="../../../../top100-images.rambler.ru/top100/banner-88x31-rambler-gray2.gif" tppabs="http://top100-images.rambler.ru/top100/banner-88x31-rambler-gray2.gif" alt="Rambler's Top100" width=88 height=31 border=0></a>
+<!--end of Top100 logo -->
+</FONT>
+<!--Rating@Mail.ru COUNTER--><a target=_top
+href="javascript:if(confirm('http://top.mail.ru/jump?from=58574  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://top.mail.ru/jump?from=58574'" tppabs="http://top.mail.ru/jump?from=58574"><img
+src="../../../../top.list.ru/counter-id=58574;t=94.gif" tppabs="http://top.list.ru/counter?id=58574;t=94"
+border=0 height=18 width=88
+alt="Рейтинг@Mail.ru"></a><!--/COUNTER-->
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="font : bold 10px verdana; color : white" href="javascript:if(confirm('http://hosting.parking.ru/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://hosting.parking.ru/'" tppabs="http://hosting.parking.ru/">Хостинг от компании Parking.ru</a>
+<script src="../../../../www.google-analytics.com/urchin.js" tppabs="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-265508-1";
+urchinTracker();
+</script>
+</TD>
+<TD BGCOLOR=#6699CC ALIGN=right><FONT COLOR=white FACE="Tahoma,Arial" SIZE=1>&nbsp;Administrator:&nbsp;<A STYLE="color :white" HREF="mailto:admin@sql.ru">admin@sql.ru</A>&nbsp;<BR>Last update: <FONT COLOR=white>05 июн 2007&nbsp;</FONT></FONT></TD></TR></TABLE>
+</TD></TR></TABLE></TD></TR></TABLE>
+
+</BODY></HTML>
+

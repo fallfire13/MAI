@@ -1,0 +1,987 @@
+<HTML>
+<HEAD>
+<TITLE>Понимание SQL. Приложение A. [SQL.RU]</TITLE>
+<META http-equiv="Content-Type" CONTENT="text/html; charset=windows-1251">
+<META HTTP-EQUIV="Window-target" CONTENT="_top">
+<META HTTP-EQUIV="Last-Modified" CONTENT="29-03-2001">
+<META NAME="Description" CONTENT="Использование языка SQL, создание клиент-серверных систем. Конференция по MSSQL, Oracle, Interbase, MySQL. Полезные ссылки, документация, рекомендации по разработке информационных систем, сертификация, заказ книг и многое другое.">
+<META NAME="Keywords" CONTENT="SQL, конференция, Database Server, Oracle, Interbase, MySQL, документация, статьи, примеры, книги, ссылки, сертификация, работа, СУБД">
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../form.css" tppabs="http://www.sql.ru/form.css">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" leftmargin="3" topmargin="3" marginheight="3" marginwidth="3">
+<noindex>
+<TABLE BGCOLOR="#000000" WIDTH=100% CELLPADDING=0 CELLSPACING=0 BORDER=0>
+<TR><TD>
+
+<TABLE WIDTH=100% CELLPADDING=0 CELLSPACING=1 BORDER=0>
+<TR BGCOLOR="#6699CC"><TD><TABLE CELLSPACING=0 CELLPADDING=0 WIDTH=100% BORDER=0 BGCOLOR="#6699CC">
+<TR><TD COLSPAN=3><IMG SRC="../../../images/blank.gif" tppabs="http://www.sql.ru/images/blank.gif" height=3 width=1 alt=""></TD></TR>
+<TR><TD VALIGN=TOP>&nbsp;<FONT FACE="Verdana,Arial" SIZE=5 COLOR=lightyellow>SQL.RU<BR><FONT SIZE=-5>&nbsp;client/server technologies</FONT></FONT><!--begin of Top100--><a href="javascript:if(confirm('http://top100.rambler.ru/top100/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://top100.rambler.ru/top100/'" tppabs="http://top100.rambler.ru/top100/"><img src="../../../../counter.rambler.ru/top100.cnt-236431.gif" tppabs="http://counter.rambler.ru/top100.cnt?236431" alt="Rambler's Top100" width=1 height=1 border=0></a><!--end of Top100 code--></TD>
+<TD WIDTH=468 HEIGHT=60 BGCOLOR=#6699CC ALIGN=RIGHT></TD>
+<TD WIDTH=2><IMG SRC="../../../images/blank.gif" tppabs="http://www.sql.ru/images/blank.gif" height=1 width=2 alt=""></TD></TR>                                                      	
+<TR HEIGHT=4><TD COLSPAN=3><IMG SRC="../../../images/blank.gif" tppabs="http://www.sql.ru/images/blank.gif" height=5 width=1 alt=""></TD></TR></TABLE>
+
+</TD></TR>
+
+<TR HEIGHT=15><TD bgcolor=#006699><FONT FACE="Verdana,Arial" SIZE=1 COLOR=WHITE><B><A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/'" tppabs="http://www.sql.ru/">&nbsp;<FONT COLOR=white>Главная</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/docs  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/docs'" tppabs="http://www.sql.ru/docs">&nbsp;<FONT COLOR=yellow>Документация</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/articles  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/articles'" tppabs="http://www.sql.ru/articles">&nbsp;<FONT COLOR=white>Статьи</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/books  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/books'" tppabs="http://www.sql.ru/books">&nbsp;<FONT COLOR=white>Книги</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/forum/actualforum.aspx  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/forum/actualforum.aspx'" tppabs="http://www.sql.ru/forum/actualforum.aspx">&nbsp;<FONT COLOR=white>Форум</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/poll  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/poll'" tppabs="http://www.sql.ru/poll">&nbsp;<FONT COLOR=white>Опросы</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/forum/actualtopics.aspx?bid=11  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/forum/actualtopics.aspx?bid=11'" tppabs="http://www.sql.ru/forum/actualtopics.aspx?bid=11">&nbsp;<FONT COLOR=white>Гостевая</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/subscribe  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/subscribe'" tppabs="http://www.sql.ru/subscribe">&nbsp;<FONT COLOR=white>Рассылка</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/job  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/job'" tppabs="http://www.sql.ru/job">&nbsp;<FONT COLOR=white>Работа</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/search  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/search'" tppabs="http://www.sql.ru/search">&nbsp;<FONT COLOR=white>Поиск</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/faq  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/faq'" tppabs="http://www.sql.ru/faq">&nbsp;<FONT COLOR=white>FAQ</FONT>&nbsp;</A>|</B></FONT></TD></TR>
+<TR><TD BGCOLOR=#F5F5F5>
+</noindex>
+
+<TABLE BORDER=0 CELLSPACING=10><TR><TD>
+<CENTER>
+<H2 class="headline">
+Приложение A</H2></CENTER>
+<HR width="50%">
+
+<CENTER>
+<H3>ОТВЕТЫ ДЛЯ УПРАЖНЕНИЙ</H3></CENTER><A name=1>
+<H5>Глава 1</H5><PRE> 
+ 
+1. cnum 
+ 
+2. rating 
+ 
+3. Другим словом для строки является - запись. Другим словом для столбца 
+   является - поле. 
+ 
+4. Потому что строки, по определению, находятся без какого либо 
+   определенного упорядочения. 
+ </PRE><A name=2>
+<H5>Глава 2</H5><PRE> 
+ 
+1. Символ ( или текст ) и номер 
+ 
+2. Нет 
+ 
+3. Язык Манипулирования Данными (ЯЗЫК DML) 
+ 
+4. Это слово в SQL имеет специальное учебное значение. 
+ </PRE><A name=3>
+<H5>Глава 3</H5><PRE> 
+ 
+1. SELECT onum, amt, odate 
+     FROM Orders; 
+ 
+2. SELECT * 
+      FROM Customers 
+      WHERE snum = 1001; 
+ 
+3 SELECT city, sname, snum, comm 
+     FROM Salespeople; 
+ 
+4. SELECT rating, cname 
+      FROM Customers 
+      WHERE city = 'SanJose'; 
+ 
+5. SELECT DISTINCT snum 
+      FROM Orders; 
+ 
+ </PRE><A name=4>
+<H5>Глава 4</H5><PRE> 
+ 
+1. SELECT * FROM Orders WHERE amt &gt; 1000; 
+ 
+2. SELECT sname, city 
+      FROM Salespeople 
+      WHERE city = 'London' 
+        AND comm &gt; .10; 
+ 
+3. SELECT * 
+      FROM Customers 
+      WHERE rating &gt; 100 
+        OR city = 'Rome'; 
+ 
+ или 
+  SELECT * 
+     FROM Customers 
+     WHERE NOT rating &lt; = 100 
+       OR city = 'Rome'; 
+ или 
+  SELECT * 
+     FROM Customers 
+     WHERE NOT (rating &lt; = 100 
+       AND city &lt; &gt; 'Rome'); 
+ 
+Могут быть еще другие решения. 
+ 
+ 
+4. onum      amt   odate    cnum  snum 
+ 
+   3001      18.69  10/03/1990  2008  1007 
+ 
+   3003     767.19  10/03/1990  2001  1001 
+ 
+   3005    5160.45  10/03/1990  2003  1002 
+ 
+   3009    1713.23  10/04/1990  2002  1003 
+ 
+   3007      75.75  10/04/1990  2004  1002 
+ 
+   3008    4723.00  10/05/1990  2006  1001 
+ 
+   3010    1309.95  10/06/1990  2004  1002 
+ 
+   3011    9891.88  10/06/1990  2006  1001 
+ 
+5. onum    amt      odate   cnum  snum 
+ 
+   3001    18.69    10/03/1990  2008  1007 
+ 
+   3003    767.19   10/03/1990  2001  1001 
+ 
+ 
+  onum    amt    odate     cnum snum 
+ 
+  3006  1098.16  10/03/1990   2008  1007 
+ 
+  3009  1713.23  10/04/1990   2002  1003 
+ 
+  3007  75.75    10/04/1990   2004  1002 
+ 
+  3008  4723.00  10/05/1990   2006  1001 
+ 
+  3010  1309.95  10/06/1990   2004  1002 
+ 
+  3011  9891.88  10/06/1990   2006  1001 
+ 
+6. SELECT * 
+      FROM Salespeople; 
+ </PRE><A name=5>
+<H5>Глава 5</H5><PRE> 
+ 
+1. SELECT * 
+      FROM Orders 
+      WHERE odate IN (10/03/1990,10/04/1990); 
+ 
+   и 
+   SELECT * 
+      FROM Orders 
+      WHERE odate BETWEEN 10/03/1990 AND 10/04,1990; 
+ 
+2. SELECT * 
+      FROM Customers 
+      WHERE snum IN (1001,1004); 
+ 
+3. SELECT * 
+      FROM Customers 
+      WHERE cname BETWEEN 'A' AND 'H'; 
+ </PRE>
+<b>ПРИМЕЧАНИЕ: ВЫ ASCII базовой системе Hoffman не будет выве ден из-за 
+конечных пробелов после H. По той же самой причине вторая граница не может быть 
+G, поскольку она не выведет имена Giovanni и Grass. G может использоваться в 
+сопровождении с Z, так чтобы следовать за другими символами в алфавитном 
+порядке, а не предшествовать им, как это делают пробелы.</b><PRE> 
+ 
+4. SELECT * 
+      FROM Customers 
+      WHERE cname LIKE 'C%'; 
+ 
+5. SELECT * 
+      FROM Orders 
+      WHERE amt &lt; &gt; O 
+         AND (amt IS NOT NULL); 
+  или 
+   SELECT * 
+      FROM Orders 
+      WHERE NOT (amt = O 
+         OR amt IS NULL); 
+</PRE><A name=6>
+<H5>Глава 6</H5><PRE> 
+ 
+1. SELECT COUNT(*) 
+      FROM Orders 
+      WHERE odate = 10/03/1990; 
+ 
+2. SELECT COUNT (DISTINCT city) 
+      FROM Customers; 
+ 
+3. SELECT cnum, MIN (amt) 
+      FROM Orders 
+      GROUP BY cnum; 
+ 
+4 SELECT MIN (cname) 
+     FROM Customers 
+     WHERE cname LIKE 'G%'; 
+ 
+5. SELECT city, 
+      MAX (rating) 
+      FROM Customers 
+      GROUP BY city; 
+ 
+6 SELECT odate, count (DISTINCT snum 
+     FROM Orders 
+     GROUP BY odate; 
+ 
+ </PRE><A name=7>
+<H5>Глава 7</H5><PRE> 
+ 
+1. SELECT onum, snum, amt * .12 
+      FROM Orders; 
+ 
+2. SELECT 'For the city ', city, ', the highest rating is ',  ", 
+   MAX (rating) 
+      FROM Customers 
+      GROUP BY city; 
+ 
+3 SELECT rating, cname, cnum 
+     FROM Customers 
+     ORDER BY rating DESC; 
+ 
+4. SELECT odate, SUM (amt) 
+      FROM Orders 
+      GROUP BY odate 
+      ORDER BY 2 DESC; 
+ </PRE><A name=8>
+<H5>Глава 8</H5><PRE> 
+ 
+1. SELECT onum, cname 
+      FROM Orders, Customers 
+      WHERE Customers.cnum = Orders.cnum; 
+ 
+2. SELECT onum, cname, sname 
+      FROM Orders, Customers, Salespeople 
+      WHERE Customers.cnum = Orders.cnum 
+        AND Salespeople.snum = Orders.snum; 
+ 
+3. SELECT cname, sname, comm 
+      FROM Salespeople, Customers 
+      WHERE Salespeople.snum = Customers.snum 
+        AND comm * .12; 
+ 
+4. SELECT onum, comm * amt 
+      FROM Salespeople, Orders, Customers 
+      WHERE rating &gt; 100 
+        AND Orders.cnum = Customers.cnum 
+        AND Orders.snum = Salespeople.snum; 
+ </PRE><A name=9>
+<H5>Глава 9</H5><PRE> 
+ 
+1. SELECT first.sname, second.sname 
+      FROM Salespeople first, Salespeople second 
+      WHERE first.city = second.city 
+        AND first.sname &lt; second.sname; 
+ 
+Псевдонимам нет необходимости иметь именно такие имена. 
+ 
+2. SELECT cname, first.onum, second.onum 
+      FROM Orders first, Orders second, Customers 
+      WHERE first.cnum = second.cnum 
+        AND first.cnum = Customers.cnum 
+        AND first.onum &lt; second.onum; 
+</PRE> 
+Ваш вывод может иметь некоторые отличи, но в вашем ответе все логические 
+компоненты должны быть такими же. <PRE>
+ 
+3. SELECT a.cname, a.city 
+      FROM Customers a, Customers b 
+      WHERE a.rating = b.rating 
+        AND b.cnum = 2001; 
+ 
+ </PRE><A name=10>
+<H5>Глава 10</H5><PRE> 
+ 
+1. SELECT * 
+      FROM Orders 
+      WHERE cnum = 
+      (SELECT cnum 
+          FROM Customers 
+          WHERE cname = 'Cisneros'); 
+ 
+  или 
+   SELECT * 
+      FROM Orders 
+      WHERE cnum IN 
+        (SELECT cnum 
+            FROM Customers 
+            WHERE cname = 'Cisneros'); 
+ 
+2. SELECT DISTINCT cname, rating 
+      FROM Customers, Orders 
+      WHERE amt &gt; 
+        (SELECT AVG (amt) 
+            FROM Orders) 
+        AND Orders.cnum = Customers.cnum; 
+ 
+3 SELECT snum, SUM (amt) 
+     FROM Orders 
+     GROUP BY snum 
+     HAVING SUM (amt) &gt; 
+        (SELECT MAX (amt) 
+            FROM Orders); 
+ 
+ </PRE><A name=11>
+<H5>Глава 11</H5><PRE> 
+ 
+1. SELECT cnum, cname 
+      FROM Customers outer 
+      WHERE rating = 
+        (SELECT MAX (rating) 
+         FROM Customers inner 
+         WHERE inner.city = outer.city); 
+ 
+2. Решение с помощью соотнесенного подзапроса: 
+ 
+   SELECT snum, sname 
+      FROM Salespeople main 
+      WHERE city IN 
+        (SELECT city 
+            FROM Customers inner 
+            WHERE inner.snum &lt; &gt; main.snum); 
+ 
+   Решение с помощью объединения: 
+ 
+   SELECT DISTINCT first.snum, sname 
+      FROM Salespeople first, Customers second 
+      WHERE first.city = second.city 
+         AND first.snum &lt; &gt; second.snum; 
+ </PRE>
+<b>Соотнесенный подзапрос находит всех заказчиков, не обслуживаемых данным 
+продавцом, и выясняет: живет ли кто-нибудь из их в его городе. Решение с помощью 
+объединения является более простым и более инту- итивным. Оно находит случаи где 
+пол city совпадают, а пол snums нет. Следовательно объединение является более 
+изящным решением для этой проблемы, чем то которое мы исследовали до этого. 
+Имеется еще более изящное решение с помощью подзапроса, с которым Вы столкнетесь 
+позже.</b><A name=12>
+<H5>Глава 12</H5><PRE> 
+ 
+1. SELECT * 
+      FROM Salespeople first 
+      WHERE EXISTS 
+        (SELECT * 
+            FROM Customers second 
+            WHERE first.snum = second.snum 
+              AND rating = 300); 
+ 
+2. SELECT a.snum, sname, a.city, comm 
+      FROM Salespeople a, Customers b 
+      WHERE a.snum = b.snum 
+        AND b.rating = 300; 
+ 
+3. SELECT * 
+      FROM Salespeople a 
+      WHERE EXISTS 
+        (SELECT * 
+            FROM Customers b 
+            WHERE b.city = a.city 
+              AND a.snum &lt; &gt; b.snum); 
+ 
+4. SELECT * 
+      FROM Customers a 
+      WHERE EXISTS 
+       (SELECT * 
+           FROM Orders b 
+           WHERE a.snum = b.snum 
+             AND a.cnum &lt; &gt; b.cnum) 
+ </PRE><A name=13>
+<H5>Глава 13</H5><PRE> 
+ 
+1. SELECT * 
+      FROM Customers 
+      WHERE rating &gt; = ANY 
+        (SELECT rating 
+            FROM Customers 
+            WHERE snum = 1002); 
+ 
+2.   cnum   cname    city   rating   snum 
+ 
+     2002   Giovanni  Rome      200     1003 
+ 
+     2003   Liu       San Jose  200     1002 
+ 
+     2004   Grass     Berlin    300     1002 
+ 
+     2008   Cisneros  SanJose   300     1007 
+ 
+3.  SELECT * 
+       FROM Salespeople 
+       WHERE city &lt; &gt; ALL 
+         (SELECT city 
+             FROM Customers); 
+ 
+ или 
+ 
+  SELECT * 
+     FROM Salespeople 
+     WHERE NOT city = ANY 
+       (SELECT city 
+           FROM Customers); 
+ 
+4.  SELECT * 
+       FROM Orders 
+       WHERE amt &gt; ALL 
+         (SELECT amt 
+             FROM Orders a, Customers b 
+             WHERE a.cnum = b.cnum 
+               AND b.city = 'London'); 
+ 
+5.  SELECT * 
+       FROM Orders 
+       WHERE amt &gt; 
+         (SELECT MAX (amt) 
+             FROM Orders a, Customers b 
+             WHERE a.cnum = b.cnum 
+               AND b.city = 'London'); 
+ </PRE><A name=14>
+<H5>Глава 14</H5><PRE>
+1.  SELECT cname, city, rating, 'High Rating' 
+       FROM Customers 
+       WHERE rating &gt; = 200 
+ 
+       UNION 
+ 
+    SELECT cname, city, rating, ' Low Ratlng' 
+       FROM Customers 
+       WHERE rating &lt; 200; 
+ 
+   или 
+ 
+    SELECT cname, city, rating, 'High Rating' 
+       FROM Customers 
+       WHERE rating &gt; = 200 
+ 
+       UNION 
+ 
+       SELECT cname, city, rating, ' Low Rating' 
+          FROM Customers 
+          WHERE NOT rating &gt; = 200; 
+ </PRE>
+<b>Различие между этими двум предложениями, в форме второго предиката. Обратите 
+внимание что, в обоих случаях, строка "Low Rating" имеет в начале дополнительный 
+пробел для того чтобы совпадать со строкой "High Rating" по длине.</b><PRE> 
+ 
+2. SELECT cnum, cname 
+      FROM Customers a 
+      WHERE 1 &lt; 
+       (SELECT COUNT (-) 
+           FROM Orders b 
+           WHERE a.cnum = b.cnum) 
+ 
+           UNION 
+ 
+   SELECT snum, sname 
+      FROM Salespeople a 
+      WHERE 1 &lt; 
+        (SELECT COUNT (*) 
+            FROM Orders b 
+            WHERE a.snum = b.snum) 
+ 
+      ORDER BY 2; 
+ 
+3. SELECT snum 
+      FROM Salespeople 
+      WHERE city = 'San Jose' 
+ 
+      UNION 
+ 
+  (SELECT cnum 
+      FROM Customers 
+      WHERE city = 'San Jose' 
+ 
+      UNION ALL 
+ 
+  SELECT onum 
+     FROM Orders 
+     WHERE odate = 10/03/1990); 
+</PRE><A name=15>
+<H5>Глава 15</H5><PRE> 
+
+1. INSERT INTO Salespeople (city, cname, comm, cnum) 
+VALUES ('San Jose', 'Blanco', NULL, 1100); 
+
+2. DELETE FROM Orders WHERE cnum = 2006; 
+
+3. UPDATE Customers 
+SET rating = rating + 100 
+WHERE city = 'Rome'; 
+
+4. UPDATE Customers 
+SET snum = 1004 
+WHERE snum = 1002; 
+
+</PRE><A name=16>
+<H5>Глава 16</H5><PRE> 
+
+1. INSERT INTO Multicust 
+SELECT * 
+ FROM Salespeople 
+ WHERE 1 &lt; 
+   (SELECT COUNT (*) 
+       FROM Customers 
+       WHERE Customers.snum = Salespeople.snum); 
+
+2. DELETE FROM Customers 
+WHERE NOT EXISTS 
+(SELECT * 
+    FROM Orders 
+    WHERE cnum = Customers.cnum); 
+
+3. UPDATE Salespeople 
+SET comm = comm + (comm * .2) 
+WHERE 3000 &lt; 
+(SELECT SUM (amt) 
+    FROM Orders 
+    WHERE snum = Salespeople.snum); 
+</PRE>
+<b>В более сложный вариант этой команды можно было бы вставить проверку чтобы 
+убедиться, что значения комиссионных не превышают 1.0 ( 100 % ):</b><PRE> 
+
+UPDATE Salespeople 
+SET comm = comm + (comm * .2) 
+WHERE 3000 &lt; 
+(SELECT SUM (amt) 
+   FROM Orders 
+   WHERE snum = Salespeople.snum) 
+   AND comm + (comm * .2) &lt; 1.0; 
+</PRE>
+<B>Эти проблемы могут иметь другие, такие же хорошие решения.</B>
+
+<A name=17>
+<H5>Глава 17</H5><PRE>
+1. CREATE TABLE Customers 
+(cnum   integer, 
+cname  char(10), 
+city    char(10), 
+rating  integer, 
+snum   integer); 
+
+2. CREATE INDEX Datesearch ON Orders(odate); 
+
+( Все индексные имена используемые в этих ответах - произвольные. ) 
+
+3. CREATE UNIQUE INDEX Onumkey ON Orders(onum); 
+
+4. CREATE INDEX Mydate ON Orders(snum, odate); 
+
+5. CREATE UNIQUE INDEX Combination ON 
+Customers(snum, rating);
+
+</PRE>
+<A name=18> 
+<H5>Глава 18</H5><PRE> 
+
+1. CREATE TABLE Orders 
+(onum   integer NOT NULL PRIMARY KEY, 
+amt    decimal, 
+odate  date NOT NULL, 
+cnum  integer NOT NULL, 
+snum  integer NOT NULL, 
+UNIOUE (snum, cnum)); 
+
+или 
+
+CREATE TABLE Orders 
+(onum   integer NOT NULL UNIQUE, 
+amt    decimal, 
+odate  date NOT NULL, 
+cnum  integer NOT NULL, 
+snum  integer NOT NULL, 
+UNIQUE (snum, cnum)); 
+
+Первое решение предпочтительнее. 
+
+2. CREATE TABLE Salespeople 
+(snum   integer NOT NULL PRIMARY KEY, 
+sname  char(15) CHECK (sname BETWEEN 'AA' AND 'MZ'), 
+city    char(15), 
+comm  decimal NOT NULL DEFAULT = .10); 
+
+3.  CREATE TABLE Orders 
+(onum   integer NOT NULL, 
+amt    decimal, 
+odate  date, 
+cnum  integer NOT NULL, 
+snum  integer NOT NULL, 
+CHECK ((cnum &gt; snum) AND (onum &gt; cnum))); 
+</PRE>
+<A name=19> 
+<H5>Глава 19</H5><PRE> 
+
+1. CREATE TABLE Cityorders 
+(onum   integer NOT NULL PRIMARY KEY, 
+amt    decimal, 
+cnum  integer, 
+snum  integer, 
+city   char (15), 
+FOREIGN KEY (onum, amt, snum) 
+    REFERENCES Orders (onum, amt, snum), 
+FOREIGN KEY (cnum, city) 
+    REFERENCES Customers (cnum, city) ); 
+
+2. CREATE TABLE Orders 
+(onum   integer NOT NULL, 
+amt    decimal, 
+odate  date, 
+cnum  integer NOT NULL, 
+snum  integer, 
+prev   integer, 
+    UNIQUE (cnum, onum), 
+    FOREIGN KEY (cnum, prev) REFERENCES Orders (cnum,onum) );9 
+ </PRE>
+<A name=20> 
+<H5>Глава 20</H5><PRE> 
+ 
+1. CREATE VIEW Highratings 
+      AS SELECT * 
+         FROM Customers 
+         WHERE rating = 
+           (SELECT MAX (rating) 
+            FROM Customers); 
+ 
+ 
+2. CREATE VIEW Citynumber 
+      AS SELECT city, COUNT (DISTINCT snum) 
+         FROM Salespeople 
+         GROUP BY city; 
+ 
+3. CREATE VIEW Nameorders 
+      AS SELECT sname, AVG (amt), SUM (amt) 
+         FROM Salespeople, Orders 
+         WHERE Salespeople.snum = Orders.snum 
+         GROUP BY sname; 
+ 
+4 CREATE VIEW Multcustomers 
+     AS SELECT * 
+        FROM Salespeople a 
+        WHERE 1 &lt; 
+          (SELECT COUNT (*) 
+              FROM Customers b 
+              WHERE a.snum = b.snum); 
+ </PRE>
+<A name=21> 
+<H5>Глава 21</H5><PRE> 
+ 
+1. #1 - не модифицируемый, потому что он использует DISTINCT. 
+   #2 - не модифицируемый, потому что он использует объединение, 
+          агрегатную функцию, и GROUP BY. 
+   #3 - не модифицируемый, потому что он основывается на #1, который 
+          сам по себе не модифицируемый. 
+ 
+2. CREATE VIEW Commissions 
+      AS SELECT snum, comm 
+         FROM Salespeople 
+         WHERE comm BETWEEN .10 AND .20 
+         WITH CHECK OPTION; 
+ 
+3 CREATE TABLE Orders 
+     (onum integer NOT NULL PRIMARY KEY, 
+      amt decimal, 
+      odate date DEFAULT VALUE = CURDATE, 
+      snum integer, 
+      cnum integer); 
+  CREATE VIEW Entryorders 
+     AS SELECT onum, amt, snum, cnum 
+     FROM Orders; 
+ 
+ </PRE>
+<A name=22> 
+<H5>Глава 22</H5><PRE> 
+ 
+1. GRANT UPDATE (rating) ON Customers TO Janet; 
+ 
+2. GRANT SELECT ON Orders TO Stephen WITH GRANT OPTION; 
+ 
+3. REVOKE INSERT ON Salespeople FROM Claire; 
+ 
+4. Шаг 1: CREATE VIEW Jerrysview 
+             AS SELECT * 
+                FROM Customers 
+                WHERE rating BETWEEN 100 AND 500 
+                WITH CHECK OPTION; 
+ 
+   Шаг 2: GRANT INSERT, UPDATE ON Jerrysview TO Jerry; 
+ 
+5. Шаг 1: CREATE VIEW Janetsview 
+             AS SELECT * 
+                FROM Customers 
+                WHERE rating = 
+                   (SELECT MIN (rating) 
+                       FROM Customers); 
+ 
+   Шаг 2: GRANT SELECT ON Janetsview TO Janet; 
+ 
+ </PRE>
+<A name=23> 
+<H5>Глава 23</H5><PRE> 
+ 
+1. CREATE DBSPACE Myspace 
+      (pctindex 15, 
+       pctfree 40); 
+ 
+2. CREATE SYNONYM Orders FOR Diane.Orders; 
+ 
+3. Они должны быть откатаны обратно назад. 
+ 
+4. Блокировка взаимоисключающего доступа. 
+ 
+5. Только чтение 
+</PRE>
+
+<H5>Глава 24</H5><PRE> 
+1. SELECT a.tname, a.owner, b.cname, b.datatype 
+      FROM SYSTEMCATOLOG a, SYSTEMCOLUMNS b 
+      WHERE a.tname = b.tname 
+        AND a.owner = b.owner 
+        AND a.numcolumns &gt; 4; 
+</PRE>
+
+<b>Обратите Внимание: из-за того что большинство имен столбца 
+объединяемых таблиц - различны, не все из используемых псевдонимов a
+ и b в вышеупомянутой команде - строго обязательны. Они представлены просто для понимания.</b>
+<PRE> 
+ 
+2. SELECT tname, synowner, COUNT (ALL synonym) 
+      FROM SYTEMSYNONS 
+      GROUP BY tname, synowner; 
+ 
+3 SELECT COUNT (*) 
+     FROM SYSTEMCATALOG a 
+     WHERE numcolumns/2 &lt; 
+       (SELECT COUNT (DISTINCT cnumber) 
+           FROM SYSTEMINDEXES b 
+           WHERE a.owner = b.tabowner 
+             AND a.tname = b.tname); 
+ </PRE>
+<A name=25> 
+<H5>Глава 25</H5><PRE> 
+ 
+1.  EXEC SQL BEGIN DECLARE SECTION; 
+       SQLCODE:integer; 
+    {требуемый всегда} 
+       cnum     integer; 
+       snum     integer; 
+       custnum: integer; 
+       salesnum: integer; 
+    EXEC SQL END DECLARE SECTION; 
+    EXEC SQL DECLARE Wrong_Orders AS CURSOR FOR 
+       SELECT cnum, snum 
+          FROM Orders a 
+          WHERE snum &lt; &gt; 
+            (SELECT snum 
+                FROM Customers b 
+                WHERE a.cnum = b.cnum); 
+ </PRE>
+<B> Мы пока еще используем здесь SQL для выполнения основной работы. 
+Запрос выше размещает строки таблицы Порядков которые не согласуются 
+с таблицей Заказчиков. </B><PRE> 
+  EXEC SQL DECLARE Cust_assigns AS CURSOR FOR 
+     SELECT cnum, snum 
+        FROM Customers; 
+</PRE><B>{Этот курсор используется для получения правильных значений snum}</B><PRE> 
+  begin { основная программа } 
+EXEC SQL OPEN CURSOR Wrong_Orders; 
+while SQLCODE = O do 
+</PRE><B>{Цикл до тех пор пока Wrong_Orders не опустеет}</B><PRE> 
+  begin 
+  EXEC SQL FETCH Wrong_Orders INTO 
+   (:cnum, :snum); 
+  if SQLCODE = O then 
+        begin 
+</PRE><B>{Когда Wrong_Orders опустеет, мы не хотели бы продолжать выполнение 
+ этого цикла до бесконечности}</B><PRE> 
+  EXEC SQL OPEN CURSOR Cust_Assigns; 
+     repeat 
+         EXEC SQL FETCH Cust_Assigns 
+            INTO (:custnum, :salesnum); 
+     until :custnum = :cnum; 
+</PRE><B>{Повторять FETCH до тех пор пока ... команда будет просматривать 
+ Cust_Assigns курсор до строки которая соответствует текущему 
+ значению cnum найденного в Wrong_Orders}</B><PRE> 
+ 
+     EXEC SQL CLOSE CURSOR Cust_assigns; 
+ 
+</PRE><B>{Поэтому мы будем начинать новый вывод в следующий раз через цикл. 
+ Значение в котором мы получим из этого курсора сохраняется в 
+ переменной - salesnum.}</B><PRE> 
+     EXEC SQL UPDATE Orders 
+        SET snum = :salesnum 
+        WHERE CURRENT OF Wrong_Orders; 
+     end; {Если SQLCODE = 0}. 
+  end; </PRE><B>{ Пока SQLCODE . . . выполнить }</B><PRE> 
+EXEC SQL CLOSE CURSOR Wrong_Orders; 
+end; { основная программа } 
+ 
+ 
+2.</PRE><B> Для данной программы которую  использовал, решение будет состоять в том, 
+   чтобы просто включить поле onum, первичным ключом таблицы Порядков, 
+   в курсор Wrong_Orders. В команде UPDATE, вы будете затем использовать 
+   предикат WHERE onum =:ordernum ( считая целую переменную - odernum, 
+   объявленой), вместо WHERE CURRENT Of Wrong_Orders. 
+   Результатом будет программа наподобие этой 
+   ( большинство комментариев из предыдущей программы здесь исключены ):</B><PRE> 
+ 
+EXEC SQL BEGIN DECLARE SECTION; 
+   SQLCODE:   integer; 
+   odernum      integer; 
+   cnum         integer; 
+   snum         integer; 
+   custnum:     integer; 
+   salesnum:    integer; 
+EXEC SQL END DECLARE SECTION; 
+EXEC SQL DECLARE Wrong_Orders AS CURSOR FOR 
+   SELECT onum, cnum, snum 
+      FROM Orders a 
+      WHERE snum &lt; &gt; 
+        (SELECT snum 
+            FROM Customers b 
+WHERE a.cnum = b.cnum); 
+EXEC SQL DECLARE Cust _ assigns AS CURSOR FOR 
+   SELECT cnum, snum 
+      FROM Customers; 
+begin { основная программа } 
+EXEC SQL OPEN CURSOR Wrong_Orders; 
+while SQLCODE = O do {Цикл до тех пор пока Wrong_Orders 
+не опустеет} 
+   begin 
+   EXEC SQL FETCH Wrong_Orders 
+      INTO (:odernum, :cnum, :snum); 
+   if SQLCODE = O then 
+       begin 
+       EXEC SQL OPEN CURSOR Cust_Assigns; 
+       repeat 
+          EXEC SQL FETCH Cust_Assigns 
+             INTO (:custnum, :salesnum); 
+       until :custnum = :cnum; 
+ 
+       EXEC SQL CLOSE CURSOR Cust_assigns; 
+       EXEC SQL UPDATE Orders 
+          SET snum = :salesnum 
+          WHERE CURRENT OF Wrong_Orders; 
+       end; {If SQLCODE = 0} 
+    end; { While SQLCODE . . . do } 
+EXEC SQL CLOSE CURSOR Wrong_Orders; 
+end; { main program } 
+ 
+3. EXEC SQL BEGIN DECLARE SECTION; 
+      SQLCODE  integer; 
+      newcity      packed array[1. .12] of char; 
+      commnull    boolean; 
+      citynull     boolean; 
+      response    char; 
+ 
+   EXEC SQL END DECLARE SECTION; 
+   EXEC SQL DECLARE CURSOR Salesperson AS 
+      SELECT * FROM SALESPEOPLE; 
+   begln { main program } 
+   EXEC SQL OPEN CURSOR Salesperson; 
+   EXEC SQL FETCH Salesperson 
+      INTO (:snum, :sname, :city:i_cit, :comm:i_com); 
+ 
+{Выборка первой строки} 
+while SQLCODE = O do 
+{Пока эти строки в таблице Продавцов.} 
+      begin 
+      if i_com &lt; O then commnull: = true; 
+      if i_cit &lt; O then citynull: = true; 
+{ Установить логические флаги которые могут показать NULLS.} 
+ 
+      if citynull then 
+            begin 
+            write  ('Нет текущего значения city для продавца ', 
+            snum,   ' Хотите предоставить хотя бы одно? (Y/N)'); 
+ 
+{Подсказка покажет значение city состоящее из NULL значений.} 
+ 
+             read (ответ); 
+ 
+{Ответ может быть сделан позже.} 
+ 
+             end {если конечно - citynull} 
+ 
+      else { не citynull } 
+          begin 
+          if not commnull then 
+ 
+{ Чтобы выполнять сравнение и операции только для не-NULL значений 
+  связи } 
+              begin 
+              if city = 'London' then comm: = comm * .02 * .02 
+                    else comm: = comm + .02; 
+              end; 
+{Даже если значение и не - commnull, begin и end здесь для ясности.} 
+ 
+         write ('Текущий city для продавца', 
+                 snum, 'есть', city, 
+                 Хотите его изменить? (Y/N)'); 
+ 
+3.  Обратите Внимание: Продавец не назначенный в данное время 
+    в определенный город, не будет иметь изменений комиссионных 
+    при определении находится ли он в Лондоне. 
+ 
+    read (ответ); 
+ 
+    {Ответ теперь имеет значение независимо от того что 
+     citynull - верен или неверен.} 
+ 
+          end; {иначе не citynull} 
+    if response = 'Y' then 
+          begin 
+          write ('Введите новое значение city:'); 
+          read (newcity); 
+          if not commnull then 
+ 
+    {Эта операция может быть выполнена только для не-NULL 
+     значений. } 
+ 
+              case newcity of: 
+                 begin 
+                'Barcelona':comm:= comm + .01, 
+                'San Jose': comm: = comm *.01 
+                 end; {случно и если не commnull} 
+          EXEC SQL UPDATE Salespeople 
+             SET city = :newcity, comm = :comm:i_com 
+             WHERE CURRENT OF Salesperson; 
+ 
+    {Переменна индикатора может поместить NULL значение в поле 
+     comm если так назначено.} 
+ 
+             end; { Если ответ = 'Y', или если ответ &lt; &gt; 'Y', 
+                    изменений не будет. } 
+             EXEC SQL FETCH Salesperson 
+                INTO (:snum, :sname, :city:i_clt, 
+                 :comm:l_com); 
+ 
+{выборка следующей строки} 
+   end; {если SQLCODE = 0} 
+   EXEC SQL CLOSE CURSOR Salesperson; 
+   end; {основной программы} 
+</PRE>
+
+</A></PRE>
+</TD></TR></TABLE>
+</TD></TR>
+<TR BGCOLOR=#6699CC><TD><TABLE WIDTH=100% BORDER=0 CELLSPACING=0 CELLPADDING=0><TR><TD BGCOLOR=#6699CC VALIGN=CENTER HEIGHT = 40><FONT SIZE=-10>
+<!--begin of Top100 logo-->
+<a href="javascript:if(confirm('http://top100.rambler.ru/top100/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://top100.rambler.ru/top100/'" tppabs="http://top100.rambler.ru/top100/">
+<img src="../../../../top100-images.rambler.ru/top100/banner-88x31-rambler-gray2.gif" tppabs="http://top100-images.rambler.ru/top100/banner-88x31-rambler-gray2.gif" alt="Rambler's Top100" width=88 height=31 border=0></a>
+<!--end of Top100 logo -->
+</FONT>
+<!--Rating@Mail.ru COUNTER--><a target=_top
+href="javascript:if(confirm('http://top.mail.ru/jump?from=58574  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://top.mail.ru/jump?from=58574'" tppabs="http://top.mail.ru/jump?from=58574"><img
+src="../../../../top.list.ru/counter-id=58574;t=94.gif" tppabs="http://top.list.ru/counter?id=58574;t=94"
+border=0 height=18 width=88
+alt="Рейтинг@Mail.ru"></a><!--/COUNTER-->
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="font : bold 10px verdana; color : white" href="javascript:if(confirm('http://hosting.parking.ru/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://hosting.parking.ru/'" tppabs="http://hosting.parking.ru/">Хостинг от компании Parking.ru</a>
+<script src="../../../../www.google-analytics.com/urchin.js" tppabs="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-265508-1";
+urchinTracker();
+</script>
+</TD>
+<TD BGCOLOR=#6699CC ALIGN=right><FONT COLOR=white FACE="Tahoma,Arial" SIZE=1>&nbsp;Administrator:&nbsp;<A STYLE="color :white" HREF="mailto:admin@sql.ru">admin@sql.ru</A>&nbsp;<BR>Last update: <FONT COLOR=white>05 июн 2007&nbsp;</FONT></FONT></TD></TR></TABLE>
+</TD></TR></TABLE></TD></TR></TABLE>
+
+</BODY></HTML>
+
+

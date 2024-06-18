@@ -1,0 +1,232 @@
+<HTML>
+<HEAD>
+<TITLE>Понимание SQL. Приложение B. [SQL.RU]</TITLE>
+<META http-equiv="Content-Type" CONTENT="text/html; charset=windows-1251">
+<META HTTP-EQUIV="Window-target" CONTENT="_top">
+<META HTTP-EQUIV="Last-Modified" CONTENT="29-03-2001">
+<META NAME="Description" CONTENT="Использование языка SQL, создание клиент-серверных систем. Конференция по MSSQL, Oracle, Interbase, MySQL. Полезные ссылки, документация, рекомендации по разработке информационных систем, сертификация, заказ книг и многое другое.">
+<META NAME="Keywords" CONTENT="SQL, конференция, Database Server, Oracle, Interbase, MySQL, документация, статьи, примеры, книги, ссылки, сертификация, работа, СУБД">
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../form.css" tppabs="http://www.sql.ru/form.css">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" leftmargin="3" topmargin="3" marginheight="3" marginwidth="3">
+<noindex>
+<TABLE BGCOLOR="#000000" WIDTH=100% CELLPADDING=0 CELLSPACING=0 BORDER=0>
+<TR><TD>
+
+<TABLE WIDTH=100% CELLPADDING=0 CELLSPACING=1 BORDER=0>
+<TR BGCOLOR="#6699CC"><TD><TABLE CELLSPACING=0 CELLPADDING=0 WIDTH=100% BORDER=0 BGCOLOR="#6699CC">
+<TR><TD COLSPAN=3><IMG SRC="../../../images/blank.gif" tppabs="http://www.sql.ru/images/blank.gif" height=3 width=1 alt=""></TD></TR>
+<TR><TD VALIGN=TOP>&nbsp;<FONT FACE="Verdana,Arial" SIZE=5 COLOR=lightyellow>SQL.RU<BR><FONT SIZE=-5>&nbsp;client/server technologies</FONT></FONT><!--begin of Top100--><a href="javascript:if(confirm('http://top100.rambler.ru/top100/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://top100.rambler.ru/top100/'" tppabs="http://top100.rambler.ru/top100/"><img src="../../../../counter.rambler.ru/top100.cnt-236431.gif" tppabs="http://counter.rambler.ru/top100.cnt?236431" alt="Rambler's Top100" width=1 height=1 border=0></a><!--end of Top100 code--></TD>
+<TD WIDTH=468 HEIGHT=60 BGCOLOR=#6699CC ALIGN=RIGHT></TD>
+<TD WIDTH=2><IMG SRC="../../../images/blank.gif" tppabs="http://www.sql.ru/images/blank.gif" height=1 width=2 alt=""></TD></TR>                                                      	
+<TR HEIGHT=4><TD COLSPAN=3><IMG SRC="../../../images/blank.gif" tppabs="http://www.sql.ru/images/blank.gif" height=5 width=1 alt=""></TD></TR></TABLE>
+
+</TD></TR>
+
+<TR HEIGHT=15><TD bgcolor=#006699><FONT FACE="Verdana,Arial" SIZE=1 COLOR=WHITE><B><A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/'" tppabs="http://www.sql.ru/">&nbsp;<FONT COLOR=white>Главная</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/docs  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/docs'" tppabs="http://www.sql.ru/docs">&nbsp;<FONT COLOR=yellow>Документация</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/articles  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/articles'" tppabs="http://www.sql.ru/articles">&nbsp;<FONT COLOR=white>Статьи</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/books  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/books'" tppabs="http://www.sql.ru/books">&nbsp;<FONT COLOR=white>Книги</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/forum/actualforum.aspx  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/forum/actualforum.aspx'" tppabs="http://www.sql.ru/forum/actualforum.aspx">&nbsp;<FONT COLOR=white>Форум</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/poll  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/poll'" tppabs="http://www.sql.ru/poll">&nbsp;<FONT COLOR=white>Опросы</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/forum/actualtopics.aspx?bid=11  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/forum/actualtopics.aspx?bid=11'" tppabs="http://www.sql.ru/forum/actualtopics.aspx?bid=11">&nbsp;<FONT COLOR=white>Гостевая</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/subscribe  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/subscribe'" tppabs="http://www.sql.ru/subscribe">&nbsp;<FONT COLOR=white>Рассылка</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/job  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/job'" tppabs="http://www.sql.ru/job">&nbsp;<FONT COLOR=white>Работа</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/search  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/search'" tppabs="http://www.sql.ru/search">&nbsp;<FONT COLOR=white>Поиск</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/faq  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/faq'" tppabs="http://www.sql.ru/faq">&nbsp;<FONT COLOR=white>FAQ</FONT>&nbsp;</A>|</B></FONT></TD></TR>
+<TR><TD BGCOLOR=#F5F5F5>
+</noindex>
+
+<TABLE BORDER=0 CELLSPACING=10><TR><TD>
+<CENTER>
+<H2 class="headline">
+Приложение B</H2></CENTER>
+<HR width="50%">
+
+<H3><B>ТИПЫ ДАННЫХ В SQL </B></H3>Типы данных распознаваемые с помощью 
+ANSI, состоят из символов и различных типов чисел, которые могут 
+классифицироваться как точные числа и приблизительные числа. Точные числовые 
+типы - это номера, с десятичной точкой или без десятичной точки. Приблизительные 
+числовые типы - это номера в показательной ( экспоненциальной по основанию - 10 
+) записи. Для все прочих типов, отличи слишком малы чтобы их как-то 
+классифицировать. <BR>Иногда типы данных используют аргумент, который называю 
+размером аргумента, чей точный формат и значение меняется в зависимости от 
+конкретного типа. Значения по умолчанию обеспечены для всех типов, если размер 
+аргумента отсутствует. 
+<H3><B>ТИПЫ ANSI </B></H3>Ниже представлены типы данных ANSI ( имена в круглых 
+скобках - это синонимы ): <BR>
+<TABLE>
+  <TBODY>
+  <TR align=left>
+    <TH>TEXT 
+    <TH>ТЕКСТ 
+  <TR align=left>
+    <TH>CHAR(или CHARACTER) 
+    <TD>Строка текста в реализационно-определенном формате. Размер аргумента 
+      здесь это единственное неотрицательное целое число которое ссылается к 
+      максимальной длине строки. Значения этого типа, должны быть заключены в 
+      одиночные кавычки, например 'text'. Две рядом стоящие одиночные кавычки 
+      ('') внутри строки будет пониматься как одна одиночна кавычка ('). </TD>
+  </TR></TBODY></TABLE><FONT size=2><B>ПРИМЕЧАНИЕ</B>:<BR>Здесь и далее, фраза 
+Реализационно-Определенный или Реализационно-Зависимый, указывает, что этот 
+аргумент или формат зависит от конкретной программы в которой реализуются 
+данные.</FONT><BR>
+<TABLE>
+  <TBODY>
+  <TR align=left>
+    <TH>EXACT NUMERIC 
+    <TH>ТОЧНОЕ ЧИСЛО 
+  <TR align=left>
+    <TH>DEC (или DECIMAL)
+    <TD>Десятичное число; то есть, число которое мoжет иметь десятичную точку. 
+      Здесь аргумент размера имеет две части: точность и масштаб.Масштаб не 
+      может превышать точность. Cначала указывается точность, разделительная 
+      запятая и далее аргумент масштаба. Точность указывает сколько значащих 
+      цифр имеет число. Максимальное десятичное число составляющее номер - 
+      реализационно-определенное значение, равное или большее чем этот номер. 
+      Масштаб указывает максимальное число цифр справа от десятичной точки. 
+      Масштаб = нулю делает поле эквивалентом целого числа. </TD>
+  <TR align=left>
+    <TH>NUMERIC
+    <TD>Такое же как DECIMAL за исключением того, что максимальное десятичное 
+      не может превышать аргумента точности. </TD>
+  <TR align=left>
+    <TH>INT( или INTEGER) 
+    <TD>Число без десятичной точки. Эквивалентно DECIMAL, но без цифр справа 
+      от десятичной точки, то есть с масштабом равным 0. Аргумент размера не 
+      используется (он автоматически устанавливается в реализационно-зависимое 
+      значение). </TD>
+  <TR align=left>
+    <TH>SMALLINT
+    <TD>Такое же как INTEGER, за исключением того, что, в зависимости от 
+      реализации, размер по умолчанию может ( или не может ) быть меньшее чем 
+      INTEGER. </TD>
+  <TR align=left>
+    <TH>APPROXIMATE NUMERIC 
+    <TD>ПРИБЛИЗИТЕЛЬНОЕ ЧИСЛО </TD>
+  <TR align=left>
+    <TH>FLOAT
+    <TD>Число с плавающей запятой на основе 10 показательной функции. Аргумент 
+      размера состоит из одного числа определяющего минимальную точность. </TD>
+  <TR align=left>
+    <TH>REAL
+    <TD>Такое же как FLOAT, за исключением того, что никакого аргумента 
+      размера не используется. Точность установлена реализационно-зависимую по 
+      умолчанию. </TD>
+  <TR align=left>
+    <TH>DOUBLE PRECISION ( или DOUBLE ) 
+    <TD>Такое же как REAL, за исключением того, что реализационно-определяемая 
+      точность для DOUBLE PRECISION должна превышать реализационно-определяемую 
+      точность REAL. </TD></TR></TBODY></TABLE>
+<HR width="70%">
+
+<H3>ЭКВИВАЛЕНТНЫЕ ТИПЫ ДАННЫХ В ДРУГИХ ЯЗЫКАХ </H3>Когда используется вложение 
+SQL в другие языки, значения используемые и произведенные командами SQL, обычно 
+сохраняются в переменных главного языка( см. Главу 25 ). Эти переменные должны 
+иметь тип данных совместимый со значениями SQL, которые они будут получать. В 
+дополнениях, которые не являются частью официального SQL стандарта, ANSI 
+обеспечивает поддержку при использовании вложения SQL в четыре языка: Паскаль, 
+PL/I, КОБОЛ, и ФОРТРАН. Между прочим, он включает определение эквивалентов SQL, 
+для данн- ых типов переменных используемых в этих языках. <BR><BR>Эквиваленты 
+типов данных четырех языков определенных ANSI: 
+<H3>ПЛ/I </H3>
+<TABLE>
+  <TBODY>
+  <TR align=left>
+    <TH>SQL ТИП 
+    <TH>ЭКВИВАЛЕНТ ПЛ/I<BR>
+  <TR align=left>
+    <TH>CHAR
+    <TH>CHAR 
+  <TR align=left>
+    <TH>DECIMAL 
+    <TH>FIXED DECIMAL 
+  <TR align=left>
+    <TH>INTEGER
+    <TH>FIXED BINARY 
+  <TR align=left>
+    <TH>FLOAT
+    <TH>FLOAT BINARY </TR></TBODY></TABLE>
+<HR width="50%">
+
+<H3>КОБОЛ</H3>
+<TABLE>
+  <TBODY>
+  <TR align=left>
+    <TH>SQL ТИП 
+    <TH>ЭКВИВАЛЕНТ КОБОЛА<BR>
+  <TR align=left>
+    <TH>CHAR (<INTEGER>) 
+    <TH>PIC X (<INTEGER>) 
+  <TR align=left>
+    <TH>INTEGER 
+    <TH>PIC S (<NINES>) USAGE COMPUTTATIONAL 
+  <TR align=left>
+    <TH>NUMERIC 
+    <TH>PIC S ( &lt; nines with embedded V &gt; ) DISPLAY SING LEADING 
+      SEPERATE </TR></TBODY></TABLE>
+<HR width="50%">
+
+<H3>ПАСКАЛЬ </H3>
+<TABLE>
+  <TBODY>
+  <TR align=left>
+    <TH>SQL ТИП 
+    <TH>ЭКВИВАЛЕНТ ПАСКАЛЯ<BR>
+  <TR align=left>
+    <TH>INTEGER 
+    <TH>INTEGER 
+  <TR align=left>
+    <TH>REAL 
+    <TH>REAL 
+  <TR align=left>
+    <TH>CHAR (<LENGTH>) 
+    <TH>PACKED ARRAY [1..<LENGTH>] OF CHAR </TR></TBODY></TABLE>
+<HR width="50%">
+
+<H3>ФОРТРАН</H3>
+<TABLE>
+  <TBODY>
+  <TR align=left>
+    <TH>SQL ТИП 
+    <TH>ЭКВИВАЛЕНТ ФОРТРАНА<BR>
+  <TR align=left>
+    <TH>CHAR 
+    <TH>CHAR 
+  <TR align=left>
+    <TH>INTEGER 
+    <TH>INTEGER 
+  <TR align=left>
+    <TH>REAL 
+    <TH>REAL 
+  <TR align=left>
+    <TH>DOUBLE PRECISION 
+    <TH>DOUBLE PRECISION </TR></TBODY></TABLE>
+</TD></TR></TABLE>
+</TD></TR>
+<TR BGCOLOR=#6699CC><TD><TABLE WIDTH=100% BORDER=0 CELLSPACING=0 CELLPADDING=0><TR><TD BGCOLOR=#6699CC VALIGN=CENTER HEIGHT = 40><FONT SIZE=-10>
+<!--begin of Top100 logo-->
+<a href="javascript:if(confirm('http://top100.rambler.ru/top100/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://top100.rambler.ru/top100/'" tppabs="http://top100.rambler.ru/top100/">
+<img src="../../../../top100-images.rambler.ru/top100/banner-88x31-rambler-gray2.gif" tppabs="http://top100-images.rambler.ru/top100/banner-88x31-rambler-gray2.gif" alt="Rambler's Top100" width=88 height=31 border=0></a>
+<!--end of Top100 logo -->
+</FONT>
+<!--Rating@Mail.ru COUNTER--><a target=_top
+href="javascript:if(confirm('http://top.mail.ru/jump?from=58574  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://top.mail.ru/jump?from=58574'" tppabs="http://top.mail.ru/jump?from=58574"><img
+src="../../../../top.list.ru/counter-id=58574;t=94.gif" tppabs="http://top.list.ru/counter?id=58574;t=94"
+border=0 height=18 width=88
+alt="Рейтинг@Mail.ru"></a><!--/COUNTER-->
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="font : bold 10px verdana; color : white" href="javascript:if(confirm('http://hosting.parking.ru/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://hosting.parking.ru/'" tppabs="http://hosting.parking.ru/">Хостинг от компании Parking.ru</a>
+<script src="../../../../www.google-analytics.com/urchin.js" tppabs="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-265508-1";
+urchinTracker();
+</script>
+</TD>
+<TD BGCOLOR=#6699CC ALIGN=right><FONT COLOR=white FACE="Tahoma,Arial" SIZE=1>&nbsp;Administrator:&nbsp;<A STYLE="color :white" HREF="mailto:admin@sql.ru">admin@sql.ru</A>&nbsp;<BR>Last update: <FONT COLOR=white>05 июн 2007&nbsp;</FONT></FONT></TD></TR></TABLE>
+</TD></TR></TABLE></TD></TR></TABLE>
+
+</BODY></HTML>
+
+

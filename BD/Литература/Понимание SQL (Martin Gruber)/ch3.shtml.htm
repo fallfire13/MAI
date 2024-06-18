@@ -1,0 +1,498 @@
+<HTML>
+<HEAD>
+<TITLE>Понимание SQL. Глава 3. Использование SQL для извлечения информации из таблиц. [SQL.RU]</TITLE>
+<META http-equiv="Content-Type" CONTENT="text/html; charset=windows-1251">
+<META HTTP-EQUIV="Window-target" CONTENT="_top">
+<META HTTP-EQUIV="Last-Modified" CONTENT="29-03-2001">
+<META NAME="Description" CONTENT="Использование языка SQL, создание клиент-серверных систем. Конференция по MSSQL, Oracle, Interbase, MySQL. Полезные ссылки, документация, рекомендации по разработке информационных систем, сертификация, заказ книг и многое другое.">
+<META NAME="Keywords" CONTENT="SQL, конференция, Database Server, Oracle, Interbase, MySQL, документация, статьи, примеры, книги, ссылки, сертификация, работа, СУБД">
+<LINK REL=STYLESHEET TYPE="text/css" HREF="../../../form.css" tppabs="http://www.sql.ru/form.css">
+</HEAD>
+<BODY BGCOLOR="#FFFFFF" leftmargin="3" topmargin="3" marginheight="3" marginwidth="3">
+<noindex>
+<TABLE BGCOLOR="#000000" WIDTH=100% CELLPADDING=0 CELLSPACING=0 BORDER=0>
+<TR><TD>
+
+<TABLE WIDTH=100% CELLPADDING=0 CELLSPACING=1 BORDER=0>
+<TR BGCOLOR="#6699CC"><TD><TABLE CELLSPACING=0 CELLPADDING=0 WIDTH=100% BORDER=0 BGCOLOR="#6699CC">
+<TR><TD COLSPAN=3><IMG SRC="../../../images/blank.gif" tppabs="http://www.sql.ru/images/blank.gif" height=3 width=1 alt=""></TD></TR>
+<TR><TD VALIGN=TOP>&nbsp;<FONT FACE="Verdana,Arial" SIZE=5 COLOR=lightyellow>SQL.RU<BR><FONT SIZE=-5>&nbsp;client/server technologies</FONT></FONT><!--begin of Top100--><a href="javascript:if(confirm('http://top100.rambler.ru/top100/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://top100.rambler.ru/top100/'" tppabs="http://top100.rambler.ru/top100/"><img src="../../../../counter.rambler.ru/top100.cnt-236431.gif" tppabs="http://counter.rambler.ru/top100.cnt?236431" alt="Rambler's Top100" width=1 height=1 border=0></a><!--end of Top100 code--></TD>
+<TD WIDTH=468 HEIGHT=60 BGCOLOR=#6699CC ALIGN=RIGHT></TD>
+<TD WIDTH=2><IMG SRC="../../../images/blank.gif" tppabs="http://www.sql.ru/images/blank.gif" height=1 width=2 alt=""></TD></TR>                                                      	
+<TR HEIGHT=4><TD COLSPAN=3><IMG SRC="../../../images/blank.gif" tppabs="http://www.sql.ru/images/blank.gif" height=5 width=1 alt=""></TD></TR></TABLE>
+
+</TD></TR>
+
+<TR HEIGHT=15><TD bgcolor=#006699><FONT FACE="Verdana,Arial" SIZE=1 COLOR=WHITE><B><A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/'" tppabs="http://www.sql.ru/">&nbsp;<FONT COLOR=white>Главная</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/docs  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/docs'" tppabs="http://www.sql.ru/docs">&nbsp;<FONT COLOR=yellow>Документация</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/articles  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/articles'" tppabs="http://www.sql.ru/articles">&nbsp;<FONT COLOR=white>Статьи</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/books  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/books'" tppabs="http://www.sql.ru/books">&nbsp;<FONT COLOR=white>Книги</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/forum/actualforum.aspx  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/forum/actualforum.aspx'" tppabs="http://www.sql.ru/forum/actualforum.aspx">&nbsp;<FONT COLOR=white>Форум</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/poll  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/poll'" tppabs="http://www.sql.ru/poll">&nbsp;<FONT COLOR=white>Опросы</FONT>&nbsp;</A>|<A CLASS="menu" 
+HREF="javascript:if(confirm('http://www.sql.ru/forum/actualtopics.aspx?bid=11  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/forum/actualtopics.aspx?bid=11'" tppabs="http://www.sql.ru/forum/actualtopics.aspx?bid=11">&nbsp;<FONT COLOR=white>Гостевая</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/subscribe  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/subscribe'" tppabs="http://www.sql.ru/subscribe">&nbsp;<FONT COLOR=white>Рассылка</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/job  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/job'" tppabs="http://www.sql.ru/job">&nbsp;<FONT COLOR=white>Работа</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/search  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/search'" tppabs="http://www.sql.ru/search">&nbsp;<FONT COLOR=white>Поиск</FONT>&nbsp;</A>|<A CLASS="menu"
+HREF="javascript:if(confirm('http://www.sql.ru/faq  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.sql.ru/faq'" tppabs="http://www.sql.ru/faq">&nbsp;<FONT COLOR=white>FAQ</FONT>&nbsp;</A>|</B></FONT></TD></TR>
+<TR><TD BGCOLOR=#F5F5F5>
+</noindex>
+
+<TABLE BORDER=0 CELLSPACING=10><TR><TD>
+<CENTER>
+<H2 class="headline">
+3. ИСПОЛЬЗОВАНИЕ SQL ДЛЯ ИЗВЛЕЧЕНИЯ ИНФОРМАЦИИ ИЗ ТАБЛИЦ</H2></CENTER>В этой главе мы покажем вам как извлекать 
+информацию из таблиц. Вы узнаете как опускать или переупорядочивать 
+столбцы и как автоматически устранять избыточность данных из вашего 
+вывода. В заключение, вы узнаете как устанавливать условие( проверку ) 
+которую вы можете использовать чтобы определить какие строки таблицы 
+используются в выводе. Эта последняя особенность, будет далее описана в 
+более поздних главах и является одной из наиболее изящных и мощных в SQL. 
+ <A name=3.1>
+<H3>СОЗДАНИЕ ЗАПРОСА</H3>Как мы подчеркивали ранее, SQL символизирует собой Структурированный 
+Язык Запросов. Запросы - вероятно наиболее часто используемый аспект SQL. 
+Фактически, для категории SQL пользователей,  маловероятно чтобы кто-либо 
+использовал этот язык для чего-то другого. По этой причине, мы будем начинать 
+наше обсуждение SQL с обсуждения запроса и как он выполняется на этом 
+языке. 
+ 
+<H5>ЧТО ТАКОЕ ЗАПРОС ?</H5>Запрос - команда которую вы даете вашей программе базы данных, 
+и которая сообщает ей чтобы она вывела определенную информацию из таблиц 
+в память. Эта информация обычно посылается непосредственно на экран 
+компьютера или терминала которым вы пользуетесь, хотя, в большинстве 
+случаев, ее можно также послать принтеру, сохранить в файле ( как 
+объект в памяти компьютера ), или представить как вводную информацию для 
+другой команды или процесса. 
+ <A name=3.2>
+<H3>ГДЕ ПРИМЕНЯЮТСЯ ЗАПРОСЫ ?</H3>
+Запросы обычно рассматриваются как часть языка DML. Однако, так 
+как запрос не меняет информацию в таблицах, а просто показывает ее 
+пользователю, мы будем рассматривать запросы как самостоятельную 
+категорию среди команд DML которые производят действие, а не просто 
+показывают содержание базы данных. 
+<BR><BR> 
+   Все запросы в SQL  состоят из одиночной команды. 
+Структура этой команды обманчиво проста, потому что вы должны расширять 
+ее так чтобы выполнить высоко сложные оценки и обработки данных. 
+Эта команда называется - SELECT(ВЫБОР). 
+ 
+<A name=3.3>
+<H3>КОМАНДА SELECT</H3>В самой простой форме, команда SELECT просто инструктирует базу 
+данных чтобы извлечь информацию из таблицы. Например, вы могли бы 
+вывести таблицу Продавцов напечатав следующее: 
+<PRE> 
+       SELECT snum, sname, sity, comm 
+          FROM  Salespeople; 
+</PRE> 
+Вывод для этого запроса показывается в Рисунке 3.1. 
+<PRE> 
+            ===============  SQL Execution Log ============ 
+          |                                               | 
+          | SELECT snum, sname, sity, comm                | 
+          | FROM  Salespeople;                            | 
+          |                                               | 
+          | ==============================================| 
+          |   snum      sname         city         comm   | 
+          | ------    ----------   -----------   -------  | 
+          |   1001      Peel         London        0.12   | 
+          |   1002      Serres       San Jose      0.13   | 
+          |   1004      Motika       London        0.11   | 
+          |   1007      Rifkin       Barcelona     0.15   | 
+          |   1003      Axelrod      New York      0.10   | 
+           =============================================== 
+</PRE> 
+ 
+Рисунок 3.1: команда SELECT 
+<BR><BR> 
+Другими словами, эта команда просто выводит все данные из таблицы. 
+Большинство программ будут также давать заголовки столбца как выше, 
+а некоторые позволяют детальное форматирование вывода, но это уже 
+вне стандартной спецификации. 
+ Имеется объяснение каждой части этой команды: 
+<BR><BR><TABLE BORDER=0><TR> 
+<TD VALIGN=TOP>SELECT         </TD><TD>Ключевое слово которое сообщает базе данных что 
+                     эта команда - запрос. Все запросы  начинаются этим 
+                     словом, сопровождаемым пробелом. </TD></TR>
+ 
+<TD VALIGN=TOP>snum, sname  </TD><TD>Это - список столбцов из таблицы которые выбираются 
+                 запросом. Любые столбцы не перечисленные здесь не 
+                 будут включены в вывод команды. Это, конечно, не значит 
+                 что они будут удалены или их информация будет стерта 
+                 из таблиц, потому что запрос не воздействует на 
+                 информацию в таблицах; он только показывает данные. </TD></TR>
+ 
+<TD VALIGN=TOP>FROM       </TD><TD>FROM - ключевое слово, подобно SELECT, которое должно 
+Salespeople   быть представлено в каждом запросе. Оно сопровождается пробелом и затем именем таблицы используемой 
+                 в качестве источника информации. 
+                 В данном случае - это таблица Продавцов(Salespeople). </TD></TR>
+ 
+ 
+<TD VALIGN=TOP>    ;        </TD><TD>   Точка с запятой используется во всех интерактивных 
+                 командах SQL чтобы сообщать базе данных что команда 
+                 заполнена и готова выполниться. 
+                 В некоторых системах наклонна черта влево (\) в строке, 
+                 является индикатором конца команды. </TD></TR></TABLE>
+<BR><BR> 
+Естественно, запрос такого характера не обязательно будет упорядочивать вывод 
+любым указанным способом. Та же сама команда выполненная с теми же самыми 
+данными но в разное врем не сможет вывести тот же самый порядок. Обычно, 
+строки обнаруживаются в том порядке в котором они найдены в таблице, 
+поскольку как мы установили в предыдущей главе - этот порядок произволен. 
+Это не обязательно будет тот порядок в котором данные вводились или 
+сохранялись. Вы можете упорядочивать вывод командами SQL непосредственно: 
+с помощью специального предложения. Позже, мы покажем как это делается. 
+А сейчас, просто усвойте, что в отсутствии явного упорядочения, нет никакого 
+определенного порядка в вашем выводе. 
+<BR><BR> 
+Наше использование возврата ( Клавиша ENTER ) является произвольным. 
+Мы должны точно установить как удобнее составить запрос, в несколько строк 
+или в одну строку, следующим образом: 
+<PRE> 
+      SELECT snum, sname, city, comm FROM Salespeople; 
+</PRE> 
+С тех пор как SQL использует точку с запятой чтобы указывать конец 
+команды, большинство программ SQL обрабатывают возврат (через нажим 
+Возврат или клавишу ENTER ) как пробел. Это - хороша идея чтобы 
+использовать возвраты и выравнивание что мы делали это ранее, чтобы 
+сделать ваши команды более легкими для чтения и более правильными. 
+<A name=3.4>
+<H3>ВЫБИРАЙТЕ ВСЕГДА САМЫЙ ПРОСТОЙ СПОСОБ</H3> 
+ 
+Если вы хотите видеть каждый столбец таблицы, имеется необязательное 
+сокращение которое вы можете использовать. Звездочка (*) может 
+применяться для вывода полного списка столбцов следующим образом: 
+<PRE> 
+      SELECT * 
+      FROM Salespeople; 
+</PRE> 
+Это приведет к тому же результату что и наша предыдущая команда. 
+<A name=3.5>
+<H3>ОПИСАНИЕ SELECT</H3> 
+ 
+В общем случае, команда SELECT начинается с ключевого слова SELECT, 
+сопровождаемого пробелом. После этого должен следовать список имен 
+столбцов которые вы хотите видеть, отделяемые запятыми. Если вы хотите 
+видеть все столбцы таблицы, вы можете заменить этот список звездочкой (*). 
+Ключевое слово FROM следующее далее, сопровождается пробелом и 
+именем таблицы запрос к которой делается. 
+В заключение, точка с запятой ( ; ) должна использоваться чтобы закончить 
+запрос и указать что команда готова к выполнению. 
+ <A name=3.6>
+<H3>ПРОСМОТР ТОЛЬКО ОПРЕДЕЛЕННОГО СТОЛБЦА ТАБЛИЦЫ</H3> 
+ 
+Команда SELECT способна извлечь строго определенную информацию из 
+таблицы. Сначала, мы можем предоставить возможность увидеть только 
+определенные столбцы таблицы. 
+Это выполняется легко, простым исключением столбцов которые вы не хотите 
+видеть, из части команды SELECT. Например, запрос 
+<PRE> 
+   SELECT sname, comm 
+      FROM Salespeople; 
+</PRE>  
+будет производить вывод показанный на Рисунке 3.2. 
+<PRE> 
+ 
+         ===============  SQL Execution Log ============ 
+        |                                               | 
+        | SELECT snum, comm                             | 
+        | FROM  Salespeople;                            | 
+        |                                               | 
+        | ==============================================| 
+        |        sname             comm                 | 
+        |   -------------      ---------                | 
+        |        Peel              0.12                 | 
+        |        Serres            0.13                 | 
+        |        Motika            0.11                 | 
+        |        Rifkin            0.15                 | 
+        |        Axelrod           0.10                 | 
+         =============================================== 
+</PRE>  
+Рисунок 3.2: Выбор определенных столбцов 
+<BR><BR> 
+Могут иметься таблицы которые имеют большое количество столбцов 
+содержащих данные, не все из которых являются относящимися к 
+поставленной задаче. Следовательно, вы можете найти способ подбора и 
+выбора только полезных для Вас столбцов. 
+<A name=3.7>
+<H3>ПЕРЕУПОРЯДОЧЕНИЕ СТОЛБЦА</H3> 
+ 
+Даже если столбцы таблицы, по определению, упорядочены, это не 
+означает что вы будете восстанавливать их в том же порядке. 
+Конечно, звездочка (*) покажет все столбцы в их естественном порядке, 
+но если вы укажете столбцы отдельно, вы можете получить их в том 
+порядке котором хотите. Давайте рассмотрим таблицу Порядков, 
+содержащую дату приобретения(odate), номер продавца(snum), номер 
+порядка(onum),  и суммы приобретения(amt): 
+<PRE> 
+   SELECT odate, snum, onum, amt 
+      FROM Orders; 
+</PRE>  
+Вывод этого запроса показан на Рисунке 3.3. 
+<PRE> 
+      =============  SQL Execution Log  ============= 
+    |                                                 | 
+    |  SELECT odate, snum, onum, amt                  | 
+    |  FROM Orders;                                   | 
+    |                                                 | 
+    | ------------------------------------------------| 
+    |     odate        snum        onum          amt  | 
+    | -----------   -------      ------     --------- | 
+    | 10/03/1990       1007        3001         18.69 | 
+    | 10/03/1990       1001        3003        767.19 | 
+    | 10/03/1990       1004        3002       1900.10 | 
+    | 10/03/1990       1002        3005       5160.45 | 
+    | 10/03/1990       1007        3006       1098.16 | 
+    | 10/04/1990       1003        3009       1713.23 | 
+    | 10/04/1990       1002        3007         75.75 | 
+    | 10/05/1990       1001        3008       4723.00 | 
+    | 10/06/1990       1002        3010       1309.95 | 
+    | 10/06/1990       1001        3011       9891.88 | 
+    |                                                 | 
+      =============================================== 
+</PRE>  
+Рисунок 3.3: Реконструкция столбцов 
+<BR><BR> 
+Как вы можете видеть, структура информации в таблицах - это просто 
+основа для активной перестройки структуры в SQL. 
+<A name=3.8>
+<H3>УДАЛЕНИЕ ИЗБЫТОЧНЫХ ДАННЫХ</H3> 
+ 
+DISTINCT (ОТЛИЧИЕ) - аргумент который обеспечивает Вас 
+способом устранять двойные значения из вашего предложения SELECT. 
+Предположим что вы хотите знать какие продавцы в настоящее время 
+имеют свои порядки в таблице Порядков.  Под порядком (здесь и далее) 
+будет пониматься запись в таблицу Порядков, регистрирующую приобретения сделанные в определенный день определенным заказчиком у определенного продавца на определенную сумму). 
+Вам не нужно знать, сколько порядков имеет каждый; вам нужен только 
+список номеров продавцов (snum). Поэтому Вы можете ввести: 
+<PRE> 
+     SELECT snum 
+       FROM Orders; 
+</PRE>  
+для получения вывода показанного в Рисунке 3.4 
+<PRE> 
+               ===============  SQL Execution Log ============ 
+              |                                               | 
+              | SELECT snum                                   | 
+              | FROM  Orders;                                 | 
+              |                                               | 
+              | ============================================= | 
+              |   snum                                        | 
+              | -------                                       | 
+              |   1007                                        | 
+              |   1001                                        | 
+              |   1004                                        | 
+              |   1002                                        | 
+              |   1007                                        | 
+              |   1003                                        | 
+              |   1002                                        | 
+              |   1001                                        | 
+              |   1002                                        | 
+              |   1001                                        | 
+                ============================================= 
+</PRE>  
+Рисунок 3. 4: SELECT с дублированием номеров продавцов. 
+<BR><BR> 
+Для получения списка без дубликатов, для удобочитаемости, вы можете 
+ввести следующее: 
+<PRE> 
+       SELECT DISTINCT snum 
+          FROM Orders; 
+</PRE>  
+Вывод для этого запроса показан в Рисунке 3.5. 
+<BR><BR> 
+  Другими словами, DISTINCT следит за тем, какие значения были 
+ранее, так что бы они не были продублированы в списке. Это - полезный 
+способ избежать избыточности данных, но важно что бы при этом вы 
+понимали что вы делаете. Если вы не хотите потерять некоторые данные, 
+вы не должны безоглядно использовать DISTINCT, потому что это может 
+скрыть какую-то проблему или какие-то важные данные. 
+Например, вы могли бы предположить что имена всех ваших заказчиков 
+различны. Если кто-то помещает второго Clemens в таблицу Заказчиков, 
+а вы используете SELECT DISTINCT cname, вы не будете даже знать 
+о существовании двойника. Вы можете получить не того Clemens и даже 
+не знать об этом. Так как вы не ожидаете избыточности, в этом случае вы 
+не должны использовать DISTINCT. 
+
+<H5>ПАРАМЕТРЫ DISTINCT</H5> 
+ 
+DISTINCT может указываться только один раз в данном предложении 
+SELECT. Если предложение выбирает многочисленные пол, 
+<PRE> 
+               ===============  SQL Execution Log ============ 
+              |                                               | 
+              | SELECT DISTINCT snum                          | 
+              | FROM  Orders;                                 | 
+              |                                               | 
+              | ============================================= | 
+              |   snum                                        | 
+              | -------                                       | 
+              |   1001                                        | 
+              |   1002                                        | 
+              |   1003                                        | 
+              |   1004                                        | 
+              |   1007                                        | 
+                ============================================= 
+</PRE>  
+Рисунок 3.5: SELECT без дублирования 
+<BR><BR> 
+DISTINCT опускает строки где все выбранные пол идентичны. Строки в 
+которых некоторые значения одинаковы а некоторые различны - будут 
+сохранены. DISTINCT, фактически, приводит к показу всей строки вывода, 
+не указывая полей ( за исключением когда он используется внутри агрегат- 
+ных функций, как описано в Главе 6 ), так что нет никакого смысла чтобы 
+его повторять. 
+ 
+ 
+<H5>DISTINCT ВМЕСТО ALL</H5> 
+ 
+Вместо DISTINCT, вы можете указать - ALL. Это будет иметь противоположный 
+эффект, дублирование строк вывода сохранится. 
+Так как это - тот же самый случай когда вы не указываете ни DISTINCT ни 
+ALL, то ALL - по существу скорее пояснительный, а не действующий аргумент. 
+ <A name=3.9>
+<H3>КВАЛИФИЦИРОВАННЫЙ ВЫБОР ПРИ ИСПОЛЬЗОВАНИИ ПРЕДЛОЖЕНИЙ</H3> 
+ 
+Таблицы имеют тенденцию становиться очень большими, поскольку с 
+течением времени, все большее и большее количество строк в нее добавляется. 
+Поскольку обычно из них только определенные строки интересуют вас в 
+данное врем, SQL дает возможность вам устанавливать критерии чтобы 
+определить какие строки будут выбраны для вывода. 
+<BR><BR> 
+ WHERE - предложение команды SELECT, которое позволяет вам 
+устанавливать предикаты, условие которых может быть или верным или 
+неверным для любой строки таблицы. Команда извлекает только те строки 
+из таблицы для которой такое утверждение верно. 
+Например, предположим вы хотите видеть имена и комиссионные всех 
+продавцов в Лондоне. Вы можете ввести такую команду: 
+<PRE> 
+      SELECT sname, city 
+        FROM Salespeople; 
+        WHERE city = "LONDON"; 
+</PRE>  
+Когда предложение WHERE представлено, программа базы данных 
+просматривает всю таблицу по одной строке и исследует каждую строку 
+чтобы определить верно ли утверждение. 
+Следовательно, для записи Peel, программа рассмотрит текущее значение 
+столбца city, определит что оно равно "London", и включит эту строку в 
+вывод. Запись для Serres не будет включена, и так далее. 
+Вывод для вышеупомянутого запроса показан в Рисунке 3.6. 
+<PRE> 
+ 
+               ===============  SQL Execution Log ============ 
+              |                                               | 
+              | SELECT sname, city                            | 
+              | FROM  Salespeople                             | 
+              | WHERE city = 'London'                         | 
+              | ============================================= | 
+              |   sname           city                        | 
+              |  -------       ----------                     | 
+              |   Peel            London                      | 
+              |   Motika          London                      | 
+                ============================================= 
+</PRE>  
+Рисунок 3.6: SELECT c предложением WHERE 
+<BR><BR> 
+Давайте попробуем пример с числовым полем в предложении WHERE. 
+Поле rating таблицы Заказчиков предназначено чтобы разделять 
+заказчиков на группы основанные на некоторых критериях которые могут 
+быть получены в итоге через этот номер. Возможно это - форма оценки 
+кредита или оценки основанной на томе предыдущих приобретений. 
+Такие числовые коды могут быть полезны в реляционных базах данных как 
+способ подведения итогов сложной информации. Мы можем выбрать всех 
+заказчиков с рейтингом 100, следующим образом: 
+<PRE> 
+     SELECT * 
+        FROM Customers 
+        WHERE rating = 100; 
+</PRE>  
+Одиночные кавычки не используются здесь потому, что оценка - это числовое 
+поле. 
+Результаты запроса показаны в Рисунке 3. 7. 
+<BR><BR> 
+Предложение WHERE совместимо с предыдущим материалом в этой главе. 
+Другими словами, вы можете использовать номера столбцов, устранять 
+дубликаты, или переупорядочивать столбцы в команде SELECT которая 
+использует WHERE. Однако, вы можете изменять порядок столбцов для 
+имен только в предложении SELECT, но не в предложении WHERE. 
+ 
+<PRE> 
+               ============  SQL Execution Log ============ 
+              |                                               | 
+              | SELECT *                                      | 
+              | FROM  Customers                               | 
+              | WHERE rating = 100;                           | 
+              | ============================================= | 
+              |   сnum     cname    city     rating    snum   | 
+              |  ------   --------  ------    ----   ------   | 
+              |   2001     Hoffman  London     100     1001   | 
+              |   2006     Clemens  London     100     1001   | 
+              |   2007     Pereira  Rome       100     1001   | 
+                ============================================= 
+</PRE>  
+Рисунок 3.7:  SELECT с числовым полем в предикате 
+ <A name=3.10>
+<H3>РЕЗЮМЕ</H3> 
+Теперь вы знаете несколько способов заставить таблицу давать вам 
+ту информацию какую вы хотите, а не просто выбрасывать наружу все 
+ее содержание. Вы можете переупорядочивать столбцы таблицы или 
+устранять любую из них. Вы можете решать, хотите вы видеть дублиро- 
+ванные значения или нет. 
+<BR><BR> 
+Наиболее важно то, что вы можете устанавливать условие называемое 
+предикатом которое определяет или не определяет указанную строку 
+таблицы из тысяч таких же строк, будет ли она выбрана для вывода. 
+<BR><BR> 
+Предикаты могут становиться очень сложными, предоставляя вам высокую 
+точность в решении, какие строки вам выбирать с помощью запроса. 
+Именно эта способность решать точно, что вы хотите видеть, делает запросы 
+SQL такими мощными. 
+Следующие несколько глав будут посвящены, в большей мере, особенностям 
+которые расширяют мощность предикатов. В Главе 4, вам будут представлены 
+операторы иные чем те которые используются в условиях предиката, а также 
+способы объединения многочисленных условий в единый предикат. 
+ <A name=3.11>
+<H3>РАБОТА С SQL</H3> 
+1. Напишите команду SELECT которая бы вывела номер порядка, 
+   сумму, и дату для всех строк из таблицы Порядков. 
+<BR><BR> 
+2. Напишите запрос который вывел бы все строки из таблицы 
+   Заказчиков для которых номер продавца = 1001. 
+<BR><BR> 
+3  Напишите запрос который вывел бы таблицу со столбцами в следующем 
+   порядке: city, sname, snum, comm. 
+<BR><BR> 
+4. Напишите команду SELECT которая вывела бы оценку(rating), 
+   сопровождаемую именем каждого заказчика в San Jose. 
+<BR><BR> 
+5. Напишите запрос который вывел бы значения snum всех продавцов 
+   в текущем порядке из таблицы Порядков без каких бы то ни было 
+   повторений. 
+<BR><BR> 
+(См.<A href="a.shtml.htm#3" tppabs="http://www.sql.ru/docs/sql/u_sql/a.shtml#3"> Приложение A</A> для ответов.)
+</H3>
+</TD></TR></TABLE>
+</TD></TR>
+<TR BGCOLOR=#6699CC><TD><TABLE WIDTH=100% BORDER=0 CELLSPACING=0 CELLPADDING=0><TR><TD BGCOLOR=#6699CC VALIGN=CENTER HEIGHT = 40><FONT SIZE=-10>
+<!--begin of Top100 logo-->
+<a href="javascript:if(confirm('http://top100.rambler.ru/top100/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://top100.rambler.ru/top100/'" tppabs="http://top100.rambler.ru/top100/">
+<img src="../../../../top100-images.rambler.ru/top100/banner-88x31-rambler-gray2.gif" tppabs="http://top100-images.rambler.ru/top100/banner-88x31-rambler-gray2.gif" alt="Rambler's Top100" width=88 height=31 border=0></a>
+<!--end of Top100 logo -->
+</FONT>
+<!--Rating@Mail.ru COUNTER--><a target=_top
+href="javascript:if(confirm('http://top.mail.ru/jump?from=58574  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://top.mail.ru/jump?from=58574'" tppabs="http://top.mail.ru/jump?from=58574"><img
+src="../../../../top.list.ru/counter-id=58574;t=94.gif" tppabs="http://top.list.ru/counter?id=58574;t=94"
+border=0 height=18 width=88
+alt="Рейтинг@Mail.ru"></a><!--/COUNTER-->
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="font : bold 10px verdana; color : white" href="javascript:if(confirm('http://hosting.parking.ru/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://hosting.parking.ru/'" tppabs="http://hosting.parking.ru/">Хостинг от компании Parking.ru</a>
+<script src="../../../../www.google-analytics.com/urchin.js" tppabs="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-265508-1";
+urchinTracker();
+</script>
+</TD>
+<TD BGCOLOR=#6699CC ALIGN=right><FONT COLOR=white FACE="Tahoma,Arial" SIZE=1>&nbsp;Administrator:&nbsp;<A STYLE="color :white" HREF="mailto:admin@sql.ru">admin@sql.ru</A>&nbsp;<BR>Last update: <FONT COLOR=white>05 июн 2007&nbsp;</FONT></FONT></TD></TR></TABLE>
+</TD></TR></TABLE></TD></TR></TABLE>
+
+</BODY></HTML>
+
