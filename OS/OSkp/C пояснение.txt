@@ -1,0 +1,51 @@
+"C.c"
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include <signal.h>
+
+#include <unistd.h>
+#include <sys/prctl.h>
+
+#define BUFF_SIZE 256
+
+int read_A;					// у C 3 функции в pipes
+int write_B;
+int write_A;
+
+void parent_death(int sig) {			// завершение с ошибкой
+    exit(EXIT_FAILURE);
+}
+
+void parent_end(int sig) {			// успешное завершение
+    close(read_A);
+    close(write_B);
+    close(write_A);
+    exit(EXIT_SUCCESS);
+}
+
+int main(int argc, char **argv) {
+    pid_t parent_pid = atoi(argv[1]);		// считываем число со строки
+    prctl(PR_SET_PDEATHSIG, SIGABRT);		// принимает сигнал из POSIX (арг. 1, приходит в случае смерти родителя), арг.2 - пришлёт сама себе его)
+    signal(SIGABRT, parent_death);		// реакция на SIGABRT
+    if (getppid() != parent_pid) {		// если полученный PID не родительский, т.е. родитель умер - завершаем процесс с ошибкой
+        parent_death(SIGABRT);
+    }
+    signal(SIGTERM, parent_end);		// реакция на SIGTERM
+
+    read_A = atoi(argv[2]);			// перевод данных массива в целое число (парсинг)
+    write_B = atoi(argv[3]);
+    write_A = atoi(argv[4]);
+
+    char buff[BUFF_SIZE + 1];
+    while (1) {						// (1) = если true
+        read(read_A, buff, BUFF_SIZE + 1);		// C принимает саму строку от A
+        printf("C got string: %s", buff);
+        size_t input_len = strlen(buff) - 1;
+        write(write_B, &input_len, sizeof(size_t));	// C отправляет размер строки в B
+        int temp = 1;					// переменная проверки
+        write(write_A, &temp, sizeof(int));  		// C уведомляет A об успехе
+    }
+
+    return 0;
+}

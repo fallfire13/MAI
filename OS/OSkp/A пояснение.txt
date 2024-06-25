@@ -1,0 +1,108 @@
+"A.c"
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include <signal.h>
+
+#include <unistd.h>
+
+#define BUFF_SIZE 256
+
+#define READ 0
+#define WRITE 1
+#define MAX_ARG_LEN 8
+
+
+int main() {					// 4 канала
+    int fd_A2C[2];	
+    int fd_A2B[2];
+    int fd_C2A[2];
+    int fd_C2B[2];
+
+    if (pipe(fd_A2C) || pipe(fd_A2B) || pipe(fd_C2A) || pipe(fd_C2B)) {		//инициализация pipes
+        perror("Error");
+        exit(EXIT_FAILURE);			// и их закрытие в случае ошибки, return 1
+    }
+
+    pid_t parent_pid = getpid();		// узнаём идентификатор (PID) родительского процесса
+
+    pid_t proc_C_pid = fork();			// создаём процесс C
+    if (proc_C_pid == -1) {			// ошибка с кодом -1
+        perror("Error");
+        exit(EXIT_FAILURE);
+    }
+    else if (proc_C_pid == 0) {			// если процесс C запустился, мы в дочернем процессе
+        close(fd_A2B[READ]);			// закрываем ненужные pipes
+        close(fd_A2B[WRITE]);
+        close(fd_A2C[WRITE]);
+        close(fd_C2B[READ]);
+        close(fd_C2A[READ]);
+
+        char ppid[MAX_ARG_LEN + 1];				// массив идентификаторов родительских процессов (PPID)
+        snprintf(ppid, MAX_ARG_LEN + 1, "%d", parent_pid);	// запись данных в строку
+
+        char read_A[MAX_ARG_LEN + 1];				// массив отправляемых символов из A в C
+        snprintf(read_A, MAX_ARG_LEN + 1, "%d", fd_A2C[READ]);  // запись данных в строку
+
+        char write_B[MAX_ARG_LEN + 1];				 // массив отправляемого размера строки из C в B
+        snprintf(write_B, MAX_ARG_LEN + 1, "%d", fd_C2B[WRITE]); // запись данных в строку
+
+        char write_A[MAX_ARG_LEN + 1];				 // массив с уведомлением для A об успехе C
+        snprintf(write_A, MAX_ARG_LEN + 1, "%d", fd_C2A[WRITE]); // запись данных в строку
+
+        execl("./C", "./C", ppid, read_A, write_B, write_A, (char *) NULL); // передаём аргументы ./C
+        kill(parent_pid, SIGABRT);				// в случае ошибки execl
+    }
+
+    pid_t proc_B_pid = fork();			// создаём процесс B
+    if (proc_B_pid == -1) {			// ошибка с кодом -1
+        perror("Error");			// выводим ошибку в виде Error:"%d"
+        kill(proc_C_pid, SIGABRT);
+        exit(EXIT_FAILURE);
+    }
+    else if (proc_B_pid == 0) {			// если процессс B запустился
+        close(fd_A2C[READ]);			// закрываем ненужные pipes
+        close(fd_A2C[WRITE]);
+        close(fd_C2A[READ]);
+        close(fd_C2A[WRITE]);
+        close(fd_A2B[WRITE]);
+        close(fd_C2B[WRITE]);
+
+        char ppid[MAX_ARG_LEN + 1];				// массив идентификаторов родительских процессов (PPID)
+        snprintf(ppid, MAX_ARG_LEN + 1, "%d", parent_pid);	// запись данных в строку
+
+        char read_A[MAX_ARG_LEN + 1];				// массив отправляемого размера строки из A в B
+        snprintf(read_A, MAX_ARG_LEN + 1, "%d", fd_A2B[READ]);	// запись данных в строку
+
+        char read_C[MAX_ARG_LEN + 1];				// массив отправляемого размера строки из C в B
+        snprintf(read_C, MAX_ARG_LEN + 1, "%d", fd_C2B[READ]);	// запись данных в строку
+
+        execl("./B", "./B", ppid, read_A, read_C, (char *) NULL); // передаём аргументы ./B
+        kill(parent_pid, SIGABRT);				// в случае ошибки execl
+    }
+								// мы в A, C и B запущены
+    close(fd_C2B[READ]);					// закрываем ненужные pipes
+    close(fd_C2B[WRITE]);
+    close(fd_C2A[WRITE]);
+    close(fd_A2C[READ]);
+    close(fd_A2B[READ]);
+    
+    char buff[BUFF_SIZE + 1];
+    while (fgets(buff, BUFF_SIZE + 1, stdin) != NULL) {		// A принимает ввод по строкам
+        size_t input_len = strlen(buff) - 1;
+        printf("A sent string: %s", buff);
+        write(fd_A2B[WRITE], &input_len, sizeof(size_t));	// A отправляет размер строки в B
+        write(fd_A2C[WRITE], buff, BUFF_SIZE + 1);		// A отправляет саму строку в C
+        int temp;						// переменная проверки
+        read(fd_C2A[READ], &temp, sizeof(int));			// A принимает сообщение об успехе из C
+    }
+
+    kill(proc_C_pid, SIGTERM);			// завершение процесса C (принимает id, посылает SIGRERM)
+    kill(proc_B_pid, SIGTERM);			// завершение процесса B (принимает id, посылает SIGRERM)
+
+    close(fd_A2C[WRITE]);			// закрываем ненужные pipes
+    close(fd_A2B[WRITE]);
+    close(fd_C2A[READ]);
+
+    return 0;
+}
