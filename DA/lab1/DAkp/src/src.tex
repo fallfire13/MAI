@@ -1,0 +1,444 @@
+\section{Общие сведения о программе}
+\begin{enumerate}
+    \item $main.cpp$ - принимает из командной строки названия файлов и считывает их построчно в вектор, после чего вызывает функцию, строющую diff между этими векторами.
+    \item $diff.h$ - содержит шаблонную функцию. строющую diff в соотвествии с алгоритмом Юджина Майерса. Функция принимает любой тип, имеющий в себе метод $size$ и оператор квадратных скобок.
+\end{enumerate}
+
+\pagebreak
+
+\section{Исходный код}
+
+\textbf{structs.h}
+
+\begin{lstlisting}[language=C++]
+#ifndef STRUCTS_H
+#define STRUCTS_H
+
+#include <cstdint>
+
+struct TAction {
+    enum {ADD, DEL, KEEP} type;
+    int64_t x, y;
+};
+
+#endif
+\end{lstlisting}
+
+\textbf{diff.h}
+
+\begin{lstlisting}[language=C++]
+#ifndef DIFF_H
+#define DIFF_H
+
+#include <cstdint>
+#include <vector>
+
+#include "structs.h"
+
+std::vector<TAction> build_trace(
+        const std::vector< std::vector<int64_t> >& trace, 
+        int64_t x, int64_t y, size_t total);
+
+template<typename T>
+std::vector<TAction> 
+find_diff(const T& data1, const T& data2) {
+    const size_t len1  = data1.size();
+    const size_t len2  = data2.size();
+    const size_t total = len1 + len2;
+
+    std::vector<int64_t> extensions(2 * total + 1);
+    std::vector< std::vector<int64_t> > trace;
+
+    extensions[1 + total] = 0;
+    for (int64_t path = 0; path <= total; ++path) {
+
+        trace.push_back(extensions);
+
+        for (int64_t diag = -path; diag <= path; diag += 2) {
+            int64_t x, y;
+            bool go_down = (diag == -path 
+                            || (diag != path 
+                                && extensions[diag - 1 + total] < extensions[diag + 1 + total]));
+
+            if (go_down) {
+                x = extensions[diag + 1 + total];
+            } else {
+                x = extensions[diag - 1 + total] + 1;
+            }
+
+            y = x - diag;
+
+            while (x < len1 && y < len2 && data1[x] == data2[y]) {
+                ++x;
+                ++y;
+            }
+
+            extensions[diag + total] = x;
+            if (x >= len1 && y >= len2) {
+                return build_trace(trace, len1, len2, total);
+            }
+        }
+    }
+
+    return std::vector<TAction> ();
+}
+
+#endif
+\end{lstlisting}
+
+\textbf{linear\underline{ }diff.h}
+
+\begin{lstlisting}[language=C++]
+#ifndef LINEAR_DIFF_H
+#define LINEAR_DIFF_H
+
+#include <vector>
+#include <utility>
+#include <cmath>
+
+#include "structs.h"
+
+namespace {
+    struct Box {
+        Box(int64_t left,  int64_t top, 
+                int64_t right, int64_t bottom) {
+            this->left   = left;
+            this->top    = top;
+            this->right  = right;
+            this->bottom = bottom;
+
+            width  = right - left;
+            height = bottom - top;
+            size   = width + height;
+            delta  = width - height;
+        }
+
+        int64_t left;
+        int64_t top;
+        int64_t right;
+        int64_t bottom;
+        int64_t width;
+        int64_t height;
+        int64_t size;
+        int64_t delta;
+    };
+
+    using Point = std::pair<int64_t, int64_t>;
+    using Snake = std::pair<Point, Point>;
+
+    size_t wrap_index(int64_t i, int64_t size) {
+        while (i >= size) {
+            i -= size;
+        }
+        while (i < 0) {
+            i += size;
+        }
+        return i;
+    }
+
+    template<typename T>
+    std::pair<Snake, bool> forwards(
+                const Box& box, std::vector<int64_t>& forw_snakes,
+                std::vector<int64_t>& back_snakes, int64_t depth,
+                int64_t total, const T& a, const T& b) {
+        for (int64_t k = depth; k >= -depth; k -= 2) {
+            const int64_t size = 2 * total + 1;
+
+            int64_t c = k - box.delta;
+            int64_t x; 
+            int64_t px;
+            int64_t y;
+            int64_t py;
+
+            bool go_down = ( k == -depth || 
+                    (k != -depth && forw_snakes[wrap_index(k - 1, size)] < forw_snakes[wrap_index(k + 1, size)]) );
+            if (go_down) {
+                px = x = forw_snakes[wrap_index(k + 1, size)];
+            } else {
+                px = forw_snakes[wrap_index(k - 1, size)];
+                x = px + 1;
+            }
+
+            y  = box.top + (x - box.left) - k;
+            py = (depth == 0 || x != px) ? y : y - 1;
+
+            while (x < box.right && y < box.bottom && a[x] == b[y]) {
+                ++x;
+                ++y;
+            }
+
+            forw_snakes[wrap_index(k, size)] = x;
+
+            bool delta_odd = box.delta % 2 == 1;
+            bool c_between = c >= -depth + 1 && c <= depth - 1;
+            if (delta_odd && c_between && y >= back_snakes[wrap_index(c, size)]){
+                if (depth == 1) {
+                    while (x > px && y > py) {
+                        --x;
+                        --y;
+                    }
+                }
+                Snake snake = std::make_pair(
+                                 std::make_pair(px, py),
+                                 std::make_pair(x, y)
+                              );
+                return std::make_pair(snake, true);
+            }
+        }
+
+        return std::make_pair(Snake(), false);
+    }
+
+    template<typename T>
+    std::pair<Snake, bool> backwards(
+                const Box& box, std::vector<int64_t>& forw_snakes,
+                std::vector<int64_t>& back_snakes, int64_t depth,
+                int64_t total, const T& a, const T& b) {
+        for (int64_t c = depth; c >= -depth; c -= 2) {
+            const int64_t size = 2 * total + 1;
+
+            int64_t k = c + box.delta;
+            int64_t x;
+            int64_t px;
+            int64_t y;
+            int64_t py;
+            
+            bool go_up = ( c == -depth || 
+                    (c != depth && back_snakes[wrap_index(c - 1, size)] > back_snakes[wrap_index(c + 1, size)]) );
+            if (go_up) {
+                py = y = back_snakes[wrap_index(c + 1, size)];
+            } else {
+                py = back_snakes[wrap_index(c - 1, size)];
+                y  = py - 1;
+            }
+
+            x  = box.left + (y - box.top) + k;
+            px = (depth == 0 || y != py) ? x : x + 1;
+            
+            while (x > box.left && y > box.top && a[x - 1] == b[y - 1]) {
+                --x;
+                --y;
+            }
+
+            back_snakes[wrap_index(c, size)] = y;
+
+            bool delta_even = box.delta % 2 == 0;
+            bool k_between = k >= -depth && k <= depth;
+            if (delta_even && k_between && x <= forw_snakes[wrap_index(k, size)]) {
+                Snake snake = std::make_pair(
+                                 std::make_pair(x, y),
+                                 std::make_pair(px, py)
+                              );
+                return std::make_pair(snake, true);
+            }
+        }
+
+        return std::make_pair(Snake(), false);
+    }
+
+    template<typename T>
+    std::pair<Snake, bool> midpoint(const Box& box, const T& a, const T& b) {
+        if (box.size == 0) {
+            return std::make_pair(Snake(), false);
+        }
+
+        int64_t max_d = ceil(box.size / 2.);
+        std::vector<int64_t> forw_snakes(2 * max_d + 1);
+        forw_snakes[1] = box.left;
+        std::vector<int64_t> back_snakes(2 * max_d + 1);
+        back_snakes[1] = box.bottom;
+
+        std::pair<Snake, bool> snake;
+
+        for (int64_t depth = 0; depth <= max_d; ++depth) {
+            snake = forwards(box, forw_snakes, back_snakes, depth, max_d, a, b);
+            if (snake.second) {
+                return snake;
+            }
+            snake = backwards(box, forw_snakes, back_snakes, depth, max_d, a, b);
+            if (snake.second) {
+                return snake;
+            }
+        }
+
+        snake.second = false;
+        return snake;
+    }
+
+    template<typename T>
+    std::vector<Point> find_path(
+            int64_t left,  int64_t top, 
+            int64_t right, int64_t bottom, 
+            const T& a, const T& b) {
+        Box box(left, top, right, bottom);
+        std::pair<Snake, bool> snake = midpoint(box, a, b);
+
+        std::vector<Point> result;
+
+        if (!snake.second) {
+            return result;
+        }
+
+        Point start = snake.first.first;
+        Point end   = snake.first.second;
+
+        std::vector<Point> head = find_path(box.left, box.top, start.first, start.second, a, b);
+        std::vector<Point> tail = find_path(end.first, end.second, box.right, box.bottom, a, b);
+
+        if (head.empty()) {
+            result.push_back(start);
+        } else {
+            result.insert(result.end(), head.begin(), head.end());
+        }
+
+        if (tail.empty()) {
+            result.push_back(end);
+        } else {
+            result.insert(result.end(), tail.begin(), tail.end());
+        }
+
+        return result;
+    }
+
+    template<typename T>
+    std::vector<TAction> find_diff_linear(const T& data1, const T& data2) {
+        std::vector<Point> path = find_path(0, 0, data1.size(), data2.size(), data1, data2);
+        std::vector<TAction> diff_actions;
+        int64_t x = 0;
+        int64_t y = 0;
+
+        for (size_t i = 0; i < path.size(); ++i) {
+            const Point& p = path[i];
+
+            while (x < p.first && y < p.second) {
+                diff_actions.push_back({TAction::KEEP, x, y});
+                ++x;
+                ++y;
+            }
+
+            if (p.first - x < p.second - y) {
+                diff_actions.push_back({TAction::ADD, x, y});
+                ++y;
+            } else if (p.first - x > p.second - y) {
+                diff_actions.push_back({TAction::DEL, x, y});
+                ++x;
+            }
+        }
+
+        return diff_actions;
+    }
+}
+
+#endif
+\end{lstlisting}
+
+\textbf{diff.cpp}
+
+\begin{lstlisting}[language=C++]
+#include "diff.h"
+
+std::vector<TAction> build_trace(
+        const std::vector< std::vector<int64_t> >& trace, 
+        int64_t x, int64_t y, size_t total) {
+    std::vector<TAction> diff_actions;
+
+    for (int64_t d = trace.size() - 1; d >= 0; --d) {
+        const std::vector<int64_t>& layer = trace[d];
+
+        int64_t k = x - y;
+        int64_t prev_k;
+
+        bool went_down = (k == -d || (k != d && layer[k - 1 + total] < layer[k + 1 + total]));
+        if (went_down) {
+            prev_k = k + 1;
+        } else {
+            prev_k = k - 1;
+        }
+
+        int64_t prev_x = layer[prev_k + total];
+        int64_t prev_y = prev_x - prev_k;
+
+        while (x > prev_x && y > prev_y) {
+            --x;
+            --y;
+            diff_actions.push_back({TAction::KEEP, x, y});
+        }
+
+        if (d == 0) {
+            continue;
+        }
+
+        if (x == prev_x) {
+            y = prev_y;
+            diff_actions.push_back({TAction::ADD, x, y});
+        } else if (y == prev_y) {
+            x = prev_x;
+            diff_actions.push_back({TAction::DEL, x, y});
+        }
+    }
+
+    return std::vector<TAction>(diff_actions.rbegin(), diff_actions.rend());
+}
+\end{lstlisting}
+
+\textbf{main.cpp}
+
+\begin{lstlisting}[language=C++]
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <vector>
+
+#include "diff.h"
+
+std::vector<std::string> read_file(char* filename) {
+    std::ifstream is(filename);
+    std::string line;
+    std::vector<std::string> text;
+
+    while(std::getline(is, line)) {
+        text.push_back(line);
+    }
+
+    return text;
+}
+
+int main(int argc, char* argv[]) {
+    if (argc < 3) {
+        std::cout 
+            << "Usage: " 
+            << argv[0] 
+            << " FILE1 FILE2" 
+            << std::endl;
+        return -1;
+    }
+
+    std::vector<std::string> text1 = read_file(argv[1]);
+    std::vector<std::string> text2 = read_file(argv[2]);
+
+    std::vector<TAction> actions( find_diff(text1, text2) );
+
+    for (const auto& act : actions) {
+        switch (act.type) {
+          case TAction::ADD: {
+            std::cout << "+ ";
+            std::cout << text2[act.y] << std::endl;
+            break;
+          }
+          case TAction::DEL: {
+            std::cout << "- ";
+            std::cout << text1[act.x] << std::endl;
+            break;
+          }
+          case TAction::KEEP: {
+            std::cout << "  ";
+            std::cout << text1[act.x] << std::endl;
+            break;
+          }
+        }
+    }
+}
+\end{lstlisting}
+
+
+\pagebreak
