@@ -1,0 +1,63 @@
+\section{Пример работы}
+
+Продемонстрирую процесс работы программы:
+
+\begin{verbatim}
+
+fallfire13@DESKTOP-M7F3IHA:~/OS_labs/OS6/src$ ./server
+OK: 11153
+create 1 0
+OK: 11156
+create 2 1
+OK: 11159
+create 3 1
+OK: 11162
+create 4 2
+OK: 11165
+create 5 3
+OK: 11168
+exec 5 start
+OK:5
+exec 5 time
+OK:5: 6480
+exec 5 stop
+OK:5
+exec 5 time
+OK:5: 13881
+exec 5 time
+OK:5: 13881
+remove 3
+OK
+exec 5 time
+Error: Not found
+pingall
+Ok:
+^Z
+[1]+  Stopped                 ./server
+fallfire13@DESKTOP-M7F3IHA:~/OS_labs/OS6/src$ ps
+  PID TTY          TIME CMD
+11135 tty1     00:00:00 bash
+11149 tty1     00:00:00 server
+11153 tty1     00:00:00 client
+11156 tty1     00:00:00 client
+11159 tty1     00:00:00 client
+11162 tty1     00:00:00 client <defunct>
+11165 tty1     00:00:00 client
+11171 tty1     00:00:00 ps
+fallfire13@DESKTOP-M7F3IHA:~/OS_labs/OS6/src$ kill -9 11159
+fallfire13@DESKTOP-M7F3IHA:~/OS_labs/OS6/src$ fg
+./server
+pingall
+Ok: 2;4;
+exec 2 start
+Error: Node is unavailable
+fallfire13@DESKTOP-M7F3IHA:~/OS_labs/OS6/src$ ps
+  PID TTY          TIME CMD
+11135 tty1     00:00:00 bash
+11173 tty1     00:00:00 ps
+
+\end{verbatim}
+
+\pagebreak
+
+

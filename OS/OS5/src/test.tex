@@ -1,0 +1,83 @@
+\section{Пример работы}
+
+Продемонстрирую процесс сборки программ:
+
+\begin{verbatim}
+
+fallfire13@DESKTOP-M7F3IHA:~/OS_labs/OS5$ make
+gcc -Wall -Wextra -c -I./include src/main_runt.c -o bin/main_runt.o
+gcc -Wall -Wextra -c -fpic -I./include src/pi_1.c -o bin/pi_1.o
+gcc -shared bin/pi_1.o -o bin/libpi_1.so
+gcc -Wall -Wextra -c -fpic -I./include src/square_1.c -o bin/square_1.o
+gcc -shared bin/square_1.o -o bin/libsquare_1.so
+gcc -Wall -Wextra -c -fpic -I./include src/pi_2.c -o bin/pi_2.o
+gcc -shared bin/pi_2.o -o bin/libpi_2.so
+gcc -Wall -Wextra -c -fpic -I./include src/square_2.c -o bin/square_2.o
+gcc -shared bin/square_2.o -o bin/libsquare_2.so
+gcc bin/main_runt.o -o main_runt -ldl
+gcc -Wall -Wextra -c -I./include src/main_link.c -o bin/main_link.o
+gcc -L./bin -Wl,-rpath=./bin bin/main_link.o bin/libpi_1.so bin/libsquare_1.so -o main_link -lpi_1 -lsquare_1
+
+\end{verbatim}
+
+Работа первой программы:
+
+\begin{verbatim}
+
+fallfire13@DESKTOP-M7F3IHA:~/OS_labs/OS5$ ./main_link
+0
+no such command
+1 1
+pi = 4.000000
+1 10
+pi = 3.041840
+1 30
+pi = 3.108268
+1 100
+pi = 3.131593
+2 2 3
+square = 6.000000
+2 1.5 3
+square = 4.500000
+
+\end{verbatim}
+
+\pagebreak
+
+Работа второй программы:
+
+\begin{verbatim}
+
+fallfire13@DESKTOP-M7F3IHA:~/OS_labs/OS5$ ./main_runt
+1 1
+pi = 4.000000
+1 10
+pi = 3.041840
+1 30
+pi = 3.108268
+1 100
+pi = 3.131593
+2 2 3
+square = 6.000000
+2 1.5 3
+square = 4.500000
+0
+implementation changed to 2
+1 1
+pi = 4.000000
+1 10
+pi = 3.002177
+1 30
+pi = 3.091339
+1 100
+pi = 3.126081
+2 2 3
+square = 3.000000
+2 1.5 3
+square = 2.250000
+
+\end{verbatim}
+
+\pagebreak
+
+

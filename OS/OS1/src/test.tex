@@ -1,0 +1,85 @@
+\section{Пример работы}
+
+В качестве основы будем использовать код лабораторной \textnumero{2}. Запустим утилиту \\ командой strace -f -o strace-log.txt ./a.out
+
+\begin{verbatim}
+
+4594  execve("./a.out", ["./a.out"], 0x7ffff2db5568 /* 20 vars */) = 0
+4594  brk(NULL)                         = 0x7fffd1495000
+4594  arch_prctl(0x3001 /* ARCH_??? */, 0x7fffd8744140) = -1 EINVAL (Invalid argument)
+4594  access("/etc/ld.so.preload", R_OK) = -1 ENOENT (No such file or directory)
+4594  openat(AT_FDCWD, "/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3
+4594  fstat(3, {st_mode=S_IFREG|0644, st_size=31794, ...}) = 0
+4594  mmap(NULL, 31794, PROT_READ, MAP_PRIVATE, 3, 0) = 0x7fc81f328000
+4594  close(3)                          = 0
+4594  openat(AT_FDCWD, "/lib/x86_64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC) = 3
+4594  read(3, "\177ELF\2\1\1\3\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\360q\2\0\0\0\0\0"..., 832) = 832
+4594  pread64(3, "\6\0\0\0\4\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0"..., 784, 64) = 784
+4594  pread64(3, "\4\0\0\0\20\0\0\0\5\0\0\0GNU\0\2\0\0\300\4\0\0\0\3\0\0\0\0\0\0\0", 32, 848) = 32
+4594  pread64(3, "\4\0\0\0\24\0\0\0\3\0\0\0GNU\0\t\233\222%\274\260\320\31\331\326\10\204\276X>\263"..., 68, 880) = 68
+4594  fstat(3, {st_mode=S_IFREG|0755, st_size=2029224, ...}) = 0
+4594  mmap(NULL, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7fc81f360000
+4594  pread64(3, "\6\0\0\0\4\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0@\0\0\0\0\0\0\0"..., 784, 64) = 784
+4594  pread64(3, "\4\0\0\0\20\0\0\0\5\0\0\0GNU\0\2\0\0\300\4\0\0\0\3\0\0\0\0\0\0\0", 32, 848) = 32
+4594  pread64(3, "\4\0\0\0\24\0\0\0\3\0\0\0GNU\0\t\233\222%\274\260\320\31\331\326\10\204\276X>\263"..., 68, 880) = 68
+4594  mmap(NULL, 2036952, PROT_READ, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x7fc81f130000
+4594  mprotect(0x7fc81f155000, 1847296, PROT_NONE) = 0
+4594  mmap(0x7fc81f155000, 1540096, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x25000) = 0x7fc81f155000
+4594  mmap(0x7fc81f2cd000, 303104, PROT_READ, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x19d000) = 0x7fc81f2cd000
+4594  mmap(0x7fc81f318000, 24576, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1e7000) = 0x7fc81f318000
+4594  mmap(0x7fc81f31e000, 13528, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x7fc81f31e000
+4594  close(3)                          = 0
+4594  arch_prctl(ARCH_SET_FS, 0x7fc81f361380) = 0
+4594  mprotect(0x7fc81f318000, 12288, PROT_READ) = 0
+4594  mprotect(0x7fc81f365000, 4096, PROT_READ) = 0
+4594  mprotect(0x7fc81f35d000, 4096, PROT_READ) = 0
+4594  munmap(0x7fc81f328000, 31794)     = 0
+4594  pipe([3, 4])                      = 0
+4594  pipe([5, 6])                      = 0
+4594  getpid()                          = 4594
+4594  clone(child_stack=NULL, flags=CLONE_CHILD_CLEARTID|CLONE_CHILD_SETTID|SIGCHLD, child_tidptr=0x7fc81f361650) = 4595
+4594  clone(child_stack=NULL, flags=CLONE_CHILD_CLEARTID|CLONE_CHILD_SETTID|SIGCHLD <unfinished ...>
+4595  prctl(PR_SET_PDEATHSIG, SIGTERM)  = 0
+4595  rt_sigaction(SIGTERM, {sa_handler=0x7fc81f363399, sa_mask=[TERM], sa_flags=SA_RESTORER|SA_RESTART, sa_restorer=0x7fc81f176210}, {sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7f5f39fd6210}, 8) = 0
+4595  getppid()                         = 4594
+4595  close(4)                          = 0
+4595  read(3,  <unfinished ...>
+4594  <... clone resumed>, child_tidptr=0x7fc81f361650) = 4596
+4596  prctl(PR_SET_PDEATHSIG, SIGTERM <unfinished ...>
+4594  close(3)                          = 0
+4596  <... prctl resumed>)              = 0
+4594  close(5)                          = 0
+4596  rt_sigaction(SIGTERM, {sa_handler=0x7fc81f363399, sa_mask=[TERM], sa_flags=SA_RESTORER|SA_RESTART, sa_restorer=0x7fc81f176210},  <unfinished ...>
+4594  read(0,  <unfinished ...>
+4596  <... rt_sigaction resumed>{sa_handler=SIG_DFL, sa_mask=[], sa_flags=SA_RESTORER, sa_restorer=0x7f5f39fd6210}, 8) = 0
+4596  getppid()                         = 4594
+4596  close(6)                          = 0
+4596  read(5,  <unfinished ...>
+4594  <... read resumed>"\n", 1)        = 1
+4594  write(4, "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 4097) = 4097
+4595  <... read resumed>"\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 4097) = 4097
+4594  read(0,  <unfinished ...>
+4595  openat(AT_FDCWD, "", O_WRONLY|O_CREAT, 0600) = -1 ENOENT (No such file or directory)
+4595  read(3,  <unfinished ...>
+4594  <... read resumed>"\n", 1)        = 1
+4594  write(6, "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 4097) = 4097
+4596  <... read resumed>"\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 4097) = 4097
+4594  read(0,  <unfinished ...>
+4596  openat(AT_FDCWD, "", O_WRONLY|O_CREAT, 0600) = -1 ENOENT (No such file or directory)
+4596  read(5,  <unfinished ...>
+4594  <... read resumed>"", 1)          = 0
+4594  exit_group(0)                     = ?
+4594  +++ exited with 0 +++
+4595  <... read resumed>0x7fffd87430c0, 4097) = ? ERESTARTSYS (To be restarted if SA_RESTART is set)
+4596  <... read resumed>0x7fffd87430c0, 4097) = ? ERESTARTSYS (To be restarted if SA_RESTART is set)
+4595  --- SIGTERM {si_signo=SIGTERM, si_code=SI_TKILL, si_pid=4594, si_uid=1000} ---
+4596  --- SIGTERM {si_signo=SIGTERM, si_code=SI_TKILL, si_pid=4594, si_uid=1000} ---
+4595  exit_group(0)                     = ?
+4596  exit_group(0 <unfinished ...>
+4595  +++ exited with 0 +++
+4596  <... exit_group resumed>)         = ?
+4596  +++ exited with 0 +++
+
+\end{verbatim}
+
+\pagebreak

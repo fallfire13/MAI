@@ -1,0 +1,1900 @@
+\section{Общий метод и алгоритм решения}
+
+Для общения между узлами используется очередь сообщений ZeroMQ. Управляющим узлом является программа server, вычислительным - client. client создается с помощью fork() и последующего execl. Библиотека zmq обернута в функции, которые кидают исключение в случае ошибки. Классы Socket, Client и Server созданы для удобства написания кода и инкапсулируют соответствующий их названиям функционал. Сокеты используют протокол ipc, так как он предназначен для межпроцессорного взаимодействия. Используется шаблон Publish-Subscribe, сообщения передаются уровень за уровнем по дереву. Сама структура дерева общего вида описана классом n\_tree.
+
+При запуске программы (./server) создается сервер, который разделяется на два потока, один из которых создает нулевой вычислительный узел. Один поток сервера принимает ввод из stdin, другой поток обрабатывает все присланные ему данные. Сообщения по дереву могут передаваться вниз и вверх, клиент, указанный адресатом сообщения выполняет необходимое ему действие и при необходимости отправляет результат обратно в управляющий узел.
+
+\pagebreak
+
+\section{Исходный код}
+
+Заголовочные файлы:
+
+\textbf{ntree.h}
+
+\begin{lstlisting}[language=C++]
+
+#ifndef _NTREE_H_
+#define _NTREE_H_
+
+#include <unistd.h>
+#include <iostream>
+#include <memory>
+#include <unordered_set>
+#include <utility>
+
+const std::pair<int, pid_t> BAD_RES = {-1, -1};
+class n_tree_node {
+private:
+    std::pair<int, pid_t> id_ = BAD_RES;
+    std::unordered_set<std::shared_ptr<n_tree_node>> children_;
+public:
+    n_tree_node(std::pair<int, pid_t> id = BAD_RES);
+    bool add_to(int parrent_id, std::pair<int, pid_t> new_id);
+    bool remove(int id);
+    bool find(int id) const;
+    std::pair<int, pid_t>& get(int id);
+    std::unordered_set<pid_t> get_all_second() const;
+    std::unordered_set<int> get_all_first() const;
+    std::pair<int, pid_t> id() const;
+};
+
+class n_tree {
+private:
+    std::shared_ptr<n_tree_node> head_;
+public:
+    bool add_to(int parrent_id, std::pair<int, pid_t> new_id);
+    bool remove(int id);
+    bool find(int id) const;
+    std::pair<int, pid_t>& get(int id);
+    std::unordered_set<pid_t> get_all_second() const;
+    std::unordered_set<int> get_all_first() const;
+};
+
+#endif
+
+\end{lstlisting}
+
+\textbf{zmq\_wrapper.h}
+
+\begin{lstlisting}[language=C++]
+
+#ifndef _ZMQ_WRAPPER_H_
+#define _ZMQ_WRAPPER_H_
+
+#include <string>
+
+enum class message_type {
+    ERROR,
+    CHECK,
+    CREATE_CHILD,
+    REMOVE_CHILD,
+    TIMER_TIME,
+    TIMER_START,
+    TIMER_STOP,
+    PINGALL
+};
+
+enum class ip_type {
+    CHILD_PUB,
+    PARRENT_PUB,
+};
+
+enum class socket_type {
+    PUB,
+    SUB
+};
+
+
+
+struct Message {
+    message_type command = message_type::ERROR;
+    int to_id;
+    int value;
+    bool go_up = false;
+    int uniq_num;
+    Message();
+    Message(message_type command_a, int to_id_a, int value_a);
+};
+
+void* create_zmq_context();
+void destroy_zmq_context(void* context);
+void* create_zmq_socket(void* context, socket_type type);
+void close_zmq_socket(void* socket);
+std::string create_ip(ip_type type, pid_t id);
+void bind_zmq_socket(void* socket, std::string ip);
+void unbind_zmq_socket(void* socket, std::string ip);
+void connect_zmq_socket(void* socket, std::string ip);
+void disconnect_zmq_socket(void* socket, std::string ip);
+bool operator==(const Message& lhs, const Message& rhs);
+void send_zmq_msg(void* socket, Message msg);
+Message get_zmq_msg(void* socket);
+
+#endif
+
+\end{lstlisting}
+
+\textbf{socket.h}
+
+\begin{lstlisting}[language=C++]
+
+#ifndef _SOCKET_H_
+#define _SOCKET_H_
+
+#include <string>
+#include "zmq_wrapper.h"
+
+enum class connection_type {
+    BIND,
+    CONNECT
+};
+
+class Socket {
+public:
+    Socket(void* context, socket_type socket_type, std::string ip);
+    ~Socket();
+    void send(Message message);
+    Message receive();
+    void subscribe(std::string ip);
+    std::string ip() const;
+private:
+    void* socket_;
+    socket_type socket_type_;
+    std::string ip_;
+};
+
+#endif
+
+\end{lstlisting}
+
+\textbf{server.h}
+
+\begin{lstlisting}[language=C++]
+
+#ifndef _SERVER_H_
+#define _SERVER_H_
+
+#include <unistd.h>
+#include <memory>
+#include <unordered_map>
+#include "socket.h"
+#include "ntree.h"
+
+class Server {
+public:
+    Server();
+    ~Server();
+    pid_t pid() const;
+    Message last_message() const;
+    void send(Message message);
+    Message receive();
+    bool check(int id);
+    void create_child_cmd(int id, int parrent_id);
+    void remove_child_cmd(int id);
+    void exec_cmd(int id, message_type type);
+    void pingall_cmd();
+    friend void* second_thread(void* serv_arg);
+private:
+    pid_t pid_;
+    void* context_ = nullptr;
+    std::unique_ptr<Socket> pub_;
+    std::unique_ptr<Socket> sub_;
+    pthread_t receive_msg_loop_id;
+    bool terminated_ = false;
+    Message last_message_;
+    n_tree tree_;
+    std::unordered_map<int, bool> map_for_check_;
+};
+
+#endif
+
+
+
+\end{lstlisting}
+
+\textbf{client.h}
+
+\begin{lstlisting}[language=C++]
+
+#ifndef _CLIENT_H_
+#define _CLIENT_H_
+
+#include <unistd.h>
+#include <chrono>
+#include <memory>
+#include <string>
+#include "socket.h"
+
+class Client {
+public:
+    Client(int id, std::string parrent_ip);
+    ~Client();
+    int id() const;
+    pid_t pid() const;
+    void send_up(Message message);
+    void send_down(Message message);
+    Message receive();
+    void start_timer();
+    void stop_timer();
+    int get_time();
+    void pingall();
+    void add_child(int id);
+private:
+    int id_;
+    pid_t pid_;
+    void* context_ = nullptr;
+    std::unique_ptr<Socket> child_pub_;
+    std::unique_ptr<Socket> parrent_pub_;
+    std::unique_ptr<Socket> sub_;
+    bool is_timer_started = false;
+    std::chrono::steady_clock::time_point start_;
+    std::chrono::steady_clock::time_point finish_;
+    bool terminated_ = false;
+};
+
+#endif
+
+\end{lstlisting}
+
+Файлы с кодом:
+
+\textbf{ntree.cpp}
+
+\begin{lstlisting}[language=C++]
+
+#include "ntree.h"
+#include <algorithm>
+#include <exception>
+
+n_tree_node::n_tree_node(std::pair<int, pid_t> id) : id_(id) {}
+
+bool n_tree_node::add_to(int parrent_id, std::pair<int, pid_t> new_id) {
+    if (id_.first == parrent_id) {
+        children_.insert(std::make_shared<n_tree_node>(new_id));
+        return true;
+    } 
+    else {
+        bool is_ok = false;
+        for (const auto& ch_ptr : children_) {
+            is_ok = is_ok || ch_ptr->add_to(parrent_id, new_id);
+            if (is_ok) {
+                break;
+            }
+        }
+        return is_ok;
+    }
+}
+
+
+
+bool n_tree_node::remove(int id) {
+
+    auto it = std::find_if(children_.begin(), children_.end(), [id](const auto& ptr) { 
+
+                                                                                         return ptr->id_.first == id; 
+
+                                                                                     });
+
+    if (it != children_.end()) {
+
+        children_.erase(it);
+
+        return true;
+
+    } 
+
+    else {
+
+        bool is_ok = false;
+
+        for (const auto& ch_ptr : children_) {
+
+            is_ok = is_ok || ch_ptr->remove(id);
+
+            if (is_ok) {
+
+                break;
+
+            }
+
+        }
+
+        return is_ok;
+
+    }
+
+}
+
+
+
+bool n_tree_node::find(int id) const {
+
+    if (id_.first == id) {
+
+        return true;
+
+    } 
+
+    else {
+
+        bool is_ok = false;
+
+        for (const auto& ch_ptr : children_) {
+
+            is_ok = is_ok || ch_ptr->find(id);
+
+            if (is_ok) {
+
+                return true;
+
+            }
+
+        }
+
+        return is_ok;
+
+    }
+
+}
+
+
+
+std::pair<int, pid_t>& n_tree_node::get(int id) {
+
+    if (id_.first == id) {
+
+        return id_;
+
+    } 
+
+    else {
+
+        for (const auto& ch_ptr : children_) {
+
+            if (ch_ptr->find(id)) {
+
+                return ch_ptr->get(id);
+
+            }
+
+        }
+
+        throw std::runtime_error("can't get value");
+
+    }
+
+}
+
+
+
+std::unordered_set<pid_t> n_tree_node::get_all_second() const {
+
+    std::unordered_set<pid_t> res;
+
+    for (const auto& ptr : children_) {
+
+        res.insert(ptr->id().second);
+
+        res.merge(ptr->get_all_second());
+
+    }
+
+    return res;
+
+}
+
+
+
+std::unordered_set<pid_t> n_tree_node::get_all_first() const {
+
+    std::unordered_set<pid_t> res;
+
+    for (const auto& ptr : children_) {
+
+        res.insert(ptr->id().first);
+
+        res.merge(ptr->get_all_first());
+
+    }
+
+    return res;
+
+}
+
+
+
+std::pair<int, pid_t> n_tree_node::id() const {
+
+    return id_;
+
+}
+
+
+
+bool n_tree::add_to(int parrent_id, std::pair<int, pid_t> new_id) {
+
+    if (!head_) {
+
+        head_ = std::make_shared<n_tree_node>(new_id);
+
+        return true;
+
+    }
+
+    if (find(new_id.first)) {
+
+        return false;
+
+    }
+
+    return head_->add_to(parrent_id, new_id);
+
+}
+
+
+
+bool n_tree::remove(int id) {
+
+    if (head_) {
+
+        if (id == head_->id().first) {
+
+            head_ = nullptr;
+
+            return true;
+
+        }
+
+        return head_->remove(id);
+
+    }
+
+    return false;
+
+}
+
+
+
+bool n_tree::find(int id) const {
+
+    if (head_) {
+
+        return head_->find(id);
+
+    }
+
+    return false;
+
+}
+
+
+
+std::pair<int, pid_t>& n_tree::get(int id) {
+
+    if (head_) {
+
+        return head_->get(id);
+
+    }
+
+    throw std::runtime_error("can't get value");
+
+}
+
+
+
+std::unordered_set<pid_t> n_tree::get_all_second() const {
+
+    if (head_) {
+
+        std::unordered_set<pid_t> res;
+
+        res.insert(head_->id().second);
+
+        res.merge(head_->get_all_second());
+
+        return res;
+
+    }
+
+    return {};
+
+}
+
+
+
+std::unordered_set<pid_t> n_tree::get_all_first() const {
+
+    if (head_) {
+
+        std::unordered_set<pid_t> res;
+
+        res.insert(head_->id().first);
+
+        res.merge(head_->get_all_first());
+
+        return res;
+
+    }
+
+    return {};
+
+}
+
+
+
+\end{lstlisting}
+
+\textbf{zmq\_wrapper.cpp}
+
+\begin{lstlisting}[language=C++]
+
+#include "zmq_wrapper.h"
+
+
+
+#include <errno.h>
+
+#include <string.h>
+
+#include <unistd.h>
+
+#include <zmq.h>
+
+
+
+#include <iostream>
+
+#include <tuple>
+
+
+
+
+
+void* create_zmq_context() {
+
+    void* context = zmq_ctx_new();
+
+    if (context == NULL) {
+
+        throw std::runtime_error(zmq_strerror(errno));
+
+    }
+
+    return context;
+
+}
+
+
+
+void destroy_zmq_context(void* context) {
+
+  if (zmq_ctx_destroy(context) != 0) {
+
+    throw std::runtime_error(zmq_strerror(errno));
+
+  }
+
+}
+
+
+
+int get_zmq_socket_type(socket_type type) {
+
+    switch (type) {
+
+        case socket_type::PUB:
+
+            return ZMQ_PUB;
+
+        case socket_type::SUB:
+
+            return ZMQ_SUB;
+
+        default:
+
+            throw std::logic_error("Undefined socket type");
+
+    }
+
+}
+
+
+
+void* create_zmq_socket(void* context, socket_type type) {
+
+    int zmq_type = get_zmq_socket_type(type);
+
+    void* socket = zmq_socket(context, zmq_type);
+
+    if (socket == NULL) {
+
+        throw std::runtime_error(zmq_strerror(errno));
+
+    }
+
+    if (zmq_type == ZMQ_SUB) {
+
+        if (zmq_setsockopt(socket, ZMQ_SUBSCRIBE, 0, 0) == -1) {
+
+            throw std::runtime_error(zmq_strerror(errno));
+
+        }
+
+        int linger_period = 0;
+
+        if (zmq_setsockopt(socket, ZMQ_LINGER, &linger_period, sizeof(int)) == -1) {
+
+            throw std::runtime_error(zmq_strerror(errno));
+
+        }
+
+    }
+
+    return socket;
+
+}
+
+
+
+void close_zmq_socket(void* socket) {
+
+    sleep(1);
+
+    if (zmq_close(socket) != 0) {
+
+        throw std::runtime_error(zmq_strerror(errno));
+
+    }
+
+}
+
+
+
+std::string create_ip(ip_type type, pid_t id) {
+
+    switch (type) {
+
+        case ip_type::PARRENT_PUB:
+
+            return "ipc:///tmp/parrent_pub_" + std::to_string(id);
+
+        case ip_type::CHILD_PUB:
+
+            return "ipc:///tmp/child_pub_" + std::to_string(id);
+
+        default:
+
+            throw std::logic_error("undefined ip type");
+
+    }
+
+}
+
+
+
+void bind_zmq_socket(void* socket, std::string ip) {
+
+    if (zmq_bind(socket, ip.data()) != 0) {
+
+        throw std::runtime_error(zmq_strerror(errno));
+
+    }
+
+}
+
+
+
+void unbind_zmq_socket(void* socket, std::string ip) {
+
+    if (zmq_unbind(socket, ip.data()) != 0) {
+
+        throw std::runtime_error(zmq_strerror(errno));
+
+    }
+
+}
+
+
+
+void connect_zmq_socket(void* socket, std::string ip) {
+
+    if (zmq_connect(socket, ip.data()) != 0) {
+
+        throw std::runtime_error(zmq_strerror(errno));
+
+    }
+
+}
+
+
+
+void disconnect_zmq_socket(void* socket, std::string ip) {
+
+    if (zmq_disconnect(socket, ip.data()) != 0) {
+
+        throw std::runtime_error(zmq_strerror(errno));
+
+    }
+
+}
+
+
+
+int counter = 0;
+
+Message::Message() {
+
+    uniq_num = counter++;
+
+}
+
+
+
+Message::Message(message_type command_a, int to_id_a, int value_a)
+
+    : Message() {
+
+    command = command_a;
+
+    to_id = to_id_a;
+
+    value = value_a;
+
+}
+
+
+
+bool operator==(const Message& lhs, const Message& rhs) {
+
+    return std::tie(lhs.command, lhs.to_id, lhs.value, lhs.uniq_num) == std::tie(rhs.command, rhs.to_id, rhs.value, rhs.uniq_num);
+
+}
+
+
+
+void create_zmq_msg(zmq_msg_t* zmq_msg, Message msg) {
+
+    zmq_msg_init_size(zmq_msg, sizeof(Message));
+
+    memcpy(zmq_msg_data(zmq_msg), &msg, sizeof(Message));
+
+}
+
+
+
+void send_zmq_msg(void* socket, Message msg) {
+
+    zmq_msg_t zmq_msg;
+
+    create_zmq_msg(&zmq_msg, msg);
+
+    if (!zmq_msg_send(&zmq_msg, socket, 0)) {
+
+        throw std::runtime_error(zmq_strerror(errno));
+
+    }
+
+    zmq_msg_close(&zmq_msg);
+
+}
+
+
+
+Message get_zmq_msg(void* socket) {
+
+    zmq_msg_t zmq_msg;
+
+    zmq_msg_init(&zmq_msg);
+
+    if (zmq_msg_recv(&zmq_msg, socket, 0) == -1) {
+
+        return Message{message_type::ERROR, 0, 0};
+
+    }
+
+    Message msg;
+
+    memcpy(&msg, zmq_msg_data(&zmq_msg), sizeof(Message));
+
+    zmq_msg_close(&zmq_msg);
+
+    return msg;
+
+}
+
+\end{lstlisting}
+
+\textbf{socket.cpp}
+
+\begin{lstlisting}[language=C++]
+
+#include "socket.h"
+
+
+
+#include <iostream>
+
+#include <stdexcept>
+
+
+
+
+
+Socket::Socket(void* context, socket_type socket_type, std::string ip)
+
+    : socket_type_(socket_type), ip_(ip) {
+
+    socket_ = create_zmq_socket(context, socket_type_);
+
+    switch (socket_type_) {
+
+        case socket_type::PUB:
+
+            bind_zmq_socket(socket_, ip);
+
+            break;
+
+        case socket_type::SUB:
+
+            connect_zmq_socket(socket_, ip);
+
+            break;
+
+        default:
+
+            throw std::logic_error("Undefined connection type");
+
+    }
+
+}
+
+
+
+Socket::~Socket() {
+
+    try {
+
+        close_zmq_socket(socket_);
+
+    } 
+
+    catch (std::exception& ex) {
+
+        std::cerr << "Socket wasn't closed: " << ex.what() << std::endl;
+
+    }
+
+}
+
+
+
+void Socket::send(Message message) {
+
+    if (socket_type_ == socket_type::PUB) {
+
+        send_zmq_msg(socket_, message);
+
+    } 
+
+    else {
+
+        throw std::logic_error("SUB socket can't send messages");
+
+    }
+
+}
+
+
+
+Message Socket::receive() {
+
+    if (socket_type_ == socket_type::SUB) {
+
+        return get_zmq_msg(socket_);
+
+    } 
+
+    else {
+
+        throw std::logic_error("PUB socket can't receive messages");
+
+    }
+
+}
+
+
+
+void Socket::subscribe(std::string ip) {
+
+    if (socket_type_ == socket_type::SUB) {
+
+        connect_zmq_socket(socket_, ip);
+
+    } 
+
+    else {
+
+        throw std::logic_error("Subscribe is only for SUB sockets");
+
+    }
+
+}
+
+
+
+std::string Socket::ip() const {
+
+    return ip_;
+
+}
+
+\end{lstlisting}
+
+\textbf{server.cpp}
+
+\begin{lstlisting}[language=C++]
+
+#include "server.h"
+
+
+
+#include <pthread.h>
+
+#include <signal.h>
+
+#include <unistd.h>
+
+#include <cstring>
+
+#include <cerrno>
+
+
+
+#include <iostream>
+
+
+
+#include "zmq_wrapper.h"
+
+
+
+
+
+const int ERR_LOOP = 2;
+
+const std::string CLIENT_PROG = "./client";
+
+const double MESSAGE_WAITING_TIME = 1;
+
+const int MESSAGE_ALL = -256;
+
+
+
+void* second_thread(void* serv_arg) {
+
+    Server* server_ptr = (Server*)serv_arg;
+
+    pid_t server_pid = server_ptr->pid();
+
+    try {
+
+        pid_t child_pid = fork();
+
+        if (child_pid == -1) {
+
+            throw std::runtime_error(std::strerror(errno));
+
+        }
+
+        if (child_pid == 0) {
+
+            execl(CLIENT_PROG.data(), CLIENT_PROG.data(), "0", server_ptr->pub_->ip().data(), NULL);
+
+        }
+
+
+
+        std::string ip = create_ip(ip_type::PARRENT_PUB, child_pid);
+
+        server_ptr->sub_ = std::make_unique<Socket>(server_ptr->context_, socket_type::SUB, ip);
+
+        server_ptr->tree_.add_to(0, {0, child_pid});
+
+
+
+        while (true) {
+
+            Message msg = server_ptr->sub_->receive();
+
+            if (msg.command == message_type::ERROR) {
+
+                if (server_ptr->terminated_) {
+
+                    return NULL;
+
+                } 
+
+                else {
+
+                    throw std::runtime_error("error message");
+
+                }
+
+            }
+
+            server_ptr->last_message_ = msg;
+
+
+
+            switch (msg.command) {
+
+                case message_type::CREATE_CHILD: {
+
+                    auto& pa = server_ptr->tree_.get(msg.to_id);
+
+                    pa.second = msg.value;
+
+                    std::cout << "OK: " << server_ptr->last_message_.value << std::endl;
+
+                    break;
+
+                }
+
+                case message_type::REMOVE_CHILD:
+
+                    server_ptr->tree_.remove(msg.to_id);
+
+                    std::cout << "OK" << std::endl;
+
+                    break;
+
+                case message_type::TIMER_START:
+
+                    std::cout << "OK:" << msg.to_id << std::endl;
+
+                    break;
+
+                case message_type::TIMER_STOP:
+
+                    std::cout << "OK:" << msg.to_id << std::endl;
+
+                    break;
+
+                case message_type::TIMER_TIME: {
+
+                    std::cout << "OK:" << msg.to_id << ": " << msg.value << std::endl;
+
+                    break;
+
+                }
+
+              case message_type::PINGALL:
+
+                  server_ptr->map_for_check_[msg.to_id] = true;
+
+                  break;
+
+              default:
+
+                  break;
+
+            }
+
+        }
+
+    } 
+
+    catch (std::exception& ex) {
+
+        std::cerr << ex.what() << std::endl;
+
+        exit(ERR_LOOP);
+
+    }
+
+    return NULL;
+
+}
+
+
+
+Server::Server() {
+
+    pid_ = getpid();
+
+    context_ = create_zmq_context();
+
+    std::string ip = create_ip(ip_type::CHILD_PUB, getpid());
+
+    pub_ = std::make_unique<Socket>(context_, socket_type::PUB, ip);
+
+    if (pthread_create(&receive_msg_loop_id, 0, second_thread, this) != 0) {
+
+        throw std::runtime_error(std::strerror(errno));
+
+    }
+
+}
+
+
+
+Server::~Server() {
+
+    if (terminated_) {
+
+        std::cerr << std::to_string(pid_) + " server double termination" << std::endl;
+
+        return;
+
+    }
+
+    terminated_ = true;
+
+    for (pid_t pid : tree_.get_all_second()) {
+
+        kill(pid, SIGINT);
+
+    }
+
+
+
+    try {
+
+        pub_ = nullptr;
+
+        sub_ = nullptr;
+
+        destroy_zmq_context(context_);
+
+    } 
+
+    catch (std::exception& ex) {
+
+        std::cerr << ex.what() << std::endl;
+
+    }
+
+}
+
+
+
+void Server::send(Message message) {
+
+    message.go_up = false;
+
+    pub_->send(message);
+
+}
+
+
+
+Message Server::receive() {
+
+    return sub_->receive();
+
+}
+
+
+
+pid_t Server::pid() const {
+
+    return pid_;
+
+}
+
+
+
+Message Server::last_message() const {
+
+    return last_message_;
+
+}
+
+
+
+bool Server::check(int id) {
+
+    Message msg(message_type::CHECK, id, 0);
+
+    send(msg);
+
+    sleep(MESSAGE_WAITING_TIME);
+
+    if (last_message_ == msg) {
+
+        return true;
+
+    } else {
+
+        return false;
+
+    }
+
+}
+
+
+
+void Server::create_child_cmd(int id, int parrent_id) {
+
+    if (tree_.find(id)) {
+
+        std::cout << "Error: Already exists" << std::endl;
+
+        return;
+
+    }
+
+    if (!tree_.find(parrent_id)) {
+
+        std::cout << "Error: Parent not found" << std::endl;
+
+        return;
+
+    }
+
+    if (!check(parrent_id)) {
+
+        std::cout << "Error: Parent is unavailable" << std::endl;
+
+        return;
+
+    }
+
+    send(Message(message_type::CREATE_CHILD, parrent_id, id));
+
+    tree_.add_to(parrent_id, {id, 0});
+
+}
+
+
+
+void Server::remove_child_cmd(int id) {
+
+    if (id == 0) {
+
+        std::cout << "Error: Can't remove server node" << std::endl;
+
+        return;
+
+    }
+
+    if (!tree_.find(id)) {
+
+        std::cout << "Error: Not found" << std::endl;
+
+        return;
+
+    }
+
+    if (!check(id)) {
+
+        std::cout << "Error: Node is unavailable" << std::endl;
+
+        return;
+
+    }
+
+    send(Message(message_type::REMOVE_CHILD, id, 0));
+
+}
+
+
+
+void Server::exec_cmd(int id, message_type type) {
+
+    if (!tree_.find(id)) {
+
+        std::cout << "Error: Not found" << std::endl;
+
+        return;
+
+    }
+
+    if (!check(id)) {
+
+        std::cout << "Error: Node is unavailable" << std::endl;
+
+        return;
+
+    }
+
+    send(Message(type, id, 0));
+
+}
+
+
+
+void Server::pingall_cmd() {
+
+    send(Message(message_type::PINGALL, MESSAGE_ALL, 0));
+
+    auto uset = tree_.get_all_first();
+
+    for (int id : uset) {
+
+        map_for_check_[id] = false;
+
+    }
+
+    sleep(MESSAGE_WAITING_TIME);
+
+    std::cout << "Ok: ";
+
+    for (auto& [id, bit] : map_for_check_) {
+
+        if (!bit) {
+
+            std::cout << id << ";";
+
+        }
+
+        bit = false;
+
+    }
+
+    std::cout << std::endl;
+
+}
+
+\end{lstlisting}
+
+\textbf{client.cpp}
+
+\begin{lstlisting}[language=C++]
+
+#include "client.h"
+
+
+
+#include <unistd.h>
+
+
+
+#include <iostream>
+
+
+
+#include "zmq_wrapper.h"
+
+
+
+//using namespace std;
+
+
+
+const std::string CLIENT_PROG = "./client";
+
+const double MESSAGE_WAITING_TIME = 1;
+
+
+
+Client::Client(int id, std::string parrent_ip) {
+
+    id_ = id;
+
+    pid_ = getpid();
+
+    context_ = create_zmq_context();
+
+
+
+    std::string ip = create_ip(ip_type::CHILD_PUB, getpid());
+
+    child_pub_ = std::make_unique<Socket>(context_, socket_type::PUB, ip);
+
+    ip = create_ip(ip_type::PARRENT_PUB, getpid());
+
+    parrent_pub_ = std::make_unique<Socket>(context_, socket_type::PUB, ip);
+
+
+
+    sub_ = std::make_unique<Socket>(context_, socket_type::SUB, parrent_ip);
+
+
+
+    sleep(MESSAGE_WAITING_TIME);
+
+    send_up(Message(message_type::CREATE_CHILD, id, getpid()));
+
+}
+
+
+
+Client::~Client() {
+
+    if (terminated_) {
+
+        std::cerr << std::to_string(pid_) << " Client double termination" << std::endl;
+
+        return;
+
+    }
+
+
+
+    terminated_ = true;
+
+
+
+    sleep(MESSAGE_WAITING_TIME);
+
+    try {
+
+        child_pub_ = nullptr;
+
+        parrent_pub_ = nullptr;
+
+        sub_ = nullptr;
+
+        destroy_zmq_context(context_);
+
+    } 
+
+    catch (std::exception& ex) {
+
+        std::cerr << std::to_string(pid_) << ex.what() << std::endl;
+
+    }
+
+}
+
+
+
+void Client::send_up(Message message) {
+
+    message.go_up = true;
+
+    parrent_pub_->send(message);
+
+}
+
+
+
+void Client::send_down(Message message) {
+
+    message.go_up = false;
+
+    child_pub_->send(message);
+
+}
+
+
+
+Message Client::receive() {
+
+    Message msg = sub_->receive();
+
+    return msg;
+
+}
+
+
+
+void Client::add_child(int id) {
+
+    pid_t child_pid = fork();
+
+    if (child_pid == -1) {
+
+        throw std::runtime_error("Can't fork");
+
+    }
+
+    if (child_pid == 0) {
+
+        execl(CLIENT_PROG.data(), CLIENT_PROG.data(), std::to_string(id).data(), child_pub_->ip().data(), NULL);
+
+    }
+
+
+
+    std::string ip = create_ip(ip_type::PARRENT_PUB, child_pid);
+
+    sub_->subscribe(ip);
+
+}
+
+
+
+void Client::start_timer() {
+
+    is_timer_started = true;
+
+    start_ = std::chrono::steady_clock::now();
+
+}
+
+
+
+void Client::stop_timer() {
+
+    is_timer_started = false;
+
+    finish_ = std::chrono::steady_clock::now();
+
+}
+
+
+
+int Client::get_time() {
+
+    if (is_timer_started) {
+
+      finish_ = std::chrono::steady_clock::now();
+
+    }
+
+    return std::chrono::duration_cast<std::chrono::milliseconds>(finish_ - start_).count();
+
+}
+
+
+
+void Client::pingall() {
+
+    send_up(Message(message_type::PINGALL, id_, 0));
+
+}
+
+
+
+int Client::id() const {
+
+    return id_;
+
+}
+
+
+
+pid_t Client::pid() const {
+
+    return pid_;
+
+}
+
+\end{lstlisting}
+
+\textbf{server\_main.cpp}
+
+\begin{lstlisting}[language=C++]
+
+#include <signal.h>
+
+
+
+#include <iostream>
+
+#include <string>
+
+#include <cstring>
+
+#include <cerrno>
+
+
+
+#include "server.h"
+
+
+
+
+
+Server* server_ptr = nullptr;
+
+void terminate(int) {
+
+    if (server_ptr != nullptr) {
+
+        server_ptr->~Server();
+
+    }
+
+    exit(0);
+
+}
+
+
+
+void process_cmd(Server& server, std::string cmd) {
+
+    if (cmd == "create") {
+
+        int id, parrent_id;
+
+        std::cin >> id >> parrent_id;
+
+        server.create_child_cmd(id, parrent_id);
+
+    } 
+
+    else if (cmd == "remove") {
+
+        int id;
+
+        std::cin >> id;
+
+        server.remove_child_cmd(id);
+
+    } 
+
+    else if (cmd == "exec") {
+
+        int id;
+
+        std::string sub_cmd;
+
+        std::cin >> id >> sub_cmd;
+
+        message_type type;
+
+        if (sub_cmd == "time") {
+
+            type = message_type::TIMER_TIME;
+
+        } 
+
+        else if (sub_cmd == "start") {
+
+            type = message_type::TIMER_START;
+
+        } 
+
+        else if (sub_cmd == "stop") {
+
+            type = message_type::TIMER_STOP;
+
+        } 
+
+        else {
+
+            std::cout << "incorrect arguments" << std::endl;
+
+            return;
+
+        }
+
+        server.exec_cmd(id, type);
+
+    } 
+
+    else if (cmd == "pingall") {
+
+        server.pingall_cmd();
+
+    } 
+
+    else {
+
+        std::cout << "no such command" << std::endl;
+
+    }
+
+}
+
+
+
+int main() {
+
+    try {
+
+        signal(SIGINT, terminate);
+
+        signal(SIGSEGV, terminate);
+
+        Server server;
+
+        server_ptr = &server;
+
+        std::string cmd;
+
+        while (std::cin >> cmd) {
+
+            process_cmd(server, cmd);
+
+        }
+
+    } 
+
+    catch (std::exception& ex) {
+
+        std::cerr << std::to_string(getpid()) << ' ' << ex.what() << std::endl;
+
+        exit(1);
+
+    }
+
+    return 0;
+
+}
+
+
+
+\end{lstlisting}
+
+\textbf{client\_main.cpp}
+
+\begin{lstlisting}[language=C++]
+
+#include <signal.h>
+
+
+
+#include <iostream>
+
+#include <string>
+
+#include <cerrno>
+
+#include <cstring>
+
+
+
+#include "client.h"
+
+
+
+
+
+const int ERR_TERMINATED = 1;
+
+const int MESSAGE_ALL = -256;
+
+
+
+Client* client_ptr = nullptr;
+
+
+
+void terminate(int) {
+
+    if (client_ptr != nullptr) {
+
+        client_ptr->~Client();
+
+    }
+
+    exit(0);
+
+}
+
+
+
+void process_msg(Client& client, const Message msg) {
+
+    switch (msg.command) {
+
+        case message_type::ERROR:
+
+            throw std::runtime_error("error message received");
+
+        case message_type::CHECK:
+
+            client.send_up(msg);
+
+            break;
+
+        case message_type::CREATE_CHILD:
+
+            client.add_child(msg.value);
+
+            break;
+
+        case message_type::REMOVE_CHILD: {
+
+            if (msg.to_id != MESSAGE_ALL) {
+
+                client.send_up(msg);
+
+            }
+
+            Message tmp = msg;
+
+            tmp.to_id = MESSAGE_ALL;
+
+            client.send_down(tmp);
+
+            terminate(0);
+
+            break;
+
+        }
+
+        case message_type::TIMER_START:
+
+            client.start_timer();
+
+            client.send_up(msg);
+
+            break;
+
+        case message_type::TIMER_STOP:
+
+            client.stop_timer();
+
+            client.send_up(msg);
+
+            break;
+
+        case message_type::TIMER_TIME: {
+
+            int val = client.get_time();
+
+            client.send_up(Message(message_type::TIMER_TIME, client.id(), val));
+
+            break;
+
+        }
+
+        case message_type::PINGALL:
+
+            client.send_down(msg);
+
+            client.pingall();
+
+            break;
+
+        default:
+
+            throw std::logic_error("no such message command");
+
+    }
+
+}
+
+
+
+int main(int argc, char const* argv[]) {
+
+    try {
+
+        signal(SIGINT, terminate);
+
+        signal(SIGSEGV, terminate);
+
+        Client client(std::stoi(argv[1]), std::string(argv[2]));
+
+        client_ptr = &client;
+
+        while (true) {
+
+            Message msg = client.receive();
+
+            if (msg.to_id != client.id() && msg.to_id != MESSAGE_ALL) {
+
+                if (msg.go_up) {
+
+                    client.send_up(msg);
+
+                } 
+
+                else {
+
+                    client.send_down(msg);
+
+                }
+
+                continue;
+
+            }
+
+            process_msg(client, msg);
+
+        }
+
+    } 
+
+    catch (std::exception& ex) {
+
+        std::cerr << std::to_string(getpid()) << ' ' << ex.what() << std::endl;
+
+        exit(ERR_TERMINATED);
+
+    }
+
+    return 0;
+
+}
+
+\end{lstlisting}
+
+\pagebreak
