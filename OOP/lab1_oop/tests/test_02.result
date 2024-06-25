@@ -1,0 +1,14 @@
+SUM:
+12 28
+SUB:
+12 -2
+MULTIPLY:
+-195 180
+DIVIDE:
+0.866667 -0.8
+EQUAL:
+Numbers are not equal
+Conjugate number for a:
+12 -13
+Module compare for a and b:
+Module a more module b
