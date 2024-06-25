@@ -1,0 +1,71 @@
+
+Win:
+	log	admin
+	pass	admin
+
+Linux:
+	log	user
+	pass	Test123
+
+Mikrotik:
+	log	admin
+	pass	(ничего)
+
+SW1:
+
+
+
+ПО ЗАДАНИЮ:
+	Пароль для admin на Cisco (в Винде): admin1
+	Префикс внутренней сети для маршрутизатора на Cisco (в Винде): 192.168.1.0/24, ether2
+	Пароль для терминала Mikrotik: admin1	(ВКРАТЦЕ: консоль микротика - нахуй, пользуемся winbox, это тож самое)
+
+
+enable - переход в #
+copy running-config startup-config - сохраняем настройки (или используем write memory)
+conf t - режим (config)
+hostname SW1 - меняем название
+aaa new-model - ?
+service password-encryption - включаем шифровку пароля
+username admin privilege 15 password 0 admin1 - смена пароля админа на комутаторе
+
+**
+username checker privilege 15 password 0 PfxtvXtrth! - добавление пользователя checker
+**
+
+aaa authentication login default local - спрашивает пароль на коммутаторе при заходе (вводить не переключаясь между вкладками)
+enable secret admin1 - спрашивает пароль на коммутаторе для enable
+end - 1 block down
+exit - перезагрузка терминала
+
+
+interface vlan 1 - переход в интерфейс VLAN
+
+
+что-то получилось с интерфейсом 192.168.1.0/24 и пулом адресов 192.168.1.50-192.168.1.150
+
+
+ip domain-name labaz.org
+crypto key generate rsa
+
+
+line vty 0 4
+transport input ssh
+login authentication default
+
+
+
+
+1) +
+2) +
+3) +
+4) +
+5) 2/3
+6) +
+7) +
+8) +
+9) 1/2
+10)
+11)
+
+

@@ -1,0 +1,516 @@
+
+Win:
+	log	admin
+	pass	admin
+
+Linux:
+	log	user
+	pass	Test123
+
+Ubuntu Server:
+	
+	log	root
+	pass	root
+
+ПО ЗАДАНИЮ:
+	Пароль для admin на Cisco (в Винде): admin1
+
+Пункты (2-3):
+conf t
+service password-encryption
+aaa new-model
+aaa authentication login default local
+username admin privilege 15 password 0 admin1
+username checker privilege 15 password 0 PfxtvXtrth!
+enable secret admin1
+end
+write memory
+exit
+
+Пункт (5):
+conf t
+ip domain-lookup
+ip dns server
+ip name-server 9.9.9.9
+
+
+conf t
+vtp domain LABAZ
+vtp version 3
+vtp mode server
+vtp primary vlan (вне conf t)
+show vtp status
+
+
+conf t
+vlan 11
+name MGMT
+exit
+
+
+
+1) +
+2) +
+3) +
+4) +
+5) +
+6) +
+7) +
+8) +
+9) 
+10) +
+11)
+12)
+13) +
+14) +
+15)
+16)
+17)
+18)
+19)
+
+
+show vtp count - ?
+
+на SW1:
+
+порт ченелы (объединение в единый канал):
+conf t
+interface Port-Channel 1
+end
+(далее к порт ченелу присоединяем интерфейсы):
+conf t
+interface range gi0/1,gi0/2
+channel-group 1 mode active
+end
+
+на SW2:
+
+conf t
+interface Port-Channel 1
+end
+interface range gi0/0,gi0/1
+channel-group 1 mode active
+end
+
+show etherchannel summary - просмотр порт ченелов с его интерфейсами
+
+на SW1:
+
+conf t
+interface Port-Channel 2
+end
+interface range gi1/0,gi1/1
+channel-group 2 mode active
+end
+
+на SW3:
+
+conf t
+interface Port-Channel 1
+end
+interface range gi0/0,gi0/1
+channel-group 1 mode active
+end
+
+
+
+на SW1:
+############################ ниже неверно
+conf t
+interface gigabitEthernet 0/1
+switchport mode trunk		- зачем хз
+switchport trunk encapsulation dot1q
+do show etherchannel - чек эзерченелов
+############################ выше неверно
+
+conf t
+interface Port-Channel 1
+switchport trunk encapsulation dot1q
+switchport mode trunk
+end
+show run			- dot1q должен появиться у порт ченела 1 и 2 гигабитэзернетов (0/1 и 0/2)
+
+на SW2:
+
+conf t
+interface Port-Channel 1
+switchport trunk encapsulation dot1q
+switchport mode trunk
+end
+show int
+
+на SW1:
+
+show vlan
+conf t
+interface Port-Channel 2
+switchport trunk encapsulation dot1q
+switchport mode trunk
+end
+
+на SW3:
+
+show vlan
+show run
+conf t
+vtp domain LABAZ
+vtp version 3
+vtp mode client
+interface Port Channel 1
+switchport trunk encapsulation dot1q
+switchport mode trunk
+end
+
+на SW4:
+
+conf t
+vtp domain LABAZ
+vtp version 3
+vtp mode client
+
+на SW1:
+
+conf t
+interface GigabitEthernet 1/0
+switchport trunk encapsulation dot1q
+switchport mode trunk
+end
+
+на SW4:
+
+conf t
+interface GigabitEthernet 0/0
+switchport trunk encapsulation dot1q
+switchport mode trunk
+end
+
+conf t
+interface range gig0/0,gig0/1
+switchport trunk encapsulation dot1q
+switchport mode trunk
+end
+show vlan
+
+conf t
+interface gigabitEthernet 1/0
+switchport mode access
+switchport access vlan 20
+end
+
+show mac address-table
+show mac address-table vlan 10
+
+на SW1:
+
+conf t
+interface gi0/0
+switchport trunk encapsulation dot1q
+switchport mode trunk
+end
+
+на R1:
+
+conf t
+interface gigabitEthernet 0/1.20
+ip address 192.168.20.1 255.255.255.0
+encapsulation dot1Q 20
+ip address 192.168.20.1 255.255.255.0
+no shut
+end
+show run
+conf t
+interface gigabitEthernet 0/1
+no shut
+end
+show interfaces gigabitEthernet 0/1.20 (mac на R1 и mac на соотв порту в SW4 совпадают)
+
+на SW1: (все ip-шники висят на SW1)
+
+conf t
+interface vlan 20
+ip address 192.168.20.201 255.255.255.0
+no shut
+end
+ping 192.168.20.1
+show arp
+show spanning-tree bridge
+show spanning-tree summary
+show spanning-tree
+
+conf t
+spanning-tree vlan 1-99 root primary
+
+на SW4:
+
+show spanning-tree
+conf t
+interface gigabitEthernet 0/0
+spanning-tree cost 3
+end
+
+на SW1:
+
+conf t
+int gi0/3
+switchport trunk encapsulation dot1q
+switchport mode trunk
+end
+
+на Server: (с помощью init plan)
+
+-----------------------
+	ЧТО ДЕЛАЛ Я:
+-----------------------
+на R1:
+
+conf t
+interface gigabitEthernet 0/1.21
+ip address 192.168.21.1 255.255.255.0
+encapsulation dot1Q 21
+ip address 192.168.21.1 255.255.255.0
+no shut
+end
+show run
+
+
+conf t
+interface gigabitEthernet 0/1
+no shut
+end
+
+conf t
+interface gigabitEthernet 0/0
+no shut
+end
+
+на SW1:
+
+conf t
+interface vlan 21
+ip address 192.168.21.201 255.255.255.0
+no shut
+end
+
+------------------------------------
+------------------------------------
+
+Настраиваю на маршрутизаторе R1 встроенный DNS-сервер с передачей запросов на сервер QuadNine (9.9.9.9), включаю удаленные запросы
+conf t
+ip domain-lookup
+ip dns server
+ip name-server 9.9.9.9
+
+На каждом коммутаторе настраиваю VTP (на SW1 добавляется основной VTP-сервер и назначается после выхода из конфига командами vtp mode server и vtp primary vlan соответственно)
+conf t
+vtp domain LABAZ
+vtp version 3
+exit
+
+
+Настраиваю VLANы на коммутаторах в соответствии с таблицей:
+conf t
+vlan 11
+name MGMT
+conf t
+vlan 21
+name Internet
+conf t
+vlan 31
+name Cash
+
+Организую на коммутаторах SW1, SW2 и SW3 группы портов между соседями в кольце в EntherChannel-каналы и перевожу эти каналы в trunk 802.1q
+На SW1:
+conf t
+interface Port-Channel 1
+interface range gi0/1,gi0/2
+channel-group 1 mode active
+switchport trunk allowed vlan 11,21,31
+switchport trunk encapsulation dot1q
+switchport mode trunk
+exit
+conf t
+interface Port-Channel 2
+interface range gi1/0,gi1/1
+channel-group 2 mode active
+switchport trunk allowed vlan 11,21,31
+switchport trunk encapsulation dot1q
+switchport mode trunk
+
+Аналогичны группы портов для SW2 и SW3, плюсом идут отельные порты на SW4 и SW5:
+conf t
+interface Port-Channel 1
+interface range gi0/0,gi0/1
+channel-group 1 mode active
+switchport trunk allowed vlan 11,21,31
+switchport trunk encapsulation dot1q
+switchport mode trunk
+exit
+conf t
+interface Port-Channel 2
+interface range gi0/2,gi0/3
+channel-group 2 mode active
+switchport trunk allowed vlan 11,21,31
+switchport trunk encapsulation dot1q
+switchport mode trunk
+exit
+conf t
+interface range gi1/0,gi1/1
+switchport trunk encapsulation dot1q
+switchport mode trunk
+
+Также на SW4 и SW5 перевожу порты в режим trunk 802.1q (кроме access-портов gi1/0):
+interface range gi0/0,gi0/1
+switchport trunk allowed vlan 11,21,31
+switchport trunk encapsulation dot1q
+switchport mode trunk
+end
+conf t
+interface gi1/0
+switchport mode access
+switchport access vlan 21
+
+Затем на SW4 и SW5 делаем интерфейсы gi0/0 primary рутом:
+interface gi0/0
+spanning-tree cost 3
+
+А также на SW1 делаем VLAN root bridge:
+spanning-tree vlan 11,21,31 root primary
+
+На SW1 настраиваем порты на маршрутизатор R1 и Server:
+interface gi0/0
+switchport trunk encapsulation dot1q
+switchport mode trunk
+switchport trunk allowed vlan 11,21
+exit
+conf t
+interface gi0/3
+switchport trunk encapsulation dot1q
+switchport mode trunk
+switchport trunk allowed vlan 21,31
+
+На SW1 настраиваю поиск доменных имён, настраиваю IP для VLAN Internet и маршрут по умолчанию, задаю IP-адреса во всех VLAN. Для SW2-SW5 аналогично, меняется только последняя цифра ip address интерфейсов vlan в формате 20* (где * - номер коммутатора):
+ip domain-lookup
+ip domain-name LABAZ
+ip name-server 192.168.21.1
+ip default-gateway 192.168.11.1
+interface vlan 11
+ip address 192.168.11.201 255.255.255.0
+no shutdown
+exit
+conf t
+interface vlan 21
+ip address 192.168.21.201 255.255.255.0
+no shutdown
+exit
+conf t
+interface vlan 31
+ip address 192.168.1.201 255.255.255.0
+no shutdown
+exit
+
+На R1 добавляю порты на SW1 и на интернет, включаю NAT для доступа в интернет IP-адресов из VLAN Internet, используя в качестве глобального адреса адрес на интерфейсе gi0/0:
+
+interface gi0/0
+no shutdown
+ip address dhcp hostname R1
+ip nat outside
+end
+conf t
+interface gi0/1
+no shutdown
+end
+conf t
+interface gi0/1.11
+encapsulation dot1q 11
+ip address 192.168.11.1 255.255.255.0
+no shutdown
+end
+conf t
+interface gi0/1.21
+encapsulation dot1q 21
+ip address 192.168.21.1 255.255.255.0
+ip nat inside
+no shutdown
+end
+conf t
+access-list 1 permit 192.168.21.0 0.0.0.255
+ip nat inside source list 1 interface gi0/0 overload
+ip route 192.168.1.0 255.255.255.0 192.168.1.201
+ip route 192.168.11.0 255.255.255.0 192.168.11.201
+ip route 192.168.21.0 255.255.255.0 192.168.21.201
+
+Включаем ip-маршрутизацию на SW1:
+ip route 0.0.0.0 0.0.0.0 vlan21 192.168.21.1
+ip routing
+
+И также на SW2-SW5:
+ip route 0.0.0.0 0.0.0.0 Vlan11 192.168.11.201
+ip routing
+
+
+На коммутаторах и маршрутизаторе настраиваем доступ по SSH:
+
+crypto key generate RSA
+1024
+ip ssh version 2
+line vty 0 4
+transport input ssh
+login authentication default
+
+На SW1 настраиваю DHCP:
+
+ip dhcp excluded-address 192.168.21.1
+ip dhcp excluded-address 192.168.21.201
+ip dhcp excluded-address 192.168.1.201
+ip dhcp excluded-address 192.168.11.201 192.168.11.205
+ip dhcp excluded-address 192.168.11.2
+ip dhcp excluded-address 192.168.21.2
+ip dhcp excluded-address 192.168.1.2
+ip dhcp excluded-address 192.168.11.1
+ip dhcp pool VLAN21
+network 192.168.21.0 255.255.255.0
+default-router 192.168.21.201
+dns-server 192.168.21.1
+ip dhcp pool VLAN31
+network 192.168.1.0 255.255.255.0
+default-router 192.168.1.201 
+
+На Serverе редактирую файл /etc/netplan/01-netcfg.yaml:
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    eth0:
+      dhcp4: no
+  vlans:
+    vlan11:
+      id: 11
+      link: eth0
+      addresses: [192.168.11.2/24]
+      dhcp4: no
+      gateway4: 192.168.11.201
+    vlan21:
+      id: 21
+      link: eth0
+      addresses: [192.168.21.2/24]
+      dhcp4: no
+      gateway4: 192.168.21.201
+      nameservers:
+        addresses: [192.168.21.1]
+    vlan31:
+      id: 31
+      link: eth0
+      addresses: [192.168.1.2/24]
+      dhcp4: no
+      gateway4: 192.168.1.201
+
+Отключаю доступ к коммутаторам и маршрутизатору через web-интерфейс:
+no ip http server
+no ip http secure-server
+
+Проверяю результат выполненной лабораторной работы. 
+
+
+
+
